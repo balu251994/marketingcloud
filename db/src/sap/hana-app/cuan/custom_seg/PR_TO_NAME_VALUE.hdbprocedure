@@ -1,0 +1,54 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_TO_NAME_VALUE" (  in i_string NCLOB ,  out ot_name_value "sap.hana-app.cuan.custom_seg::PR_TO_NAME_VALUE/tabletype/ot_name_value"  ) language SQLSCRIPT sql security invoker reads sql data as lv_s string;
+lc_sep_1 char(1):= ',';
+lc_sep_2 char(1):= '"';
+lc_sep_3 char(1):= ':';
+ 
+begin 
+  lt_name_value = select '' as name, '' as value from "sap.hana-app.sys::DUMMY" where 1 = 0;
+ 
+  lv_s := i_string;
+  while locate(:lv_s,lc_sep_2) > 0 do
+    lt_name_value =
+      select "NAME", "VALUE" from :lt_name_value union all
+      select
+          substr_before(
+            substr_after(
+              substr_before("NAME_VALUE",:lc_sep_3),
+              lc_sep_2
+            ),
+            lc_sep_2
+          ) as "NAME",
+          substr_before(
+            substr_after(
+              substr_after("NAME_VALUE",:lc_sep_3),
+              lc_sep_2
+            ),
+            lc_sep_2
+          ) as "VALUE"
+        from (
+          select
+              case when locate(:lv_s,lc_sep_1) > 0
+                then substr_before(:lv_s,lc_sep_1)
+                else :lv_s
+              end as "NAME_VALUE"
+            from "sap.hana-app.sys::DUMMY"
+        );
+    select substr_after(:lv_s,lc_sep_1) into lv_s from "sap.hana-app.sys::DUMMY";
+  end while;
+  
+  ot_name_value = select name, value from :lt_name_value;
+end;
+--==============================================================================
+-- Test in SQL Editor
+--==============================================================================
+/*
+call "_SYS_BIC"."sap.hana-app.cuan.cpred.reuse.internal/PR_TO_NAME_VALUE"('
+  "TARGETGROUP":    "0000007218",
+  "TARGETPRODUCT":  "1EDA018FD3CCD411858800902761A739",
+  "METRIC":         "2",
+  "DOC_DATE_START": "2000-01-01",
+  "DOC_DATE_END":   "2013-12-31",
+  "REFPRODUCT01":   "E8DB018FD3CCD411858800902761A739",
+  "REFPRODUCT02":   "68DA018FD3CCD411858800902761A739"
+',?);
+*/

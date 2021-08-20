@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.internal::CA_C_CE_INTERACTIONS_ALL_CNT" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DEFAULT" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_C_INTERACTIONS_ALL_CNT"/>
+  <metadata changedAt="2018-01-31 11:38:05.598"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="15"/>
+  <dataSources>
+    <DataSource id="CA_C_CE_INTERACTIONS_ALL">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_C_CE_INTERACTIONS_ALL</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="CA_C_CE_INTERACTIONS_ALL">
+    <descriptions/>
+    <attributes>
+      <attribute id="IA_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_KEY"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMM_MEDIUM"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="IA_TYPE" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_TYPE"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="TIMESTAMP" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TIMESTAMP"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="TIMESTAMP"/>
+      </attribute>
+      <attribute id="INITIATIVE_ID" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="INITIATIVE_ID"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="INITIATIVE_ID"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM" order="7" attributeHierarchyActive="false" descriptionColumnName="INTEREST_ITEM.description" displayAttribute="false">
+        <descriptions defaultDescription="INTEREST_ITEM"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="INTEREST_ITEM"/>
+      </attribute>
+      <attribute id="CHANNEL" order="8" attributeHierarchyActive="false" descriptionColumnName="CHANNEL.description" displayAttribute="false">
+        <descriptions defaultDescription="CHANNEL"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="CHANNEL"/>
+      </attribute>
+      <attribute id="COMPANY_KEY" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANY_KEY"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="COMPANY_KEY"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM.description" hidden="true" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="INTEREST_ITEM.description"/>
+      </attribute>
+      <attribute id="CHANNEL.description" hidden="true" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="CHANNEL.description"/>
+      </attribute>
+      <attribute id="KUNNR" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="KUNNR"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="KUNNR"/>
+      </attribute>
+      <attribute id="DIRECTION" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DIRECTION"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="DIRECTION"/>
+      </attribute>
+      <attribute id="COUNTRY" order="16" attributeHierarchyActive="false" descriptionColumnName="COUNTRY_DESC" displayAttribute="false">
+        <descriptions defaultDescription="COUNTRY"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="COUNTRY"/>
+      </attribute>
+      <attribute id="LAST_INBOUND_IA_TIMESTAMP" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAST_INBOUND_IA_TIMESTAMP"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="LAST_INBOUND_IA_TIMESTAMP"/>
+      </attribute>
+      <attribute id="MKT_AREA_ID" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MKT_AREA_ID"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="COUNTRY_DESC" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COUNTRY_DESC"/>
+        <keyMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="COUNTRY_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="QUANTIFIER" order="9" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="QUANTIFIER"/>
+        <measureMapping columnObjectName="CA_C_CE_INTERACTIONS_ALL" columnName="QUANTIFIER"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures>
+      <measure id="IA_CNT" hidden="false" order="11" aggregationType="sum" measureType="simple" aggregatable="true" calculatedMeasureType="counter" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <descriptions defaultDescription="IA_CNT"/>
+        <exceptionAggregation exceptionAggregationType="countDistinct">
+          <attribute attributeName="IA_KEY"/>
+        </exceptionAggregation>
+        <formula>1</formula>
+      </measure>
+    </calculatedMeasures>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

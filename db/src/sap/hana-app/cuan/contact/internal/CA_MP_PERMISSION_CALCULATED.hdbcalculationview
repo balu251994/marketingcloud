@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.internal::CA_MP_PERMISSION_CALCULATED" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Marketing Permissions"/>
+  <metadata changedAt="2019-04-09 14:44:09.294"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="53"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_FCET">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_FCET</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_MP_MAP">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_MP_MAP</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_CMM_M_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_CMM_M_T</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_MP_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_MP_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CA_COUNTRY_PERMISSION_MERGE_BASE_CUST">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_COUNTRY_PERMISSION_MERGE_BASE_CUST</resourceUri>
+    </DataSource>
+    <DataSource id="HPAC_MKT_AREA_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::HPAC_MKT_AREA_T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_ROOT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (not in (&quot;OBSOLETE&quot;,'X')) AND (not in (&quot;ANONYMIZED&quot;,'X')) AND (not in (&quot;_DATAAGING&quot;,'00010101')) AND (not in (&quot;END_OF_PURPOSE&quot;,'X'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="INVALID"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_FCET"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (not in (&quot;OBSOLETE&quot;,'X')) AND (not in (&quot;_DATAAGING&quot;,'00010101')) AND (not in (&quot;INVALID&quot;,'X')) AND (not in (&quot;END_OF_PURPOSE&quot;,'X'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="COUNTRY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+      </input>
+      <input node="Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="DB_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="DISABLED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANC_CE_MP_MAP"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;DISABLED&quot; !='X')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_N" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="COUNTRY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+      </input>
+      <input node="Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="COMM_MEDIUM"/>
+      </input>
+      <joinAttribute name="ID_ORIGIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="COUNTRY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="ID"/></input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="COMM_MEDIUM_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANC_CE_CMM_M_T"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6" filterExpressionLanguage="SQL">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="INITIATIVE_ID"/>
+        <viewAttribute id="IA_TIMESTAMP"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="COMM_CAT_KEY"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+      
+        <viewAttribute id="IS_IMPLICIT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_MP_ROOT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;COMM_DIRECTION&quot; ='O') AND (&quot;COMM_CAT_KEY&quot;  is null  or &quot;COMM_CAT_KEY&quot; = '' or &quot;COMM_CAT_KEY&quot; ='00000000000000000000000000000000') AND NOT (&quot;IS_IMPLICIT&quot; = 'X') </filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="INITIATIVE_ID"/>
+        <viewAttribute id="IA_TIMESTAMP"/>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="COMM_CAT_KEY"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="CONTACT_FACET_ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="CONTACT_FACET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+      </input>
+      <input node="Projection_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_ID" source="INITIATIVE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TIMESTAMP" source="IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_CAT_KEY" source="COMM_CAT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="CONTACT_FACET_ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="CONTACT_FACET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+      <joinAttribute name="CONTACT_FACET_ID_ORIGIN"/>
+      <joinAttribute name="CONTACT_FACET_ID"/>
+      <joinAttribute name="OUTBOUND_COMM_MEDIUM"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_8">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="OPT_IN_CUST"/>
+        <viewAttribute id="INBOUND_STORAGE_CALC"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="OPT_IN_CUST_YN" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;OPT_IN_CUST&quot; = 'I','Y','N')</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="CA_COUNTRY_PERMISSION_MERGE_BASE_CUST">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN_CUST" source="CONSENT_CALC"/></input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;COMM_DIRECTION&quot; ='O')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_10">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="OPT_IN_MKT_PERM"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN_MKT_PERM" source="OPT_IN"/></input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="C1_N" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="OPT_IN_CUST"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="OPT_IN_MKT_PERM"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="OPT_IN_CUST_YN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="CONTACT_FACET_ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="CONTACT_FACET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN_MKT_PERM" source="OPT_IN_MKT_PERM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+      </input>
+      <input node="Projection_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN_CUST" source="OPT_IN_CUST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN_CUST_YN" source="OPT_IN_CUST_YN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="COMM_MEDIUM"/>
+      </input>
+      <joinAttribute name="COUNTRY"/>
+      <joinAttribute name="OUTBOUND_COMM_MEDIUM"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_11" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="OPT_IN_CUST"/>
+        <viewAttribute id="OPT_IN_MKT_PERM"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="OPT_IN_CUST_YN"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="OPT_IN" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isnull(&quot;OPT_IN_MKT_PERM&quot;),&quot;OPT_IN_CUST_YN&quot;,&quot;OPT_IN_MKT_PERM&quot;) </formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Join_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/></input>
+      <filter>&quot;OPT_IN&quot; = 'Y'</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="COMM_MEDIUM_DESC"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="MKT_AREA_ID_DESC" length="120" expressionLanguage="COLUMN_ENGINE">
+          <formula>''</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Projection_11">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM" source="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+      </input>
+      <input node="Projection_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM_DESC" source="COMM_MEDIUM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM" source="COMM_MEDIUM"/>
+      </input>
+      <joinAttribute name="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="HPAC_MKT_AREA_T"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC"/>
+        <viewAttribute id="MKT_PERM_MKT_AREA_ID"/>
+        <viewAttribute id="MKT_PERM_MKT_AREA_ID_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM" source="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC" source="COMM_MEDIUM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID" source="MKT_AREA_ID"/>
+      </input>
+      <input node="Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID_DESC" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID" source="MKT_AREA_ID"/>
+      </input>
+      <joinAttribute name="MKT_PERM_MKT_AREA_ID"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_6">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_6" columnName="MANDT"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_6" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC" hidden="true" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Communication Medium Description"/>
+        <keyMapping columnObjectName="Join_6" columnName="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC"/>
+      </attribute>
+      <attribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM" order="4" attributeHierarchyActive="false" descriptionColumnName="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Communication Medium Opt-In"/>
+        <keyMapping columnObjectName="Join_6" columnName="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="MKT_PERM_MKT_AREA_ID" order="5" attributeHierarchyActive="false" descriptionColumnName="MKT_PERM_MKT_AREA_ID_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area"/>
+        <keyMapping columnObjectName="Join_6" columnName="MKT_PERM_MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="MKT_PERM_MKT_AREA_ID_DESC" hidden="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area Description"/>
+        <keyMapping columnObjectName="Join_6" columnName="MKT_PERM_MKT_AREA_ID_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="478" y="87"/>
+        <rectangleSize height="61" width="140"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="975"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="975"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="879"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="879"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="175" y="783"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="175" y="705"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="479" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="329" y="705"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="250" y="609"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_6" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="404" y="531"/>
+        <rectangleSize height="60" width="140"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_10" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="250" y="531"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="325" y="435"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Projection_10" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_8" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_11" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="325" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="401" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Projection_11" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="555" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="478" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    
+      <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_7" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

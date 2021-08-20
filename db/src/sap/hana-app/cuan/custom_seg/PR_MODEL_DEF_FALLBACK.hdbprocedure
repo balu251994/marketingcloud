@@ -1,0 +1,322 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_MODEL_DEF_FALLBACK" (  in IP_MODEL_GUID VARCHAR(32) ,  out ot_model_def "sap.hana-app.cuan.custom_seg::PR_MODEL_DEF_FALLBACK/tabletype/ot_model_def"  ) language SQLSCRIPT sql security invoker reads sql data as lc_namespace_sap           nvarchar(3) := 'SAP';
+lc_namespace_cus           nvarchar(3) := 'CUS';
+lc_model_config_ds_para    nclob       := 'DS_PARA';
+lc_model_config_model_para nclob       := 'MODEL_PARA';
+lc_model_config_select_var nclob       := 'SELECT_VAR';
+lc_proc_par_cat_mod        nvarchar(3) := 'MOD';
+lc_trainmodel_version_actv nvarchar(1) := 'A';
+lc_nclob_dummy             nclob       := '';
+
+lc_sep_1 char(1):= ',';
+lc_sep_2 char(1):= '"';
+lc_sep_3 char(1):= ':';
+ 
+l_predictive_scenario   nclob;
+l_predictive_process    nclob;
+l_target_variable       nclob;
+l_scenario_parameters   nclob;
+l_datasource_parameters nclob;
+l_selected_variables    nclob;
+l_model_parameters      nclob;
+
+begin
+
+--==============================================================================
+-- Read Model Metadata
+--==============================================================================
+--Scenario
+select
+    "PREDICTIVE_KPI"
+  into l_predictive_scenario
+  from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"
+  where "MANDT"  = session_context('CLIENT') 
+    and "DB_KEY" = :ip_model_guid
+;
+
+--Predictive Process
+select
+    "PRED_PROCESS"
+  into l_predictive_process
+  from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"    as t0
+  join "sap.hana-app.cuan.db.cuan::CUAND_P_MODELFIT" as t1
+     on t0."MANDT"  = t1."MANDT"
+    and t0."DB_KEY" = t1."PARENT_KEY"
+  join "sap.hana-app.cuan.db.cuan::CUAND_TRAINMODEL" as t1b
+     on t1."MANDT"    = t1b."MANDT"
+    and t1."DB_KEY"   = t1b."PARENT_KEY"
+    and t1b."VERSION" = :lc_trainmodel_version_actv
+  where t0."MANDT"  = session_context('CLIENT')
+    and t0."DB_KEY" = :ip_model_guid
+;
+
+--Target variable
+select
+    case when "SUCCESS_METRIC" <> '' then "SUCCESS_METRIC" else :lc_nclob_dummy end
+  into l_target_variable
+  from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"
+  where "MANDT"  = session_context('CLIENT') 
+    and "DB_KEY" = :ip_model_guid
+;
+
+--Scenario parameters
+lt_scenario_parameters_bo =
+select 
+    "NAME", "VALUE"
+  from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT" as t0
+  join "sap.hana-app.cuan.db.cuan::CUAND_PM_TO"   as t1
+     on t0."MANDT" =  t1."MANDT"
+    and t0."DB_KEY" = t1."PARENT_KEY"
+  where t0."MANDT"  = session_context('CLIENT')  
+    and t0."DB_KEY" = :ip_model_guid
+;
+
+call "sap.hana-app.cuan.cpred.reuse.internal::PR_NAME_VALUE_TO_STRING"(
+  :lt_scenario_parameters_bo,
+  lt_scenario_parameters_bo_string
+);
+
+select top 1 "STRING" into l_scenario_parameters from :lt_scenario_parameters_bo_string;
+
+lt_scenario_parameters =
+select
+    "NAME",
+    "VALUE"
+  from (
+    select
+        t1."PAR_NAME" as "NAME",
+        case when t3."HIDE" = 'X'
+          then t3."DEFAULT_VALUE"
+          else
+            case when t3."HIDE" is null and t2."HIDE" = 'X'
+              then t2."DEFAULT_VALUE"
+            end
+        end as "VALUE"
+      from "sap.hana-app.cuan.db.cuan::CUANC_PM_SCN_PAR"      as t1
+      left join "sap.hana-app.cuan.db.cuan::CUANC_PM_SCN_P_D" as t2
+        on t1."CLIENT"      = t2."CLIENT"
+       and t1."SCENARIO_ID" = t2."SCENARIO_ID"
+       and t1."PAR_NAME"    = t2."PAR_NAME"
+       and t2."NAMESPACE"   = :lc_namespace_sap
+      left join "sap.hana-app.cuan.db.cuan::CUANC_PM_SCN_P_D" as t3
+        on t1."CLIENT"      = t3."CLIENT"
+       and t1."SCENARIO_ID" = t3."SCENARIO_ID"
+       and t1."PAR_NAME"    = t3."PAR_NAME"
+       and t3."NAMESPACE"   = :lc_namespace_cus
+      where t1."CLIENT"      = session_context('CLIENT')
+        and t1."SCENARIO_ID" = :l_predictive_scenario
+  ) as t4
+  where t4."VALUE" is not null
+;
+call "sap.hana-app.cuan.cpred.reuse.internal::PR_NAME_VALUE_TO_STRING"(
+  :lt_scenario_parameters,
+  lt_scenario_parameters_string
+);
+select
+    case when :l_scenario_parameters = '' and to_nvarchar("STRING") = ''
+      then :lc_nclob_dummy
+      else
+        :l_scenario_parameters ||
+        case when :l_scenario_parameters <> '' and to_nvarchar("STRING") <> ''
+          then :lc_sep_1
+          else ''
+        end ||
+        "STRING"
+    end
+  into l_scenario_parameters
+  from "sap.hana-app.sys::DUMMY"
+  left join (
+    select top 1
+        "STRING"
+      from :lt_scenario_parameters_string
+  ) on 1 = 1
+;
+ 
+--Datasource parameters
+lt_datasource_parameters =
+select
+    t3."NAME",
+    t3."VALUE"
+  from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"    as t0
+  join "sap.hana-app.cuan.db.cuan::CUAND_P_MODELFIT" as t1
+     on t0."MANDT"    = t1."MANDT"
+    and t0."DB_KEY"   = t1."PARENT_KEY"
+  join "sap.hana-app.cuan.db.cuan::CUAND_TRAINMODEL" as t1b
+     on t1."MANDT"    = t1b."MANDT"
+    and t1."DB_KEY"   = t1b."PARENT_KEY"
+    and t1b."VERSION" = :lc_trainmodel_version_actv
+  join "sap.hana-app.cuan.db.cuan::CUAND_DETAILFIT"  as t2
+     on t1."MANDT"             = t2."MANDT"
+    and t1."CURR_DETAILED_FIT" = t2."DB_KEY"
+  join "sap.hana-app.cuan.db.cuan::CUAND_MOD_CONFIG" as t3
+     on t2."MANDT"  = t3."MANDT"
+    and t2."DB_KEY" = t3."PARENT_KEY"
+    and t3."TYPE"   = :lc_model_config_ds_para
+  where t0."MANDT"      = session_context('CLIENT')
+    and t0."DB_KEY" = :ip_model_guid
+union all
+select
+    "NAME",
+    "VALUE"
+  from (
+    select
+        t1."PAR_NAME" as "NAME",
+        case when t3."HIDE" = 'X'
+          then t3."DEFAULT_VALUE"
+          else
+            case when t3."HIDE" is null and t2."HIDE" = 'X'
+              then t2."DEFAULT_VALUE"
+            end
+        end           as "VALUE"
+      from "sap.hana-app.cuan.db.cuan::CUANC_PM_PROCESS"      as t0
+      left join "sap.hana-app.cuan.db.cuan::CUANC_PM_DS_PAR"  as t1
+        on t0."CLIENT"        = t1."CLIENT"
+       and t0."DATASOURCE_ID" = t1."DATASOURCE_ID"
+      left join "sap.hana-app.cuan.db.cuan::CUANC_PM_DS_PA_D" as t2
+        on t1."CLIENT"        = t2."CLIENT"
+       and t1."DATASOURCE_ID" = t2."DATASOURCE_ID"
+       and t1."PAR_NAME"      = t2."PAR_NAME"
+       and t2."NAMESPACE"     = :lc_namespace_sap
+      left join "sap.hana-app.cuan.db.cuan::CUANC_PM_DS_PA_D" as t3
+        on t1."CLIENT"        = t3."CLIENT"
+       and t1."DATASOURCE_ID" = t3."DATASOURCE_ID"
+       and t1."PAR_NAME"      = t3."PAR_NAME"
+       and t3."NAMESPACE"     = :lc_namespace_cus
+      where t0."CLIENT"     = session_context('CLIENT')
+        and t0."PROCESS_ID" = :l_predictive_process
+  ) as t4
+  where t4."VALUE" is not null
+;
+call "sap.hana-app.cuan.cpred.reuse.internal::PR_NAME_VALUE_TO_STRING"(
+  :lt_datasource_parameters,
+  lt_datasource_parameters_string
+);
+select top 1
+    "STRING"
+  into l_datasource_parameters
+  from :lt_datasource_parameters_string
+;
+select
+    to_nclob( case when :l_datasource_parameters <> '' then l_datasource_parameters else :lc_nclob_dummy end )
+  into l_datasource_parameters
+  from "sap.hana-app.sys::DUMMY"
+;
+
+--Selected variables
+lt_selected_variables =
+select
+    t3."NAME"
+  from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"    as t0
+  join "sap.hana-app.cuan.db.cuan::CUAND_P_MODELFIT" as t1
+     on t0."MANDT"    = t1."MANDT"
+    and t0."DB_KEY"   = t1."PARENT_KEY"
+  join "sap.hana-app.cuan.db.cuan::CUAND_TRAINMODEL" as t1b
+     on t1."MANDT"    = t1b."MANDT"
+    and t1."DB_KEY"   = t1b."PARENT_KEY"
+    and t1b."VERSION" = :lc_trainmodel_version_actv
+  join "sap.hana-app.cuan.db.cuan::CUAND_DETAILFIT" as t2
+     on t1."MANDT"             = t2."MANDT"
+    and t1."CURR_DETAILED_FIT" = t2."DB_KEY"
+  join "sap.hana-app.cuan.db.cuan::CUAND_MOD_CONFIG" as t3
+     on t2."MANDT"  = t3."MANDT"
+    and t2."DB_KEY" = t3."PARENT_KEY"
+    and t3."TYPE"   = :lc_model_config_select_var
+  where t0."MANDT"      = session_context('CLIENT') 
+    and t0."DB_KEY" = :ip_model_guid
+;
+call "sap.hana-app.cuan.cpred.reuse.internal::PR_NAME_TO_STRING"(
+  :lt_selected_variables,
+  lt_selected_variables_string
+);
+select top 1
+    "STRING"
+  into l_selected_variables
+  from :lt_selected_variables_string
+;
+select
+    to_nclob( case when :l_selected_variables <> '' then l_selected_variables else :lc_nclob_dummy end )
+  into l_selected_variables
+  from "sap.hana-app.sys::DUMMY"
+;
+
+--Model parameters
+lt_model_parameters =
+select
+    t3."NAME",
+    t3."VALUE"
+  from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"    as t0
+  join "sap.hana-app.cuan.db.cuan::CUAND_P_MODELFIT" as t1
+     on t0."MANDT"    = t1."MANDT"
+    and t0."DB_KEY"   = t1."PARENT_KEY"
+  join "sap.hana-app.cuan.db.cuan::CUAND_TRAINMODEL" as t1b
+     on t1."MANDT"    = t1b."MANDT"
+    and t1."DB_KEY"   = t1b."PARENT_KEY"
+    and t1b."VERSION" = :lc_trainmodel_version_actv
+  join "sap.hana-app.cuan.db.cuan::CUAND_DETAILFIT"  as t2
+     on t1."MANDT"             = t2."MANDT"
+    and t1."CURR_DETAILED_FIT" = t2."DB_KEY"
+  join "sap.hana-app.cuan.db.cuan::CUAND_MOD_CONFIG" as t3
+     on t2."MANDT"  = t3."MANDT"
+    and t2."DB_KEY" = t3."PARENT_KEY"
+    and t3."TYPE"   = :lc_model_config_model_para
+  where t0."MANDT"      = session_context('CLIENT') 
+    and t0."DB_KEY" = :ip_model_guid
+union all
+select
+    "NAME",
+    "VALUE"
+  from (
+    select
+        t1."PAR_NAME" as "NAME",
+        case when t3."HIDE" = 'X'
+          then t3."DEFAULT_VALUE"
+          else
+            case when t3."HIDE" is null and t2."HIDE" = 'X'
+              then t2."DEFAULT_VALUE"
+            end
+        end           as "VALUE"
+      from "sap.hana-app.cuan.db.cuan::CUANC_PM_PRC_PAR"      as t1
+      left join "sap.hana-app.cuan.db.cuan::CUANC_PM_PRC_P_D" as t2
+        on t1."CLIENT"     = t2."CLIENT"
+       and t1."PROCESS_ID" = t2."PROCESS_ID"
+       and t1."PAR_NAME"   = t2."PAR_NAME"
+       and t2."NAMESPACE"  = :lc_namespace_sap
+      left join "sap.hana-app.cuan.db.cuan::CUANC_PM_PRC_P_D" as t3
+        on t1."CLIENT"     = t3."CLIENT"
+       and t1."PROCESS_ID" = t3."PROCESS_ID"
+       and t1."PAR_NAME"   = t3."PAR_NAME"
+       and t3."NAMESPACE"  = :lc_namespace_cus
+      where t1."CLIENT"     = session_context('CLIENT')
+        and t1."PROCESS_ID" = :l_predictive_process
+        and t1."PAR_CAT"    = :lc_proc_par_cat_mod
+  ) as t4
+  where t4."VALUE" is not null
+;
+call "sap.hana-app.cuan.cpred.reuse.internal::PR_NAME_VALUE_TO_STRING"(
+  :lt_model_parameters,
+  lt_model_parameters_string
+);
+select top 1
+    "STRING"
+  into l_model_parameters
+  from :lt_model_parameters_string
+;
+select
+    to_nclob( case when :l_model_parameters <> '' then l_model_parameters else :lc_nclob_dummy end )
+  into l_model_parameters
+  from "sap.hana-app.sys::DUMMY"
+;
+
+ot_model_def =
+--select '$$implementation_method$$' as "NAME", :l_predictive_process    as "VALUE" from dummy union all
+select '$$target_variable$$'       as "NAME", :l_target_variable       as "VALUE" from "sap.hana-app.sys::DUMMY" union all
+select '$$scenario_parameters$$'   as "NAME", :l_scenario_parameters   as "VALUE" from "sap.hana-app.sys::DUMMY" union all
+select '$$datasource_parameters$$' as "NAME", :l_datasource_parameters as "VALUE" from "sap.hana-app.sys::DUMMY" union all
+select '$$selected_variables$$'    as "NAME", :l_selected_variables    as "VALUE" from "sap.hana-app.sys::DUMMY" union all
+select '$$model_parameters$$'      as "NAME", :l_model_parameters      as "VALUE" from "sap.hana-app.sys::DUMMY"
+;
+
+end
+
+/*
+call "_SYS_BIC"."sap.hana-app.cuan.cpred.reuse.internal/PR_MODEL_DEF_FALLBACK"('',?);
+*/

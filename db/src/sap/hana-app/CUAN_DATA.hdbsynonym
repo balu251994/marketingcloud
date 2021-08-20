@@ -1,0 +1,7 @@
+{
+   "sap.hana-app::M_TIME_DIMENSION": {
+        "target":   {
+ "object": "hdbtables::M_TIME_DIMENSION"  
+		}
+	} 
+}

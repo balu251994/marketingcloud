@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_PRODUCT_CATEGORY_PARENT_V2" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Modified Product Category and its Parent Information"/>
+  <metadata changedAt="2020-08-13 14:06:47.948"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="38"/>
+  <dataSources>
+    <DataSource id="CUAND_PROD_CATEG">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG</resourceUri>
+    </DataSource>
+    <DataSource id="Proj_P2_CATEG$$$$sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PCAT_DESC">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC</resourceUri>
+    </DataSource>
+    <DataSource id="Proj_P3_CATEG$$$$sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC</resourceUri>
+    </DataSource>
+    <DataSource id="DESC_PROJ_P2$$$$sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC</resourceUri>
+    </DataSource>
+    <DataSource id="DESC_PROJ_P3$$$$sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PCH_DESC">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PCH_DESC</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_CATEG" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_PROD_CATEG"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_P1_CATEG" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="PARENT_CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_P1_CATEG" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="P1_CATEGORY_KEY"/>
+        <viewAttribute id="P2_CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="P1_CATEGORY_ID"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$PARENT_CATEGORY_ID$CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Proj_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_CATEGORY_ID$CATEGORY_ID" source="PARENT_CATEGORY_ID"/>
+      </input>
+      <input node="Proj_P1_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_ID" source="PARENT_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_CATEGORY_ID$CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+      </input>
+      <joinAttribute name="JOIN$PARENT_CATEGORY_ID$CATEGORY_ID"/>
+      <joinAttribute name="HIERARCHY_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_P2_CATEG">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="PARENT_CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Proj_P2_CATEG$$$$sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG$$"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="DESC_PROJ_CATEG">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_PCAT_DESC"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="P1_CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="P1_CATEGORY_ID"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="P2_CATEGORY_ID"/>
+        <viewAttribute id="CATEGORY_NAME"/>
+        <viewAttribute id="CATEGORY_DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_P1_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_KEY" source="P1_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_ID" source="P1_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_ID" source="P2_CATEGORY_ID"/>
+      </input>
+      <input node="DESC_PROJ_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="CATEGORY_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_P2_CATEG" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="P3_CATEGORY_ID"/>
+        <viewAttribute id="P2_CATEGORY_KEY"/>
+        <viewAttribute id="P2_CATEGORY_ID"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="P1_CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="P1_CATEGORY_ID"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="CATEGORY_NAME"/>
+        <viewAttribute hidden="true" id="JOIN$P2_CATEGORY_ID$CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_KEY" source="P1_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_ID" source="P1_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESCRIPTION" source="CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_NAME" source="CATEGORY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$P2_CATEGORY_ID$CATEGORY_ID" source="P2_CATEGORY_ID"/>
+      </input>
+      <input node="Proj_P2_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_ID" source="PARENT_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$P2_CATEGORY_ID$CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+      </input>
+      <joinAttribute name="JOIN$P2_CATEGORY_ID$CATEGORY_ID"/>
+      <joinAttribute name="HIERARCHY_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_P3_CATEG">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="PARENT_CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Proj_P3_CATEG$$$$sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG$$"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_P3_CATEG" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="P3_CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="P1_CATEGORY_ID"/>
+        <viewAttribute id="P2_CATEGORY_ID"/>
+        <viewAttribute id="P3_CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="P1_CATEGORY_KEY"/>
+        <viewAttribute id="P2_CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_NAME"/>
+        <viewAttribute hidden="true" id="JOIN$P3_CATEGORY_ID$CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_P2_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_ID" source="P1_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_ID" source="P2_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESCRIPTION" source="CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_KEY" source="P1_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_KEY" source="P2_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_NAME" source="CATEGORY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$P3_CATEGORY_ID$CATEGORY_ID" source="P3_CATEGORY_ID"/>
+      </input>
+      <input node="Proj_P3_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$P3_CATEGORY_ID$CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+      </input>
+      <joinAttribute name="JOIN$P3_CATEGORY_ID$CATEGORY_ID"/>
+      <joinAttribute name="HIERARCHY_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="DESC_PROJ_P1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="P1_CATEGORY_ID"/>
+        <viewAttribute id="P2_CATEGORY_ID"/>
+        <viewAttribute id="P3_CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="P1_CATEGORY_KEY"/>
+        <viewAttribute id="P2_CATEGORY_KEY"/>
+        <viewAttribute id="P3_CATEGORY_KEY"/>
+        <viewAttribute id="P1_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="CATEGORY_NAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_P3_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_ID" source="P1_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_ID" source="P2_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_ID" source="P3_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESCRIPTION" source="CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_KEY" source="P1_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_KEY" source="P2_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_KEY" source="P3_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_NAME" source="CATEGORY_NAME"/>
+      </input>
+      <input node="DESC_PROJ_P1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="P1_CATEGORY_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="DESC_PROJ_P2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="DESC_PROJ_P2$$$$sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC$$"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_1" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="P3_CATEGORY_ID"/>
+        <viewAttribute id="P2_CATEGORY_ID"/>
+        <viewAttribute id="P1_CATEGORY_ID"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="P1_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="P2_CATEGORY_KEY"/>
+        <viewAttribute id="P3_CATEGORY_KEY"/>
+        <viewAttribute id="P2_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="CATEGORY_NAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESCRIPTION" source="CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_ID" source="P3_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_ID" source="P2_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_ID" source="P1_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_DESCRIPTION" source="P1_CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_KEY" source="P2_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_KEY" source="P3_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_NAME" source="CATEGORY_NAME"/>
+      </input>
+      <input node="DESC_PROJ_P2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="P2_CATEGORY_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="DESC_PROJ_P3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="DESC_PROJ_P3$$$$sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC$$"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="C1_1" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="P1_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="P1_CATEGORY_ID"/>
+        <viewAttribute id="P2_CATEGORY_ID"/>
+        <viewAttribute id="P3_CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="P2_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="P3_CATEGORY_KEY"/>
+        <viewAttribute id="P3_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="CATEGORY_NAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_DESCRIPTION" source="P1_CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_ID" source="P1_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_ID" source="P2_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_ID" source="P3_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESCRIPTION" source="CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_DESCRIPTION" source="P2_CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_KEY" source="P3_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_NAME" source="CATEGORY_NAME"/>
+      </input>
+      <input node="DESC_PROJ_P3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="P3_CATEGORY_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="HIERARCHY_DESC">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_PCH_DESC"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PCAT_EE" cardinality="C1_1" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="P1_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="P1_CATEGORY_ID"/>
+        <viewAttribute id="P2_CATEGORY_ID"/>
+        <viewAttribute id="P3_CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="P2_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="P3_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="CATEGORY_NAME"/>
+        <viewAttribute id="HIERARCHY_DESC"/>
+        <viewAttribute hidden="true" id="JOIN$PARENT_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_DESCRIPTION" source="P1_CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P1_CATEGORY_ID" source="P1_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_ID" source="P2_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_ID" source="P3_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESCRIPTION" source="CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P2_CATEGORY_DESCRIPTION" source="P2_CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="P3_CATEGORY_DESCRIPTION" source="P3_CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_NAME" source="CATEGORY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_KEY$PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <input node="HIERARCHY_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_DESC" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_KEY$PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$PARENT_KEY$PARENT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_PCAT_EE">
+    <descriptions/>
+    <attributes>
+      <attribute id="PRODUCTCATEGORYHIERARCHY" order="1" attributeHierarchyActive="false" descriptionColumnName="PRODCATHIERARCHYDESCRIPTION" displayAttribute="false">
+        <descriptions defaultDescription="Product Hierarchy ID"/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="HIERARCHY_ID"/>
+      </attribute>
+      <attribute id="PRODCATHIERARCHYDESCRIPTION" hidden="true" order="2" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="HIERARCHY_DESC"/>
+      </attribute>
+      <attribute id="INTERACTIONPRODUCTCATEGORYUUID" order="3" attributeHierarchyActive="false" descriptionColumnName="PRODUCTCATEGORYNAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Category Key"/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="CATEGORY_KEY"/>
+      </attribute>
+      <attribute id="PRODUCTCATEGORYNAME" hidden="true" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="CATEGORY_NAME"/>
+      </attribute>
+      <attribute id="INTERACTIONPRODUCTCATEGORY" order="5" attributeHierarchyActive="false" descriptionColumnName="PRODUCTCATEGORYDESC" displayAttribute="false">
+        <descriptions defaultDescription="Product Category ID"/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="CATEGORY_ID"/>
+      </attribute>
+      <attribute id="PRODUCTCATEGORYDESC" hidden="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="CATEGORY_DESCRIPTION"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY" order="7" attributeHierarchyActive="false" descriptionColumnName="PARENTPRODUCTCATEGORYNAME" displayAttribute="false">
+        <descriptions defaultDescription="Parent Product Category ID"/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="P1_CATEGORY_ID"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORYNAME" hidden="true" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="P1_CATEGORY_DESCRIPTION"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY2" order="9" attributeHierarchyActive="false" descriptionColumnName="PARENTPRODUCTCATEGORY2NAME" displayAttribute="false">
+        <descriptions defaultDescription="Parent Product Category 2 ID"/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="P2_CATEGORY_ID"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY2NAME" hidden="true" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="P2_CATEGORY_DESCRIPTION"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY3" order="11" attributeHierarchyActive="false" descriptionColumnName="PARENTPRODUCTCATEGORY3NAME" displayAttribute="false">
+        <descriptions defaultDescription="Parent Product Category 3 ID"/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="P3_CATEGORY_ID"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY3NAME" hidden="true" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PCAT_EE" columnName="P3_CATEGORY_DESCRIPTION"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="170" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="34" y="1031"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_P1_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="188" y="1031"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_P1_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="111" y="935"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Proj_CATEG" modelObjectNameSpace="Join_P1_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Proj_P1_CATEG" modelObjectNameSpace="Join_P1_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_P2_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="839"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="DESC_PROJ_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="265" y="935"/>
+        <rectangleSize height="43" width="99"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="839"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_P1_CATEG" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="DESC_PROJ_CATEG" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_P2_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="91" y="743"/>
+        <rectangleSize height="91" width="151"/>
+      </shape>
+      <shape modelObjectName="Join_1" modelObjectNameSpace="Join_P2_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Proj_P2_CATEG" modelObjectNameSpace="Join_P2_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_P3_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="256" y="743"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_P3_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="173" y="647"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_P2_CATEG" modelObjectNameSpace="Join_P3_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Proj_P3_CATEG" modelObjectNameSpace="Join_P3_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="DESC_PROJ_P1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="327" y="647"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="248" y="551"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_P3_CATEG" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="DESC_PROJ_P1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="DESC_PROJ_P2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="93" y="551"/>
+        <rectangleSize height="71" width="141"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="170" y="455"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="DESC_PROJ_P2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="DESC_PROJ_P3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="363" y="463"/>
+        <rectangleSize height="61" width="101"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="170" y="357"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="DESC_PROJ_P3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="HIERARCHY_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="360" y="240"/>
+        <rectangleSize height="81" width="128"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PCAT_EE" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="170" y="200"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    
+      <shape modelObjectName="Join_4" modelObjectNameSpace="Join_PCAT_EE" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="HIERARCHY_DESC" modelObjectNameSpace="Join_PCAT_EE" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

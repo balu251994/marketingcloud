@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.prodreco.samples::CA_D_PROD_TO_PROD_L1_CAT_PREFILTER" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Mapping of Product to its Product Category"/>
+  <metadata changedAt="2018-08-24 15:45:05.989"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="31"/>
+  <dataSources>
+    <DataSource id="CUAND_PROD_TOCAT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_TOCAT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_CATEG">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Product2Category">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_TOCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="ProductCategories">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Product2L1Category" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute hidden="true" id="JOIN$CATEGORY_KEY$CATEGORY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Product2Category">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CATEGORY_KEY$CATEGORY_KEY" source="CATEGORY_KEY"/>
+      </input>
+      <input node="#ProductCategories">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CATEGORY_KEY$CATEGORY_KEY" source="CATEGORY_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$CATEGORY_KEY$CATEGORY_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PREFILTER_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$PRODUCT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="PREFILTER_VALUE" length="100" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;HIERARCHY_ID&quot; + '/' + &quot;CATEGORY_ID&quot;</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#CUAND_PROD_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PRODUCT_KEY" source="DB_KEY"/>
+      </input>
+      <input node="#Product2L1Category">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PREFILTER_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PRODUCT_KEY" source="PRODUCT_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$MANDT$MANDT"/>
+      <joinAttribute name="JOIN$DB_KEY$PRODUCT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="PREFILTER_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PREFILTER_KEY"/>
+        <keyMapping columnObjectName="Join_1" columnName="PREFILTER_KEY"/>
+      </attribute>
+      <attribute id="PREFILTER_VALUE" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PREFILTER_VALUE"/>
+        <keyMapping columnObjectName="Join_1" columnName="PREFILTER_VALUE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Product2Category" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ProductCategories" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Product2L1Category" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

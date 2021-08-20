@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.common.internal::CA_D_CE_CH_ASGN" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription=""/>
+  <metadata changedAt="2016-08-19 11:04:36.142"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUANC_CE_CH_ASGN">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_CH_ASGN</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_CHNNL_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_CHNNL_T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_CH_ASGN">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="DISABLED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUANC_CE_CH_ASGN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DISABLED" source="DISABLED"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;DISABLED&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_CHNNL_T" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="CHANNEL_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_CH_ASGN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+      </input>
+      <input node="#CUANC_CE_CHNNL_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL_DESC" source="CHANNEL_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="CHANNEL"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_CHNNL_T">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_CHNNL_T" columnName="MANDT"/>
+      </attribute>
+      <attribute id="IA_TYPE" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_CHNNL_T" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_CHNNL_T" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="CHANNEL" order="4" attributeHierarchyActive="false" descriptionColumnName="CHANNEL_DESC" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_CHNNL_T" columnName="CHANNEL"/>
+      </attribute>
+      <attribute id="CHANNEL_DESC" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_CHNNL_T" columnName="CHANNEL_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="22" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_CH_ASGN" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_CHNNL_T" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

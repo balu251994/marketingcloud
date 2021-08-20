@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_IC_MARKETING_PERMISSION" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true" pruningTable="">
+<origin/>
+  <descriptions defaultDescription="Marketing Permissions"/>
+  <localVariables>
+    <variable id="SWITCH" parameter="true">
+      <descriptions defaultDescription="Switch between calculated and persisted implicite permissions"/>
+      <variableProperties datatype="CHAR" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="Single"/>
+        <derivationRule>
+          <resourceUri>sap.hana-app.cuan.contact.internal::PR_MP_PERMISSION_PERSISTED</resourceUri>
+        </derivationRule>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="28"/>
+  <dataSources>
+    <DataSource id="CA_MP_PERMISSION_PERSISTED">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_MP_PERMISSION_PERSISTED</resourceUri>
+    </DataSource>
+    <DataSource id="CA_MP_PERMISSION_CALCULATED">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_MP_PERMISSION_CALCULATED</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+        <viewAttribute id="COMM_MEDIUM_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="SWITCH" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>'X'</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <restrictedViewAttributes/>
+      <input node="CA_MP_PERMISSION_PERSISTED">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_DESC" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM_DESC" source="COMM_MEDIUM_DESC"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="MKT_PERM_MKT_AREA_ID"/>
+        <viewAttribute id="MKT_PERM_MKT_AREA_ID_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="SWITCH" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>''</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <restrictedViewAttributes/>
+      <input node="CA_MP_PERMISSION_CALCULATED">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC" source="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM" source="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID" source="MKT_PERM_MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID_DESC" source="MKT_PERM_MKT_AREA_ID_DESC"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC"/>
+        <viewAttribute id="MKT_PERM_MKT_AREA_ID"/>
+        <viewAttribute id="MKT_PERM_MKT_AREA_ID_DESC"/>
+        <viewAttribute id="SWITCH" datatype="VARCHAR" length="1"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC" source="COMM_MEDIUM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID_DESC" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SWITCH" null="false" value="2"/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM" source="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC" source="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID" source="MKT_PERM_MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID_DESC" source="MKT_PERM_MKT_AREA_ID_DESC"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SWITCH" null="false" value="3"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC"/>
+        <viewAttribute id="MKT_PERM_MKT_AREA_ID_DESC"/>
+        <viewAttribute id="MKT_PERM_MKT_AREA_ID"/>
+        <viewAttribute id="SWITCH"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Union_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM" source="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC" source="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID_DESC" source="MKT_PERM_MKT_AREA_ID_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_PERM_MKT_AREA_ID" source="MKT_PERM_MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SWITCH" source="SWITCH"/>
+      </input>
+      <filter>(&quot;SWITCH&quot; ='$$SWITCH$$')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MANDT"/>
+        <keyMapping columnObjectName="Projection_1" columnName="MANDT"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="Projection_1" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM" order="3" attributeHierarchyActive="false" descriptionColumnName="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Communication Medium Opt-In"/>
+        <keyMapping columnObjectName="Projection_1" columnName="MKT_PERM_OUTBOUND_COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC" hidden="true" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Communication Medium Description"/>
+        <keyMapping columnObjectName="Projection_1" columnName="MKT_PERM_OUTBOUND_COMM_MEDIUM_DESC"/>
+      </attribute>
+      <attribute id="MKT_PERM_MKT_AREA_ID_DESC" hidden="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area Description"/>
+        <keyMapping columnObjectName="Projection_1" columnName="MKT_PERM_MKT_AREA_ID_DESC"/>
+      </attribute>
+      <attribute id="MKT_PERM_MKT_AREA_ID" order="6" attributeHierarchyActive="false" descriptionColumnName="MKT_PERM_MKT_AREA_ID_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area"/>
+        <keyMapping columnObjectName="Projection_1" columnName="MKT_PERM_MKT_AREA_ID"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="61" width="140"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="359"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="359"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="243"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

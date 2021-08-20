@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.prodreco.samples::CA_OFFER_BY_LOCATION_RUNTIME_PF" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_OFFER_BY_LOCATION_RUNTIME"/>
+  <metadata changedAt="2018-09-14 13:19:41.433"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="42"/>
+  <dataSources>
+    <DataSource id="CUAND_OFFER_ML" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_OFFER_ML</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_OFR_CX_UID">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_OFR_CX_UID</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="AllLocations" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="MARKETING_LOCATION_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_OFFER_ML">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_LOCATION_KEY" source="MARKETING_LOCATION_KEY"/>
+      </input>
+      <filter>&quot;MANDT&quot; = $$client$$</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="ValidOffers">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ROOT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_OFR_CX_UID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PREFILTER_KEY"/>
+        <viewAttribute id="PREFILTER_VALUE"/>
+        <viewAttribute hidden="true" id="JOIN$PARENT_KEY$ROOT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#AllLocations">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PREFILTER_VALUE" source="MARKETING_LOCATION_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_KEY$ROOT_KEY" source="PARENT_KEY"/>
+      </input>
+      <input node="#ValidOffers">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PREFILTER_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_KEY$ROOT_KEY" source="ROOT_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$PARENT_KEY$ROOT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="PREFILTER_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PREFILTER_KEY"/>
+        <keyMapping columnObjectName="Join_1" columnName="PREFILTER_KEY"/>
+      </attribute>
+      <attribute id="PREFILTER_VALUE" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PREFILTER_VALUE"/>
+        <keyMapping columnObjectName="Join_1" columnName="PREFILTER_VALUE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="AllLocations" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ValidOffers" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

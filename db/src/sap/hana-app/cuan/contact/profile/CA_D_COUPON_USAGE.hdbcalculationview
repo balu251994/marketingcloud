@@ -1,0 +1,1612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_COUPON_USAGE" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="ZHNCA_D_COUPON_USAGE"/>
+  <metadata changedAt="2020-09-08 16:21:23.94"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="40"/>
+  <dataSources>
+    <DataSource id="CUAND_CPN_USAGE">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CPN_USAGE</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CPN_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CPN_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CPN_CODE">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CPN_CODE</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_OFFER_COUP" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_OFFER_COUP</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_OFFER_ROOT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_OFFER_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_OFFER_FCT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_OFFER_FCT</resourceUri>
+    </DataSource>
+    <DataSource id="DD07T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CPN_TEXT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CPN_TEXT</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.db.cuan::DD07T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+    <DataSource id="Projection_10$$$$sap.hana-app.cuan.db.cuan::DD07T$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+    <DataSource id="Projection_11$$$$sap.hana-app.cuan.db.cuan::DD07T$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+    <DataSource id="HPAC_MKT_AREA_T" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::HPAC_MKT_AREA_T</resourceUri>
+    </DataSource>
+    <DataSource id="Projection_13$$$$sap.hana-app.cuan.db.cuan::DD07T$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CPN_USAGE"/>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="TOTALNUMBEROFREQUESTEDCPNCODES"/>
+        <viewAttribute id="CPNCODEVALIDITYSTARTDELAY"/>
+        <viewAttribute id="CPNCODEVALIDITYSTARTDELAYUNIT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CPN_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="MARKETINGAREA"/></input>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+      </input>
+      <input node="Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+      </input>
+      <joinAttribute name="COUPONUUID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CPN_CODE"/>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+      </input>
+      <input node="Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+      </input>
+      <joinAttribute name="COUPONCODEUUID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OFFER_KEY"/>
+        <viewAttribute id="COUPON_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_OFFER_COUP">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER_KEY" source="PARENT_KEY"/></input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="OFFER_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+      </input>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER_KEY" source="OFFER_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPON_KEY"/>
+      </input>
+      <joinAttribute name="COUPONUUID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="START_DATE"/>
+        <viewAttribute id="END_DATE"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="OFFERPROJECTEDGROSSMARGININPERCENT"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+        <viewAttribute id="_DATAAGING"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_OFFER_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERPROJECTEDGROSSMARGININPERCENT" source="GROSS_MARGIN_PERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="IS_SUPPLIER_FUNDED"/></input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (in (&quot;_DATAAGING&quot;,'','00000000'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="OFFER_KEY"/>
+        <viewAttribute id="OFFER"/>
+        <viewAttribute id="OFFERNAME"/>
+        <viewAttribute id="OFFERDESCRIPTION"/>
+        <viewAttribute id="OFFERMARKETINGAREA"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERSTARTDATE"/>
+        <viewAttribute id="OFFERENDDATE"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="GROSS_MARGIN_PERCENT"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER_KEY" source="OFFER_KEY"/>
+      </input>
+      <input node="Projection_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERNAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERDESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERMARKETINGAREA" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTARTDATE" source="START_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERENDDATE" source="END_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITY_IS_LOCAL" source="VALIDITY_IS_LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_CI_NB" source="LAST_CI_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_VARU_NB" source="LAST_VARU_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_MARGIN_PERCENT" source="OFFERPROJECTEDGROSSMARGININPERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="OFFERISFUNDEDBYSUPPLIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER_KEY" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="OFFER_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OFFER_KEY"/>
+        <viewAttribute id="EXTERNALOFFER"/>
+        <viewAttribute id="EXTERNALOFFERORIGIN"/>
+        <viewAttribute id="EXTERNALOFFERSTATUS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_OFFER_FCT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFER" source="OFFER_ID_EXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERORIGIN" source="OFFER_ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERSTATUS" source="STATUS_EXT"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="OFFER"/>
+        <viewAttribute id="OFFERNAME"/>
+        <viewAttribute id="OFFERDESCRIPTION"/>
+        <viewAttribute id="OFFERMARKETINGAREA"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERSTARTDATE"/>
+        <viewAttribute id="OFFERENDDATE"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="GROSS_MARGIN_PERCENT"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+        <viewAttribute id="EXTERNALOFFER"/>
+        <viewAttribute id="EXTERNALOFFERORIGIN"/>
+        <viewAttribute id="EXTERNALOFFERSTATUS"/>
+        <viewAttribute hidden="true" id="JOIN$OFFER_KEY$OFFER_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER" source="OFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERNAME" source="OFFERNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERDESCRIPTION" source="OFFERDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERMARKETINGAREA" source="OFFERMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="OFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTARTDATE" source="OFFERSTARTDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERENDDATE" source="OFFERENDDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITY_IS_LOCAL" source="VALIDITY_IS_LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_CI_NB" source="LAST_CI_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_VARU_NB" source="LAST_VARU_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_MARGIN_PERCENT" source="GROSS_MARGIN_PERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="OFFERISFUNDEDBYSUPPLIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$OFFER_KEY$OFFER_KEY" source="OFFER_KEY"/>
+      </input>
+      <input node="Projection_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFER" source="EXTERNALOFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERORIGIN" source="EXTERNALOFFERORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERSTATUS" source="EXTERNALOFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$OFFER_KEY$OFFER_KEY" source="OFFER_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$OFFER_KEY$OFFER_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="COUPONCODEUSAGETYPENAME"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="DDLANGUAGE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="DD07T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPENAME" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="DOMVALUE_L"/></input>
+      <filter>(&quot;DOMNAME&quot; ='CUAN_CPN_CODE_USAGE_ID') AND (&quot;AS4LOCAL&quot; ='A')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="C1_1" joinType="textTable" languageColumn="DDLANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="OFFER"/>
+        <viewAttribute id="OFFERNAME"/>
+        <viewAttribute id="OFFERDESCRIPTION"/>
+        <viewAttribute id="OFFERMARKETINGAREA"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERSTARTDATE"/>
+        <viewAttribute id="OFFERENDDATE"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="GROSS_MARGIN_PERCENT"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+        <viewAttribute id="EXTERNALOFFER"/>
+        <viewAttribute id="EXTERNALOFFERORIGIN"/>
+        <viewAttribute id="EXTERNALOFFERSTATUS"/>
+        <viewAttribute id="COUPONCODEUSAGETYPENAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER" source="OFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERNAME" source="OFFERNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERDESCRIPTION" source="OFFERDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERMARKETINGAREA" source="OFFERMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="OFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTARTDATE" source="OFFERSTARTDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERENDDATE" source="OFFERENDDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITY_IS_LOCAL" source="VALIDITY_IS_LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_CI_NB" source="LAST_CI_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_VARU_NB" source="LAST_VARU_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_MARGIN_PERCENT" source="GROSS_MARGIN_PERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="OFFERISFUNDEDBYSUPPLIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFER" source="EXTERNALOFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERORIGIN" source="EXTERNALOFFERORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERSTATUS" source="EXTERNALOFFERSTATUS"/>
+      </input>
+      <input node="Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPENAME" source="COUPONCODEUSAGETYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+      </input>
+      <joinAttribute name="COUPONCODEUSAGETYPE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_8">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="COUPONNAME"/>
+        <viewAttribute id="COUPONDESCRIPTION"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="LANGUAGE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CPN_TEXT"/>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_7" cardinality="C1_1" joinType="textTable" languageColumn="LANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="COUPONCODEUSAGETYPENAME"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="OFFER"/>
+        <viewAttribute id="OFFERNAME"/>
+        <viewAttribute id="OFFERDESCRIPTION"/>
+        <viewAttribute id="OFFERMARKETINGAREA"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERSTARTDATE"/>
+        <viewAttribute id="OFFERENDDATE"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="GROSS_MARGIN_PERCENT"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+        <viewAttribute id="EXTERNALOFFER"/>
+        <viewAttribute id="EXTERNALOFFERORIGIN"/>
+        <viewAttribute id="EXTERNALOFFERSTATUS"/>
+        <viewAttribute id="COUPONDESCRIPTION"/>
+        <viewAttribute id="COUPONNAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPENAME" source="COUPONCODEUSAGETYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER" source="OFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERNAME" source="OFFERNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERDESCRIPTION" source="OFFERDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERMARKETINGAREA" source="OFFERMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="OFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTARTDATE" source="OFFERSTARTDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERENDDATE" source="OFFERENDDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITY_IS_LOCAL" source="VALIDITY_IS_LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_CI_NB" source="LAST_CI_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_VARU_NB" source="LAST_VARU_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_MARGIN_PERCENT" source="GROSS_MARGIN_PERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="OFFERISFUNDEDBYSUPPLIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFER" source="EXTERNALOFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERORIGIN" source="EXTERNALOFFERORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERSTATUS" source="EXTERNALOFFERSTATUS"/>
+      </input>
+      <input node="Projection_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONDESCRIPTION" source="COUPONDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONNAME" source="COUPONNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+      </input>
+      <joinAttribute name="COUPONUUID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_9">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONTYPENAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="sap.hana-app.cuan.db.cuan::DD07T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="DOMVALUE_L"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPENAME" source="DDTEXT"/>
+      </input>
+      <filter>(&quot;DOMNAME&quot; ='CUAN_CPN_COUPON_TYPE_ID') AND (&quot;AS4LOCAL&quot; ='A')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_8" cardinality="C1_1" joinType="textTable" languageColumn="DDLANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="EXTERNALOFFERSTATUS"/>
+        <viewAttribute id="EXTERNALOFFERORIGIN"/>
+        <viewAttribute id="EXTERNALOFFER"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+        <viewAttribute id="GROSS_MARGIN_PERCENT"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="OFFERENDDATE"/>
+        <viewAttribute id="OFFERSTARTDATE"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERMARKETINGAREA"/>
+        <viewAttribute id="OFFERDESCRIPTION"/>
+        <viewAttribute id="OFFERNAME"/>
+        <viewAttribute id="OFFER"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPENAME"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONDESCRIPTION"/>
+        <viewAttribute id="COUPONNAME"/>
+        <viewAttribute id="COUPONTYPENAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERSTATUS" source="EXTERNALOFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERORIGIN" source="EXTERNALOFFERORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFER" source="EXTERNALOFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="OFFERISFUNDEDBYSUPPLIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_MARGIN_PERCENT" source="GROSS_MARGIN_PERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_VARU_NB" source="LAST_VARU_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_CI_NB" source="LAST_CI_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITY_IS_LOCAL" source="VALIDITY_IS_LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERENDDATE" source="OFFERENDDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTARTDATE" source="OFFERSTARTDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="OFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERMARKETINGAREA" source="OFFERMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERDESCRIPTION" source="OFFERDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERNAME" source="OFFERNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER" source="OFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPENAME" source="COUPONCODEUSAGETYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONDESCRIPTION" source="COUPONDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONNAME" source="COUPONNAME"/>
+      </input>
+      <input node="Projection_9">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPENAME" source="COUPONTYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+      </input>
+      <joinAttribute name="COUPONTYPE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_10">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_10$$$$sap.hana-app.cuan.db.cuan::DD07T$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPENAME" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="DOMVALUE_L"/>
+      </input>
+      <filter>(&quot;DOMNAME&quot; ='CUAN_CPN_CONTACT_REL_ID') AND (&quot;AS4LOCAL&quot; ='A')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_9" cardinality="C1_1" joinType="textTable" languageColumn="DDLANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="EXTERNALOFFERSTATUS"/>
+        <viewAttribute id="EXTERNALOFFERORIGIN"/>
+        <viewAttribute id="EXTERNALOFFER"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+        <viewAttribute id="GROSS_MARGIN_PERCENT"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="OFFERENDDATE"/>
+        <viewAttribute id="OFFERSTARTDATE"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERMARKETINGAREA"/>
+        <viewAttribute id="OFFERDESCRIPTION"/>
+        <viewAttribute id="OFFERNAME"/>
+        <viewAttribute id="OFFER"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONTYPENAME"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPENAME"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONDESCRIPTION"/>
+        <viewAttribute id="COUPONNAME"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERSTATUS" source="EXTERNALOFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERORIGIN" source="EXTERNALOFFERORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFER" source="EXTERNALOFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="OFFERISFUNDEDBYSUPPLIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_MARGIN_PERCENT" source="GROSS_MARGIN_PERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_VARU_NB" source="LAST_VARU_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_CI_NB" source="LAST_CI_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITY_IS_LOCAL" source="VALIDITY_IS_LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERENDDATE" source="OFFERENDDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTARTDATE" source="OFFERSTARTDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="OFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERMARKETINGAREA" source="OFFERMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERDESCRIPTION" source="OFFERDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERNAME" source="OFFERNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER" source="OFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPENAME" source="COUPONTYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPENAME" source="COUPONCODEUSAGETYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONDESCRIPTION" source="COUPONDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONNAME" source="COUPONNAME"/>
+      </input>
+      <input node="Projection_10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPENAME" source="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+      </input>
+      <joinAttribute name="COUPONCONTACTRELATIONSHIPTYPE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_11">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERSTATUSNAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_11$$$$sap.hana-app.cuan.db.cuan::DD07T$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUSNAME" source="DOMVALUE_L"/>
+      </input>
+      <filter>(&quot;DOMNAME&quot; ='CUAN_OFM_OFFER_STATUS') AND (&quot;AS4LOCAL&quot; ='A')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_10" cardinality="C1_1" joinType="textTable" languageColumn="DDLANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUPONNAME"/>
+        <viewAttribute id="COUPONDESCRIPTION"/>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="COUPONCODEUSAGETYPENAME"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPENAME"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="OFFER"/>
+        <viewAttribute id="OFFERNAME"/>
+        <viewAttribute id="OFFERDESCRIPTION"/>
+        <viewAttribute id="OFFERMARKETINGAREA"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERSTARTDATE"/>
+        <viewAttribute id="OFFERENDDATE"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="GROSS_MARGIN_PERCENT"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+        <viewAttribute id="EXTERNALOFFER"/>
+        <viewAttribute id="EXTERNALOFFERORIGIN"/>
+        <viewAttribute id="EXTERNALOFFERSTATUS"/>
+        <viewAttribute id="OFFERSTATUSNAME"/>
+      
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_9">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONNAME" source="COUPONNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONDESCRIPTION" source="COUPONDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPENAME" source="COUPONCODEUSAGETYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPENAME" source="COUPONTYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER" source="OFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERNAME" source="OFFERNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERDESCRIPTION" source="OFFERDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERMARKETINGAREA" source="OFFERMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="OFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTARTDATE" source="OFFERSTARTDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERENDDATE" source="OFFERENDDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITY_IS_LOCAL" source="VALIDITY_IS_LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_CI_NB" source="LAST_CI_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_VARU_NB" source="LAST_VARU_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_MARGIN_PERCENT" source="GROSS_MARGIN_PERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="OFFERISFUNDEDBYSUPPLIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFER" source="EXTERNALOFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERORIGIN" source="EXTERNALOFFERORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERSTATUS" source="EXTERNALOFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPENAME" source="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+      </input>
+      <input node="Projection_11">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUSNAME" source="OFFERSTATUSNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="OFFERSTATUS"/>
+      </input>
+      <joinAttribute name="OFFERSTATUS"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_12">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="HPAC_MKT_AREA_T"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_11" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUPONNAME"/>
+        <viewAttribute id="COUPONDESCRIPTION"/>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="COUPONCODEUSAGETYPENAME"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPONTYPENAME"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="OFFER"/>
+        <viewAttribute id="OFFERNAME1"/>
+        <viewAttribute id="OFFERDESCRIPTION"/>
+        <viewAttribute id="OFFERMARKETINGAREA"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERSTATUSNAME"/>
+        <viewAttribute id="OFFERSTARTDATE"/>
+        <viewAttribute id="OFFERENDDATE"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="GROSS_MARGIN_PERCENT"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+        <viewAttribute id="EXTERNALOFFER"/>
+        <viewAttribute id="EXTERNALOFFERORIGIN"/>
+        <viewAttribute id="EXTERNALOFFERSTATUS"/>
+        <viewAttribute id="COUPONMARKETINGAREANAME"/>
+      
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONNAME" source="COUPONNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONDESCRIPTION" source="COUPONDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPENAME" source="COUPONCODEUSAGETYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPENAME" source="COUPONTYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER" source="OFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERNAME1" source="OFFERNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERDESCRIPTION" source="OFFERDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERMARKETINGAREA" source="OFFERMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="OFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUSNAME" source="OFFERSTATUSNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTARTDATE" source="OFFERSTARTDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERENDDATE" source="OFFERENDDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITY_IS_LOCAL" source="VALIDITY_IS_LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_CI_NB" source="LAST_CI_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_VARU_NB" source="LAST_VARU_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_MARGIN_PERCENT" source="GROSS_MARGIN_PERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="OFFERISFUNDEDBYSUPPLIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFER" source="EXTERNALOFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERORIGIN" source="EXTERNALOFFERORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERSTATUS" source="EXTERNALOFFERSTATUS"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPENAME" source="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+      </input>
+      <input node="Projection_12">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREANAME" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="MKT_AREA_ID"/>
+      </input>
+      <joinAttribute name="COUPONMARKETINGAREA"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_13">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="DDTEXT"/>
+        <viewAttribute id="DOMVALUE_L"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_13$$$$sap.hana-app.cuan.db.cuan::DD07T$$"/>
+      <filter>(&quot;DOMNAME&quot; ='CUAN_CPN_INTEGR_STATUS_ID') AND (&quot;AS4LOCAL&quot; ='A')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_12" cardinality="C1_1" joinType="textTable" languageColumn="DDLANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="EXTERNALOFFERSTATUS"/>
+        <viewAttribute id="EXTERNALOFFERORIGIN"/>
+        <viewAttribute id="EXTERNALOFFER"/>
+        <viewAttribute id="OFFERISFUNDEDBYSUPPLIER"/>
+        <viewAttribute id="GROSS_MARGIN_PERCENT"/>
+        <viewAttribute id="LAST_VARU_NB"/>
+        <viewAttribute id="LAST_CI_NB"/>
+        <viewAttribute id="VALIDITY_IS_LOCAL"/>
+        <viewAttribute id="OFFERENDDATE"/>
+        <viewAttribute id="OFFERSTARTDATE"/>
+        <viewAttribute id="OFFERSTATUSNAME"/>
+        <viewAttribute id="OFFERSTATUS"/>
+        <viewAttribute id="OFFERMARKETINGAREA"/>
+        <viewAttribute id="OFFERDESCRIPTION"/>
+        <viewAttribute id="OFFERNAME1"/>
+        <viewAttribute id="OFFER"/>
+        <viewAttribute id="COUPONCODESERIALNUMBER"/>
+        <viewAttribute id="QRCODEIMAGEURL"/>
+        <viewAttribute id="EANCODEIMAGEURL"/>
+        <viewAttribute id="COUPONCODE"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUS"/>
+        <viewAttribute id="COUPONINTEGRATIONSCENARIO"/>
+        <viewAttribute id="COUPONMARKETINGAREA"/>
+        <viewAttribute id="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <viewAttribute id="TOTALNUMBEROFREDEMPTION"/>
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <viewAttribute id="COUPONTYPE"/>
+        <viewAttribute id="COUPONTYPENAME"/>
+        <viewAttribute id="COUPONORIGIN"/>
+        <viewAttribute id="COUPON"/>
+        <viewAttribute id="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <viewAttribute id="VALIDITYENDDATETIME"/>
+        <viewAttribute id="VALIDITYSTARTDATETIME"/>
+        <viewAttribute id="COUPONUUID"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="COUPONCODEUSAGETYPENAME"/>
+        <viewAttribute id="COUPONCODEUSAGETYPE"/>
+        <viewAttribute id="COUPONCODEUUID"/>
+        <viewAttribute id="COUPONDESCRIPTION"/>
+        <viewAttribute id="COUPONNAME"/>
+        <viewAttribute id="COUPONMARKETINGAREANAME"/>
+        <viewAttribute id="COUPONINTEGRATIONSTATUSNAME"/>
+      
+        <viewAttribute id="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_11">
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERSTATUS" source="EXTERNALOFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFERORIGIN" source="EXTERNALOFFERORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALOFFER" source="EXTERNALOFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERISFUNDEDBYSUPPLIER" source="OFFERISFUNDEDBYSUPPLIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_MARGIN_PERCENT" source="GROSS_MARGIN_PERCENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_VARU_NB" source="LAST_VARU_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_CI_NB" source="LAST_CI_NB"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITY_IS_LOCAL" source="VALIDITY_IS_LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERENDDATE" source="OFFERENDDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTARTDATE" source="OFFERSTARTDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUSNAME" source="OFFERSTATUSNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERSTATUS" source="OFFERSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERMARKETINGAREA" source="OFFERMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERDESCRIPTION" source="OFFERDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFERNAME1" source="OFFERNAME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER" source="OFFER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODESERIALNUMBER" source="COUPONCODESERIALNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QRCODEIMAGEURL" source="QRCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EANCODEIMAGEURL" source="EANCODEIMAGEURL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODE" source="COUPONCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="COUPONINTEGRATIONSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSCENARIO" source="COUPONINTEGRATIONSCENARIO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREA" source="COUPONMARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFRDMPTNPERCONTACT" source="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFREDEMPTION" source="TOTALNUMBEROFREDEMPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPE" source="COUPONCONTACTRELATIONSHIPTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPE" source="COUPONTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONTYPENAME" source="COUPONTYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONORIGIN" source="COUPONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPON" source="COUPON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBEROFREDEMPTIONPERCONTACT" source="NUMBEROFREDEMPTIONPERCONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYENDDATETIME" source="VALIDITYENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDITYSTARTDATETIME" source="VALIDITYSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONUUID" source="COUPONUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPENAME" source="COUPONCODEUSAGETYPENAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUSAGETYPE" source="COUPONCODEUSAGETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCODEUUID" source="COUPONCODEUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONDESCRIPTION" source="COUPONDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONNAME" source="COUPONNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONMARKETINGAREANAME" source="COUPONMARKETINGAREANAME"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONCONTACTRELATIONSHIPTYPENAME" source="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+      </input>
+      <input node="Projection_13">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUSNAME" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUPONINTEGRATIONSTATUS" source="DOMVALUE_L"/>
+      </input>
+      <joinAttribute name="COUPONINTEGRATIONSTATUS"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_12">
+    <descriptions/>
+    <attributes>
+      <attribute id="EXTERNALOFFERSTATUS" hidden="true" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="External Offer Status"/>
+        <keyMapping columnObjectName="Join_12" columnName="EXTERNALOFFERSTATUS"/>
+      </attribute>
+      <attribute id="EXTERNALOFFERORIGIN" hidden="true" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="External Offer Origin"/>
+        <keyMapping columnObjectName="Join_12" columnName="EXTERNALOFFERORIGIN"/>
+      </attribute>
+      <attribute id="EXTERNALOFFER" hidden="true" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="External Offer"/>
+        <keyMapping columnObjectName="Join_12" columnName="EXTERNALOFFER"/>
+      </attribute>
+      <attribute id="OFFERISFUNDEDBYSUPPLIER" hidden="true" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Is Funded By Supplier"/>
+        <keyMapping columnObjectName="Join_12" columnName="OFFERISFUNDEDBYSUPPLIER"/>
+      </attribute>
+      <attribute id="GROSS_MARGIN_PERCENT" order="5" attributeHierarchyActive="false" displayAttribute="false" hidden="true">
+        <descriptions defaultDescription="Projected Gross Margin (%)"/>
+        <keyMapping columnObjectName="Join_12" columnName="GROSS_MARGIN_PERCENT"/>
+      </attribute>
+      <attribute id="LAST_VARU_NB" order="6" attributeHierarchyActive="false" displayAttribute="false" hidden="true">
+        <descriptions defaultDescription="Last Content Item Number (within an Offer)"/>
+        <keyMapping columnObjectName="Join_12" columnName="LAST_VARU_NB"/>
+      </attribute>
+      <attribute id="LAST_CI_NB" order="7" attributeHierarchyActive="false" displayAttribute="false" hidden="true">
+        <descriptions defaultDescription="Last Content Item Number (within an Offer)"/>
+        <keyMapping columnObjectName="Join_12" columnName="LAST_CI_NB"/>
+      </attribute>
+      <attribute id="VALIDITY_IS_LOCAL" order="8" attributeHierarchyActive="false" displayAttribute="false" hidden="true">
+        <descriptions defaultDescription="Offer Validity: Local Time"/>
+        <keyMapping columnObjectName="Join_12" columnName="VALIDITY_IS_LOCAL"/>
+      </attribute>
+      <attribute id="OFFERENDDATE" hidden="true" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="End Date"/>
+        <keyMapping columnObjectName="Join_12" columnName="OFFERENDDATE"/>
+      </attribute>
+      <attribute id="OFFERSTARTDATE" hidden="true" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Start Date"/>
+        <keyMapping columnObjectName="Join_12" columnName="OFFERSTARTDATE"/>
+      </attribute>
+      <attribute id="OFFERSTATUS" hidden="true" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Offer Status"/>
+        <keyMapping columnObjectName="Join_12" columnName="OFFERSTATUS"/>
+      </attribute>
+      <attribute id="OFFERMARKETINGAREA" hidden="true" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Offer Marketing Area"/>
+        <keyMapping columnObjectName="Join_12" columnName="OFFERMARKETINGAREA"/>
+      </attribute>
+      <attribute id="OFFERDESCRIPTION" hidden="true" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Offer Description"/>
+        <keyMapping columnObjectName="Join_12" columnName="OFFERDESCRIPTION"/>
+      </attribute>
+      <attribute id="OFFERNAME1" hidden="true" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Offer Name"/>
+        <keyMapping columnObjectName="Join_12" columnName="OFFERNAME1"/>
+      </attribute>
+      <attribute id="OFFER" hidden="true" order="15" attributeHierarchyActive="false" descriptionColumnName="OFFERNAME1" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Offer"/>
+        <keyMapping columnObjectName="Join_12" columnName="OFFER"/>
+      </attribute>
+      <attribute id="COUPONCODESERIALNUMBER" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Serial Number"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONCODESERIALNUMBER"/>
+      </attribute>
+      <attribute id="QRCODEIMAGEURL" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Coupon QR Code"/>
+        <keyMapping columnObjectName="Join_12" columnName="QRCODEIMAGEURL"/>
+      </attribute>
+      <attribute id="EANCODEIMAGEURL" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Barcode"/>
+        <keyMapping columnObjectName="Join_12" columnName="EANCODEIMAGEURL"/>
+      </attribute>
+      <attribute id="COUPONCODE" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Code"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONCODE"/>
+      </attribute>
+      <attribute id="COUPONINTEGRATIONSTATUS" order="20" attributeHierarchyActive="false" descriptionColumnName="COUPONINTEGRATIONSTATUSNAME" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Integration Status"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONINTEGRATIONSTATUS"/>
+      </attribute>
+      <attribute id="COUPONINTEGRATIONSCENARIO" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Replicate to External Service"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONINTEGRATIONSCENARIO"/>
+      </attribute>
+      <attribute id="COUPONMARKETINGAREA" order="22" attributeHierarchyActive="false" descriptionColumnName="COUPONMARKETINGAREANAME" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Marketing Area"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONMARKETINGAREA"/>
+      </attribute>
+      <attribute id="TOTALNUMBEROFRDMPTNPERCONTACT" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Total Number of Redemptions per Code / Contact"/>
+        <keyMapping columnObjectName="Join_12" columnName="TOTALNUMBEROFRDMPTNPERCONTACT"/>
+      </attribute>
+      <attribute id="TOTALNUMBEROFREDEMPTION" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Redemption Limit"/>
+        <keyMapping columnObjectName="Join_12" columnName="TOTALNUMBEROFREDEMPTION"/>
+      </attribute>
+      <attribute id="COUPONCONTACTRELATIONSHIPTYPE" order="25" attributeHierarchyActive="false" descriptionColumnName="COUPONCONTACTRELATIONSHIPTYPENAME" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Relationship Type"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONCONTACTRELATIONSHIPTYPE"/>
+      </attribute>
+      <attribute id="COUPONTYPE" order="26" attributeHierarchyActive="false" descriptionColumnName="COUPONTYPENAME" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Type"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONTYPE"/>
+      </attribute>
+      <attribute id="COUPONTYPENAME" hidden="true" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONTYPENAME"/>
+      </attribute>
+      <attribute id="COUPONORIGIN" order="28" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Origin"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONORIGIN"/>
+      </attribute>
+      <attribute id="COUPON" order="29" attributeHierarchyActive="false" descriptionColumnName="COUPONNAME" displayAttribute="false">
+        <descriptions defaultDescription="Coupon"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPON"/>
+      </attribute>
+      <attribute id="NUMBEROFREDEMPTIONPERCONTACT" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Number of Redemptions per Code / Contact"/>
+        <keyMapping columnObjectName="Join_12" columnName="NUMBEROFREDEMPTIONPERCONTACT"/>
+      </attribute>
+      <attribute id="VALIDITYENDDATETIME" order="31" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Validity End Date Time"/>
+        <keyMapping columnObjectName="Join_12" columnName="VALIDITYENDDATETIME"/>
+      </attribute>
+      <attribute id="VALIDITYSTARTDATETIME" order="32" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Validity Start Date Time"/>
+        <keyMapping columnObjectName="Join_12" columnName="VALIDITYSTARTDATETIME"/>
+      </attribute>
+      <attribute id="COUPONUUID" hidden="true" order="33" attributeHierarchyActive="false" descriptionColumnName="COUPONDESCRIPTION" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Key"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONUUID"/>
+      </attribute>
+      <attribute id="INTERACTIONCONTACTUUID" order="34" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_12" columnName="INTERACTIONCONTACTUUID"/>
+      </attribute>
+      <attribute id="COUPONCODEUSAGETYPENAME" hidden="true" order="35" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONCODEUSAGETYPENAME"/>
+      </attribute>
+      <attribute id="COUPONCODEUSAGETYPE" order="36" attributeHierarchyActive="false" descriptionColumnName="COUPONCODEUSAGETYPENAME" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Code Usage Type"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONCODEUSAGETYPE"/>
+      </attribute>
+      <attribute id="COUPONCODEUUID" hidden="true" order="37" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Coupon Code Key"/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONCODEUUID"/>
+      </attribute>
+      <attribute id="COUPONDESCRIPTION" hidden="true" order="38" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONDESCRIPTION"/>
+      </attribute>
+      <attribute id="COUPONNAME" hidden="true" order="39" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONNAME"/>
+      </attribute>
+      <attribute id="COUPONMARKETINGAREANAME" hidden="true" order="40" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONMARKETINGAREANAME"/>
+      </attribute>
+      <attribute id="COUPONINTEGRATIONSTATUSNAME" hidden="true" order="41" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONINTEGRATIONSTATUSNAME"/>
+      </attribute>
+    
+      <attribute id="COUPONCONTACTRELATIONSHIPTYPENAME" hidden="true" order="42" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription=""/>
+        <keyMapping columnObjectName="Join_12" columnName="COUPONCONTACTRELATIONSHIPTYPENAME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="690" y="120"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="1352"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="1352"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="1256"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="1256"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="175" y="1160"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="329" y="1160"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="250" y="1064"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="404" y="1064"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="324" y="968"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="478" y="968"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="397" y="872"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_6" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="551" y="872"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="469" y="776"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_7" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="623" y="776"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="542" y="680"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_8" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_9" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="696" y="680"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="616" y="584"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_7" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_9" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_10" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="770" y="584"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_9" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="691" y="488"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_8" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_10" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="488" y="325"/>
+        <rectangleSize width="327.00634765625"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_11" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="845" y="488"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_10" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="767" y="392"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_9" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_11" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_12" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="613" y="392"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_11" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="690" y="296"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_10" modelObjectNameSpace="Join_11" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_12" modelObjectNameSpace="Join_11" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_13" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="845" y="305"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_12" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="690" y="198"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    
+      <shape modelObjectName="Join_11" modelObjectNameSpace="Join_12" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_13" modelObjectNameSpace="Join_12" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

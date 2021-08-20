@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_INTEREST_ITEMS" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Items of Interest"/>
+  <metadata changedAt="2016-08-29 10:48:12.283"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_INTR">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_INTR</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IOI_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IOI_T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_IA_INTR">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="INTEREST_ITEM"/>
+        <viewAttribute id="INTEREST_QUANTIFIER"/>
+        <viewAttribute id="INTEREST_VALUATION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IA_INTR"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_IOI" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="INTEREST_ITEM"/>
+        <viewAttribute id="INTEREST_QUANTIFIER"/>
+        <viewAttribute id="INTEREST_VALUATION"/>
+        <viewAttribute id="INTEREST_ITEM_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Proj_IA_INTR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM" source="INTEREST_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_QUANTIFIER" source="INTEREST_QUANTIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_VALUATION" source="INTEREST_VALUATION"/>
+      </input>
+      <input node="CUAND_CE_IOI_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM_DESC" source="INTEREST_ITEM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM" source="INTEREST_ITEM"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="INTEREST_ITEM"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_IOI">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client1"/>
+        <keyMapping columnObjectName="Join_IOI" columnName="MANDT"/>
+      </attribute>
+      <attribute id="DB_KEY" hidden="true" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DB_KEY"/>
+        <keyMapping columnObjectName="Join_IOI" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="PARENT_KEY" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Key1"/>
+        <keyMapping columnObjectName="Join_IOI" columnName="PARENT_KEY"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM" order="4" attributeHierarchyActive="false" descriptionColumnName="INTEREST_ITEM_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Item of Interest1"/>
+        <keyMapping columnObjectName="Join_IOI" columnName="INTEREST_ITEM"/>
+      </attribute>
+      <attribute id="INTEREST_QUANTIFIER" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Quantifier1"/>
+        <keyMapping columnObjectName="Join_IOI" columnName="INTEREST_QUANTIFIER"/>
+      </attribute>
+      <attribute id="INTEREST_VALUATION" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Valuation1"/>
+        <keyMapping columnObjectName="Join_IOI" columnName="INTEREST_VALUATION"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM_DESC" order="7" attributeHierarchyActive="false" displayAttribute="false" hidden="true">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_IOI" columnName="INTEREST_ITEM_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="22" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_IA_INTR" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_IOI" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    
+      <shape modelObjectName="Proj_IA_INTR" modelObjectNameSpace="Join_IOI" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::CUAND_CE_IOI_T" modelObjectNameSpace="Join_IOI" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

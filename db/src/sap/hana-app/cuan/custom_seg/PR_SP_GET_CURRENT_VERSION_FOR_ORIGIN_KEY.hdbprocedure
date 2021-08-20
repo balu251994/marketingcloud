@@ -1,0 +1,18 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_SP_GET_CURRENT_VERSION_FOR_ORIGIN_KEY" (  in iv_origin NVARCHAR(2) ,  in iv_origin_db_key NVARCHAR(32) ,  out var_out "sap.hana-app.cuan.custom_seg::PR_SP_GET_CURRENT_VERSION_FOR_ORIGIN_KEY/tabletype/ty_out"  ) language SQLSCRIPT sql security invoker reads sql data as 
+BEGIN
+
+var_out = 
+select top 1
+    t2.score_guid,
+    max(t2.version) as version
+  from "sap.hana-app.cuan.db.cuan::CUAND_SP_ROOT" as t1
+  join "sap.hana-app.cuan.db.cuan::CUAND_SP_VERSION" as t2
+     on t1.mandt  = t2.client
+    and t1.db_key = t2.score_guid
+  where t1.mandt      = session_context('CLIENT')
+    and t1.origin        = :iv_origin
+    and t1.origin_db_key = :iv_origin_db_key
+  group by t2.score_guid
+  order by version desc;
+
+END;

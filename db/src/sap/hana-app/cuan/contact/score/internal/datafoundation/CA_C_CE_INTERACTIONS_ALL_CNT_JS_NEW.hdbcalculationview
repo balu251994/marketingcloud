@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.score.internal.datafoundation::CA_C_CE_INTERACTIONS_ALL_CNT_JS_NEW" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DEFAULT" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+  <descriptions defaultDescription="CA_C_CE_INTERACTIONS_ALL_CNT_JS_NEW"/>
+  <localVariables>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="IP_JOIN_SET_ID"/>
+      <variableProperties datatype="VARCHAR" length="32" mandatory="true" defaultValue="undefined">
+        <valueDomain type="UnitOfMeasure"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="37"/>
+  <dataSources>
+    <DataSource id="CA_C_CE_INTERACTIONS_ALL">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_C_CE_INTERACTIONS_ALL</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_JS_CONTACT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT</resourceUri>
+    </DataSource>
+  </dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="COLUMN_ENGINE">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="LAST_INBOUND_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CA_C_CE_INTERACTIONS_ALL"/>
+    <filter>&quot;MANDT&quot; = '$$client$$'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="COLUMN_ENGINE">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="JOIN_SET_ID"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUAND_JS_CONTACT"/>
+    <filter>(&quot;JOIN_SET_ID&quot; = '$$IP_JOIN_SET_ID$$')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="LAST_INBOUND_IA_TIMESTAMP"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_INBOUND_IA_TIMESTAMP" source="LAST_INBOUND_IA_TIMESTAMP"/>
+      </input>
+      <input node="Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="ID"/>
+      </input>
+    <joinAttribute name="COMPANY_KEY"/>
+  </calculationView>
+</calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="LAST_INBOUND_IA_TIMESTAMP" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAST_INBOUND_IA_TIMESTAMP"/>
+        <keyMapping columnObjectName="Join_1" columnName="LAST_INBOUND_IA_TIMESTAMP"/>
+      </attribute>
+      <attribute id="COMPANY_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANY_KEY"/>
+        <keyMapping columnObjectName="Join_1" columnName="COMPANY_KEY"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="Join_1" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="TIMESTAMP" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TIMESTAMP"/>
+        <keyMapping columnObjectName="Join_1" columnName="TIMESTAMP"/>
+      </attribute>
+      <attribute id="IA_KEY" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_KEY"/>
+        <keyMapping columnObjectName="Join_1" columnName="IA_KEY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures>
+      <measure id="IA_CNT" hidden="false" order="6" aggregationType="sum" measureType="simple" aggregatable="true" calculatedMeasureType="counter" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <descriptions defaultDescription="IA_CNT"/>
+        <exceptionAggregation exceptionAggregationType="countDistinct">
+          <attribute attributeName="IA_KEY"/>
+        </exceptionAggregation>
+        <formula>1</formula>
+      </measure>
+    </calculatedMeasures>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+<layout>
+  <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="221.11302679000914" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="221.11302679000914" y="217"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

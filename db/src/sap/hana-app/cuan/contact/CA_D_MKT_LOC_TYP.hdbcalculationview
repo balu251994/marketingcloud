@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_MKT_LOC_TYP" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Marketing Location Type"/>
+  <metadata changedAt="2019-02-01 10:37:24.059"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="48"/>
+  <dataSources>
+    <DataSource id="CUAND_LOC_FACET">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_LOC_FACET</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_LOC_TYPE_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_LOC_TYPE_T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_MKT_LOC">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LOC_ORIGIN"/>
+        <viewAttribute id="LOC_ID"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="LOCATION_NAME"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="POSTCODE"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="HOUSE_NUM"/>
+        <viewAttribute id="OCCUPANCY_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_LOC_FACET"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_MKT_LOC_TYPE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="LOC_TYPE"/>
+        <viewAttribute id="LOC_TYPE_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANC_LOC_TYPE_T"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;SPRAS&quot; ='$$language$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_LOC_Type" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="LOC_ORIGIN"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LOC_ID"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="LOC_TYPE_DESC"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="LOCATION_NAME"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="POSTCODE"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="HOUSE_NUM"/>
+        <viewAttribute id="OCCUPANCY_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_MKT_LOC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ORIGIN" source="LOC_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ID" source="LOC_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_NAME" source="LOCATION_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE" source="POSTCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM" source="HOUSE_NUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OCCUPANCY_TYPE" source="OCCUPANCY_TYPE"/>
+      </input>
+      <input node="Projection_MKT_LOC_TYPE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_TYPE_DESC" source="LOC_TYPE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="LOC_TYPE"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="TYPE"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_LOC_Type">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="MANDT"/>
+      </attribute>
+      <attribute id="LOC_ORIGIN" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Location Origin"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="LOC_ORIGIN"/>
+      </attribute>
+      <attribute id="LOC_ID" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Location ID"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="LOC_ID"/>
+      </attribute>
+      <attribute id="LOC_TYPE" order="4" attributeHierarchyActive="false" descriptionColumnName="LOC_TYPE_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Location Type"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="TYPE"/>
+      </attribute>
+      <attribute id="LOC_TYPE_DESC" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Location Type Description"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="LOC_TYPE_DESC"/>
+      </attribute>
+      <attribute id="SPRAS" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Language"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="SPRAS"/>
+      </attribute>
+      <attribute id="LOCATION_NAME" order="7" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Location Name"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="LOCATION_NAME"/>
+      </attribute>
+      <attribute id="COUNTRY" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Country/Region"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="COUNTRY"/>
+      </attribute>
+      <attribute id="REGION" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Region"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="REGION"/>
+      </attribute>
+      <attribute id="CITY" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="City"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="CITY"/>
+      </attribute>
+      <attribute id="POSTCODE" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Postal Code"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="POSTCODE"/>
+      </attribute>
+      <attribute id="STREET" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Street"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="STREET"/>
+      </attribute>
+      <attribute id="LATITUDE" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latitude"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="LATITUDE"/>
+      </attribute>
+      <attribute id="LONGITUDE" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Longitude"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="LONGITUDE"/>
+      </attribute>
+      <attribute id="HOUSE_NUM" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="House Number"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="HOUSE_NUM"/>
+      </attribute>
+      <attribute id="OCCUPANCY_TYPE" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Occupancy Type"/>
+        <keyMapping columnObjectName="Join_LOC_Type" columnName="OCCUPANCY_TYPE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_MKT_LOC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_MKT_LOC_TYPE" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_LOC_Type" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    
+      <shape modelObjectName="Projection_MKT_LOC" modelObjectNameSpace="Join_LOC_Type" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_MKT_LOC_TYPE" modelObjectNameSpace="Join_LOC_Type" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

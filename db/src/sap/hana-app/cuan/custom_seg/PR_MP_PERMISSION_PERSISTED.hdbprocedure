@@ -1,0 +1,15 @@
+PROCEDURE "sap.hana-app.cuan.custom_seg::PR_MP_PERMISSION_PERSISTED" ( OUT SWITCH NVARCHAR(1)) 
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+	Code nvarchar(100);
+BEGIN
+DECLARE EXIT HANDLER FOR SQL_ERROR_CODE 1299
+BEGIN
+   Code :='';
+   SWITCH :=  3;
+END;
+
+select CONV_VALUE into SWITCH from "sap.hana-app.cuan.contact.internal::CA_MP_TC_PERMISSION_PERSISTED";
+                                    
+END;

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.prodreco.algorithm.query.offers::CA_RECO_ELIGIBLE_OFFERS" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <descriptions defaultDescription="CA_RECO_ELIGIBLE_OFFERS"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="35"/>
+  <dataSources>
+    <DataSource id="CUAND_OFR_CX_UID">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_OFR_CX_UID</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_ITEM_R">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_ITEM_R</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ROW_NO"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ROOT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="DB_KEY_NVC" length="50" expressionLanguage="COLUMN_ENGINE">
+          <formula>rawtohex(&quot;DB_KEY&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#CUAND_OFR_CX_UID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROW_NO" source="ROW_NO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="ITEM_KEY"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY_NVC$ITEM_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="ROW_NO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY_NVC$ITEM_ID" source="DB_KEY_NVC"/>
+      </input>
+      <input node="#PRECO_CX_ITEM_R">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY_NVC$ITEM_ID" source="ITEM_ID"/>
+      </input>
+      <joinAttribute name="JOIN$DB_KEY_NVC$ITEM_ID"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="TASK_ID" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TASK_ID"/>
+        <keyMapping columnObjectName="Join_1" columnName="TASK_ID"/>
+      </attribute>
+      <attribute id="ITEM_TYPE" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ITEM_TYPE"/>
+        <keyMapping columnObjectName="Join_1" columnName="ITEM_TYPE"/>
+      </attribute>
+      <attribute id="ITEM_ID" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ITEM_ID"/>
+        <keyMapping columnObjectName="Join_1" columnName="ITEM_ID"/>
+      </attribute>
+      <attribute id="SCORE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SCORE"/>
+        <keyMapping columnObjectName="Join_1" columnName="SCORE"/>
+      </attribute>
+      <attribute id="OFFER_CONTENT_KEY" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="OFFER_CONTENT_KEY"/>
+        <keyMapping columnObjectName="Join_1" columnName="ITEM_KEY"/>
+      </attribute>
+      <attribute id="ROOT_KEY" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_1" columnName="ROOT_KEY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="47" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="64" width="191"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="27" y="165"/>
+        <rectangleSize height="81" width="181"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

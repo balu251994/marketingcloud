@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_IC_FACET_PROJ" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Facet of Interaction Contact"/>
+  <metadata changedAt="2019-04-12 12:10:10.553"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CA_D_IC_FACET">
+      <resourceUri>sap.hana-app.cuan.contact::CA_D_IC_FACET</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="CA_D_IC_FACET">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MANDT"/>
+      </attribute>
+      <attribute id="PARENT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Parent Key"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="PARENT_KEY"/>
+      </attribute>
+      <attribute id="ID_ORIGIN" order="3" attributeHierarchyActive="false" descriptionColumnName="ID_ORIGIN_DESC_PROJ" displayAttribute="false">
+        <descriptions defaultDescription="ID Origin"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="ID_ORIGIN"/>
+      </attribute>
+      <attribute id="ID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="ID"/>
+      </attribute>
+      <attribute id="MEMBER_KEY" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Member Key"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MEMBER_KEY"/>
+      </attribute>
+      <attribute id="ID_ORIGIN_DESC_PROJ" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="ID_ORIGIN_DESC"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENTPARTICIPANTSTATUSTEXT" hidden="true" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Participant Status Description"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTPARTICIPANTSTATUSTEXT"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENTSTATUSTEXT" hidden="true" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Event Status Description"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTSTATUSTEXT"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENT" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Event ID"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENT"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENTNAME" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Event Name"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTNAME"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENTSTATUS" order="11" attributeHierarchyActive="false" descriptionColumnName="IC_CONT_MKTGEVENTSTATUSTEXT" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Event Status"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTSTATUS"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENTPARTICIPANTSTATUS" order="12" attributeHierarchyActive="false" descriptionColumnName="IC_CONT_MKTGEVENTPARTICIPANTSTATUSTEXT" displayAttribute="false">
+        <descriptions defaultDescription="Participant Status"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTPARTICIPANTSTATUS"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENTPROVIDER" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Event Provider"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTPROVIDER"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENTSTARTDATETIME" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Start Timestamp of Event"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTSTARTDATETIME"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGENGAGEMENTSCORE" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Participation Score"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGENGAGEMENTSCORE"/>
+      </attribute>
+      <attribute id="IC_CONT_TOTALNUMBEROFMINUTESLIVE" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Live Participation Time"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="TOTALNUMBEROFMINUTESLIVE"/>
+      </attribute>
+      <attribute id="IC_CONT_TOTALNUMBEROFMINUTESREPLAY" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="On-demand Participation Time"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="TOTALNUMBEROFMINUTESREPLAY"/>
+      </attribute>
+      <attribute id="IC_CONT_TOTALNUMBEROFMINUTESATTENDED" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Total Participation Time"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="TOTALNUMBEROFMINUTESATTENDED"/>
+      </attribute>
+    
+      <attribute id="IC_CONT_MKTGEVENTLANGUAGENAME" hidden="true" order="19" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription=""/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTLANGUAGENAME"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENTLANGUAGE" order="20" descriptionColumnName="IC_CONT_MKTGEVENTLANGUAGENAME" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Marketing Event Language"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTLANGUAGE"/>
+      </attribute>
+      <attribute id="IC_CONT_MKTGEVENTENDDATETIME" order="21" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="End Timestamp of Event"/>
+        <keyMapping columnObjectName="CA_D_IC_FACET" columnName="MKTGEVENTENDDATETIME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="100" y="105"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

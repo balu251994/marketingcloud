@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.score::CA_CE_CONTACT_ENGAGEMENT_SCORE_EXT" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Engagement Score of Contacts"/>
+  <metadata changedAt="2018-05-17 09:04:59.726"/>
+  <localVariables>
+    <variable id="IP_MODEL_GUID" parameter="true">
+      <descriptions defaultDescription="Predictive Model"/>
+      <variableProperties datatype="VARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="Reference to Set of Relevant Customers"/>
+      <variableProperties datatype="VARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR">
+      <targetVariable name="IP_MODEL_GUID" resourceUri="sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR"/>
+      <localVariable>IP_MODEL_GUID</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+  </variableMappings>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR" type="TABLE_FUNCTION">
+      <resourceUri>sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR">
+    <descriptions/>
+    <attributes>
+      <attribute id="CONTACT_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="SCORE_DESC" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Engagement Score"/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR" columnName="SCORE_DESC"/>
+      </attribute>
+      <attribute id="UNIT" order="4" attributeHierarchyActive="false" descriptionColumnName="UNIT.description" displayAttribute="false">
+        <descriptions defaultDescription="Unit"/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR" columnName="UNIT"/>
+      </attribute>
+      <attribute id="RANK" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Rank"/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR" columnName="RANK"/>
+      </attribute>
+      <attribute id="UNIT.description" hidden="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR" columnName="UNIT.description"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="SCORE_VALUE" order="2" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Engagement Score"/>
+        <measureMapping columnObjectName="TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR" columnName="SCORE_VALUE"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

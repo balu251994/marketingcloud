@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_MOBILE_PUSH_AFFINITY" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription=""/>
+  <metadata changedAt="2017-07-05 22:03:50.228"/>
+  <localVariables>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="IP_JOIN_SET_ID"/>
+      <variableProperties datatype="NVARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="Single"/>
+      </variableProperties>
+    </variable>
+    <variable id="i_scenario_parameters" parameter="true">
+      <descriptions defaultDescription="i_scenario_parameters"/>
+      <variableProperties datatype="NCLOB" defaultValue="&quot;IP_DOC_DATE_START&quot;:&quot;1000-12-31&quot;,&quot;IP_DOC_DATE_END&quot;:&quot;9999-12-31&quot;" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_D_CONTACT_TIMEZONE">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_D_CONTACT_TIMEZONE"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+  </variableMappings>
+  <informationModelLayout relativeWidthScenario="48"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_JS_CONTACT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANI_PM_DUMMY">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANI_PM_DUMMY</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_CONTACT_TIMEZONE">
+      <resourceUri>sap.hana-app.cuan.cpred.datafoundation.internal::CA_D_CONTACT_TIMEZONE</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_TYPE_1"/>
+        <viewAttribute id="ID_ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DATE" id="date_start" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(strlen('$$i_scenario_parameters$$')&lt;45,'1000-01-01', rightstr(leftstr('$$i_scenario_parameters$$', instr('$$i_scenario_parameters$$', 'IP_DOC_DATE_START')+29),10) )</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="DATE" id="date_end" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(strlen('$$i_scenario_parameters$$')&lt;45,'9999-01-01', rightstr(leftstr('$$i_scenario_parameters$$', instr('$$i_scenario_parameters$$', 'IP_DOC_DATE_END')+27),10)  )</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_1" source="IA_TYPE"/></input>
+      <filter>(&quot;CLIENT&quot; ='$$client$$') AND (&quot;COMM_MEDIUM&quot; ='MOBILE_APP') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;OBSOLETE&quot; ='') AND (&quot;IA_DATE&quot; &gt;=&quot;date_start&quot;) AND (&quot;IA_DATE&quot; &lt;=&quot;date_end&quot;) AND (In(&quot;IA_TYPE&quot;,'MOB_APP_NOTIF_SENT','MOB_APP_NOTIF_VIEWED','MOB_APP_UNINSTALLED','BOUNCE_HARD','OFFER_DISPLAY','OFFER_CLICK'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="JOIN_SET_ID"/>
+        <viewAttribute id="CONTACT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_JS_CONTACT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="ID"/>
+      </input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;JOIN_SET_ID&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute hidden="true" id="JOIN$CONTACT_KEY$CONTACT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <input node="Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$CONTACT_KEY$CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="EMPTY_JS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANI_PM_DUMMY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/></input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;EMPTY_JS&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_5" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute hidden="true" id="JOIN$CLIENT$HPA_CLIENT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$HPA_CLIENT" source="CLIENT"/>
+      </input>
+      <input node="Projection_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$HPA_CLIENT" source="HPA_CLIENT"/>
+      </input>
+      <joinAttribute name="JOIN$CLIENT$HPA_CLIENT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="TIMESTAMP"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="Join_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TZONE"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="TIMESTAMP"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="TIMESTAMP" id="LOCAL_TIMESTAMP" expressionLanguage="COLUMN_ENGINE">
+          <formula>if (isNull(&quot;TZONE&quot;) or &quot;TZONE&quot; = '', longdate(null), utctolocal(longdate(&quot;TIMESTAMP&quot;),&quot;TZONE&quot;))
+</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Union_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+      </input>
+      <input node="CA_D_CONTACT_TIMEZONE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TZONE" source="TZONE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="TIMESTAMP"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="BIGINT" id="NO_OF_PUSH_NOTIF_OPENED" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;IA_TYPE&quot;='MOB_APP_NOTIF_VIEWED', 1, 0)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="BIGINT" id="NO_OF_PUSH_NOTIF_SENT" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;IA_TYPE&quot;='MOB_APP_NOTIF_SENT', 1, 0)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="BIGINT" id="NO_OF_PUSH_NOTIF_BOUNCE_HARD" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;IA_TYPE&quot;='MOB_APP_UNINSTALLED' or &quot;IA_TYPE&quot;='BOUNCE_HARD' , 1, 0)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="BIGINT" id="NO_OF_MOB_OFFER_DISPLAY" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;IA_TYPE&quot;='OFFER_DISPLAY',1,0)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="BIGINT" id="NO_OF_MOB_OFFER_CLICK" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;IA_TYPE&quot;='OFFER_CLICK',1,0)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Join_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="LOCAL_TIMESTAMP"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_DISPLAY"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="HOUR" expressionLanguage="COLUMN_ENGINE">
+          <formula>if((midstr(string(&quot;TIMESTAMP&quot;),12,2)!=''),int(midstr(string(&quot;TIMESTAMP&quot;),12,2)),null)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Projection_1"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="HOUR"/>
+        <viewAttribute aggregationType="sum" id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute aggregationType="sum" id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute aggregationType="sum" id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute aggregationType="sum" id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute aggregationType="sum" id="NO_OF_MOB_OFFER_DISPLAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Projection_6"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="HOUR"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Aggregation_1"/>
+      <filter>(&quot;NO_OF_PUSH_NOTIF_OPENED&quot; &gt;0)</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="PEAK_OPENED_HOUR">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="HOUR"/></input>
+      <windowFunction dynamicPartitionAttributes="false">
+        <partitionViewAttributeName>CONTACT_KEY</partitionViewAttributeName>
+        <order byViewAttributeName="PEAK_MOB_PUSH_NOTIF_OPENED" direction="ASC"/>
+        <rankThreshold>
+          <value>1</value>
+        </rankThreshold>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_8" cardinality="CN_N" joinType="inner">
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="HOUR" aggregationType="sum"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUR" source="HOUR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+      </input>
+      <input node="Aggregation_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="MAX_NO_OF_PUSH_NOTIF_OPENED"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+      <joinAttribute name="NO_OF_PUSH_NOTIF_OPENED"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_4">
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MAX_NO_OF_PUSH_NOTIF_OPENED" aggregationType="max"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_DISPLAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Aggregation_1"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_DISPLAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Aggregation_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_DISPLAY" source="NO_OF_MOB_OFFER_DISPLAY"/>
+      </input>
+      <input node="PEAK_OPENED_HOUR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_8" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="HOUR"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Aggregation_1"/>
+      <filter>(&quot;NO_OF_MOB_OFFER_CLICK&quot;&gt;0)</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="PEAK_CLICKED_HOUR">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_9">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="HOUR"/></input>
+      <windowFunction dynamicPartitionAttributes="false">
+        <partitionViewAttributeName>CONTACT_KEY</partitionViewAttributeName>
+        <order byViewAttributeName="PEAK_MOB_PUSH_OFFER_CLICKED" direction="ASC"/>
+        <rankThreshold>
+          <value>1</value>
+        </rankThreshold>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_9" cardinality="CN_N" joinType="inner">
+      <viewAttributes>
+        <viewAttribute id="HOUR" aggregationType="sum"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUR" source="HOUR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+      </input>
+      <input node="Aggregation_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="MAX_NO_OF_MOB_OFFER_CLICK"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+      <joinAttribute name="NO_OF_MOB_OFFER_CLICK"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_5">
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MAX_NO_OF_MOB_OFFER_CLICK" aggregationType="max"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Projection_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_DISPLAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_DISPLAY" source="NO_OF_MOB_OFFER_DISPLAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+      </input>
+      <input node="PEAK_CLICKED_HOUR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_DISPLAY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="WEEKDAY" expressionLanguage="COLUMN_ENGINE">
+          <formula>weekday(date(&quot;TIMESTAMP&quot;))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Projection_1"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="WEEKDAY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Projection_2"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_9" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="WEEKDAY"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Aggregation_2"/>
+      <filter>(&quot;NO_OF_MOB_OFFER_CLICK&quot;&gt;0)</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="PEAK_CLICKED_WEEKDAY">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" source="WEEKDAY"/></input>
+      <windowFunction dynamicPartitionAttributes="false">
+        <partitionViewAttributeName>CONTACT_KEY</partitionViewAttributeName>
+        <order byViewAttributeName="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" direction="ASC"/>
+        <rankThreshold>
+          <value>1</value>
+        </rankThreshold>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_10" cardinality="CN_N" joinType="inner">
+      <viewAttributes>
+        <viewAttribute id="WEEKDAY" aggregationType="sum"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_9">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEEKDAY" source="WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+      </input>
+      <input node="Aggregation_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="MAX_NO_OF_MOB_OFFER_CLICK"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+      <joinAttribute name="NO_OF_MOB_OFFER_CLICK"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_6">
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MAX_NO_OF_MOB_OFFER_CLICK" aggregationType="max"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Projection_9">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_10" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="WEEKDAY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Aggregation_2"/>
+      <filter>(&quot;NO_OF_PUSH_NOTIF_OPENED&quot;&gt;0)</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="PEAK_OPENED_WEEKDAY">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_11">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" source="WEEKDAY"/></input>
+      <windowFunction dynamicPartitionAttributes="false">
+        <partitionViewAttributeName>CONTACT_KEY</partitionViewAttributeName>
+        <order byViewAttributeName="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" direction="ASC"/>
+        <rankThreshold>
+          <value>1</value>
+        </rankThreshold>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_11" cardinality="CN_N" joinType="inner">
+      <viewAttributes>
+        <viewAttribute id="WEEKDAY" aggregationType="sum"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEEKDAY" source="WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+      </input>
+      <input node="Aggregation_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="MAX_NO_OF_PUSH_NOTIF_OPENED"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+      <joinAttribute name="NO_OF_PUSH_NOTIF_OPENED"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_7">
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MAX_NO_OF_PUSH_NOTIF_OPENED" aggregationType="max"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Projection_10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_7" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_DISPLAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_DISPLAY" source="NO_OF_MOB_OFFER_DISPLAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+      </input>
+      <input node="PEAK_CLICKED_WEEKDAY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" source="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_DISPLAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_DISPLAY" source="NO_OF_MOB_OFFER_DISPLAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" source="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </input>
+      <input node="PEAK_OPENED_WEEKDAY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" source="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_4">
+    <descriptions/>
+    <attributes>
+      <attribute id="CONTACT_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="Join_4" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="PEAK_MOB_PUSH_NOTIF_OPENED" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <keyMapping columnObjectName="Join_4" columnName="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+      </attribute>
+      <attribute id="PEAK_MOB_PUSH_OFFER_CLICKED" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <keyMapping columnObjectName="Join_4" columnName="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+      </attribute>
+      <attribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <keyMapping columnObjectName="Join_4" columnName="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+      </attribute>
+      <attribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+        <keyMapping columnObjectName="Join_4" columnName="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="MOB_PUSH_NOTIF_OPEN_RATE" hidden="false" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <keyCalculation datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+          <formula>if(&quot;NO_OF_PUSH_NOTIF_SENT&quot;&gt;0,&quot;NO_OF_PUSH_NOTIF_OPENED&quot;/&quot;NO_OF_PUSH_NOTIF_SENT&quot;*100,0)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="MOB_PUSH_BOUNCE_RATE" hidden="false" order="7" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MOB_PUSH_BOUNCE_RATE"/>
+        <keyCalculation datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+          <formula>if(&quot;NO_OF_PUSH_NOTIF_SENT&quot; + &quot;NO_OF_PUSH_NOTIF_BOUNCE_HARD&quot; = 0 , 0 , decfloat(&quot;NO_OF_PUSH_NOTIF_BOUNCE_HARD&quot; ) /(decfloat(&quot;NO_OF_PUSH_NOTIF_SENT&quot;)+&quot;NO_OF_PUSH_NOTIF_BOUNCE_HARD&quot;)*100)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="MOB_OFFER_CLICK_RATE" hidden="false" order="8" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MOB_OFFER_CLICK_RATE"/>
+        <keyCalculation datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+          <formula>if(&quot;NO_OF_PUSH_NOTIF_SENT&quot;&gt;0,&quot;NO_OF_MOB_OFFER_CLICK&quot;/&quot;NO_OF_PUSH_NOTIF_SENT&quot;*100,0)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="NO_OF_PUSH_NOTIF_SENT" order="2" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="NO_OF_PUSH_NOTIF_SENT"/>
+        <measureMapping columnObjectName="Join_4" columnName="NO_OF_PUSH_NOTIF_SENT"/>
+      </measure>
+      <measure id="NO_OF_PUSH_NOTIF_OPENED" order="3" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="NO_OF_PUSH_NOTIF_OPENED"/>
+        <measureMapping columnObjectName="Join_4" columnName="NO_OF_PUSH_NOTIF_OPENED"/>
+      </measure>
+      <measure id="NO_OF_PUSH_NOTIF_BOUNCE_HARD" order="5" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <measureMapping columnObjectName="Join_4" columnName="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+      </measure>
+      <measure id="NO_OF_MOB_OFFER_CLICK" order="6" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="NO_OF_MOB_OFFER_CLICK"/>
+        <measureMapping columnObjectName="Join_4" columnName="NO_OF_MOB_OFFER_CLICK"/>
+      </measure>
+      <measure id="NO_OF_MOB_OFFER_DISPLAY" hidden="true" order="9" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="NO_OF_MOB_OFFER_DISPLAY"/>
+        <measureMapping columnObjectName="Join_4" columnName="NO_OF_MOB_OFFER_DISPLAY"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="656" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="629" y="2206"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="419" y="2206"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="445" y="2046"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="839" y="2206"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="741" y="2046"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="631" y="1906"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="false" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="631" y="1766"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Union_1" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.cpred.datafoundation.internal::CA_D_CONTACT_TIMEZONE" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="631" y="1661"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="369" y="1536"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="369" y="1431"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="306" y="1266"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PEAK_OPENED_HOUR" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="238" y="856"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="238" y="981"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_7" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="252"/>
+      </shape>
+      <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="282"/>
+      </shape>
+    
+      <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="332" y="1141"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="1276"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="212" y="696"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Aggregation_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PEAK_OPENED_HOUR" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="555" y="1266"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PEAK_CLICKED_HOUR" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="448" y="856"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_9" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="453" y="981"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_8" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Aggregation_5" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="563" y="1141"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="358" y="536"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PEAK_CLICKED_HOUR" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="765" y="1276"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="773" y="1141"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_9" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="663" y="986"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PEAK_CLICKED_WEEKDAY" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="568" y="554"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_10" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="592" y="696"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_9" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Aggregation_6" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="266"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="680" y="856"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_10" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="873" y="986"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PEAK_OPENED_WEEKDAY" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="780" y="554"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_11" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="823" y="696"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_10" modelObjectNameSpace="Join_11" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="252"/>
+      </shape>
+      <shape modelObjectName="Aggregation_7" modelObjectNameSpace="Join_11" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="282"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="911" y="856"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+    
+      <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="542" y="376"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_3" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PEAK_CLICKED_WEEKDAY" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="656" y="217"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Join_7" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PEAK_OPENED_WEEKDAY" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape></shapes>
+  </layout>
+</Calculation:scenario>

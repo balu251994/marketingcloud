@@ -1,0 +1,74 @@
+FUNCTION "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS" (IP_MODEL_GUID VARCHAR (32), IP_JOIN_SET_ID VARCHAR (32) ) 
+RETURNS TABLE ("CONTACT_KEY" VARBINARY(16), "SCORE_VALUE" INTEGER, "SCORE_DESC" NVARCHAR(40),
+               "UNIT" NVARCHAR(5), "RANK" INTEGER, "UNIT.description" NVARCHAR(2) )
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+    AS
+BEGIN
+if to_varchar(:ip_model_guid) <> '' then
+----------------------------------------------------------------------------------------
+-- Get score_guid and current persisted version.
+----------------------------------------------------------------------------------------
+  declare lv_score_guid nvarchar(32) default '';
+  declare lv_version decimal(21,7) default 0;
+
+  call "sap.hana-app.cuan.cpred.reuse.internal::PR_SP_GET_CURRENT_VERSION_FOR_ORIGIN_KEY"(
+    '01',
+    :ip_model_guid,
+    lt_sp_version
+    );
+
+  select top 1 case when score_guid is not null then score_guid else '' end into lv_score_guid
+    from "sap.hana-app.sys::DUMMY"
+    left join :lt_sp_version
+    on 1= 1
+    ;
+    
+  select upper(lv_score_guid) into lv_score_guid from "sap.hana-app.sys::DUMMY";    
+
+  select top 1 case when score_guid is not null then version else 0 end into lv_version
+    from "sap.hana-app.sys::DUMMY"
+    left join :lt_sp_version
+    on 1= 1
+    ;
+
+----------------------------------------------------------------------------------------
+-- Read from persistence table (No joinset given)
+----------------------------------------------------------------------------------------
+  if :ip_join_set_id = '' then
+    return
+      select contact_key,
+             score_value as score_value,
+             '' as score_desc,
+             '' as unit,
+             0  as rank,
+             '' as "UNIT.description"
+      from "sap.hana-app.cuan.db.cuan::CUAND_SP_SCR_PST" as t1
+      where t1.client    = session_context('CLIENT')
+        and t1.score_guid = :lv_score_guid
+        and t1.version    = :lv_version
+    ;
+----------------------------------------------------------------------------------------
+-- Read from persistence table (Restrict by joinset)
+----------------------------------------------------------------------------------------
+  else
+    return
+      select contact_key,
+             score_value,
+             '' as score_desc,
+             '' as unit,
+             0  as rank,
+             '' as "UNIT.description"
+      from "sap.hana-app.cuan.db.cuan::CUAND_SP_SCR_PST" as t1
+      join "sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT" as t2
+        on t1.client      = t2.mandt
+       and t2.join_set_id = :ip_join_set_id
+       and t1.contact_key = t2.id
+     where t1.client      = session_context('CLIENT')
+       and t1.score_guid  = :lv_score_guid
+       and t1.version     = :lv_version
+  ;
+  end if;
+
+end if;
+END;

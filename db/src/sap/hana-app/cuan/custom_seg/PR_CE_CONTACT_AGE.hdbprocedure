@@ -1,0 +1,25 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_AGE" (  in i_scenario_parameters NCLOB ,  in i_datasource_parameters NCLOB ,  in i_selected_variables NCLOB ,  in i_model_parameters NCLOB ,  in ip_join_set_id VARCHAR(32) ,  out var_out "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_AGE/tabletype/var_out"  ) language SQLSCRIPT sql security invoker reads sql data as begin 
+
+---------------------------------------------------------------------------------------------------
+-- Run Calculation
+---------------------------------------------------------------------------------------------------
+	
+	if :ip_join_set_id = '' then
+	  var_out =
+		select 
+				db_key							as "KEY",
+				age                   			as "SCORE"
+		from "sap.hana-app.cuan.contact::AT_CE_CONTACT"
+		group by db_key, age;
+	else	
+      var_out =
+		select db_key 							as "KEY",
+			age                   				as "SCORE"
+		from "sap.hana-app.cuan.contact::AT_CE_CONTACT" as contact
+		inner join "sap.hana-app.cuan.contact.score.internal.datafoundation::AT_JS_CONTACT" as js
+			on contact.db_key = js.id
+		where js."JOIN_SET_ID" = :ip_join_set_id
+		group by db_key, age;
+	end if;		
+					   
+end

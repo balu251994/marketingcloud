@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.cust_retention.score.internal::CA_D_INTERACTION_ACCOUNT" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Accounts"/>
+  <metadata changedAt="2018-11-09 09:55:06.215"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_REL">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_REL</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Contact_ROOT" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_OF_PURPOSE" source="END_OF_PURPOSE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; = '$$client$$') AND (&quot;OBSOLETE&quot; = '')  AND  (&quot;_DATAAGING&quot; != '00010101') AND (&quot;END_OF_PURPOSE&quot;='') AND (&quot;IC_TYPE&quot; = '02')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Relationship" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="RELATION_TYPE"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_IC_REL">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RELATION_TYPE" source="RELATION_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY_TO"/>
+      </input>
+      <filter>(&quot;MANDT&quot; = '$$client$$') AND (&quot;RELATION_TYPE&quot; = '01')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Contact_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      </input>
+      <input node="#Relationship">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="CONTACT_KEY_TO"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="DB_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join" columnName="MANDT"/>
+      </attribute>
+      <attribute id="ACCOUNT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Account Key"/>
+        <keyMapping columnObjectName="Join" columnName="DB_KEY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="133" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Contact_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="64" width="179"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Relationship" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="215" y="261"/>
+        <rectangleSize height="64" width="163"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="133" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

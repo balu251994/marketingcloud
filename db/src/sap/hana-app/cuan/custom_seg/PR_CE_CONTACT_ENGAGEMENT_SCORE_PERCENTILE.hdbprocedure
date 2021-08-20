@@ -1,0 +1,80 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_ENGAGEMENT_SCORE_PERCENTILE" (  in i_scenario_parameters NCLOB ,  in i_datasource_parameters NCLOB ,  in i_selected_variables NCLOB ,  in i_model_parameters NCLOB ,  in ip_join_set_id VARCHAR(32) ,  out var_out "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_ENGAGEMENT_SCORE_PERCENTILE/tabletype/var_out"  ) language SQLSCRIPT sql security invoker reads sql data as 
+BEGIN
+	declare lv_last_n_days             		integer;
+	declare lv_outlier_percentile   		integer;
+	declare lv_num_of_ia_max  				integer;
+	declare lv_num_of_ia_reference  		integer;
+	declare lv_doc_tmstp_start 				decimal(21,7);
+	declare lv_doc_tmstp_end   				decimal(21,7);
+	declare lv_current_day 					date;
+    declare lv_index 						int;
+    
+--  read model parameters from model definition
+	call "sap.hana-app.cuan.cpred.reuse.internal::PR_TO_NAME_VALUE"(
+	    :i_model_parameters,
+	    lt_model_parameters
+	 );  	  
+	select "VALUE" into lv_last_n_days	        from :lt_model_parameters where "NAME" = 'LAST_N_DAYS';	
+	select "VALUE" into lv_outlier_percentile	from :lt_model_parameters where "NAME" = 'OUTLIER_PERCENTILE';	
+	select 
+		CASE WHEN :lv_outlier_percentile > 100 THEN 100
+		     WHEN :lv_outlier_percentile < 0   THEN 1
+		     ELSE :lv_outlier_percentile 
+		END into lv_outlier_percentile          from "sap.hana-app.sys::DUMMY";
+
+--  count interactions	
+	select to_date(now()) into lv_current_day from "sap.hana-app.sys::DUMMY";
+	lv_doc_tmstp_start := to_dats(add_days(lv_current_day, -lv_last_n_days)) || '000000';
+    lv_doc_tmstp_end   := to_dats(add_days(lv_current_day, 1))               || '000000';
+		
+	lt_num_of_ia_of_contact =	
+		select contact_key, count(distinct ia_key) as "NUM_OF_IA"
+		from "sap.hana-app.cuan.contact.score.internal.datafoundation::CA_D_INTERACTIONS"
+		where 
+			direction = '0'  -- inbound interactions
+			and
+			timestamp >= :lv_doc_tmstp_start and timestamp <= :lv_doc_tmstp_end
+		group by contact_key;
+
+    select max("NUM_OF_IA") into lv_num_of_ia_max 
+	from :lt_num_of_ia_of_contact;
+
+	select
+	    max(case when
+	        "ROW_NUMBER" = floor( "ROW_COUNT" * (100 - :lv_outlier_percentile) / 100 ) 
+	        then "NUM_OF_IA" 
+	        else null end) 
+	   into lv_num_of_ia_reference
+	from (
+	    select
+	        "NUM_OF_IA",
+	        row_number() over (order BY "NUM_OF_IA") as "ROW_NUMBER",
+	        count(*) over ()                         as "ROW_COUNT"
+	      from :lt_num_of_ia_of_contact
+	);
+
+	if :ip_join_set_id = '' then
+	  var_out =  
+	  	select
+	  		contact_key                         as "KEY",
+	  		case when num_of_ia / :lv_num_of_ia_reference > 1
+	  		then round(((100 - :lv_outlier_percentile) + num_of_ia * :lv_outlier_percentile / :lv_num_of_ia_max),  0)
+	  		else round((num_of_ia / :lv_num_of_ia_reference * (100 - :lv_outlier_percentile)), 0)
+	  		end                                  as "SCORE"
+	  	from :lt_num_of_ia_of_contact;
+	else
+	  var_out = 
+		  select
+	  		contact_key                          as "KEY",
+	  		case when num_of_ia / :lv_num_of_ia_reference > 1
+	  		then round(((100 - :lv_outlier_percentile) + num_of_ia * :lv_outlier_percentile / :lv_num_of_ia_max),  0)
+	  		else round((num_of_ia / :lv_num_of_ia_reference * (100 - :lv_outlier_percentile)), 0)
+	  		end                                  as "SCORE"
+		  from :lt_num_of_ia_of_contact as t1
+		  inner join "sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT"   as t2
+		    on t2.join_set_id = :ip_join_set_id
+		      and t1.contact_key = t2.id
+		  where t2.mandt = session_context('CLIENT')
+		  ;
+	end if;
+END;

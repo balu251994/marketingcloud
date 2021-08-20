@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact::CA_D_PRODUCT" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Product"/>
+  <metadata changedAt="2018-06-28 15:01:39.947"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="35"/>
+  <dataSources>
+    <DataSource id="CUAND_PROD_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_FACET">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_FACET</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_DESC">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_DESC</resourceUri>
+    </DataSource>
+    <DataSource id="HPA_D_BRAND_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::HPA_D_BRAND_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="HPA_D_BRAND_DESC">
+      <resourceUri>sap.hana-app.cuan.db.cuan::HPA_D_BRAND_DESC</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ROOT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IMAGE_URL"/>
+        <viewAttribute id="NAV_URL"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="BOOLEAN5"/>
+        <viewAttribute id="BOOLEAN6"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="NUMBER4"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="DECIMAL4"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="QUANTITY1"/>
+        <viewAttribute id="UNIT_OF_MEASURE1"/>
+        <viewAttribute id="AMOUNT1"/>
+        <viewAttribute id="AMOUNT2"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="BRAND_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN5" source="BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN6" source="BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER4" source="NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL4" source="DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY1" source="QUANTITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE1" source="UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT1" source="AMOUNT1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT2" source="AMOUNT2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_PROD_FACET">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="IS_ADDITIONAL_PRODUCT_ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_ADDITIONAL_PRODUCT_ORIGIN" source="IS_ADDITIONAL_PRODUCT_ORIGIN"/>
+      </input>
+      <filter>(&quot;IS_ADDITIONAL_PRODUCT_ORIGIN&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_FACET" cardinality="C1_N" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IMAGE_URL"/>
+        <viewAttribute id="NAV_URL"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="BOOLEAN5"/>
+        <viewAttribute id="BOOLEAN6"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="NUMBER4"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="DECIMAL4"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="QUANTITY1"/>
+        <viewAttribute id="UNIT_OF_MEASURE1"/>
+        <viewAttribute id="AMOUNT1"/>
+        <viewAttribute id="AMOUNT2"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="BRAND_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN5" source="BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN6" source="BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER4" source="NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL4" source="DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY1" source="QUANTITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE1" source="UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT1" source="AMOUNT1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT2" source="AMOUNT2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+      </input>
+      <input node="#Proj_PROD_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="DB_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_DESC" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IMAGE_URL"/>
+        <viewAttribute id="NAV_URL"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="BOOLEAN5"/>
+        <viewAttribute id="BOOLEAN6"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="NUMBER4"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="DECIMAL4"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="QUANTITY1"/>
+        <viewAttribute id="UNIT_OF_MEASURE1"/>
+        <viewAttribute id="AMOUNT1"/>
+        <viewAttribute id="AMOUNT2"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="BRAND_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN5" source="BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN6" source="BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER4" source="NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL4" source="DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY1" source="QUANTITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE1" source="UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT1" source="AMOUNT1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT2" source="AMOUNT2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+      </input>
+      <input node="#CUAND_PROD_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="DB_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BRAND_ID" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#HPA_D_BRAND_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      </input>
+      <filter>(&quot;MANDT&quot;='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BRAND_NAME" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#HPA_D_BRAND_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      </input>
+      <filter>(&quot;MANDT&quot;='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_BRAND" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="LANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_BRAND_ID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <input node="#Projection_BRAND_NAME">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="JOIN$DB_KEY$PARENT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_BRAND_DESC" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="LANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="D_PRODUCT_NAME"/>
+        <viewAttribute id="D_PRODUCT_DESCRIPTION"/>
+        <viewAttribute id="PRODUCT_IMAGE_URL"/>
+        <viewAttribute id="PRODUCT_NAV_URL"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="BOOLEAN5"/>
+        <viewAttribute id="BOOLEAN6"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="NUMBER4"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="DECIMAL4"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="QUANTITY1"/>
+        <viewAttribute id="UNIT_OF_MEASURE1"/>
+        <viewAttribute id="AMOUNT1"/>
+        <viewAttribute id="AMOUNT2"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="BRAND_NAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="D_PRODUCT_NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="D_PRODUCT_DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN5" source="BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN6" source="BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER4" source="NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL4" source="DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY1" source="QUANTITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE1" source="UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT1" source="AMOUNT1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT2" source="AMOUNT2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+      </input>
+      <input node="#Join_BRAND">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_NAME" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="ID"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="BRAND_ID"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_BRAND_DESC">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client1"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="MANDT"/>
+      </attribute>
+      <attribute id="DB_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Key_update1"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="D_PRODUCT_NAME" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Name"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="D_PRODUCT_NAME"/>
+      </attribute>
+      <attribute id="D_PRODUCT_DESCRIPTION" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Description"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="D_PRODUCT_DESCRIPTION"/>
+      </attribute>
+      <attribute id="PRODUCT_IMAGE_URL" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Image URL"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="PRODUCT_IMAGE_URL"/>
+      </attribute>
+      <attribute id="PRODUCT_NAV_URL" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Navigation URL"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="PRODUCT_NAV_URL"/>
+      </attribute>
+      <attribute id="BOOLEAN1" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="BOOLEAN1"/>
+      </attribute>
+      <attribute id="BOOLEAN2" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="BOOLEAN2"/>
+      </attribute>
+      <attribute id="BOOLEAN3" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="BOOLEAN3"/>
+      </attribute>
+      <attribute id="BOOLEAN4" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="BOOLEAN4"/>
+      </attribute>
+      <attribute id="BOOLEAN5" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="BOOLEAN5"/>
+      </attribute>
+      <attribute id="BOOLEAN6" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="BOOLEAN6"/>
+      </attribute>
+      <attribute id="DATE1" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="DATE1"/>
+      </attribute>
+      <attribute id="DATE2" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="DATE2"/>
+      </attribute>
+      <attribute id="DATE3" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="DATE3"/>
+      </attribute>
+      <attribute id="NUMBER1" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="NUMBER1"/>
+      </attribute>
+      <attribute id="NUMBER2" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="NUMBER2"/>
+      </attribute>
+      <attribute id="NUMBER3" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="NUMBER3"/>
+      </attribute>
+      <attribute id="NUMBER4" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="NUMBER4"/>
+      </attribute>
+      <attribute id="TIMESTAMP1" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="TIMESTAMP1"/>
+      </attribute>
+      <attribute id="TIMESTAMP2" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="TIMESTAMP2"/>
+      </attribute>
+      <attribute id="DECIMAL1" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="DECIMAL1"/>
+      </attribute>
+      <attribute id="DECIMAL2" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="DECIMAL2"/>
+      </attribute>
+      <attribute id="DECIMAL3" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="DECIMAL3"/>
+      </attribute>
+      <attribute id="DECIMAL4" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="DECIMAL4"/>
+      </attribute>
+      <attribute id="TEXT40_1" order="26" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="TEXT40_1"/>
+      </attribute>
+      <attribute id="TEXT40_2" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="TEXT40_2"/>
+      </attribute>
+      <attribute id="TEXT120_1" order="28" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="TEXT120_1"/>
+      </attribute>
+      <attribute id="TEXT120_2" order="29" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="TEXT120_2"/>
+      </attribute>
+      <attribute id="TEXT255_1" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="TEXT255_1"/>
+      </attribute>
+      <attribute id="TEXT255_2" order="31" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="TEXT255_2"/>
+      </attribute>
+      <attribute id="QUANTITY1" order="32" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="QUANTITY1"/>
+      </attribute>
+      <attribute id="UNIT_OF_MEASURE1" order="33" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="UNIT_OF_MEASURE1"/>
+      </attribute>
+      <attribute id="AMOUNT1" order="34" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="AMOUNT1"/>
+      </attribute>
+      <attribute id="AMOUNT2" order="35" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="AMOUNT2"/>
+      </attribute>
+      <attribute id="CURRENCY" order="36" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="CURRENCY"/>
+      </attribute>
+      <attribute id="PRODUCT_ORIGIN" order="37" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Origin"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="PRODUCT_ORIGIN"/>
+      </attribute>
+      <attribute id="PRODUCT_ID" order="38" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="D_PRODUCT_DESCRIPTION" displayAttribute="false">
+        <descriptions defaultDescription="Product ID"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="PRODUCT_ID"/>
+      </attribute>
+      <attribute id="BRAND_ID" order="39" attributeHierarchyActive="false" descriptionColumnName="BRAND_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Brand ID"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="BRAND_ID"/>
+      </attribute>
+      <attribute id="BRAND_NAME" hidden="true" order="40" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Brand Name"/>
+        <keyMapping columnObjectName="Join_BRAND_DESC" columnName="BRAND_NAME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="176" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_PROD_FACET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_FACET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="357"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="261"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_BRAND_ID" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_BRAND_NAME" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="407" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_BRAND" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_BRAND_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="165"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.score.internal.datafoundation::CA_D_INTERACTIONS" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <descriptions defaultDescription="CA_INTERACTIONS"/>
+  <metadata changedAt="2018-02-26 15:22:56.0"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="36"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_IA_TYPE">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_IA_TYPE</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_CH_ASGN">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_CH_ASGN</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="IA_RT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;OBSOLETE&quot; ='') AND (in (&quot;_DATAAGING&quot;,'','00000000'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="INBOUND_IA_TYPE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="DIRECTION"/>
+        <viewAttribute id="TECHNICAL_IA_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="CUANC_CE_IA_TYPE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TECHNICAL_IA_TYPE" source="TECHNICAL_IA_TYPE"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;TECHNICAL_IA_TYPE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_INBOUND" cardinality="CN_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="DIRECTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <input node="INBOUND_IA_TYPE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+      </input>
+      <joinAttribute name="IA_TYPE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="CHANNEL_ASGN">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="DISABLED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="CUANC_CE_CH_ASGN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DISABLED" source="DISABLED"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;DISABLED&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_CHANNEL" cardinality="CN_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="DIRECTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Join_INBOUND">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+      </input>
+      <input node="CHANNEL_ASGN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+      </input>
+      <joinAttribute name="IA_TYPE"/>
+      <joinAttribute name="COMM_MEDIUM"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="IC_ROOT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="CONTAINER"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="CUAND_CE_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTAINER" source="CONTAINER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_OF_PURPOSE" source="END_OF_PURPOSE"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;ANONYMIZED&quot; ='') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;CONTAINER&quot; ='') AND (&quot;OBSOLETE&quot; ='') AND (&quot;END_OF_PURPOSE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_IC" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="DIRECTION"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COUNTRY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+      </input>
+      <input node="Join_CHANNEL">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_IC">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MANDT"/>
+        <keyMapping columnObjectName="Join_IC" columnName="MANDT"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="Join_IC" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IA_KEY" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_KEY"/>
+        <keyMapping columnObjectName="Join_IC" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMM_MEDIUM"/>
+        <keyMapping columnObjectName="Join_IC" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="IA_TYPE" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_TYPE"/>
+        <keyMapping columnObjectName="Join_IC" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="CHANNEL" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CHANNEL"/>
+        <keyMapping columnObjectName="Join_IC" columnName="CHANNEL"/>
+      </attribute>
+      <attribute id="DIRECTION" order="7" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_IC" columnName="DIRECTION"/>
+      </attribute>
+      <attribute id="COUNTRY" order="9" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_IC" columnName="COUNTRY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="TIMESTAMP" order="8" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="TIMESTAMP"/>
+        <measureMapping columnObjectName="Join_IC" columnName="TIMESTAMP"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="IA_RT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="INBOUND_IA_TYPE" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_INBOUND" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="357"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="IA_RT" modelObjectNameSpace="Join_INBOUND" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="INBOUND_IA_TYPE" modelObjectNameSpace="Join_INBOUND" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="CHANNEL_ASGN" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_CHANNEL" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_INBOUND" modelObjectNameSpace="Join_CHANNEL" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="CHANNEL_ASGN" modelObjectNameSpace="Join_CHANNEL" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="IC_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_IC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    
+      <shape modelObjectName="IC_ROOT" modelObjectNameSpace="Join_IC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_CHANNEL" modelObjectNameSpace="Join_IC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

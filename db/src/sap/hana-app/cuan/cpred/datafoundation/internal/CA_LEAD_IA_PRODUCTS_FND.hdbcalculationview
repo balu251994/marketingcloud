@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.cpred.datafoundation.internal::CA_LEAD_IA_PRODUCTS_FND" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_LEAD_INTERACTIONS"/>
+  <metadata changedAt="2017-03-23 14:25:21.817"/>
+  <localVariables>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="IP_JOIN_SET_ID"/>
+      <variableProperties datatype="NVARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="i_scenario_parameters" parameter="true">
+      <descriptions defaultDescription="i_scenario_parameters"/>
+      <variableProperties datatype="NCLOB" defaultValue="&quot;IP_DOC_DATE_START&quot;:&quot;1000-12-31&quot;,&quot;IP_DOC_DATE_END&quot;:&quot;9999-12-31&quot;" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="41"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_PROD">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_PROD</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_JS_CONTACT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANI_PM_DUMMY">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANI_PM_DUMMY</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_TARGETCURR">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_TARGETCURR</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="AMOUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_IA_PROD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+      </input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CURRENCY"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DATE" id="date_start" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(strlen('$$i_scenario_parameters$$')&lt;45,'1000-01-01', rightstr(leftstr('$$i_scenario_parameters$$', instr('$$i_scenario_parameters$$', 'IP_DOC_DATE_START')+29),10) )</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="DATE" id="date_end" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(strlen('$$i_scenario_parameters$$')&lt;45,'9999-01-01', rightstr(leftstr('$$i_scenario_parameters$$', instr('$$i_scenario_parameters$$', 'IP_DOC_DATE_END')+27),10)  )</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      </input>
+      <filter>(&quot;CLIENT&quot; ='$$client$$') AND (&quot;COMM_MEDIUM&quot; !='SYSTEM') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;OBSOLETE&quot; ='') AND (&quot;IA_DATE&quot; >=&quot;date_start&quot;) AND (&quot;IA_DATE&quot; &lt;=&quot;date_end&quot;)</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="JOIN_SET_ID"/>
+        <viewAttribute id="CONTACT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_JS_CONTACT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_SET_ID" source="JOIN_SET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="ID"/>
+      </input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;JOIN_SET_ID&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute hidden="true" id="JOIN$CONTACT_KEY$CONTACT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <input node="#Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$CONTACT_KEY$CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="EMPTY_JS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUANI_PM_DUMMY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMPTY_JS" source="EMPTY_JS"/>
+      </input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;EMPTY_JS&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute hidden="true" id="JOIN$CLIENT$HPA_CLIENT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$HPA_CLIENT" source="CLIENT"/>
+      </input>
+      <input node="#Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$HPA_CLIENT" source="HPA_CLIENT"/>
+      </input>
+      <joinAttribute name="JOIN$CLIENT$HPA_CLIENT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="IA_DATE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="#Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="#Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="AMOUNT"/>
+        <viewAttribute id="IA_DATE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Union_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+      </input>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+      </input>
+      <joinAttribute name="IA_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="TARGET_CURRENCY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUANC_TARGETCURR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="WAERS"/>
+      </input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_1" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="TARGET_CURRENCY"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="AMOUNT"/>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="IA_DATE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+      </input>
+      <input node="#Projection_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_CURRENCY" source="TARGET_CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+      </input>
+      <joinAttribute name="HPA_CLIENT"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_4">
+    <descriptions/>
+    <attributes>
+      <attribute id="CONTACT_KEY_BIN" hidden="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="Join_4" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IA_KEY_BIN" hidden="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_KEY"/>
+        <keyMapping columnObjectName="Join_4" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="PRODUCT_KEY_BIN" hidden="true" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PRODUCT_KEY"/>
+        <keyMapping columnObjectName="Join_4" columnName="PRODUCT_KEY"/>
+      </attribute>
+      <attribute id="TARGET_CURRENCY" hidden="true" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TARGET_CURRENCY"/>
+        <keyMapping columnObjectName="Join_4" columnName="TARGET_CURRENCY"/>
+      </attribute>
+      <attribute id="CURRENCY" hidden="true" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CURRENCY"/>
+        <keyMapping columnObjectName="Join_4" columnName="CURRENCY"/>
+      </attribute>
+      <attribute id="HPA_CLIENT" hidden="true" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="HPA_CLIENT"/>
+        <keyMapping columnObjectName="Join_4" columnName="HPA_CLIENT"/>
+      </attribute>
+      <attribute id="IA_DATE" hidden="true" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_DATE"/>
+        <keyMapping columnObjectName="Join_4" columnName="IA_DATE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="CONTACT_KEY" hidden="false" order="1" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="32">
+          <formula>to_nvarchar(&quot;CONTACT_KEY_BIN&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="IA_KEY" hidden="false" order="2" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_KEY"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="32">
+          <formula>to_nvarchar(&quot;IA_KEY_BIN&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="PRODUCT_KEY" hidden="false" order="3" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PRODUCT_KEY"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="32">
+          <formula>to_nvarchar(&quot;PRODUCT_KEY_BIN&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="AMOUNT" hidden="true" order="10" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="AMOUNT"/>
+        <measureMapping columnObjectName="Join_4" columnName="AMOUNT"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures>
+      <measure id="AMOUNT_CC" hidden="false" order="4" semanticType="amount" aggregationType="sum" measureType="amount" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="31" scale="2">
+        <descriptions defaultDescription="AMOUNT_CC"/>
+        <unitCurrencyAttribute attributeName="TARGET_CURRENCY"/>
+        <currencyConversion errorHandling="failOnError" generateOutputUnitCurrencyAttribute="true" outputUnitCurrencyAttributeName="AMOUNT_CC_CURRENCY">
+          <client>
+            <attribute attributeName="HPA_CLIENT"/>
+          </client>
+          <currencyConversionTables rates="sap.hana-app.cuan.db.cuan::TCURR" configuration="sap.hana-app.cuan.db.cuan::TCURV" prefactors="sap.hana-app.cuan.db.cuan::TCURF" notations="sap.hana-app.cuan.db.cuan::TCURN" precisions="sap.hana-app.cuan.db.cuan::TCURX"/>
+          <sourceCurrency>
+            <attribute attributeName="CURRENCY"/>
+          </sourceCurrency>
+          <erpDecimalShift>true</erpDecimalShift>
+          <erpDecimalShiftBack>true</erpDecimalShiftBack>
+          <targetCurrency>
+            <attribute attributeName="TARGET_CURRENCY"/>
+          </targetCurrency>
+          <referenceDate>
+            <attribute attributeName="IA_DATE"/>
+          </referenceDate>
+          <exchangeRateType>M</exchangeRateType>
+        </currencyConversion>
+        <formula>&quot;AMOUNT&quot;</formula>
+      </measure>
+    </calculatedMeasures>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="173" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="false" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="328" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="569"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="569"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="473"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="569"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="473"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="174" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="250" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="96" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="173" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

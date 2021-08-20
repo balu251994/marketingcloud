@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.prodreco.algorithm.query.topn::CA_TOP_N_GET_RECOMMENDATION" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="PRECO_D_TOPN"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="39"/>
+  <dataSources>
+    <DataSource id="PRECO_D_TOPN">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_D_TOPN</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_D_ALGO_TYP">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_D_ALGO_TYP</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_TASK">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TASK</resourceUri>
+    </DataSource>
+    <DataSource id="ResultMax$$$$PRECO_CX_TASK$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TASK</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="TopN">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PRECO_D_TOPN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+      </input>
+      <filter>(&quot;CLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="TopNAlgorithms">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="TYPE_ID"/>
+        <viewAttribute id="RUNTIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PRECO_D_ALGO_TYP">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE_ID" source="TYPE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RUNTIME" source="RUNTIME"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;RUNTIME&quot; ='sap.hana-app.prodreco.algorithm.query.topn/CA_TOP_N_GET_RECOMMENDATION')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Task" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute hidden="true" id="JOIN$ALGO_TYPE_ID$TYPE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PRECO_CX_TASK">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ALGO_TYPE_ID$TYPE_ID" source="ALGO_TYPE_ID"/>
+      </input>
+      <input node="#TopNAlgorithms">
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ALGO_TYPE_ID$TYPE_ID" source="TYPE_ID"/>
+      </input>
+      <joinAttribute name="JOIN$ALGO_TYPE_ID$TYPE_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="RelevantTopN" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#TopN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+      </input>
+      <input node="#Task">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="MaxResult">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute aggregationType="max" id="MAXSCORE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#RelevantTopN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAXSCORE" source="SCORE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="TopNCalibrated" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="MAXSCORE"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute hidden="true" id="JOIN$TASK_ID$TASK_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DOUBLE" id="CALIBRATED_SCORE" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;MAXSCORE&quot;, 0 , 0, double(&quot;SCORE&quot;) / double(&quot;MAXSCORE&quot;))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#MaxResult">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAXSCORE" source="MAXSCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_ID$TASK_ID" source="TASK_ID"/>
+      </input>
+      <input node="#RelevantTopN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_ID$TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="JOIN$TASK_ID$TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="Rank">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="SCORE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#TopNCalibrated">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="CALIBRATED_SCORE"/>
+      </input>
+      <windowFunction>
+        <partitionViewAttributeName>TASK_ID</partitionViewAttributeName>
+        <order byViewAttributeName="SCORE" direction="DESC"/>
+        <rankThreshold>
+          <value>100</value>
+        </rankThreshold>
+        <rankViewAttributeName>RANK</rankViewAttributeName>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="ResultMax" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="RANK"/>
+        <viewAttribute id="MAX_RESULT"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="TO_KEEP" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;RANK&quot;&lt;=&quot;MAX_RESULT&quot;,'X','')</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#Rank">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RANK" source="RANK"/>
+      </input>
+      <input node="#ResultMax$$$$PRECO_CX_TASK$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="FinalFilter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="TO_KEEP"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#ResultMax">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TO_KEEP" source="TO_KEEP"/>
+      </input>
+      <filter>(&quot;TO_KEEP&quot; ='X')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="FinalFilter">
+    <descriptions/>
+    <attributes>
+      <attribute id="TASK_ID" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TASK_ID"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="TASK_ID"/>
+      </attribute>
+      <attribute id="RESULT_ITEM_TYPE" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RESULT_ITEM_TYPE"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="RESULT_ITEM_TYPE"/>
+      </attribute>
+      <attribute id="RESULT_ITEM" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RESULT_ITEM"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="RESULT_ITEM"/>
+      </attribute>
+      <attribute id="SCORE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SCORE"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="SCORE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="162" y="93"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TopN" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="239" y="693"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TopNAlgorithms" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="85" y="789"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Task" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="85" y="693"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="RelevantTopN" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="162" y="597"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MaxResult" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="75" y="519"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TopNCalibrated" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="162" y="423"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Rank" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="162" y="345"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ResultMax" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="162" y="249"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FinalFilter" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="162" y="171"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

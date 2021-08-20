@@ -1,0 +1,2745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_INTERACTION_CONTACT_B2B" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Interaction Contacts"/>
+  <metadata changedAt="2019-02-19 11:38:27.846"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="35"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="T002T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T002T</resourceUri>
+    </DataSource>
+    <DataSource id="T005T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T005T</resourceUri>
+    </DataSource>
+    <DataSource id="TSAD3T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::TSAD3T</resourceUri>
+    </DataSource>
+    <DataSource id="T005U">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T005U</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.db.cuan::TSAD15T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::TSAD15T</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_T016T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_T016T</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_TSABT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_TSABT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_TPFKT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_TPFKT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_VA_ST_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_VA_ST_T</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_MKTA">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_MKTA</resourceUri>
+    </DataSource>
+    <DataSource id="HPAC_MKT_AREA_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::HPAC_MKT_AREA_T</resourceUri>
+    </DataSource>
+    <DataSource id="TB027T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::TB027T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IC">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="CONTAINER"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="LCHG_DATE_TIME"/></input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;OBSOLETE&quot; ='') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (in (&quot;IC_TYPE&quot;,'00','01')) AND (&quot;END_OF_PURPOSE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_LANGU" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="LANGUAGE_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_IC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="T002T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_DESC" source="SPTXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="SPRSL"/>
+      </input>
+      <joinAttribute name="LANGUAGE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_COUNTRY" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_LANGU">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="T005T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="LANDX50"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="LAND1"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="COUNTRY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_TITLE" cardinality="C1_1" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_COUNTRY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="TSAD3T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_MEDI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="TITLE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_REGION" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_TITLE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="T005U">
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="BEZEI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="BLAND"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="COUNTRY"/>
+      <joinAttribute name="REGION"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_SEX">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="GTEXT"/>
+        <viewAttribute id="SPRAS"/></viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="sap.hana-app.cuan.db.cuan::TSAD15T"/></calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_SEX" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="SEX_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_REGION">
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="REGION_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="Projection_SEX">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_DESC" source="GTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="GENDER"/>
+      </input>
+      <joinAttribute name="SEX"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_BRSCH" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="SEX_DESC"/>
+        <viewAttribute id="BRSCH_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_SEX">
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="REGION_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_DESC" source="SEX_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="CUANC_T016T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_DESC" source="BRTXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="BRSCH"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_ABTNR" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BRSCH_DESC"/>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="SEX_DESC"/>
+        <viewAttribute id="BRSCH_DESC_1"/>
+        <viewAttribute id="ABTNR_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_BRSCH">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_DESC" source="BRSCH_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="REGION_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_DESC" source="SEX_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_DESC_1" source="BRSCH_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="CUANC_TSABT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_DESC" source="VTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="ABTNR"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PAFKT" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BRSCH_DESC"/>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="SEX_DESC"/>
+        <viewAttribute id="ABTNR_DESC"/>
+        <viewAttribute id="PAFKT_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_ABTNR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_DESC" source="BRSCH_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="REGION_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_DESC" source="SEX_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_DESC" source="ABTNR_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="CUANC_TPFKT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_DESC" source="VTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="PAFKT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_VA_ST" cardinality="C1_1" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BRSCH_DESC"/>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="SEX_DESC"/>
+        <viewAttribute id="ABTNR_DESC"/>
+        <viewAttribute id="PAFKT_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS_DESCR"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_PAFKT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_DESC" source="BRSCH_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="REGION_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_DESC" source="SEX_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_DESC" source="ABTNR_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_DESC" source="PAFKT_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="CUANC_CE_VA_ST_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS_DESCR" source="VALIDATION_STATUS_DESCR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="VALIDATION_STATUS"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IC_MKT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="ROOT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_MKTA"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;OBSOLETE&quot; ='') AND (&quot;_DATAAGING&quot; !='00010101')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_IC_MKT" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BRSCH_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS_DESCR"/>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="SEX_DESC"/>
+        <viewAttribute id="ABTNR_DESC"/>
+        <viewAttribute id="PAFKT_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_VA_ST">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_DESC" source="BRSCH_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS_DESCR" source="VALIDATION_STATUS_DESCR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="REGION_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_DESC" source="SEX_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_DESC" source="ABTNR_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_DESC" source="PAFKT_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="Projection_IC_MKT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="ROOT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_MARKETING_DESC" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="HPAC_MKT_AREA_T"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_MARKETING_DESC" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BRSCH_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS_DESCR"/>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="SEX_DESC"/>
+        <viewAttribute id="ABTNR_DESC"/>
+        <viewAttribute id="PAFKT_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_IC_MKT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_DESC" source="BRSCH_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS_DESCR" source="VALIDATION_STATUS_DESCR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="REGION_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_DESC" source="SEX_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_DESC" source="ABTNR_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_DESC" source="PAFKT_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      </input>
+      <input node="Projection_MARKETING_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_DESC" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="MKT_AREA_ID"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_MARITAL_STATUS" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MARITAL_STATUS_DESC"/>
+        <viewAttribute id="BRSCH_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS_DESCR"/>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="STREET"/>
+        <viewAttribute id="HOUSE_NUM1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="UNIT"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="IMAGE_URI"/>
+        <viewAttribute id="WEB_URI"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TEXT20_3"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT40_3"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT80_3"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT120_3"/>
+        <viewAttribute id="TITLE_DESC"/>
+        <viewAttribute id="SEX_DESC"/>
+        <viewAttribute id="ABTNR_DESC"/>
+        <viewAttribute id="PAFKT_DESC"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="CONT_LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONT_LCHG_DATE_TIME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_MARKETING_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_DESC" source="BRSCH_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS_DESCR" source="VALIDATION_STATUS_DESCR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="REGION_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT" source="UNIT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URI" source="IMAGE_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEB_URI" source="WEB_URI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_3" source="TEXT20_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_3" source="TEXT40_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_3" source="TEXT80_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_3" source="TEXT120_3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_DESC" source="TITLE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_DESC" source="SEX_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_DESC" source="ABTNR_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_DESC" source="PAFKT_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LAST_IA_TIMESTAMP" source="CONT_LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONT_LCHG_DATE_TIME" source="CONT_LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_DESC" source="MKT_AREA_DESC"/>
+      </input>
+      <input node="TB027T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_DESC" source="BEZ20"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARST"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="MARITAL_STATUS"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_MARITAL_STATUS">
+    <descriptions/>
+    <attributes>
+      <attribute id="IC_BRSCH_DESC" hidden="true" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="BRSCH_DESC"/>
+      </attribute>
+      <attribute id="MARITAL_STATUS_DESC" hidden="true" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="MARITAL_STATUS_DESC"/>
+      </attribute>
+      <attribute id="CONT_VALIDATION_STATUS_DESCR" hidden="true" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="VALIDATION_STATUS_DESCR"/>
+      </attribute>
+      <attribute id="CONT_REGION_DESC" hidden="true" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="REGION_DESC"/>
+      </attribute>
+      <attribute id="CONT_COUNTRY_DESC" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="COUNTRY_DESC"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IC_CONT_NAME_TEXT" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Full Name"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="NAME_TEXT"/>
+      </attribute>
+      <attribute id="IC_CONT_COUNTRY" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Country/Region"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="COUNTRY"/>
+      </attribute>
+      <attribute id="IC_CONT_REGION" order="9" attributeHierarchyActive="false" displayAttribute="false" descriptionColumnName="CONT_REGION_DESC">
+        <descriptions defaultDescription="Region"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="REGION"/>
+      </attribute>
+      <attribute id="IC_CONT_CITY1" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="City"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="CITY1"/>
+      </attribute>
+      <attribute id="IC_NAME_FIRST" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="First Name"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="NAME_FIRST"/>
+      </attribute>
+      <attribute id="IC_NAME_LAST" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Last Name"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="NAME_LAST"/>
+      </attribute>
+      <attribute id="IC_CONT_TITLE" order="13" attributeHierarchyActive="false" descriptionColumnName="TITLE_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Title"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TITLE"/>
+      </attribute>
+      <attribute id="IC_CONT_TITLE_FT" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Title (User-Defined Text)"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TITLE_FT"/>
+      </attribute>
+      <attribute id="IC_CONT_COUNTRY_FT" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Country/Region (User-Defined Text)"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="COUNTRY_FT"/>
+      </attribute>
+      <attribute id="IC_CONT_POSTCODE1" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Postal Code"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="POSTCODE1"/>
+      </attribute>
+      <attribute id="IC_CONT_REGION_FT" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Region (User-Defined Text)"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="REGION_FT"/>
+      </attribute>
+      <attribute id="IC_CONT_STREET" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Street"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="STREET"/>
+      </attribute>
+      <attribute id="IC_CONT_HOUSE_NUM1" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="House Number"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="HOUSE_NUM1"/>
+      </attribute>
+      <attribute id="IC_CONT_LANGUAGE" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Language"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="LANGUAGE"/>
+      </attribute>
+      <attribute id="IC_CONT_LANGUAGE_FT" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Language (User-Defined Text)"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="LANGUAGE_FT"/>
+      </attribute>
+      <attribute id="IC_CONT_SEX" order="22" attributeHierarchyActive="false" descriptionColumnName="SEX_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Gender"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="SEX"/>
+      </attribute>
+      <attribute id="IC_CONT_SEX_FT" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Gender (User-Defined Text)"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="SEX_FT"/>
+      </attribute>
+      <attribute id="IC_CONT_MARITAL_STATUS" order="24" attributeHierarchyActive="false" descriptionColumnName="MARITAL_STATUS_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marital Status"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="MARITAL_STATUS"/>
+      </attribute>
+      <attribute id="IC_CONT_MARITAL_STATUS_FT" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marital Status"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="MARITAL_STATUS_FT"/>
+      </attribute>
+      <attribute id="IC_CONT_BRSCH" order="26" attributeHierarchyActive="false" descriptionColumnName="IC_BRSCH_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Industry"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="BRSCH"/>
+      </attribute>
+      <attribute id="IC_CONT_BRSCH_FT" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Industry (User-Defined Text)"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="BRSCH_FT"/>
+      </attribute>
+      <attribute id="IC_CONT_ABTNR" order="28" attributeHierarchyActive="false" descriptionColumnName="CONT_ABTNR_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Department"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="ABTNR"/>
+      </attribute>
+      <attribute id="IC_CONT_ABTNR_FT" order="29" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Department (User-Defined Text)"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="ABTNR_FT"/>
+      </attribute>
+      <attribute id="IC_CONT_PAFKT_FT" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Function (User-Defined Text)"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="PAFKT_FT"/>
+      </attribute>
+      <attribute id="IC_CONT_PAFKT" order="31" attributeHierarchyActive="false" descriptionColumnName="PAFKT_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Function"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="PAFKT"/>
+      </attribute>
+      <attribute id="IC_CONT_DATE_OF_BIRTH" order="32" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date of Birth"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="DATE_OF_BIRTH"/>
+      </attribute>
+      <attribute id="IS_CONTACT" order="33" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Is Contact"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="IS_CONTACT"/>
+      </attribute>
+      <attribute id="IS_CONSUMER" order="34" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Is Consumer/Prospect"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="IS_CONSUMER"/>
+      </attribute>
+      <attribute id="IC_CONT_LATITUDE" order="35" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latitude"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="LATITUDE"/>
+      </attribute>
+      <attribute id="IC_CONT_LONGITUDE" order="36" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Geolocation"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="LONGITUDE"/>
+      </attribute>
+      <attribute id="IC_CONT_UNIT" order="37" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="UNIT"/>
+      </attribute>
+      <attribute id="IC_CONT_BOOLEAN1" order="38" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="BOOLEAN1"/>
+      </attribute>
+      <attribute id="IC_CONT_BOOLEAN2" order="39" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="BOOLEAN2"/>
+      </attribute>
+      <attribute id="IC_CONT_BOOLEAN3" order="40" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="BOOLEAN3"/>
+      </attribute>
+      <attribute id="IC_CONT_BOOLEAN4" order="41" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="BOOLEAN4"/>
+      </attribute>
+      <attribute id="IC_CONT_TIME1" order="42" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TIME1"/>
+      </attribute>
+      <attribute id="IC_CONT_IMAGE_URI" order="43" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Image URI"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="IMAGE_URI"/>
+      </attribute>
+      <attribute id="IC_CONT_WEB_URI" order="44" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Web URI"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="WEB_URI"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT255_2" order="45" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT255_2"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT255_1" order="46" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT255_1"/>
+      </attribute>
+      <attribute id="IC_CONT_DATE1" order="47" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="DATE1"/>
+      </attribute>
+      <attribute id="IC_CONT_DATE2" order="48" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="DATE2"/>
+      </attribute>
+      <attribute id="IC_CONT_DATE3" order="49" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="DATE3"/>
+      </attribute>
+      <attribute id="IC_CONT_NUMBER1" order="50" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="NUMBER1"/>
+      </attribute>
+      <attribute id="IC_CONT_NUMBER2" order="51" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="NUMBER2"/>
+      </attribute>
+      <attribute id="IC_CONT_NUMBER3" order="52" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="NUMBER3"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT20_1" order="53" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT20_1"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT20_2" order="54" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT20_2"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT20_3" order="55" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT20_3"/>
+      </attribute>
+      <attribute id="IC_CONT_TIMESTAMP1" order="56" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TIMESTAMP1"/>
+      </attribute>
+      <attribute id="IC_CONT_TIMESTAMP2" order="57" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TIMESTAMP2"/>
+      </attribute>
+      <attribute id="IC_CONT_DECIMAL1" order="58" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="DECIMAL1"/>
+      </attribute>
+      <attribute id="IC_CONT_DECIMAL2" order="59" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="DECIMAL2"/>
+      </attribute>
+      <attribute id="IC_CONT_DECIMAL3" order="60" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="DECIMAL3"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT40_1" order="61" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT40_1"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT40_2" order="62" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT40_2"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT40_3" order="63" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT40_3"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT80_1" order="64" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT80_1"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT80_2" order="65" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT80_2"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT80_3" order="66" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT80_3"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT120_1" order="67" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT120_1"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT120_2" order="68" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT120_2"/>
+      </attribute>
+      <attribute id="IC_CONT_TEXT120_3" order="69" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TEXT120_3"/>
+      </attribute>
+      <attribute id="TITLE_DESC" hidden="true" order="70" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TITLE_DESC"/>
+      </attribute>
+      <attribute id="SEX_DESC" hidden="true" order="71" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="SEX_DESC"/>
+      </attribute>
+      <attribute id="CONT_ABTNR_DESC" hidden="true" order="72" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="ABTNR_DESC"/>
+      </attribute>
+      <attribute id="PAFKT_DESC" hidden="true" order="73" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="PAFKT_DESC"/>
+      </attribute>
+      <attribute id="MANDT" order="74" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="MANDT"/>
+      </attribute>
+      <attribute id="IC_CONT_VALIDATION_STATUS" order="75" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="CONT_VALIDATION_STATUS_DESCR" displayAttribute="false">
+        <descriptions defaultDescription="Contact Level"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="VALIDATION_STATUS"/>
+      </attribute>
+      <attribute id="IC_CONT_LAST_IA_TIMESTAMP" order="76" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Timestamp of Last Interaction"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="CONT_LAST_IA_TIMESTAMP"/>
+      </attribute>
+      <attribute id="IC_CONT_LCHG_DATE_TIME" order="77" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Last Change Date"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="CONT_LCHG_DATE_TIME"/>
+      </attribute>
+      <attribute id="IC_CONT_SMTP_ADDR" order="78" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Email"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="SMTP_ADDR"/>
+      </attribute>
+      <attribute id="IC_CONT_TELNR_LONG" order="79" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Phone"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TELNR_LONG"/>
+      </attribute>
+      <attribute id="IC_CONT_TELNR_MOBILE" order="80" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Mobile"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="TELNR_MOBILE"/>
+      </attribute>
+      <attribute id="IC_MKT_AREA_ID" order="81" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="IC_MKT_AREA_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="CREA_DATE_TIME" order="82" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Creation Date Time"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="CREA_DATE_TIME"/>
+      </attribute>
+      <attribute id="IC_MKT_AREA_DESC" hidden="true" order="83" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area Description"/>
+        <keyMapping columnObjectName="Join_MARITAL_STATUS" columnName="MKT_AREA_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="248" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_IC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="266" y="2056"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_LANGU" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="275" y="1916"/>
+        <rectangleSize height="41" width="141"/>
+      </shape>
+      <shape modelObjectName="Projection_IC" modelObjectNameSpace="Join_LANGU" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::T002T" modelObjectNameSpace="Join_LANGU" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_COUNTRY" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="270" y="1776"/>
+        <rectangleSize height="91" width="151"/>
+      </shape>
+      <shape modelObjectName="Join_LANGU" modelObjectNameSpace="Join_COUNTRY" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::T005T" modelObjectNameSpace="Join_COUNTRY" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_TITLE" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="291" y="1616"/>
+        <rectangleSize height="73" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_COUNTRY" modelObjectNameSpace="Join_TITLE" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::TSAD3T" modelObjectNameSpace="Join_TITLE" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_REGION" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="328" y="1456"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_TITLE" modelObjectNameSpace="Join_REGION" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::T005U" modelObjectNameSpace="Join_REGION" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_SEX" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="118" y="1456"/>
+        <rectangleSize height="51" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_SEX" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="237" y="1296"/>
+        <rectangleSize height="49" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_REGION" modelObjectNameSpace="Join_SEX" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_SEX" modelObjectNameSpace="Join_SEX" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_BRSCH" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="237" y="1156"/>
+        <rectangleSize height="61" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_SEX" modelObjectNameSpace="Join_BRSCH" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::CUANC_T016T" modelObjectNameSpace="Join_BRSCH" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_ABTNR" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="237" y="1016"/>
+        <rectangleSize height="76" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_BRSCH" modelObjectNameSpace="Join_ABTNR" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::CUANC_TSABT" modelObjectNameSpace="Join_ABTNR" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PAFKT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="305" y="856"/>
+        <rectangleSize height="41" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_ABTNR" modelObjectNameSpace="Join_PAFKT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::CUANC_TPFKT" modelObjectNameSpace="Join_PAFKT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_VA_ST" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="383" y="696"/>
+        <rectangleSize height="51" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_PAFKT" modelObjectNameSpace="Join_VA_ST" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::CUANC_CE_VA_ST_T" modelObjectNameSpace="Join_VA_ST" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_IC_MKT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="152" y="696"/>
+        <rectangleSize height="61" width="181"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_IC_MKT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302" y="536"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_VA_ST" modelObjectNameSpace="Join_IC_MKT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_IC_MKT" modelObjectNameSpace="Join_IC_MKT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_MARKETING_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="536"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_MARKETING_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="220" y="376"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_IC_MKT" modelObjectNameSpace="Join_MARKETING_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_MARKETING_DESC" modelObjectNameSpace="Join_MARKETING_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_MARITAL_STATUS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="220" y="236"/>
+        <rectangleSize height="31" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Join_MARKETING_DESC" modelObjectNameSpace="Join_MARITAL_STATUS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::TB027T" modelObjectNameSpace="Join_MARITAL_STATUS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

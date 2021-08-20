@@ -1,0 +1,94 @@
+FUNCTION "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_GENDER_SCORE" (IP_MODEL_GUID VARCHAR (32), IP_JOIN_SET_ID VARCHAR (32))
+RETURNS TABLE ("CONTACT_KEY" VARBINARY (16), "SCORE_VALUE" DECIMAL (15, 2), "SCORE_DESC" NVARCHAR (40), "UNIT" NVARCHAR (5), "UNIT.description" NVARCHAR (20), "RANK" INTEGER)
+LANGUAGE SQLSCRIPT
+SQL SECURITY INVOKER AS 
+
+lc_scenario_id              nvarchar(60) := 'CONTACT_GENDER_SCORE';
+l_model_guid                varchar(32);
+l_scenario_parameters       nclob;
+l_target_variable           nclob;
+l_datasource_parameters     nclob;
+l_selected_variables        nclob;
+l_model_parameters          nclob;
+l_implementation_method     nvarchar(32);
+l_implementation_method_cat nclob;
+
+begin  
+--==============================================================================
+-- [Convention:] If no model guid is given assume only 1 model per scenario exists
+--==============================================================================
+	if :ip_model_guid <> '' then
+	   l_model_guid := :ip_model_guid;
+	else
+	  select top 1
+	      "DB_KEY"
+	    into l_model_guid
+	    from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"
+	    where "MANDT" = session_context('CLIENT')
+	      and "PREDICTIVE_KPI" = :lc_scenario_id
+	      and status = '3'
+	  ;
+	end if;
+	
+	if :l_model_guid <> '' then
+	
+--==============================================================================
+-- Read Model Definition
+--==============================================================================
+		call "sap.hana-app.cuan.cpred.reuse.internal::PR_READ_MODEL_DEF"(
+		  :l_model_guid,
+		  lt_model_def,
+		  lt_model
+		);
+		  
+		select top 1 "VALUE" into l_scenario_parameters       from :lt_model_def where name = '$$scenario_parameters$$';
+		select top 1 "VALUE" into l_datasource_parameters     from :lt_model_def where name = '$$datasource_parameters$$';
+		select top 1 "VALUE" into l_selected_variables        from :lt_model_def where name = '$$selected_variables$$';
+		select top 1 "VALUE" into l_model_parameters          from :lt_model_def where name = '$$model_parameters$$';
+		select top 1 "VALUE" into l_implementation_method     from :lt_model_def where name = '$$implementation_method$$';
+		select top 1 "VALUE" into l_implementation_method_cat from :lt_model_def where name = '$$implementation_method_cat$$';
+		
+--==============================================================================
+-- Execute Model
+--==============================================================================
+		if :l_implementation_method = 'CONTACT_GENDER_SCORE' then
+		
+		  call "sap.hana-app.cuan.contact.score.internal::PR_CE_CONTACT_GENDER"(
+		     :l_scenario_parameters,
+		     :l_datasource_parameters,
+		     :l_selected_variables,
+		     :l_model_parameters,
+		     :ip_join_set_id,
+		     lt_result
+		   );
+		   
+	   		lt_result_w_rank =
+				select a.*, max(rank) as rank
+				from :lt_result as a
+				left join "sap.hana-app.cuan.db.cuan::CUANC_PM_UI_THRS" as b
+				on b.SCENARIO_ID = lc_scenario_id 
+				where b.THRESHOLD_VALUE <= a.score
+				group by a.key, a.score;
+		   
+			var_out =
+			   select
+			       a.key 	as "CONTACT_KEY",    
+			       a.score	as "SCORE_VALUE",
+			       '' 		as "SCORE_DESC",
+			       '' 		as "UNIT",
+			       '' 		as "UNIT.description",
+			   	 	case when b.rank is null 
+			   	 	then 0
+			   	 	else b.rank 
+			   	 	end as "RANK"
+			     from :lt_result as a
+			     left join :lt_result_w_rank as b
+			     on a.key = b.key;
+		
+		end if;
+
+	end if;
+
+
+return :var_out;
+END;

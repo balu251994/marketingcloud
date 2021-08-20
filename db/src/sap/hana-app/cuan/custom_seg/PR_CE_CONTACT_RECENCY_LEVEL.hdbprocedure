@@ -1,0 +1,21 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_RECENCY_LEVEL" (  in i_scenario_parameters NCLOB ,  in i_datasource_parameters NCLOB ,  in i_selected_variables NCLOB ,  in i_model_parameters NCLOB ,  in ip_join_set_id VARCHAR(32) ,  out var_out "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_RECENCY_LEVEL/tabletype/var_out"  ) language SQLSCRIPT sql security invoker reads sql data as begin 
+	if :ip_join_set_id = '' or :ip_join_set_id = '00000000000000000000000000000000' then
+	  lt_recency_score =
+		select 
+				db_key,
+				days_until_last_ia
+		from "sap.hana-app.cuan.contact::AN_CONTACT_SCORING";
+	else	
+      lt_recency_score =
+		select db_key,
+			   days_until_last_ia
+		from "sap.hana-app.cuan.contact.score.internal.datafoundation::CA_C_CONTACT_SCORING_JS"(
+			placeholder."$$IP_JOIN_SET_ID$$" => :ip_join_set_id);        
+	end if;		
+
+	var_out =
+		select db_key        				as "KEY", 
+		       days_until_last_ia 			as "SCORE"
+		from :lt_recency_score as recency_score;
+		  
+end

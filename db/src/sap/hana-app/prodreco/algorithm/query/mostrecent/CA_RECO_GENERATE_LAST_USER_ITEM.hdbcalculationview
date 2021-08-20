@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.prodreco.algorithm.query.mostrecent::CA_RECO_GENERATE_LAST_USER_ITEM" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_RECO_GENERATE_LAST_USER_ITEM"/>
+  <metadata changedAt="2019-12-13 11:47:18.587"/>
+  <localVariables>
+    <variable id="IV_TASK" parameter="true">
+      <descriptions defaultDescription="IV_TASK"/>
+      <variableProperties datatype="INTEGER" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+        <derivationRule>
+          <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TASK</resourceUri>
+          <resultElementName>TASK_ID</resultElementName>
+        </derivationRule>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="50"/>
+  <dataSources>
+    <DataSource id="PRECO_CX_TASK">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TASK</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_TRANS">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TRANS</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IA_PROD">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_PROD</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_CUAN_PRODUCT_VARIANT_TO_BASE_MAP">
+      <resourceUri>sap.hana-app.prodreco.internal::CA_D_CUAN_PRODUCT_VARIANT_TO_BASE_MAP</resourceUri>
+    </DataSource>
+  </dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Tasks">
+    <descriptions defaultDescription="PRECO_CX_TASK_ORI"/>
+    <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ALGO_TYPE_ID"/>
+        <viewAttribute id="MAX_RESULT"/>
+      </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="DUMMY" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>1</formula>
+        </calculatedViewAttribute>
+      
+      <calculatedViewAttribute id="MAX_RESULT_DEC" datatype="DECIMAL" length="22" scale="2" expressionLanguage="SQL">
+      
+        <formula>TO_DECIMAL(&quot;MAX_RESULT&quot;)</formula>
+      
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+      <input node="PRECO_CX_TASK"/>
+    </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Interactions">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="TRANSACTION_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="SOURCE_OBJECT_ID"/>
+        <viewAttribute id="SOURCE_OBJECT_TYPE"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_KEY" source="DB_KEY"/></input>
+    <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;SOURCE_OBJECT_ID&quot; !='')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="InjectedTransactions">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="TRANSACTION_ID"/>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="ITEM_ID"/>
+      </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARBINARY" id="TRANSACTION_HEX" length="16" expressionLanguage="SQL">
+          <formula>hextobin(&quot;TRANSACTION_ID&quot;)</formula>
+        </calculatedViewAttribute>
+      
+      <calculatedViewAttribute id="PRODUCT_HEX" datatype="VARBINARY" length="16" expressionLanguage="SQL">
+      
+        <formula>hextobin(&quot;ITEM_ID&quot;)</formula>
+      
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+      <input node="PRECO_CX_TRANS"/>
+    </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="EnhancedInteractions" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SOURCE_OBJECT_ID"/>
+        <viewAttribute id="SOURCE_OBJECT_TYPE"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="TRANSACTION_KEY"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="Interactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_ID" source="SOURCE_OBJECT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_TYPE" source="SOURCE_OBJECT_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_KEY" source="TRANSACTION_KEY"/>
+      </input>
+      <input node="AggregationTrxProd">
+        <mapping xsi:type="Calculation:AttributeMapping" target="USER_ID" source="USER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_KEY" source="TRANSACTION_HEX"/>
+      </input>
+    <joinAttribute name="TRANSACTION_KEY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="AggregationTrxProd">
+    <descriptions/>
+    <viewAttributes>
+    
+      <viewAttribute id="USER_ID"/>
+      <viewAttribute id="ITEM_ID"/>
+    
+        <viewAttribute id="TRANSACTION_HEX"/>
+      
+      <viewAttribute id="PRODUCT_HEX"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+      <input node="InjectedTransactions"/>
+    </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="RankLastInteractionTimestamp">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="SOURCE_OBJECT_ID"/>
+        <viewAttribute id="SOURCE_OBJECT_TYPE"/>
+        <viewAttribute id="TIMESTAMP"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="EnhancedInteractions"/>
+    <windowFunction dynamicPartitionAttributes="false">
+      <partitionViewAttributeName>USER_ID</partitionViewAttributeName>
+      <order byViewAttributeName="TIMESTAMP" direction="DESC"/>
+      <rankThreshold>
+        <value>1</value>
+      </rankThreshold>
+      <rankViewAttributeName>RANK</rankViewAttributeName>
+    </windowFunction>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="FilteredLastSourceObjectId" cardinality="C1_N" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="TRANSACTION_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute hidden="true" id="JOIN$USER_ID$USER_ID"/>
+      <viewAttribute hidden="true" id="JOIN$SOURCE_OBJECT_ID$SOURCE_OBJECT_ID"/>
+      <viewAttribute hidden="true" id="JOIN$SOURCE_OBJECT_TYPE$SOURCE_OBJECT_TYPE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARBINARY" id="ITEM_HEX" length="16" expressionLanguage="SQL">
+          <formula>hextobin(&quot;ITEM_ID&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="RankLastInteractionTimestamp">
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$USER_ID$USER_ID" source="USER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SOURCE_OBJECT_ID$SOURCE_OBJECT_ID" source="SOURCE_OBJECT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SOURCE_OBJECT_TYPE$SOURCE_OBJECT_TYPE" source="SOURCE_OBJECT_TYPE"/>
+      </input>
+      <input node="EnhancedInteractions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="USER_ID" source="USER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_KEY" source="TRANSACTION_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$USER_ID$USER_ID" source="USER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SOURCE_OBJECT_ID$SOURCE_OBJECT_ID" source="SOURCE_OBJECT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SOURCE_OBJECT_TYPE$SOURCE_OBJECT_TYPE" source="SOURCE_OBJECT_TYPE"/>
+      </input>
+    <joinAttribute name="JOIN$USER_ID$USER_ID"/>
+    <joinAttribute name="JOIN$SOURCE_OBJECT_ID$SOURCE_OBJECT_ID"/>
+    <joinAttribute name="JOIN$SOURCE_OBJECT_TYPE$SOURCE_OBJECT_TYPE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="IA_Product">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="TRANSACTION_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="QUANTITY"/>
+      </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DECIMAL" id="SCORE" length="22" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;QUANTITY&quot;=0,1,&quot;QUANTITY&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="CUAND_CE_IA_PROD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_KEY" source="PARENT_KEY"/></input>
+    <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="IA_ProductFiltered" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="TRANSACTION_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="SCORE"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="IA_Product">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_KEY" source="TRANSACTION_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+      </input>
+      <input node="AggregationTrxProd">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_KEY" source="TRANSACTION_HEX"/>
+      </input>
+    <joinAttribute name="TRANSACTION_KEY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="IA_ProductConverted" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="TRANSACTION_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="SCORE"/>
+      <viewAttribute hidden="true" id="JOIN$PRODUCT_KEY$DB_KEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="IA_Product_Aggregated">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_KEY" source="TRANSACTION_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRODUCT_KEY$DB_KEY" source="PRODUCT_KEY"/>
+      </input>
+      <input node="CA_D_CUAN_PRODUCT_VARIANT_TO_BASE_MAP">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="RESULT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRODUCT_KEY$DB_KEY" source="DB_KEY"/>
+      </input>
+    <joinAttribute name="JOIN$PRODUCT_KEY$DB_KEY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="IA_Product_Aggregated">
+    <viewAttributes>
+      <viewAttribute id="TRANSACTION_KEY"/>
+      <viewAttribute id="SCORE" aggregationType="sum"/>
+    
+      <viewAttribute id="PRODUCT_KEY"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="IA_ProductFiltered"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="AddingQuantifier" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="TRANSACTION_KEY"/>
+        <viewAttribute id="ITEM_HEX"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute hidden="true" id="JOIN$PRODUCT_KEY$ITEM_HEX"/>
+      <viewAttribute hidden="true" id="JOIN$TRANSACTION_KEY$TRANSACTION_KEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="IA_ProductConverted">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRODUCT_KEY$ITEM_HEX" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TRANSACTION_KEY$TRANSACTION_KEY" source="TRANSACTION_KEY"/>
+      </input>
+      <input node="FilteredLastSourceObjectId">
+        <mapping xsi:type="Calculation:AttributeMapping" target="USER_ID" source="USER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_KEY" source="TRANSACTION_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_HEX" source="ITEM_HEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRODUCT_KEY$ITEM_HEX" source="ITEM_HEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TRANSACTION_KEY$TRANSACTION_KEY" source="TRANSACTION_KEY"/>
+      </input>
+    <joinAttribute name="JOIN$PRODUCT_KEY$ITEM_HEX"/>
+    <joinAttribute name="JOIN$TRANSACTION_KEY$TRANSACTION_KEY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="AggregationScore">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="RESULT_ITEM_ID"/>
+        <viewAttribute aggregationType="sum" id="SCORE"/>
+        <viewAttribute aggregationType="max" id="TIMESTAMP"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+      <input node="AddingQuantifier">
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_ID" source="ITEM_HEX"/></input>
+    </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="RankTS">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="RESULT_ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="TIMESTAMP"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="RemoveNegativeScore"/>
+    <windowFunction dynamicPartitionAttributes="false">
+      <partitionViewAttributeName>USER_ID</partitionViewAttributeName>
+      <partitionViewAttributeName>SCORE</partitionViewAttributeName>
+      <order byViewAttributeName="TIMESTAMP" direction="ASC"/>
+      <rankThreshold>
+        <value>100</value>
+      </rankThreshold>
+      <rankViewAttributeName>TS_SCORE</rankViewAttributeName>
+    </windowFunction>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="RemoveNegativeScore" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="USER_ID"/>
+      <viewAttribute id="RESULT_ITEM_ID"/>
+      <viewAttribute id="SCORE"/>
+      <viewAttribute id="TIMESTAMP"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="AggregationScore"/>
+    <filter>&quot;SCORE&quot;&gt;0</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="FinalScore">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="RESULT_ITEM_ID"/>
+        <viewAttribute id="ORIGINAL_SCORE"/>
+        <viewAttribute id="TS_SCORE"/>
+      </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DECIMAL" id="SCORE" length="22" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>(&quot;ORIGINAL_SCORE&quot;*100)+&quot;TS_SCORE&quot;</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="VARCHAR" id="DUMMY" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>1</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="RankTS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ORIGINAL_SCORE" source="SCORE"/></input>
+    </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="FinalRank">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="RESULT_ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="DUMMY"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="FinalScore"/>
+    <windowFunction dynamicPartitionAttributes="false">
+      <partitionViewAttributeName>USER_ID</partitionViewAttributeName>
+      <order byViewAttributeName="SCORE" direction="ASC"/>
+      <rankThreshold>
+        <value>100</value>
+      </rankThreshold>
+      <rankViewAttributeName>RANK</rankViewAttributeName>
+    </windowFunction>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="MaxResults" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="RESULT_ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="RANK"/>
+        <viewAttribute id="MAX_RESULT"/>
+      <viewAttribute id="MAX_RESULT_DEC"/>
+      <viewAttribute hidden="true" id="JOIN$DUMMY$DUMMY"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="TO_KEEP" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;RANK&quot;&lt;=&quot;MAX_RESULT_DEC&quot;,'X','')</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="FinalRank">
+        <mapping xsi:type="Calculation:AttributeMapping" target="USER_ID" source="USER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_ID" source="RESULT_ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RANK" source="RANK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DUMMY$DUMMY" source="DUMMY"/>
+      </input>
+      <input node="Tasks">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT_DEC" source="MAX_RESULT_DEC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DUMMY$DUMMY" source="DUMMY"/>
+      </input>
+    <joinAttribute name="JOIN$DUMMY$DUMMY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="FinalFilter">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="RESULT_ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="RANK"/>
+        <viewAttribute id="TO_KEEP"/>
+      </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="RESULT_ITEM_TYPE" length="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>'13'</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="VARCHAR" id="USER_TYPE" length="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>'9'</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="MaxResults"/>
+    <filter>(&quot;TO_KEEP&quot; ='X')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="MAX_SCORE">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute aggregationType="max" id="MAX_SCORE"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+      <input node="FinalFilter">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_SCORE" source="SCORE"/>
+      </input>
+    </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="NORMALIZED_SCORE" cardinality="C1_N" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="USER_TYPE"/>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="RESULT_ITEM_ID"/>
+        <viewAttribute id="SCORE_ORIGINAL"/>
+        <viewAttribute id="MAX_SCORE"/>
+      <viewAttribute hidden="true" id="JOIN$USER_ID$USER_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="BIGINT" id="SCORE1" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;MAX_SCORE&quot;, 0 , 0, 2147483646 *( &quot;SCORE_ORIGINAL&quot;/&quot;MAX_SCORE&quot;))</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="INTEGER" id="SCORE" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;SCORE1&quot; &gt;= 2147483646 , 2147483646, if(&quot;SCORE1&quot; &lt; 0 , 0, &quot;SCORE1&quot;))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="MAX_SCORE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_SCORE" source="MAX_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$USER_ID$USER_ID" source="USER_ID"/>
+      </input>
+    
+      <input node="FinalFilter">
+        <mapping xsi:type="Calculation:AttributeMapping" target="USER_TYPE" source="USER_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="USER_ID" source="USER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_ID" source="RESULT_ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_ORIGINAL" source="SCORE"/>
+    
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$USER_ID$USER_ID" source="USER_ID"/>
+    
+      </input>
+    <joinAttribute name="JOIN$USER_ID$USER_ID"/>
+  </calculationView>
+</calculationViews>
+  <logicalModel id="NORMALIZED_SCORE">
+    <descriptions/>
+    <attributes>
+      <attribute id="USER_TYPE" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="USER_TYPE"/>
+        <keyMapping columnObjectName="NORMALIZED_SCORE" columnName="USER_TYPE"/>
+      </attribute>
+      <attribute id="USER_ID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="USER_ID"/>
+        <keyMapping columnObjectName="NORMALIZED_SCORE" columnName="USER_ID"/>
+      </attribute>
+      <attribute id="RESULT_ITEM_TYPE" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RESULT_ITEM_TYPE"/>
+        <keyMapping columnObjectName="NORMALIZED_SCORE" columnName="RESULT_ITEM_TYPE"/>
+      </attribute>
+      <attribute id="RESULT_ITEM_ID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RESULT_ITEM_ID"/>
+        <keyMapping columnObjectName="NORMALIZED_SCORE" columnName="RESULT_ITEM_ID"/>
+      </attribute>
+      <attribute id="SCORE" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SCORE"/>
+        <keyMapping columnObjectName="NORMALIZED_SCORE" columnName="SCORE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+<layout>
+  <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="463.7519408977354" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Tasks" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="551.627757228884" y="786.9999964237213"/>
+        <rectangleSize height="64" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Interactions" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="104.38337023834197" y="1976.999989271164"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="InjectedTransactions" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="319.15499883906426" y="2101.999989271164"/>
+        <rectangleSize height="64" width="165"/>
+      </shape>
+      <shape expanded="true" modelObjectName="EnhancedInteractions" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="190.83333273728687" y="1816.9999904632568"/>
+        <rectangleSize height="82" width="191"/>
+      </shape>
+      <shape modelObjectName="Interactions" modelObjectNameSpace="EnhancedInteractions" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    <shape modelObjectName="AggregationTrxProd" modelObjectNameSpace="EnhancedInteractions" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+      <shape expanded="true" modelObjectName="AggregationTrxProd" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="321.65499883906426" y="1983.6666559378307"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape><shape><upperLeftCorner/><rectangleSize/></shape>
+      <shape expanded="true" modelObjectName="RankLastInteractionTimestamp" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="204.66666607062018" y="1691.9999916553497"/>
+        <rectangleSize height="64" width="227"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FilteredLastSourceObjectId" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="1531.9999928474426"/>
+        <rectangleSize height="82" width="233"/>
+      </shape>
+      <shape modelObjectName="RankLastInteractionTimestamp" modelObjectNameSpace="FilteredLastSourceObjectId" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="EnhancedInteractions" modelObjectNameSpace="FilteredLastSourceObjectId" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="IA_Product" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="531.6549988390643" y="1976.999989271164"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="IA_ProductFiltered" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="443.0770816252674" y="1816.9999904632568"/>
+        <rectangleSize height="82" width="182"/>
+      </shape>
+      <shape modelObjectName="IA_Product" modelObjectNameSpace="IA_ProductFiltered" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="AggregationTrxProd" modelObjectNameSpace="IA_ProductFiltered" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="IA_ProductConverted" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="410.34408878153897" y="1531.9999928474426"/>
+        <rectangleSize height="82" width="302"/>
+      </shape>
+    <shape modelObjectName="IA_Product_Aggregated" modelObjectNameSpace="IA_ProductConverted" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape><shape><upperLeftCorner/><rectangleSize/></shape>
+      <shape modelObjectName="sap.hana-app.prodreco.internal::CA_D_CUAN_PRODUCT_VARIANT_TO_BASE_MAP" modelObjectNameSpace="IA_ProductConverted" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    <shape expanded="true" modelObjectName="IA_Product_Aggregated" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="481.6666660706202" y="1691.9999916553497"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+      <shape expanded="true" modelObjectName="AddingQuantifier" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="382.83274487330743" y="1371.9999940395355"/>
+        <rectangleSize height="82" width="171"/>
+      </shape>
+      <shape modelObjectName="IA_ProductConverted" modelObjectNameSpace="AddingQuantifier" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="FilteredLastSourceObjectId" modelObjectNameSpace="AddingQuantifier" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="AggregationScore" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="372.83274487330743" y="1266.9999940395355"/>
+        <rectangleSize height="64" width="191"/>
+      </shape>
+      <shape expanded="true" modelObjectName="RankTS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="409.00984840192643" y="1016.9999952316284"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    <shape expanded="true" modelObjectName="RemoveNegativeScore" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="391.50984840192643" y="1121.9999952316284"/>
+      <rectangleSize height="30" width="195"/>
+    </shape>
+  
+      <shape expanded="true" modelObjectName="FinalScore" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="409.00984840192643" y="911.9999952316284"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FinalRank" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="341.6277572288839" y="786.9999964237213"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MaxResults" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="460.2693570442228" y="626.9999976158142"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="FinalRank" modelObjectNameSpace="MaxResults" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Tasks" modelObjectNameSpace="MaxResults" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FinalFilter" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="460.2693570442227" y="501.9999976158142"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MAX_SCORE" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="404.45760516460325" y="376.9999988079071"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="NORMALIZED_SCORE" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="451.7519408977353" y="217"/>
+        <rectangleSize height="82" width="184"/>
+      </shape>
+    
+      <shape modelObjectName="MAX_SCORE" modelObjectNameSpace="NORMALIZED_SCORE" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="300" y="48"/>
+        <rectangleSize width="195"/>
+      </shape>
+      <shape modelObjectName="FinalFilter" modelObjectNameSpace="NORMALIZED_SCORE" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="83" y="48"/>
+        <rectangleSize width="155"/>
+      </shape></shapes>
+</layout>
+</Calculation:scenario>

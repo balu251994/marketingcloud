@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact::CA_D_DIGITAL_ACCOUNT" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <descriptions defaultDescription="Digital account contacts"/>
+  <metadata changedAt="2019-04-03 13:45:16.977"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="45"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_MP_ROOT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_MP_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_DA_ROOT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_DA_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="DD07T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+    <DataSource id="Projection_1$$$$DD07T$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_MP">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COMM_CAT_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IS_IMPLICIT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_MP_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_CAT_KEY" source="COMM_CAT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_IMPLICIT" source="IS_IMPLICIT"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;IS_IMPLICIT&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_DA" cardinality="C1_N" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="DIGACC_ID"/>
+        <viewAttribute id="DIGACC_NAME"/>
+        <viewAttribute id="DIGACC_DESC"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="COMM_CAT_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DIGACC_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_MP">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_CAT_KEY" source="COMM_CAT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <input node="#CUAND_DA_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_ID" source="DIGACC_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_NAME" source="DIGACC_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_DESC" source="DIGACC_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_TYPE" source="DIGACC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_CAT_KEY" source="COMM_CAT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="COMM_CAT_KEY"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_STATUS_T">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="DDTEXT"/>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="DOMVALUE_L"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#DD07T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="AS4LOCAL" source="AS4LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DDLANGUAGE" source="DDLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DDTEXT" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMNAME" source="DOMNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMVALUE_L" source="DOMVALUE_L"/>
+      </input>
+      <filter>(&quot;AS4LOCAL&quot; ='A') AND (&quot;DOMNAME&quot; ='CUAN_DIGITAL_ACCOUNT_STATUS')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_STATUS_T" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="DDLANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="DIGACC_ID"/>
+        <viewAttribute id="DIGACC_NAME"/>
+        <viewAttribute id="DIGACC_DESC"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="COMM_CAT_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="STATUS_DESC"/>
+        <viewAttribute id="DIGACC_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_DA">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_ID" source="DIGACC_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_NAME" source="DIGACC_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_DESC" source="DIGACC_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_CAT_KEY" source="COMM_CAT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_TYPE" source="DIGACC_TYPE"/>
+      </input>
+      <input node="#Projection_STATUS_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_DESC" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="DOMVALUE_L"/>
+      </input>
+      <joinAttribute name="STATUS"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="DDTEXT"/>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="DOMVALUE_L"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_1$$$$DD07T$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="AS4LOCAL" source="AS4LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DDLANGUAGE" source="DDLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DDTEXT" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMNAME" source="DOMNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMVALUE_L" source="DOMVALUE_L"/>
+      </input>
+      <filter>(&quot;AS4LOCAL&quot; ='A') AND (&quot;DOMNAME&quot; ='CUAN_CE_OPTIN')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_OPTIN_T" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="DDLANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="DIGACC_ID"/>
+        <viewAttribute id="DIGACC_NAME"/>
+        <viewAttribute id="DIGACC_DESC"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="COMM_CAT_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="STATUS_DESC"/>
+        <viewAttribute id="OPTIN_DESC"/>
+        <viewAttribute id="DIGACC_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_STATUS_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_ID" source="DIGACC_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_NAME" source="DIGACC_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_DESC" source="DIGACC_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_CAT_KEY" source="COMM_CAT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_DESC" source="STATUS_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIGACC_TYPE" source="DIGACC_TYPE"/>
+      </input>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPTIN_DESC" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="DOMVALUE_L"/>
+      </input>
+      <joinAttribute name="OPT_IN"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_OPTIN_T">
+    <descriptions/>
+    <attributes>
+      <attribute id="CA_DA_DB_KEY" key="true" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Official Account Key"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="DIGACC_ID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Official Account ID"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="DIGACC_ID"/>
+      </attribute>
+      <attribute id="DIGACC_NAME" order="3" attributeHierarchyActive="false" descriptionColumnName="DIGACC_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Official Account Name"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="DIGACC_NAME"/>
+      </attribute>
+      <attribute id="DIGACC_DESC" hidden="true" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="DIGACC_DESC"/>
+      </attribute>
+      <attribute id="STATUS" order="5" attributeHierarchyActive="false" descriptionColumnName="STATUS_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Status"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="STATUS"/>
+      </attribute>
+      <attribute id="COMM_CAT_KEY" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Communication Category Key"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="COMM_CAT_KEY"/>
+      </attribute>
+      <attribute id="CA_DA_CONTACT_KEY" key="true" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="CA_DA_OPT_IN" order="8" attributeHierarchyActive="false" descriptionColumnName="OPTIN_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Opt In"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="OPT_IN"/>
+      </attribute>
+      <attribute id="CA_DA_COMM_MEDIUM" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Communication Medium"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="CA_DA_MANDT" key="true" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="MANDT"/>
+      </attribute>
+      <attribute id="STATUS_DESC" hidden="true" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="STATUS_DESC"/>
+      </attribute>
+      <attribute id="OPTIN_DESC" hidden="true" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="OPTIN_DESC"/>
+      </attribute>
+      <attribute id="DIGACC_TYPE" order="13" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Type"/>
+        <keyMapping columnObjectName="Join_OPTIN_T" columnName="DIGACC_TYPE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="194" y="87"/>
+        <rectangleSize height="55" width="140"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_MP" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="32" y="453"/>
+        <rectangleSize height="41" width="141"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_DA" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="357"/>
+        <rectangleSize height="41" width="161"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_STATUS_T" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="197" y="357"/>
+        <rectangleSize height="64" width="181"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_STATUS_T" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="124" y="261"/>
+        <rectangleSize height="47" width="141"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="279" y="261"/>
+        <rectangleSize height="51" width="111"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_OPTIN_T" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="194" y="165"/>
+        <rectangleSize height="51" width="141"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

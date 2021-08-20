@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.cust_retention.score.internal::CA_ACCOUNT_ENGAGEMENT_SCORE" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Accounts, Contacts and Interactions"/>
+  <metadata changedAt="2018-11-09 15:55:16.588"/>
+  <localVariables>
+    <variable id="IP_WEIGHT" parameter="true">
+      <descriptions defaultDescription="Weight"/>
+      <variableProperties datatype="DOUBLE" mandatory="false" defaultValue="">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="IP_LAST_N_DAYS" parameter="true">
+      <descriptions defaultDescription="Last Number of Days"/>
+      <variableProperties datatype="INTEGER" mandatory="false" defaultValue="">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="sap.hana-app.cuan.cust_retention.score.internal::CA_D_NUM_INTERACTIONS">
+      <targetVariable name="IP_LAST_N_DAYS" resourceUri="sap.hana-app.cuan.cust_retention.score.internal::CA_D_NUM_INTERACTIONS"/>
+      <localVariable>IP_LAST_N_DAYS</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="sap.hana-app.cuan.cust_retention.score.internal::CA_D_NUM_INTERACTIONS">
+      <targetVariable name="IP_WEIGHT" resourceUri="sap.hana-app.cuan.cust_retention.score.internal::CA_D_NUM_INTERACTIONS"/>
+      <localVariable>IP_WEIGHT</localVariable>
+    </mapping>
+  </variableMappings>
+  <informationModelLayout relativeWidthScenario="52"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_REL">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_REL</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.cust_retention.score.internal::CA_D_NUM_INTERACTIONS">
+      <resourceUri>sap.hana-app.cuan.cust_retention.score.internal::CA_D_NUM_INTERACTIONS</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Relationship" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="RELATION_TYPE"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_REL"/>
+      <filter>(&quot;MANDT&quot; = '$$client$$') AND (&quot;RELATION_TYPE&quot; = '01')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Contact_ROOT_2" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="IC_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_ROOT"/>
+      <filter>(&quot;MANDT&quot; = '$$client$$') AND (&quot;OBSOLETE&quot; = '')  AND  (&quot;_DATAAGING&quot; != '00010101') AND (&quot;END_OF_PURPOSE&quot;='') AND (&quot;IC_TYPE&quot; = '01')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Relationship">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY_TO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <input node="Contact_ROOT_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="PARENT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_5" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+      
+        <viewAttribute id="NUM_IA" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY_TO"/>
+      </input>
+      <input node="Num_Interactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IA" source="NUM_IA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="PARENT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Num_Interactions">
+      <viewAttributes>
+        <viewAttribute id="NUM_IA"/>
+      
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MANDT"/></viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="sap.hana-app.cuan.cust_retention.score.internal::CA_D_NUM_INTERACTIONS"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Contact_ROOT" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT"/>
+      <filter>(&quot;MANDT&quot; = '$$client$$') AND (&quot;OBSOLETE&quot; = '')  AND  (&quot;_DATAAGING&quot; != '00010101') AND (&quot;END_OF_PURPOSE&quot;='') AND (&quot;IC_TYPE&quot; = '02')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="rightOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="IC_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Relationship">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY_TO"/>
+      </input>
+      <input node="Contact_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="CONTACT_KEY_TO"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="All_Accounts">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Join_1"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_4" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="MANDT"/>
+      
+        <viewAttribute id="NUM_IA" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="All_Accounts">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY_TO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <input node="Num_Interactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IA" source="NUM_IA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_TO"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Num_Contact_IA">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="NUM_IA_CONTACT" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Join_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IA_CONTACT" source="NUM_IA"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Num_Account_IA">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="NUM_IA_ACCOUNT" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Join_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IA_ACCOUNT" source="NUM_IA"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_6" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="NUM_IA_ACCOUNT" aggregationType="sum"/>
+        <viewAttribute id="NUM_IA_CONTACT" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Num_Account_IA">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY_TO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IA_ACCOUNT" source="NUM_IA_ACCOUNT"/>
+      </input>
+      <input node="Num_Contact_IA">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IA_CONTACT" source="NUM_IA_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY_TO"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="CONTACT_KEY_TO"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Num_Contacts">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute aggregationType="count" id="NUM_IC_ACCOUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IC_ACCOUNT" source="CONTACT_KEY_TO"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_Num_Contacts">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="NUM_IC_ACCOUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Num_Contacts"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_7" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY_TO"/>
+        <viewAttribute id="NUM_IA_ACCOUNT" aggregationType="sum"/>
+        <viewAttribute id="NUM_IA_CONTACT" aggregationType="sum"/>
+        <viewAttribute id="NUM_IC_ACCOUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY_TO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IA_ACCOUNT" source="NUM_IA_ACCOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IA_CONTACT" source="NUM_IA_CONTACT"/>
+      </input>
+      <input node="Proj_Num_Contacts">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUM_IC_ACCOUNT" source="NUM_IC_ACCOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_TO" source="CONTACT_KEY_TO"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_TO"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="COLUMN_ENGINE">
+      <viewAttributes>
+        <viewAttribute id="ACCOUNT_KEY"/>
+        <viewAttribute id="NUM_IA_ACCOUNT"/>
+        <viewAttribute id="NUM_IA_CONTACT"/>
+        <viewAttribute id="NUM_IC_ACCOUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute id="NUM_IA_IC_ACCOUNT_AVG" datatype="DOUBLE" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NUM_IC_ACCOUNT&quot;),int(&quot;NUM_IA_ACCOUNT&quot;),((int(&quot;NUM_IA_ACCOUNT&quot;)*$$IP_WEIGHT$$)+(int(&quot;NUM_IA_CONTACT&quot;)*(1-$$IP_WEIGHT$$)))/int(&quot;NUM_IC_ACCOUNT&quot;))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Join_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ACCOUNT_KEY" source="CONTACT_KEY_TO"/></input>
+      <filter>&quot;NUM_IA_IC_ACCOUNT_AVG&quot;&gt;0.0</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection_3">
+    <descriptions/>
+    <attributes>
+      <attribute id="ACCOUNT_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Account Key"/>
+        <keyMapping columnObjectName="Projection_3" columnName="ACCOUNT_KEY"/>
+      </attribute>
+      <attribute id="NUM_IA_ACCOUNT" order="2" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Number Interactions of Account"/>
+        <keyMapping columnObjectName="Projection_3" columnName="NUM_IA_ACCOUNT"/>
+      </attribute>
+      <attribute id="NUM_IA_CONTACT" order="3" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Number Interactions of Contacts"/>
+        <keyMapping columnObjectName="Projection_3" columnName="NUM_IA_CONTACT"/>
+      </attribute>
+      <attribute id="NUM_IC_ACCOUNT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Number Contacts of Account"/>
+        <keyMapping columnObjectName="Projection_3" columnName="NUM_IC_ACCOUNT"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="NUM_IA_IC_ACCOUNT_AVG" order="5" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Average Number of Account Interactions"/>
+        <measureMapping columnObjectName="Projection_3" columnName="NUM_IA_IC_ACCOUNT_AVG"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="491" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Relationship" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="401" y="1286"/>
+        <rectangleSize height="64" width="164"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Contact_ROOT_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="413" y="1126"/>
+        <rectangleSize height="64" width="191"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="512" y="966"/>
+        <rectangleSize height="82" width="161"/>
+      </shape>
+      <shape modelObjectName="Relationship" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Contact_ROOT_2" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="368" y="806"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_2" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Num_Interactions" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="349" y="33"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Num_Interactions" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302" y="966"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Contact_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="167" y="1286"/>
+        <rectangleSize height="64" width="179"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="203" y="1126"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Relationship" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Contact_ROOT" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="All_Accounts" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="984"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="157" y="806"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="All_Accounts" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Num_Interactions" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="357" y="20"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Num_Contact_IA" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="369" y="681"/>
+        <rectangleSize height="64" width="161"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Num_Account_IA" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="155" y="681"/>
+        <rectangleSize height="64" width="164"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="343" y="521"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Num_Account_IA" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Num_Contact_IA" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Num_Contacts" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="579" y="824"/>
+        <rectangleSize height="64" width="166"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_Num_Contacts" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="580" y="681"/>
+        <rectangleSize height="64" width="171"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="473" y="361"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Proj_Num_Contacts" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="473" y="236"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

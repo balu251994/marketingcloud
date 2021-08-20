@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_INTERACTION_CONTACT" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Interaction Contacts"/>
+  <metadata changedAt="2018-02-26 17:22:16.887"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="T005T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T005T</resourceUri>
+    </DataSource>
+    <DataSource id="T005U">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T005U</resourceUri>
+    </DataSource>
+  </dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IC" filterExpressionLanguage="COLUMN_ENGINE">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="CONTAINER"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="DB_KEY"/></input>
+    <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;OBSOLETE&quot; ='') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (in (&quot;IC_TYPE&quot;,'00','01','02')) AND (&quot;CONTAINER&quot; ='') AND (&quot;ANONYMIZED&quot; ='') AND (&quot;END_OF_PURPOSE&quot; ='')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_COUNTRY" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="KUNNR"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="Projection_IC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+      </input>
+      <input node="T005T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="LANDX50"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="LAND1"/>
+      </input>
+    <joinAttribute name="MANDT"/>
+    <joinAttribute name="COUNTRY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_REGION" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="REGION_DESC"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="KUNNR"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="Join_COUNTRY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+      </input>
+      <input node="T005U">
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_DESC" source="BEZEI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="BLAND"/>
+      </input>
+    <joinAttribute name="MANDT"/>
+    <joinAttribute name="COUNTRY"/>
+    <joinAttribute name="REGION"/>
+  </calculationView>
+</calculationViews>
+  <logicalModel id="Join_REGION">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client1"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="MANDT"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="NAME_TEXT" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Full Name"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="NAME_TEXT"/>
+      </attribute>
+      <attribute id="COUNTRY" order="4" attributeHierarchyActive="false" descriptionColumnName="COUNTRY_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Country/Region"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="COUNTRY"/>
+      </attribute>
+      <attribute id="REGION" order="5" attributeHierarchyActive="false" descriptionColumnName="REGION_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Region"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="REGION"/>
+      </attribute>
+      <attribute id="CITY1" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="City"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="CITY1"/>
+      </attribute>
+      <attribute id="CONSUMER_ACCOUNT_ID" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Consumer Account ID"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="CONSUMER_ACCOUNT_ID"/>
+      </attribute>
+      <attribute id="COUNTRY_DESC" hidden="true" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_REGION" columnName="COUNTRY_DESC"/>
+      </attribute>
+      <attribute id="REGION_DESC" hidden="true" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_REGION" columnName="REGION_DESC"/>
+      </attribute>
+      <attribute id="NAME_FIRST" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="First Name"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="NAME_FIRST"/>
+      </attribute>
+      <attribute id="NAME_LAST" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Last Name"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="NAME_LAST"/>
+      </attribute>
+      <attribute id="SMTP_ADDR" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Email"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="SMTP_ADDR"/>
+      </attribute>
+      <attribute id="LAST_IA_TIMESTAMP" order="13" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Timestamp of Last Interaction"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="LAST_IA_TIMESTAMP"/>
+      </attribute>
+      <attribute id="KUNNR" order="14" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Account ID"/>
+        <keyMapping columnObjectName="Join_REGION" columnName="KUNNR"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+<layout>
+  <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="27" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_IC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="27" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_COUNTRY" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="91" width="151"/>
+      </shape>
+      <shape modelObjectName="Projection_IC" modelObjectNameSpace="Join_COUNTRY" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::T005T" modelObjectNameSpace="Join_COUNTRY" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_REGION" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="27" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    
+      <shape modelObjectName="Join_COUNTRY" modelObjectNameSpace="Join_REGION" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::T005U" modelObjectNameSpace="Join_REGION" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+</layout>
+</Calculation:scenario>

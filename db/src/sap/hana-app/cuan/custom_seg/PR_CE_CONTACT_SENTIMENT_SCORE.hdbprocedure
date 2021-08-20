@@ -1,0 +1,16 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_SENTIMENT_SCORE" (  in i_scenario_parameters NCLOB ,  in i_datasource_parameters NCLOB ,  in i_selected_variables NCLOB ,  in i_model_parameters NCLOB ,  in ip_join_set_id VARCHAR(32) ,  out var_out "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_SENTIMENT_SCORE/tabletype/var_out"  ) language SQLSCRIPT sql security invoker reads sql data as begin 
+	if :ip_join_set_id = '' then
+	  var_out =
+ 	    select "CONTACT_KEY" 		as "KEY", 
+	           max(sentiment_score)  as score
+		from "sap.hana-app.cuan.contact::CA_INTERACTION_SCORING"
+		group by contact_key;
+	else	
+      var_out =
+		select "CONTACT_KEY" 		as "KEY", 
+	           max(sentiment_score)  as score
+		from "sap.hana-app.cuan.contact.score.internal.datafoundation::CA_C_INTERACTION_SCORING_JS"( 
+			placeholder."$$IP_JOIN_SET_ID$$" => :ip_join_set_id)
+		group by "CONTACT_KEY";
+	end if;		
+end

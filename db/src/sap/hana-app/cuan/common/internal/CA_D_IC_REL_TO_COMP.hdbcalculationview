@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.common.internal::CA_D_IC_REL_TO_COMP" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Relationship Data of Account and company"/>
+  <metadata changedAt="2016-04-05 13:48:13.629" createdAt="2016-04-05 13:48:13.629"/>
+  <localVariables/>
+  <variableMappings/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_REL" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_REL</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IC_REL">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="RELATION_TYPE"/>
+        <viewAttribute id="IC_COMPANY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_IC_REL">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RELATION_TYPE" source="RELATION_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_COMPANY_KEY" source="CONTACT_KEY_TO"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;RELATION_TYPE&quot; ='01')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection_IC_REL">
+    <descriptions defaultDescription="Relationship Data of Account and company"/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Projection_IC_REL" columnName="MANDT"/>
+      </attribute>
+      <attribute id="IC_CONTACT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Projection_IC_REL" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IC_COMPANY_KEY" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Company Key"/>
+        <keyMapping columnObjectName="Projection_IC_REL" columnName="IC_COMPANY_KEY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="22" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="false" modelObjectName="Projection_IC_REL" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="165"/>
+        <rectangleSize height="61" width="140"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.score.internal.datafoundation::CA_C_INTERACTION_SCORING_JS" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_C_INTERACION_SCORING_JS"/>
+  <metadata changedAt="2016-06-21 10:57:20.387"/>
+  <localVariables>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="IP_JOIN_SET_ID"/>
+      <variableProperties datatype="VARCHAR" length="32" mandatory="false" defaultValue="">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="TARGET_ACTIVITY_SCORE" parameter="true">
+      <descriptions defaultDescription="TARGET_ACTIVITY_SCORE"/>
+      <variableProperties datatype="INTEGER" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+        <derivationRule>
+          <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_SCORE</resourceUri>
+          <resultElementName>TARGET_ACTIVITY_SCORE</resultElementName>
+          <columnFilter columnName="MANDT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$client$$"/>
+          </columnFilter>
+        </derivationRule>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="34"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_JS_CONTACT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_IA_TYPE">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_IA_TYPE</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IA_RT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="QUANTIFIER"/>
+        <viewAttribute id="VALUATION"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="COUNT_OF_VALUATION" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;VALUATION&quot;&gt;0,1,0)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;OBSOLETE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_JS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="JOIN_SET_ID"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_JS_CONTACT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;JOIN_SET_ID&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_JS" cardinality="CN_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="QUANTIFIER"/>
+        <viewAttribute id="VALUATION"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="JOIN_SET_ID"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COUNT_OF_VALUATION"/>
+        <viewAttribute id="IA_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTIFIER" source="QUANTIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUATION" source="VALUATION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNT_OF_VALUATION" source="COUNT_OF_VALUATION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+      </input>
+      <input node="Projection_JS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_SET_ID" source="JOIN_SET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="ID"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IA_TYPE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="TECHNICAL_IA_TYPE"/>
+        <viewAttribute id="IA_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANC_CE_IA_TYPE"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;TECHNICAL_IA_TYPE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_IA_TYPE" cardinality="CN_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="QUANTIFIER"/>
+        <viewAttribute id="VALUATION"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COUNT_OF_VALUATION"/>
+        <viewAttribute id="IA_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_JS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTIFIER" source="QUANTIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUATION" source="VALUATION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNT_OF_VALUATION" source="COUNT_OF_VALUATION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+      </input>
+      <input node="Projection_IA_TYPE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+      </input>
+      <joinAttribute name="IA_TYPE"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_IA_TYPE">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MANDT"/>
+        <keyMapping columnObjectName="Join_IA_TYPE" columnName="MANDT"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" key="true" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="Join_IA_TYPE" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IA_KEY" hidden="true" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_KEY"/>
+        <keyMapping columnObjectName="Join_IA_TYPE" columnName="IA_KEY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="QUANTIFIER" hidden="true" order="5" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="QUANTIFIER"/>
+        <measureMapping columnObjectName="Join_IA_TYPE" columnName="QUANTIFIER"/>
+      </measure>
+      <measure id="VALUATION" hidden="true" order="6" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="VALUATION"/>
+        <measureMapping columnObjectName="Join_IA_TYPE" columnName="VALUATION"/>
+      </measure>
+      <measure id="COUNT_OF_VALUATION" hidden="true" order="7" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="COUNT_OF_VALUATION"/>
+        <measureMapping columnObjectName="Join_IA_TYPE" columnName="COUNT_OF_VALUATION"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures>
+      <measure id="COUNT_OF_INTERACTION" hidden="false" order="3" aggregationType="sum" measureType="simple" aggregatable="true" calculatedMeasureType="counter" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <descriptions defaultDescription="COUNT_OF_INTERACTION"/>
+        <exceptionAggregation exceptionAggregationType="countDistinct">
+          <attribute attributeName="IA_KEY"/>
+        </exceptionAggregation>
+        <formula>1</formula>
+      </measure>
+      <measure id="ACTIVITY_SCORE" hidden="false" order="8" aggregationType="sum" measureType="simple" datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="15" scale="2">
+        <descriptions defaultDescription="ACTIVITY_SCORE"/>
+        <formula>round(if('$$TARGET_ACTIVITY_SCORE$$' = '', &quot;COUNT_OF_INTERACTION&quot;, 100 * &quot;COUNT_OF_INTERACTION&quot;/'$$TARGET_ACTIVITY_SCORE$$'),2)</formula>
+      </measure>
+      <measure id="SENTIMENT_SCORE" hidden="false" order="9" aggregationType="sum" measureType="simple" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <descriptions defaultDescription="SENTIMENT_SCORE"/>
+        <formula>round(if(&quot;COUNT_OF_VALUATION&quot;=0,0,double(&quot;VALUATION&quot;)/&quot;COUNT_OF_VALUATION&quot;),0)</formula>
+      </measure>
+    </calculatedMeasures>
+    <restrictedMeasures/>
+    <localDimensions/></logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="176" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_IA_RT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="377"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_JS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="377"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_JS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="281"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Projection_IA_RT" modelObjectNameSpace="Join_JS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_JS" modelObjectNameSpace="Join_JS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_IA_TYPE" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="281"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_IA_TYPE" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="185"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_JS" modelObjectNameSpace="Join_IA_TYPE" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_IA_TYPE" modelObjectNameSpace="Join_IA_TYPE" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

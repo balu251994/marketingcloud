@@ -1,0 +1,48 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_CE_LOCCOMPANY_NO_OF_ACTIVE_CONTACTS" (  in i_scenario_parameters NCLOB ,  in i_datasource_parameters NCLOB ,  in i_selected_variables NCLOB ,  in i_model_parameters NCLOB ,  in ip_join_set_id VARCHAR(32) ,  out var_out "sap.hana-app.cuan.custom_seg::PR_CE_LOCCOMPANY_NO_OF_ACTIVE_CONTACTS/tabletype/var_out"  ) language SQLSCRIPT sql security invoker reads sql data as begin 
+
+declare lc_actual date := to_date(now());
+declare lv_doc_tmstp_start decimal(21,7);
+declare lv_doc_tmstp_end decimal(21,7);
+declare lv_recency_days integer;
+
+
+---------------------------------------------------------------------------------------------------
+-- Get Parameters
+---------------------------------------------------------------------------------------------------
+    select top 1 -threshold_value into lv_recency_days from "sap.hana-app.cuan.db.cuan::CUANC_PM_UI_THRS" 
+     where threshold_value != '0' and scenario_id = 'CONTACT_RECENCY_LEVEL' and client = SESSION_CONTEXT('CLIENT')
+     order by threshold_value ASC;
+
+	lv_doc_tmstp_start := to_dats(add_days(lc_actual, lv_recency_days)) || '000000';
+	lv_doc_tmstp_end   := to_dats(add_days(lc_actual, 1)) || '000000';
+
+---------------------------------------------------------------------------------------------------
+-- Run Calculation
+---------------------------------------------------------------------------------------------------
+
+	if :ip_join_set_id = '' then 
+	 
+     lt_no_of_ia =
+	    select company_key, contact_key, 1 as "SCORE_VALUE" 
+        from "sap.hana-app.cuan.contact.internal::CA_C_CE_INTERACTIONS_ALL_CNT" 
+	    where last_inbound_ia_timestamp >= :lv_doc_tmstp_start and 
+		      last_inbound_ia_timestamp <= :lv_doc_tmstp_end   and
+		      company_key != ''
+	    group by company_key, contact_key;       
+     
+	else
+	
+      lt_no_of_ia =
+	    select company_key, contact_key, 1 as "SCORE_VALUE" 
+	    from "sap.hana-app.cuan.contact.score.internal.datafoundation::CA_C_CE_INTERACTIONS_ALL_CNT_JS_NEW" 
+	    (placeholder."$$IP_JOIN_SET_ID$$" => :ip_join_set_id ) 
+	    where last_inbound_ia_timestamp >= lv_doc_tmstp_start and 
+		      last_inbound_ia_timestamp <= lv_doc_tmstp_end
+		group by company_key, contact_key;   
+		 
+	end if;
+	
+--  export the result
+    var_out = select company_key as "KEY", sum("SCORE_VALUE") AS "SCORE" from :lt_no_of_ia 
+               group by company_key;    
+end;

@@ -1,0 +1,1 @@
+TYPE "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_GENDER/tabletype/var_out" AS TABLE  ( "KEY" VARBINARY(16) CS_RAW, "SCORE" DECIMAL(15,2) CS_FIXED ) 

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="sap.hana-app.cuan.cust_retention.score.internal::CA_D_NUM_INTERACTIONS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Num. of Interactions for Accounts and Contacts"/>
+<localVariables>
+  <variable id="IP_WEIGHT" parameter="true">
+    <descriptions defaultDescription="Weight"/>
+    <variableProperties datatype="DOUBLE" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_LAST_N_DAYS" parameter="true">
+    <descriptions defaultDescription="Last Number of Days"/>
+    <variableProperties datatype="INTEGER" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="sap.hana-app.cuan.db.cuan::CUANC_CE_IA_TYPE">
+    <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_IA_TYPE</resourceUri>
+  </DataSource>
+  <DataSource id="sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT">
+    <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="IA_Type" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="IA_TYPE">
+        <descriptions defaultDescription="IA_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="DIRECTION">
+        <descriptions defaultDescription="DIRECTION"/>
+      </viewAttribute>
+      <viewAttribute id="TECHNICAL_IA_TYPE">
+        <descriptions defaultDescription="TECHNICAL_IA_TYPE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="sap.hana-app.cuan.db.cuan::CUANC_CE_IA_TYPE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TECHNICAL_IA_TYPE" source="TECHNICAL_IA_TYPE"/>
+    </input>
+    <filter>(&quot;MANDT&quot;='$$client$$') AND (in(&quot;DIRECTION&quot;,'','0')) AND (&quot;TECHNICAL_IA_TYPE&quot; = '')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="IA_ROOT" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="COMM_MEDIUM">
+        <descriptions defaultDescription="COMM_MEDIUM"/>
+      </viewAttribute>
+      <viewAttribute id="IA_TYPE">
+        <descriptions defaultDescription="IA_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="TIMESTAMP">
+        <descriptions defaultDescription="TIMESTAMP"/>
+      </viewAttribute>
+      <viewAttribute id="CONTACT_KEY">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="_DATAAGING">
+        <descriptions defaultDescription="_DATAAGING"/>
+      </viewAttribute>
+      <viewAttribute id="OBSOLETE">
+        <descriptions defaultDescription="OBSOLETE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+    </input>
+    <filter>(&quot;MANDT&quot;='$$client$$') AND (&quot;COMM_MEDIUM&quot; != 'SYSTEM') AND (&quot;OBSOLETE&quot; = '') AND (in(&quot;_DATAAGING&quot;, '','00000000') ) AND &quot;TIMESTAMP&quot; &gt;= format(adddays(date(now()),-1*$$IP_LAST_N_DAYS$$), 'YYYYMMDDHHMMSS') AND &quot;TIMESTAMP&quot; &lt;= format(now(), 'YYYYMMDDHHMMSS')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="COMM_MEDIUM">
+        <descriptions defaultDescription="COMM_MEDIUM"/>
+      </viewAttribute>
+      <viewAttribute id="IA_TYPE">
+        <descriptions defaultDescription="IA_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="TIMESTAMP" aggregationType="sum">
+        <descriptions defaultDescription="TIMESTAMP"/>
+      </viewAttribute>
+      <viewAttribute id="CONTACT_KEY">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="_DATAAGING">
+        <descriptions defaultDescription="_DATAAGING"/>
+      </viewAttribute>
+      <viewAttribute id="OBSOLETE">
+        <descriptions defaultDescription="OBSOLETE"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$IA_TYPE$IA_TYPE"/>
+      <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="IA_Type">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$IA_TYPE$IA_TYPE" source="IA_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+    </input>
+    <input node="IA_ROOT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$IA_TYPE$IA_TYPE" source="IA_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+    </input>
+    <joinAttribute name="JOIN$IA_TYPE$IA_TYPE"/>
+    <joinAttribute name="JOIN$MANDT$MANDT"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Client"/>
+      <keyMapping columnObjectName="Join_1" columnName="MANDT"/>
+    </attribute>
+    <attribute id="CONTACT_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contact Key"/>
+      <keyMapping columnObjectName="Join_1" columnName="CONTACT_KEY"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="NUM_IA" order="3" aggregationType="count" measureType="simple">
+      <descriptions defaultDescription="Number of Interactions"/>
+      <measureMapping columnObjectName="Join_1" columnName="CONTACT_KEY"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="IA_Type" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="IA_ROOT" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="IA_Type" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="33"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="IA_ROOT" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_TARGET_GROUP_PROJ" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Target group Projection"/>
+  <metadata changedAt="2016-02-22 17:40:50.968"/>
+  <localVariables/>
+  <variableMappings/>
+  <dataSources>
+    <DataSource id="CA_D_TARGET_GROUP">
+      <resourceUri>sap.hana-app.cuan.contact::CA_D_TARGET_GROUP</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="CA_D_TARGET_GROUP">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="CA_D_TARGET_GROUP" columnName="MANDT"/>
+      </attribute>
+      <attribute id="TARGET_GROUP_DB_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Target Group Key"/>
+        <keyMapping columnObjectName="CA_D_TARGET_GROUP" columnName="TARGET_GROUP_DB_KEY"/>
+      </attribute>
+      <attribute id="TARGET_GROUP_MEMBER_KEY" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Target Group Member Key"/>
+        <keyMapping columnObjectName="CA_D_TARGET_GROUP" columnName="TARGET_GROUP_MEMBER_KEY"/>
+      </attribute>
+      <attribute id="TARGET_GROUP" order="4" attributeHierarchyActive="false" descriptionColumnName="CA_D_TARGET_GROUP_PROJ_TARGET_GROUP_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Target Group"/>
+        <keyMapping columnObjectName="CA_D_TARGET_GROUP" columnName="TARGET_GROUP"/>
+      </attribute>
+      <attribute id="CA_D_TARGET_GROUP_PROJ_TARGET_GROUP_DESC" hidden="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_TARGET_GROUP" columnName="TARGET_GROUP_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/></shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

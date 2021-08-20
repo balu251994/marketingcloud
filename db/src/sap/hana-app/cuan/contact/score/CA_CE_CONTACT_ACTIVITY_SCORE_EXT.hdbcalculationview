@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.score::CA_CE_CONTACT_ACTIVITY_SCORE_EXT" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Activity Score of Contacts"/>
+  <localVariables>
+    <variable id="IP_MODEL_GUID" parameter="true">
+      <descriptions defaultDescription="Predictive Model"/>
+      <variableProperties datatype="VARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="Reference to Set of Relevant Customers"/>
+      <variableProperties datatype="VARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="#CA_CE_CONTACT_ACTIVITY_SCORE">
+      <targetVariable name="IP_MODEL_GUID"/>
+      <localVariable>#IP_MODEL_GUID</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="#CA_CE_CONTACT_ACTIVITY_SCORE">
+      <targetVariable name="IP_JOIN_SET_ID"/>
+      <localVariable>#IP_JOIN_SET_ID</localVariable>
+    </mapping>
+  </variableMappings>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CA_CE_CONTACT_ACTIVITY_SCORE">
+      <resourceUri>sap.hana-app.cuan.contact.score.internal::CA_CE_CONTACT_ACTIVITY_SCORE</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="CA_CE_CONTACT_ACTIVITY_SCORE">
+    <descriptions/>
+    <attributes>
+      <attribute id="CONTACT_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="CA_CE_CONTACT_ACTIVITY_SCORE" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="SCORE_DESC" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Activity Score"/>
+        <keyMapping columnObjectName="CA_CE_CONTACT_ACTIVITY_SCORE" columnName="SCORE_DESC"/>
+      </attribute>
+      <attribute id="UNIT" order="4" attributeHierarchyActive="false" descriptionColumnName="UNIT.description" displayAttribute="false">
+        <descriptions defaultDescription="Unit"/>
+        <keyMapping columnObjectName="CA_CE_CONTACT_ACTIVITY_SCORE" columnName="UNIT"/>
+      </attribute>
+      <attribute id="RANK" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Rank"/>
+        <keyMapping columnObjectName="CA_CE_CONTACT_ACTIVITY_SCORE" columnName="RANK"/>
+      </attribute>
+      <attribute id="UNIT.description" hidden="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_CE_CONTACT_ACTIVITY_SCORE" columnName="UNIT.description"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="SCORE_VALUE" order="2" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Activity Score"/>
+        <measureMapping columnObjectName="CA_CE_CONTACT_ACTIVITY_SCORE" columnName="SCORE_VALUE"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

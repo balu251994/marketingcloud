@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.prodreco.algorithm.association.apriori.modelgeneration::CA_GENERATE_ASSOC_SQL_TRX_CAT" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_GENERATE_ASSOC_SQL_TRX_CAT"/>
+  <localVariables>
+    <variable id="IV_TASK" parameter="true">
+      <descriptions defaultDescription="IV_TASK"/>
+      <variableProperties datatype="INTEGER" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+        <derivationRule inputEnabled="true">
+          <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TSK_PAR</resourceUri>
+          <resultElementName>TASK_ID</resultElementName>
+        </derivationRule>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="53"/>
+  <dataSources>
+    <DataSource id="PRECO_CX_TRANS">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TRANS</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_TSK_PAR">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TSK_PAR</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_PROD_TO_PROD_L1_CAT">
+      <resourceUri>sap.hana-app.prodreco.internal::CA_D_PROD_TO_PROD_L1_CAT</resourceUri>
+    </DataSource>
+    <DataSource id="ScoreType$$$$PRECO_CX_TSK_PAR$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TSK_PAR</resourceUri>
+    </DataSource>
+    <DataSource id="MinSupport$$$$PRECO_CX_TSK_PAR$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TSK_PAR</resourceUri>
+    </DataSource>
+    <DataSource id="MinConfidence$$$$PRECO_CX_TSK_PAR$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TSK_PAR</resourceUri>
+    </DataSource>
+    <DataSource id="MinLift$$$$PRECO_CX_TSK_PAR$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TSK_PAR</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_TASK">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TASK</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Transaction">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TRANSACTION_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="USER_ID"/>
+        <viewAttribute id="USER_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="TASK_ID" expressionLanguage="COLUMN_ENGINE">
+          <formula>$$IV_TASK$$</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#PRECO_CX_TRANS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_ID" source="TRANSACTION_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="USER_ID" source="USER_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="USER_TYPE" source="USER_TYPE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Hierarchy">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ALGO_TYPE_PARAM_ID"/>
+        <viewAttribute id="VALUE_FROM"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PRECO_CX_TSK_PAR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ALGO_TYPE_PARAM_ID" source="ALGO_TYPE_PARAM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_FROM" source="VALUE_FROM"/>
+      </input>
+      <filter>(&quot;TASK_ID&quot; =$$IV_TASK$$) AND (&quot;ALGO_TYPE_PARAM_ID&quot; ='HIERARCHY_ID')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Prod2ProdCat" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="VALUE_FROM"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="IS_VALID" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;VALUE_FROM&quot; = &quot;HIERARCHY_ID&quot;,'X','')</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="PRODUCT_KEY_NVC" length="50" expressionLanguage="SQL">
+          <formula>to_nvarchar(&quot;PRODUCT_KEY&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#CA_D_PROD_TO_PROD_L1_CAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+      </input>
+      <input node="#Hierarchy">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_FROM" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="VALUE_FROM"/>
+      </input>
+      <joinAttribute name="HIERARCHY_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="CatTransactions" dynamic="false" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="TRANSACTION_ID"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="ITEM_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Transaction">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_ID" source="TRANSACTION_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+      </input>
+      <input node="#Prod2ProdCat">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="PRODUCT_KEY_NVC"/>
+      </input>
+      <joinAttribute name="ITEM_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="CatTransactions1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="TRANSACTION_ID"/>
+        <viewAttribute id="CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CatTransactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_ID" source="TRANSACTION_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="IntransactionItemPairs" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="TRANSACTION_ID"/>
+        <viewAttribute id="LEADING_ITEM_ID"/>
+        <viewAttribute id="RESULT_ITEM_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="toBeRemoved" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;LEADING_ITEM_ID&quot;=&quot;RESULT_ITEM_ID&quot;,'X','')</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#CatTransactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_ID" source="TRANSACTION_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_ID" source="CATEGORY_ID"/>
+      </input>
+      <input node="#CatTransactions1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_ID" source="TRANSACTION_ID"/>
+      </input>
+      <joinAttribute name="TRANSACTION_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="FilteredIntransItemPairs" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="TRANSACTION_ID"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+        <viewAttribute id="toBeRemoved"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#IntransactionItemPairs">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_ID" source="TRANSACTION_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="LEADING_ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="RESULT_ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="toBeRemoved" source="toBeRemoved"/>
+      </input>
+      <filter>&quot;toBeRemoved&quot; =''</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="RulesWithSupportCount">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute aggregationType="count" id="SUPPORT_COUNT"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#FilteredIntransItemPairs">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT_COUNT" source="TRANSACTION_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="ItemCount">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute aggregationType="count" id="ITEM_COUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CatTransactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_COUNT" source="TRANSACTION_ID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="LeadingSuppCount" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="LEADING_SUPPORT_COUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#FilteredIntransItemPairs">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <input node="#ItemCount">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_SUPPORT_COUNT" source="ITEM_COUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="LEADING_SUPPORT_COUNT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute aggregationType="min" id="LEADING_SUPPORT_CNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="LEADING_SUPPORT_COUNT" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;LEADING_SUPPORT_CNT&quot;</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#LeadingSuppCount">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_SUPPORT_CNT" source="LEADING_SUPPORT_COUNT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="ResultSuppCount" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_SUPPORT_COUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#FilteredIntransItemPairs">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <input node="#ItemCount">
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_SUPPORT_COUNT" source="ITEM_COUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="ResultSupportCount">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute aggregationType="min" id="RESULT_SUPPORT_CNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="RESULT_SUPPORT_COUNT" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;RESULT_SUPPORT_CNT&quot;</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#ResultSuppCount">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_SUPPORT_CNT" source="RESULT_SUPPORT_COUNT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="NumTransactions">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="TRANSACTION_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CatTransactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_ID" source="TRANSACTION_ID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="NumTrans">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute aggregationType="count" id="TRANSACTION_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#NumTransactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_ID" source="TRANSACTION_ID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Rules_With_Support" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT_COUNT"/>
+        <viewAttribute id="TRANSACTION_ID"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DOUBLE" id="SUPPORT" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;NumberOfTrans&quot;, 0 , 0, double(&quot;SUPPORT_COUNT&quot;)/double(&quot;NumberOfTrans&quot;))</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="INTEGER" id="NumberOfTrans" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;TRANSACTION_ID&quot;</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#NumTrans">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_ID" source="TRANSACTION_ID"/>
+      </input>
+      <input node="#RulesWithSupportCount">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT_COUNT" source="SUPPORT_COUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Rule_With_Supp_Conf" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="LEADING_SUPPORT_COUNT1"/>
+        <viewAttribute id="SUPPORT_COUNT"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="NumberOfTrans"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+        <viewAttribute id="LEADING_SUPPORT_COUNT"/>
+        <viewAttribute hidden="true" id="JOIN$TASK_ID$TASK_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DOUBLE" id="CONFIDENCE" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;LEADING_SUPPORT_COUNT&quot;, 0 , 0, double(&quot;SUPPORT_COUNT&quot;)/double(&quot;LEADING_SUPPORT_COUNT&quot;))&#xD;
+</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#LEADING_SUPPORT_COUNT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_SUPPORT_COUNT1" source="LEADING_SUPPORT_CNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_SUPPORT_COUNT" source="LEADING_SUPPORT_COUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_ID$TASK_ID" source="TASK_ID"/>
+      </input>
+      <input node="#Rules_With_Support">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT_COUNT" source="SUPPORT_COUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NumberOfTrans" source="NumberOfTrans"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TASK_ID$TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="JOIN$TASK_ID$TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Rule_With_Supp_Conf_Lift" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="NumberOfTrans"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+        <viewAttribute id="RESULT_SUPPORT_COUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DOUBLE" id="LIFT" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;RESULT_SUPPORT_COUNT&quot;, 0 , 0, &#xD;
+   case(&quot;NumberOfTrans&quot;, 0 , 0, &#xD;
+              double(&quot;CONFIDENCE&quot;)/(double (&quot;RESULT_SUPPORT_COUNT&quot;)/double(&quot;NumberOfTrans&quot;))&#xD;
+           )&#xD;
+)&#xD;
+</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#Rule_With_Supp_Conf">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NumberOfTrans" source="NumberOfTrans"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+      </input>
+      <input node="#ResultSupportCount">
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_SUPPORT_COUNT" source="RESULT_SUPPORT_COUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="ScoreType" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ALGO_TYPE_PARAM_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="PARAM_OPTION"/>
+        <viewAttribute id="VALUE_FROM"/>
+        <viewAttribute id="VALUE_TO"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#ScoreType$$$$PRECO_CX_TSK_PAR$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ALGO_TYPE_PARAM_ID" source="ALGO_TYPE_PARAM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARAM_OPTION" source="PARAM_OPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_FROM" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_TO" source="VALUE_TO"/>
+      </input>
+      <filter>(&quot;ALGO_TYPE_PARAM_ID&quot; ='SCORE_TYPE' and  &quot;TASK_ID&quot;=$$IV_TASK$$)</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="MinSupport" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ALGO_TYPE_PARAM_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="PARAM_OPTION"/>
+        <viewAttribute id="VALUE_FROM"/>
+        <viewAttribute id="VALUE_TO"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#MinSupport$$$$PRECO_CX_TSK_PAR$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ALGO_TYPE_PARAM_ID" source="ALGO_TYPE_PARAM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARAM_OPTION" source="PARAM_OPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_FROM" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_TO" source="VALUE_TO"/>
+      </input>
+      <filter>(&quot;ALGO_TYPE_PARAM_ID&quot; ='MIN_SUPPORT' and  &quot;TASK_ID&quot;=$$IV_TASK$$)</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="RulesWithMinSupport" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="NumberOfTrans"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="MIN_SUPPORT"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Rule_With_Supp_Conf_Lift">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NumberOfTrans" source="NumberOfTrans"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+      </input>
+      <input node="#MinSupport">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_SUPPORT" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="MinConfidence" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ALGO_TYPE_PARAM_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="PARAM_OPTION"/>
+        <viewAttribute id="VALUE_FROM"/>
+        <viewAttribute id="VALUE_TO"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#MinConfidence$$$$PRECO_CX_TSK_PAR$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ALGO_TYPE_PARAM_ID" source="ALGO_TYPE_PARAM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARAM_OPTION" source="PARAM_OPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_FROM" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_TO" source="VALUE_TO"/>
+      </input>
+      <filter>(&quot;ALGO_TYPE_PARAM_ID&quot; ='MIN_CONFIDENCE' and  &quot;TASK_ID&quot;=$$IV_TASK$$)</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="RulesWithConfidence" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="NumberOfTrans"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="MIN_SUPPORT"/>
+        <viewAttribute id="MIN_CONFIDENCE"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#RulesWithMinSupport">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NumberOfTrans" source="NumberOfTrans"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_SUPPORT" source="MIN_SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+      </input>
+      <input node="#MinConfidence">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_CONFIDENCE" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="MinLift" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ALGO_TYPE_PARAM_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="PARAM_OPTION"/>
+        <viewAttribute id="MIN_LIFT"/>
+        <viewAttribute id="VALUE_TO"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#MinLift$$$$PRECO_CX_TSK_PAR$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ALGO_TYPE_PARAM_ID" source="ALGO_TYPE_PARAM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARAM_OPTION" source="PARAM_OPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_LIFT" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_TO" source="VALUE_TO"/>
+      </input>
+      <filter>(&quot;ALGO_TYPE_PARAM_ID&quot; ='MIN_LIFT'  and  &quot;TASK_ID&quot;=$$IV_TASK$$)</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="RulesWithLift" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="MIN_SUPPORT"/>
+        <viewAttribute id="MIN_CONFIDENCE"/>
+        <viewAttribute id="MIN_LIFT"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#RulesWithConfidence">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_SUPPORT" source="MIN_SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_CONFIDENCE" source="MIN_CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+      </input>
+      <input node="#MinLift">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_LIFT" source="MIN_LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="FilteredRules" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="MIN_SUPPORT"/>
+        <viewAttribute id="MIN_CONFIDENCE"/>
+        <viewAttribute id="MIN_LIFT"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#RulesWithLift">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_SUPPORT" source="MIN_SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_CONFIDENCE" source="MIN_CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MIN_LIFT" source="MIN_LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+      </input>
+      <filter>&quot;SUPPORT&quot; >=&quot;MIN_SUPPORT&quot; and &quot;CONFIDENCE&quot; >= &quot;MIN_CONFIDENCE&quot; and &quot;LIFT&quot; >= &quot;MIN_LIFT&quot;</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="AssociationRuleWithScore" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="PARAM_OPTION"/>
+        <viewAttribute id="ScoreType"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DOUBLE" id="SCORE" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;ScoreType&quot;, 'SUPPORT',&quot;SUPPORT&quot;, 'CONFIDENCE', &quot;CONFIDENCE&quot;, 'LIFT', &quot;LIFT&quot;, &quot;SUPPORT&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#FilteredRules">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+      </input>
+      <input node="#ScoreType">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARAM_OPTION" source="PARAM_OPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ScoreType" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="MaxIntestingnessMeasures">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute aggregationType="max" id="SUPPORT"/>
+        <viewAttribute aggregationType="max" id="CONFIDENCE"/>
+        <viewAttribute aggregationType="max" id="LIFT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#FilteredRules">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="MaxScore" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="VALUE_FROM"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DOUBLE" id="MAX_SCORE" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;VALUE_FROM&quot;, 'SUPPORT',&quot;SUPPORT&quot;, 'CONFIDENCE', &quot;CONFIDENCE&quot;, 'LIFT', &quot;LIFT&quot;, &quot;SUPPORT&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#MaxIntestingnessMeasures">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+      </input>
+      <input node="#ScoreType">
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_FROM" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="RulesWithNormalizedScore" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="MAX_SCORE"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="NORMALIZED_SCORE" expressionLanguage="COLUMN_ENGINE">
+          <formula>case(&quot;MAX_SCORE&quot;, 0 , 0, 2147483646 *( &quot;SCORE&quot;/&quot;MAX_SCORE&quot;))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#AssociationRuleWithScore">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+      </input>
+      <input node="#MaxScore">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_SCORE" source="MAX_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="AssocRulesMaxResult" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="NORMALIZED_SCORE"/>
+        <viewAttribute id="MAX_RESULT"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="LEADING_ITEM_TYPE" length="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>'19'</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="VARCHAR" id="RESULT_ITEM_TYPE" length="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>'19'</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#RulesWithNormalizedScore">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NORMALIZED_SCORE" source="NORMALIZED_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+      </input>
+      <input node="#PRECO_CX_TASK">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="RankedAssociationRules">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="MAX_RESULT"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+        <viewAttribute id="LEADING_ITEM_TYPE"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#AssocRulesMaxResult">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="NORMALIZED_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_TYPE" source="LEADING_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+      </input>
+      <windowFunction dynamicPartitionAttributes="false">
+        <partitionViewAttributeName>TASK_ID</partitionViewAttributeName>
+        <partitionViewAttributeName>L_CATEGORY_ID</partitionViewAttributeName>
+        <order byViewAttributeName="SCORE" direction="DESC"/>
+        <rankThreshold>
+          <value>100</value>
+        </rankThreshold>
+        <rankViewAttributeName>RANK</rankViewAttributeName>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="ReducedRuleSet" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="SUPPORT"/>
+        <viewAttribute id="CONFIDENCE"/>
+        <viewAttribute id="LIFT"/>
+        <viewAttribute id="MAX_RESULT"/>
+        <viewAttribute id="RANK"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="L_CATEGORY_ID"/>
+        <viewAttribute id="R_CATEGORY_ID"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="LEADING_ITEM_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#RankedAssociationRules">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUPPORT" source="SUPPORT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONFIDENCE" source="CONFIDENCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFT" source="LIFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RANK" source="RANK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="L_CATEGORY_ID" source="L_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="R_CATEGORY_ID" source="R_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_TYPE" source="LEADING_ITEM_TYPE"/>
+      </input>
+      <filter>&quot;RANK&quot;&lt;=&quot;MAX_RESULT&quot;</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="ReducedRuleSet">
+    <descriptions/>
+    <attributes>
+      <attribute id="TASK_ID" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TASK_ID"/>
+        <keyMapping columnObjectName="ReducedRuleSet" columnName="TASK_ID"/>
+      </attribute>
+      <attribute id="LEADING_ITEM_ID" order="2" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LEADING_ITEM_ID"/>
+        <keyMapping columnObjectName="ReducedRuleSet" columnName="L_CATEGORY_ID"/>
+      </attribute>
+      <attribute id="LEADING_ITEM_TYPE" order="3" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LEADING_ITEM_TYPE"/>
+        <keyMapping columnObjectName="ReducedRuleSet" columnName="LEADING_ITEM_TYPE"/>
+      </attribute>
+      <attribute id="RESULT_ITEM_ID" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RESULT_ITEM_ID"/>
+        <keyMapping columnObjectName="ReducedRuleSet" columnName="R_CATEGORY_ID"/>
+      </attribute>
+      <attribute id="RESULT_ITEM_TYPE" order="5" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RESULT_ITEM_TYPE"/>
+        <keyMapping columnObjectName="ReducedRuleSet" columnName="RESULT_ITEM_TYPE"/>
+      </attribute>
+      <attribute id="SUPPORT" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SUPPORT"/>
+        <keyMapping columnObjectName="ReducedRuleSet" columnName="SUPPORT"/>
+      </attribute>
+      <attribute id="CONFIDENCE" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONFIDENCE"/>
+        <keyMapping columnObjectName="ReducedRuleSet" columnName="CONFIDENCE"/>
+      </attribute>
+      <attribute id="LIFT" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LIFT"/>
+        <keyMapping columnObjectName="ReducedRuleSet" columnName="LIFT"/>
+      </attribute>
+      <attribute id="SCORE" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SCORE"/>
+        <keyMapping columnObjectName="ReducedRuleSet" columnName="SCORE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="461" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Transaction" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="1785"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Hierarchy" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="1881"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Prod2ProdCat" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="1785"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="CatTransactions" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="1689"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="CatTransactions1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="264" y="1611"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="IntransactionItemPairs" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="307" y="1515"/>
+        <rectangleSize height="82" width="229"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FilteredIntransItemPairs" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="1437"/>
+        <rectangleSize height="64" width="229"/>
+      </shape>
+      <shape expanded="true" modelObjectName="RulesWithSupportCount" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="1341"/>
+        <rectangleSize height="64" width="211"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ItemCount" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="1437"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="LeadingSuppCount" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="555" y="1341"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="LEADING_SUPPORT_COUNT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="535" y="1245"/>
+        <rectangleSize height="64" width="181"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ResultSuppCount" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="1341"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ResultSupportCount" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="161" y="1149"/>
+        <rectangleSize height="64" width="170"/>
+      </shape>
+      <shape expanded="true" modelObjectName="NumTransactions" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="1437"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="NumTrans" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="1341"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Rules_With_Support" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="321" y="1245"/>
+        <rectangleSize height="82" width="200"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Rule_With_Supp_Conf" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="345" y="1149"/>
+        <rectangleSize height="82" width="234"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Rule_With_Supp_Conf_Lift" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="229" y="1053"/>
+        <rectangleSize height="82" width="238"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ScoreType" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="458" y="609"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MinSupport" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="481" y="1053"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="RulesWithMinSupport" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="375" y="957"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MinConfidence" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="529" y="957"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="RulesWithConfidence" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="449" y="861"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MinLift" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="295" y="861"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="RulesWithLift" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="370" y="765"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FilteredRules" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="370" y="687"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="AssociationRuleWithScore" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="342" y="513"/>
+        <rectangleSize height="82" width="197"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MaxIntestingnessMeasures" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="612" y="609"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MaxScore" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="553" y="513"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="RulesWithNormalizedScore" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="426" y="417"/>
+        <rectangleSize height="82" width="210"/>
+      </shape>
+      <shape expanded="true" modelObjectName="AssocRulesMaxResult" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="431" y="321"/>
+        <rectangleSize height="82" width="201"/>
+      </shape>
+      <shape expanded="true" modelObjectName="RankedAssociationRules" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="461" y="243"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ReducedRuleSet" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="461" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_INTERACTION_SURVEY" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_D_INTERACTION_SURVEY"/>
+  <metadata changedAt="2019-04-10 15:28:11.58"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="47"/>
+  <dataSources>
+    <DataSource id="CUAN_D_SVY_RESPA">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_SVY_RESPA</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_SVY_RESPQ">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_SVY_RESPQ</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_SVY_RESPD">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_SVY_RESPD</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_SVY_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_SVY_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_SVY_NAM_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_SVY_NAM_T</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_SVY_QNT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_SVY_QNT</resourceUri>
+    </DataSource>
+    <DataSource id="HPAC_MKT_AREA_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::HPAC_MKT_AREA_T</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_SVY_QNT_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_SVY_QNT_T</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_SVY_ANS">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_SVY_ANS</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_SVY_ANS_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_SVY_ANS_T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_RESA">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="MANDT_RESA"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_SVY_RESPA">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_RESA" source="MANDT"/></input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_RESQ">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="Q_ID"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="MANDT_RESQ"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_SVY_RESPQ">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_RESQ" source="MANDT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="JOIN_ANS" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="Q_ID"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="MANDT_RESQ"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="PROJ_RESQ">
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="Q_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_RESQ" source="MANDT_RESQ"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <input node="PROJ_RESA">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="COMMENT_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="A_ID_ROW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="A_ID_COL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_RESQ" source="MANDT_RESA"/>
+      </input>
+      <joinAttribute name="JOIN$DB_KEY$PARENT_KEY"/>
+      <joinAttribute name="MANDT_RESQ"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_RESPD">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IS_CONTACT_DELETED"/>
+        <viewAttribute id="IS_DELETED_FR_SURVEY_PRVD"/>
+        <viewAttribute id="MANDT_RESPD"/>
+        <viewAttribute id="RESPONSE_AT"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="RESPONSE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_SVY_RESPD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_RESPD" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_AT" source="RESPONDED_AT_DATE"/></input>
+      <filter>(&quot;IS_CONTACT_DELETED&quot; !='X') AND (&quot;IS_DELETED_FR_SURVEY_PRVD&quot; !='X') AND (in (&quot;_DATAAGING&quot;,'00000000'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="JOIN_RESD_DETAILS" cardinality="CN_1" joinType="rightOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="Q_ID"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="MANDT_RESPD"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+        <viewAttribute id="RESPONSE_AT"/>
+        <viewAttribute id="RESPONSE_ID"/>
+        <viewAttribute hidden="true" id="JOIN$PARENT_KEY$DB_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$MANDT_RESQ$MANDT_RESPD"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="JOIN_ANS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="Q_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="COMMENT_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="A_ID_ROW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="A_ID_COL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_KEY$DB_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT_RESQ$MANDT_RESPD" source="MANDT_RESQ"/>
+      </input>
+      <input node="Proj_RESPD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_RESPD" source="MANDT_RESPD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_AT" source="RESPONSE_AT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_ID" source="RESPONSE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_KEY$DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT_RESQ$MANDT_RESPD" source="MANDT_RESPD"/>
+      </input>
+      <joinAttribute name="JOIN$PARENT_KEY$DB_KEY"/>
+      <joinAttribute name="JOIN$MANDT_RESQ$MANDT_RESPD"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_ROOT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="SURVEY_PROVIDER"/>
+        <viewAttribute id="IS_DELETED_FR_SURVEY_PRVD"/>
+        <viewAttribute id="MARKETINGT_AREA_ID"/>
+        <viewAttribute id="SURVEY_STATUS"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="IS_LATEST_VERSION"/>
+        <viewAttribute id="MANDT_ROOT"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_SVY_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SURVEY_PROVIDER" source="PROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SURVEY_STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ROOT" source="MANDT"/></input>
+      <filter>(&quot;IS_DELETED_FR_SURVEY_PRVD&quot; !='X') AND (&quot;IS_LATEST_VERSION&quot; ='X') AND (&quot;MANDT_ROOT&quot; ='$$client$$') AND (in (&quot;_DATAAGING&quot;,'00000000'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="JOIN_RES" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PROVIDER"/>
+        <viewAttribute id="Q_ID"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MANDT_ROOT"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+        <viewAttribute id="RESPONSE_AT"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="RESPONSE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="PROJ_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROVIDER" source="SURVEY_PROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MARKETINGT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="SURVEY_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ROOT" source="MANDT_ROOT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      </input>
+      <input node="JOIN_RESD_DETAILS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="Q_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="COMMENT_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="A_ID_ROW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="A_ID_COL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_AT" source="RESPONSE_AT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_ID" source="RESPONSE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ROOT" source="MANDT_RESPD"/>
+      </input>
+      <joinAttribute name="DB_KEY"/>
+      <joinAttribute name="MANDT_ROOT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_SURV_TEXT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="SURVEY_NAME"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_SVY_NAM_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SURVEY_NAME" source="TEXT"/></input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="JOIN_SVY_TEXT" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PROVIDER"/>
+        <viewAttribute id="Q_ID"/>
+        <viewAttribute id="SURVEY_NAME"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MANDT_ROOT"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+        <viewAttribute id="RESPONSE_AT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="RESPONSE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="JOIN_RES">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROVIDER" source="PROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="Q_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="COMMENT_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ROOT" source="MANDT_ROOT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="A_ID_ROW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="A_ID_COL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_AT" source="RESPONSE_AT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_ID" source="RESPONSE_ID"/>
+      </input>
+      <input node="PROJ_SURV_TEXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SURVEY_NAME" source="SURVEY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ROOT" source="MANDT"/>
+      </input>
+      <joinAttribute name="DB_KEY"/>
+      <joinAttribute name="MANDT_ROOT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_SVY_QUESTIONS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="MANDT_QNT"/>
+        <viewAttribute id="PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_SVY_QNT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_QNT" source="MANDT"/></input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_MARKETING_DESC" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="HPAC_MKT_AREA_T"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_MARKETING_DESC" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PROVIDER"/>
+        <viewAttribute id="SURVEY_NAME"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+        <viewAttribute id="RESPONSE_AT"/>
+        <viewAttribute id="Q_ID"/>
+        <viewAttribute id="MANDT_ROOT"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="RESPONSE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="JOIN_SVY_TEXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROVIDER" source="PROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SURVEY_NAME" source="SURVEY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="COMMENT_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="A_ID_ROW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="A_ID_COL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_AT" source="RESPONSE_AT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="Q_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ROOT" source="MANDT_ROOT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_ID" source="RESPONSE_ID"/>
+      </input>
+      <input node="Projection_MARKETING_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_DESC" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ROOT" source="MANDT"/>
+      </input>
+      <joinAttribute name="MKT_AREA_ID"/>
+      <joinAttribute name="MANDT_ROOT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="JOIN_SVY_QNT" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="MANDT_QNT"/>
+        <viewAttribute id="PROVIDER"/>
+        <viewAttribute id="SURVEY_NAME"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+        <viewAttribute id="RESPONSE_AT"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="RESPONSE_ID"/>
+        <viewAttribute id="Q_ID"/>
+        <viewAttribute hidden="true" id="JOIN$MANDT_ROOT$MANDT_QNT"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_MARKETING_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROVIDER" source="PROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SURVEY_NAME" source="SURVEY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="COMMENT_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="A_ID_ROW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="A_ID_COL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_AT" source="RESPONSE_AT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_DESC" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_ID" source="RESPONSE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="Q_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT_ROOT$MANDT_QNT" source="MANDT_ROOT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <input node="PROJ_SVY_QUESTIONS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_QNT" source="MANDT_QNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT_ROOT$MANDT_QNT" source="MANDT_QNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="Q_ID"/>
+      <joinAttribute name="JOIN$MANDT_ROOT$MANDT_QNT"/>
+      <joinAttribute name="JOIN$DB_KEY$PARENT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_SVY_QNT_TEXT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="QUESTION"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_SVY_QNT_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUESTION" source="TEXT"/></input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="JOIN_SVY_QNT_TXT" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PROVIDER"/>
+        <viewAttribute id="SURVEY_NAME"/>
+        <viewAttribute id="QUESTION"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MANDT_QNT"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+        <viewAttribute id="RESPONSE_AT"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="RESPONSE_ID"/>
+        <viewAttribute id="Q_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="JOIN_SVY_QNT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROVIDER" source="PROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SURVEY_NAME" source="SURVEY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="COMMENT_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_QNT" source="MANDT_QNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="A_ID_ROW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="A_ID_COL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_AT" source="RESPONSE_AT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_DESC" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_ID" source="RESPONSE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="Q_ID"/>
+      </input>
+      <input node="PROJ_SVY_QNT_TEXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUESTION" source="QUESTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_QNT" source="MANDT"/>
+      </input>
+      <joinAttribute name="DB_KEY"/>
+      <joinAttribute name="MANDT_QNT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_SVY_ANS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="MANDT_ANS"/>
+        <viewAttribute id="C_ID"/>
+        <viewAttribute id="PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_SVY_ANS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ANS" source="MANDT"/></input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="JOIN_SVY_ANS" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PROVIDER"/>
+        <viewAttribute id="SURVEY_NAME"/>
+        <viewAttribute id="QUESTION"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MANDT_ANS"/>
+        <viewAttribute id="RESPONSE_AT"/>
+        <viewAttribute id="MANDT_QNT"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="RESPONSE_ID"/>
+        <viewAttribute id="Q_ID"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="JOIN_SVY_QNT_TXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROVIDER" source="PROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SURVEY_NAME" source="SURVEY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUESTION" source="QUESTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="COMMENT_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_AT" source="RESPONSE_AT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_QNT" source="MANDT_QNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_DESC" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="A_ID_ROW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="A_ID_COL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_ID" source="RESPONSE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="Q_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <input node="PROJ_SVY_ANS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ANS" source="MANDT_ANS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_QNT" source="MANDT_ANS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="C_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT_QNT"/>
+      <joinAttribute name="A_ID_COL"/>
+      <joinAttribute name="A_ID_ROW"/>
+      <joinAttribute name="JOIN$DB_KEY$PARENT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_SVY_ANS_TEXT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ANSWER"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_SVY_ANS_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANSWER" source="TEXT"/></input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="JOIN_SVY_ANS_TEXT" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PROVIDER"/>
+        <viewAttribute id="SURVEY_NAME"/>
+        <viewAttribute id="QUESTION"/>
+        <viewAttribute id="ANSWER"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="COMMENT_TEXT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="RESPONSE_AT"/>
+        <viewAttribute id="MANDT_ANS"/>
+        <viewAttribute id="MANDT_QNT"/>
+        <viewAttribute id="MKT_AREA_DESC"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="A_ID_ROW"/>
+        <viewAttribute id="A_ID_COL"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="RESPONSE_ID"/>
+        <viewAttribute id="Q_ID"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="JOIN_SVY_ANS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROVIDER" source="PROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SURVEY_NAME" source="SURVEY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUESTION" source="QUESTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMMENT_TEXT" source="COMMENT_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_AT" source="RESPONSE_AT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ANS" source="MANDT_ANS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_QNT" source="MANDT_QNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_DESC" source="MKT_AREA_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_ROW" source="A_ID_ROW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="A_ID_COL" source="A_ID_COL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESPONSE_ID" source="RESPONSE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="Q_ID" source="Q_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <input node="PROJ_SVY_ANS_TEXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANSWER" source="ANSWER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_ANS" source="MANDT"/>
+      </input>
+      <joinAttribute name="JOIN$DB_KEY$PARENT_KEY"/>
+      <joinAttribute name="MANDT_ANS"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="JOIN_SVY_ANS_TEXT">
+    <descriptions/>
+    <attributes>
+      <attribute id="SURVEY_IA_MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="MANDT_QNT"/>
+      </attribute>
+      <attribute id="SURVEY_PROVIDER" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Provider"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="PROVIDER"/>
+      </attribute>
+      <attribute id="SURVEY_NAME" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Name"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="SURVEY_NAME"/>
+      </attribute>
+      <attribute id="SURVEY_QN_ID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Question ID"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="Q_ID"/>
+      </attribute>
+      <attribute id="QUESTION" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Question"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="QUESTION"/>
+      </attribute>
+      <attribute id="MARKETING_AREA_ID" order="6" attributeHierarchyActive="false" descriptionColumnName="MARKETING_AREA_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area ID"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="RESP_ANSWER" hidden="true" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Answer"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="ANSWER"/>
+      </attribute>
+      <attribute id="SURVEY_STATUS" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Status"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="STATUS"/>
+      </attribute>
+      <attribute id="VERSION" hidden="true" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Version"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="VERSION"/>
+      </attribute>
+      <attribute id="COMMENT_TEXT" order="10" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Free Text"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="COMMENT_TEXT"/>
+      </attribute>
+      <attribute id="SURVEY_IA_CONTACT_KEY" order="11" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="SURVEY_RESPONSE_ID" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Response ID"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="RESPONSE_ID"/>
+      </attribute>
+      <attribute id="RESPONSE_AT" order="13" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Responded At"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="RESPONSE_AT"/>
+      </attribute>
+      <attribute id="SURVEY_ANS_ID_ROW" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Answer ID"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="A_ID_ROW"/>
+      </attribute>
+      <attribute id="SURVEY_ANS_ID_COL" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Answer - Column ID"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="A_ID_COL"/>
+      </attribute>
+      <attribute id="MARKETING_AREA_DESC" hidden="true" order="17" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area Description"/>
+        <keyMapping columnObjectName="JOIN_SVY_ANS_TEXT" columnName="MKT_AREA_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="ANSWER" hidden="false" order="14" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Answer"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1333">
+          <formula>if(&quot;COMMENT_TEXT&quot; != '', &quot;COMMENT_TEXT&quot;, &quot;RESP_ANSWER&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="238" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PROJ_RESA" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="177" y="1029"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PROJ_RESQ" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="23" y="1029"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="JOIN_ANS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="100" y="933"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="PROJ_RESQ" modelObjectNameSpace="JOIN_ANS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PROJ_RESA" modelObjectNameSpace="JOIN_ANS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_RESPD" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="254" y="933"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="JOIN_RESD_DETAILS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="837"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="JOIN_ANS" modelObjectNameSpace="JOIN_RESD_DETAILS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Proj_RESPD" modelObjectNameSpace="JOIN_RESD_DETAILS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PROJ_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="837"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="JOIN_RES" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="97" y="741"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="PROJ_ROOT" modelObjectNameSpace="JOIN_RES" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="JOIN_RESD_DETAILS" modelObjectNameSpace="JOIN_RES" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PROJ_SURV_TEXT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="251" y="741"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="JOIN_SVY_TEXT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="171" y="645"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="JOIN_RES" modelObjectNameSpace="JOIN_SVY_TEXT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PROJ_SURV_TEXT" modelObjectNameSpace="JOIN_SVY_TEXT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PROJ_SVY_QUESTIONS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="90" y="549"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_MARKETING_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="325" y="645"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_MARKETING_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="244" y="549"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="JOIN_SVY_TEXT" modelObjectNameSpace="Join_MARKETING_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_MARKETING_DESC" modelObjectNameSpace="Join_MARKETING_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="JOIN_SVY_QNT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="164" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_MARKETING_DESC" modelObjectNameSpace="JOIN_SVY_QNT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PROJ_SVY_QUESTIONS" modelObjectNameSpace="JOIN_SVY_QNT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PROJ_SVY_QNT_TEXT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="318" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="JOIN_SVY_QNT_TXT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="239" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="JOIN_SVY_QNT" modelObjectNameSpace="JOIN_SVY_QNT_TXT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PROJ_SVY_QNT_TEXT" modelObjectNameSpace="JOIN_SVY_QNT_TXT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PROJ_SVY_ANS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="393" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="JOIN_SVY_ANS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="315" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="JOIN_SVY_QNT_TXT" modelObjectNameSpace="JOIN_SVY_ANS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PROJ_SVY_ANS" modelObjectNameSpace="JOIN_SVY_ANS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PROJ_SVY_ANS_TEXT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="161" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="JOIN_SVY_ANS_TEXT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="238" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    
+      <shape modelObjectName="JOIN_SVY_ANS" modelObjectNameSpace="JOIN_SVY_ANS_TEXT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PROJ_SVY_ANS_TEXT" modelObjectNameSpace="JOIN_SVY_ANS_TEXT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

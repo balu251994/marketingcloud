@@ -1,0 +1,1 @@
+TYPE "sap.hana-app.cuan.custom_seg::PR_READ_MODEL_DEF_N/tabletype/ot_model_def" AS TABLE  ( "NAME" VARCHAR(64) CS_STRING, "VALUE" NCLOB  MEMORY THRESHOLD 1000   ) 

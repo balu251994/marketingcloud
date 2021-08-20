@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_PRODUCT_RELATED_IA_V2" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Modified Product Related Interactions"/>
+  <metadata changedAt="2020-08-13 14:11:33.955"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="16"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_PROD">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_PROD</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_TOCAT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_TOCAT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IA_PCAT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_PCAT</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_PRODUCT_CATEGORY_PARENT_V2">
+      <resourceUri>sap.hana-app.cuan.contact::CA_D_PRODUCT_CATEGORY_PARENT_V2</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_PRODUCT_CLOUD">
+      <resourceUri>sap.hana-app.cuan.contact::CA_D_PRODUCT_CLOUD</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_IA_PROD">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IA_PROD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="PARENT_KEY"/></input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_PROD_TOCAT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_PROD_TOCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PARENT_KEY"/></input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IA" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/></input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;COMM_MEDIUM&quot; !='SYSTEM') AND (&quot;OBSOLETE&quot; ='') AND (in (&quot;_DATAAGING&quot;,'','00000000'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PRODTOCAT" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+
+        <viewAttribute id="INTERACTIONPRODUCTUUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Proj_IA_PROD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONPRODUCTUUID" source="DB_KEY"/>
+      </input>
+      <input node="Proj_PROD_TOCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+      </input>
+      <joinAttribute name="PRODUCT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PROD_TOCAT" cardinality="C1_N" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="MANDT"/>
+
+        <viewAttribute id="INTERACTIONPRODUCTUUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_IA">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <input node="Join_PRODTOCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONPRODUCTUUID" source="INTERACTIONPRODUCTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+      </input>
+      <joinAttribute name="IA_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_IA_PCAT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PRODUCT_CATEGORY_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IA_PCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="PARENT_KEY"/></input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PCAT" cardinality="CN_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PRODUCT_CATEGORY_KEY"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$IA_KEY$DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Proj_IA_PCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_CATEGORY_KEY" source="PRODUCT_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$IA_KEY$DB_KEY" source="IA_KEY"/>
+      </input>
+      <input node="Projection_IA">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$IA_KEY$DB_KEY" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$IA_KEY$DB_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:UnionView" id="Union_PROD_PCAT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+
+        <viewAttribute id="INTERACTIONPRODUCTUUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="Join_PCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="PRODUCT_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PRODUCT_KEY" null="true" value=""/>
+
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="INTERACTIONPRODUCTUUID" null="true" value=""/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="Join_PROD_TOCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONPRODUCTUUID" source="INTERACTIONPRODUCTUUID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PROD_CAT_PARENT" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="CONTACT_KEY2"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PRODUCTCATEGORYNAME"/>
+        <viewAttribute id="PRODUCTCATEGORYDESC"/>
+        <viewAttribute id="INTERACTIONPRODUCTCATEGORY"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY2"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY3"/>
+        <viewAttribute id="PRODUCTCATEGORYHIERARCHY"/>
+        <viewAttribute id="PRODCATHIERARCHYDESCRIPTION"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORYNAME"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY2NAME"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY3NAME"/>
+
+        <viewAttribute id="INTERACTIONPRODUCTUUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Union_PROD_PCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY2" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONPRODUCTUUID" source="INTERACTIONPRODUCTUUID"/>
+      </input>
+      <input node="CA_D_PRODUCT_CATEGORY_PARENT_V2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTCATEGORYNAME" source="PRODUCTCATEGORYNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTCATEGORYDESC" source="PRODUCTCATEGORYDESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONPRODUCTCATEGORY" source="INTERACTIONPRODUCTCATEGORY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY" source="PARENTPRODUCTCATEGORY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY2" source="PARENTPRODUCTCATEGORY2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY3" source="PARENTPRODUCTCATEGORY3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTCATEGORYHIERARCHY" source="PRODUCTCATEGORYHIERARCHY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODCATHIERARCHYDESCRIPTION" source="PRODCATHIERARCHYDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORYNAME" source="PARENTPRODUCTCATEGORYNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY2NAME" source="PARENTPRODUCTCATEGORY2NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY3NAME" source="PARENTPRODUCTCATEGORY3NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="INTERACTIONPRODUCTCATEGORYUUID"/>
+      </input>
+      <joinAttribute name="CATEGORY_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PRODUCT" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PRODUCT_IMAGE_URL"/>
+        <viewAttribute id="PRODUCT_NAV_URL"/>
+        <viewAttribute id="PRODUCT_ORIGIN_DESC"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="D_PRODUCT_NAME"/>
+        <viewAttribute id="D_PRODUCT_DESCRIPTION"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="BRAND_NAME"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY3NAME"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY2NAME"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORYNAME"/>
+        <viewAttribute id="PRODCATHIERARCHYDESCRIPTION"/>
+        <viewAttribute id="PRODUCTCATEGORYHIERARCHY"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY3"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY2"/>
+        <viewAttribute id="PARENTPRODUCTCATEGORY"/>
+        <viewAttribute id="INTERACTIONPRODUCTCATEGORY"/>
+        <viewAttribute id="PRODUCTCATEGORYDESC"/>
+        <viewAttribute id="PRODUCTCATEGORYNAME"/>
+
+        <viewAttribute id="INTERACTIONPRODUCTUUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_PROD_CAT_PARENT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY3NAME" source="PARENTPRODUCTCATEGORY3NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY2NAME" source="PARENTPRODUCTCATEGORY2NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORYNAME" source="PARENTPRODUCTCATEGORYNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODCATHIERARCHYDESCRIPTION" source="PRODCATHIERARCHYDESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTCATEGORYHIERARCHY" source="PRODUCTCATEGORYHIERARCHY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY3" source="PARENTPRODUCTCATEGORY3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY2" source="PARENTPRODUCTCATEGORY2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENTPRODUCTCATEGORY" source="PARENTPRODUCTCATEGORY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONPRODUCTCATEGORY" source="INTERACTIONPRODUCTCATEGORY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTCATEGORYDESC" source="PRODUCTCATEGORYDESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTCATEGORYNAME" source="PRODUCTCATEGORYNAME"/>
+
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONPRODUCTUUID" source="INTERACTIONPRODUCTUUID"/>
+      </input>
+      <input node="CA_D_PRODUCT_CLOUD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_IMAGE_URL" source="PRODUCT_IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_NAV_URL" source="PRODUCT_NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN_DESC" source="PRODUCT_ORIGIN_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="D_PRODUCT_NAME" source="D_PRODUCT_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="D_PRODUCT_DESCRIPTION" source="D_PRODUCT_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_NAME" source="BRAND_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="PRODUCT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_PRODUCT">
+    <descriptions/>
+    <attributes>
+      <attribute id="PRODUCTIMAGEURL" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Image URL"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODUCT_IMAGE_URL"/>
+      </attribute>
+      <attribute id="PRODUCTWEBSITEURL" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Website URL"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODUCT_NAV_URL"/>
+      </attribute>
+      <attribute id="PRODUCTORIGINNAME" hidden="true" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODUCT_ORIGIN_DESC"/>
+      </attribute>
+      <attribute id="INTERACTIONCURRENCY" order="4" attributeHierarchyActive="false" displayAttribute="false" hidden="true">
+        <descriptions defaultDescription="Interaction Currency"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="CURRENCY"/>
+      </attribute>
+      <attribute id="PRODUCTNAME" hidden="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="D_PRODUCT_NAME"/>
+      </attribute>
+      <attribute id="PRODUCTDESCRIPTION" hidden="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="D_PRODUCT_DESCRIPTION"/>
+      </attribute>
+      <attribute id="PRODUCTORIGIN" order="7" attributeHierarchyActive="false" descriptionColumnName="PRODUCTORIGINNAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Origin"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODUCT_ORIGIN"/>
+      </attribute>
+      <attribute id="PRODUCTID" order="8" attributeHierarchyActive="false" descriptionColumnName="PRODUCTDESCRIPTION" displayAttribute="false">
+        <descriptions defaultDescription="Product ID"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODUCT_ID"/>
+      </attribute>
+      <attribute id="INTERACTIONPRODUCTBRANDID" order="9" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="BRANDNAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Brand ID"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="BRAND_ID"/>
+      </attribute>
+      <attribute id="BRANDNAME" hidden="true" order="10" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="BRAND_NAME"/>
+      </attribute>
+      <attribute id="PRODUCTUUID" order="11" attributeHierarchyActive="false" descriptionColumnName="PRODUCTNAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Key"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODUCT_KEY"/>
+      </attribute>
+      <attribute id="INTERACTIONPRODUCTCATEGORYUUID" order="12" attributeHierarchyActive="false" descriptionColumnName="PRODUCTCATEGORYNAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Category Key"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="CATEGORY_KEY"/>
+      </attribute>
+      <attribute id="CONTACT_KEY2" hidden="true" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IA_KEY" order="14" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Key"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY3NAME" hidden="true" order="15" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PARENTPRODUCTCATEGORY3NAME"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY2NAME" hidden="true" order="16" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PARENTPRODUCTCATEGORY2NAME"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORYNAME" hidden="true" order="17" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PARENTPRODUCTCATEGORYNAME"/>
+      </attribute>
+      <attribute id="PRODCATHIERARCHYDESCRIPTION" hidden="true" order="18" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODCATHIERARCHYDESCRIPTION"/>
+      </attribute>
+      <attribute id="PRODUCTCATEGORYHIERARCHY" order="19" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="PRODCATHIERARCHYDESCRIPTION" displayAttribute="false">
+        <descriptions defaultDescription="Product Hierarchy ID"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODUCTCATEGORYHIERARCHY"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY3" order="20" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="PARENTPRODUCTCATEGORY3NAME" displayAttribute="false">
+        <descriptions defaultDescription="Parent Product Category 3 ID"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PARENTPRODUCTCATEGORY3"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY2" order="21" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="PARENTPRODUCTCATEGORY2NAME" displayAttribute="false">
+        <descriptions defaultDescription="Parent Product Category 2 ID"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PARENTPRODUCTCATEGORY2"/>
+      </attribute>
+      <attribute id="PARENTPRODUCTCATEGORY" order="22" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="PARENTPRODUCTCATEGORYNAME" displayAttribute="false">
+        <descriptions defaultDescription="Parent Product Category ID"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PARENTPRODUCTCATEGORY"/>
+      </attribute>
+      <attribute id="INTERACTIONPRODUCTCATEGORY" order="23" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="PRODUCTCATEGORYDESC" displayAttribute="false">
+        <descriptions defaultDescription="Product Category ID"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="INTERACTIONPRODUCTCATEGORY"/>
+      </attribute>
+      <attribute id="PRODUCTCATEGORYDESC" hidden="true" order="24" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODUCTCATEGORYDESC"/>
+      </attribute>
+      <attribute id="PRODUCTCATEGORYNAME" hidden="true" order="25" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="PRODUCTCATEGORYNAME"/>
+      </attribute>
+
+      <attribute id="INTERACTIONPRODUCTUUID" order="26" descriptionColumnName="PRODUCTNAME" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Interaction Product"/>
+        <keyMapping columnObjectName="Join_PRODUCT" columnName="INTERACTIONPRODUCTUUID"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="496.6875975689149" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_IA_PROD" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="513.6107262337478" y="976.9999952316284"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_PROD_TOCAT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="723.6107262337478" y="976.9999952316284"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_IA" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="298.9999999999998" y="816.9999964237213"/>
+        <rectangleSize height="64" width="231"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PRODTOCAT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="579.9999999999998" y="816.9999964237213"/>
+        <rectangleSize height="82" width="275"/>
+      </shape>
+      <shape modelObjectName="Proj_IA_PROD" modelObjectNameSpace="Join_PRODTOCAT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Proj_PROD_TOCAT" modelObjectNameSpace="Join_PRODTOCAT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PROD_TOCAT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="428.8870760392295" y="656.9999976158142"/>
+        <rectangleSize height="82" width="239"/>
+      </shape>
+      <shape modelObjectName="Projection_IA" modelObjectNameSpace="Join_PROD_TOCAT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_PRODTOCAT" modelObjectNameSpace="Join_PROD_TOCAT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_IA_PCAT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="91.99999999999989" y="816.9999964237213"/>
+        <rectangleSize height="61" width="157"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PCAT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="117.16666666666652" y="656.9999976158142"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Proj_IA_PCAT" modelObjectNameSpace="Join_PCAT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_IA" modelObjectNameSpace="Join_PCAT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_PROD_PCAT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="400.866069141613" y="516.9999988079071"/>
+        <rectangleSize height="102" width="205"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PROD_CAT_PARENT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="396.366069141613" y="376.9999988079071"/>
+        <rectangleSize height="114" width="214"/>
+      </shape>
+      <shape modelObjectName="Union_PROD_PCAT" modelObjectNameSpace="Join_PROD_CAT_PARENT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.contact::CA_D_PRODUCT_CATEGORY_PARENT_V2" modelObjectNameSpace="Join_PROD_CAT_PARENT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PRODUCT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="472.1875975689149" y="217"/>
+        <rectangleSize height="91" width="209"/>
+      </shape>
+
+      <shape modelObjectName="Join_PROD_CAT_PARENT" modelObjectNameSpace="Join_PRODUCT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.contact::CA_D_PRODUCT_CLOUD" modelObjectNameSpace="Join_PRODUCT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

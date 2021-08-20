@@ -1,0 +1,12 @@
+{
+   "sap.hana-app.cuan.contact.internal::PR_MP_MKTA_SEPARATION_SWITCH": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_MP_MKTA_SEPARATION_SWITCH" 
+		}
+	},
+   "sap.hana-app.cuan.contact.internal::PR_MP_PERMISSION_PERSISTED": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_MP_PERMISSION_PERSISTED" 
+		}
+	} 
+}

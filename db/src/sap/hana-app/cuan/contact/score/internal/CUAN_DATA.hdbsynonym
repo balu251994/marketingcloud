@@ -1,0 +1,112 @@
+{
+   "sap.hana-app.cuan.contact.score.internal::PR_CE_CONTACT_ACTIVITY_SCORE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_ACTIVITY_SCORE" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::PR_CE_CONTACT_AGE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_AGE" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::PR_CE_CONTACT_ENGAGEMENT_SCORE_PERCENTILE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_ENGAGEMENT_SCORE_PERCENTILE" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::PR_CE_CONTACT_GENDER": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_GENDER" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::PR_CE_CONTACT_LEVEL": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_LEVEL" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::PR_CE_CONTACT_MARITAL_STATUS": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_MARITAL_STATUS" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::PR_CE_CONTACT_RECENCY_LEVEL": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_RECENCY_LEVEL" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::PR_CE_CONTACT_SENTIMENT_SCORE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_CE_CONTACT_SENTIMENT_SCORE" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::PR_CE_LOCCOMPANY_NO_OF_ACTIVE_CONTACTS": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_CE_LOCCOMPANY_NO_OF_ACTIVE_CONTACTS" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_ACTIVITY_SCORE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_ACTIVITY_SCORE" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_AGE_RT": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_AGE_RT" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_AGE_SCR": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_AGE_SCR" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_GENDER_SCORE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_GENDER_SCORE" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_LEVEL": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_LEVEL" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_MARITAL_STATUS_SCORE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_MARITAL_STATUS_SCORE" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_NO_OF_ACTIVE_CONTACTS_OF_LOCCOMP_RT": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_NO_OF_ACTIVE_CONTACTS_OF_LOCCOMP_RT" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_NO_OF_ACTIVE_CONTACTS_OF_LOCCOMP_SCR": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_NO_OF_ACTIVE_CONTACTS_OF_LOCCOMP_SCR" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_RECENCY_LEVEL": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_RECENCY_LEVEL" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_SENTIMENT_RT": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_SENTIMENT_RT" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_SENTIMENT_SCR": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_SENTIMENT_SCR" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_RT": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_RT" 
+		}
+	},
+   "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CONTACT_ENGAGEMENT_SCR" 
+		}
+	} 
+}

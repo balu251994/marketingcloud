@@ -1,0 +1,229 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_READ_MODEL_DEF_N" (  in IP_MODEL_GUID VARCHAR(32) ,  out ot_model_def "sap.hana-app.cuan.custom_seg::PR_READ_MODEL_DEF_N/tabletype/ot_model_def" ,  out ot_model "sap.hana-app.cuan.custom_seg::PR_READ_MODEL_DEF_N/tabletype/ot_model"  ) language SQLSCRIPT sql security invoker reads sql data as lc_trainmodel_version_actv nvarchar(1) := 'A';
+l_model_def_exists         integer;
+l_model_def                nclob;
+l_scenario_parameters      nclob;
+l_ip_doc_date_start        nvarchar(10);
+l_ip_doc_date_end          nvarchar(10);
+l_use_old_shift			   nvarchar(1) := ' ';	
+
+begin
+
+lt_tr_model_def =
+  select
+      "ID",
+      to_nclob(t3."MODEL") as "MODEL"
+    from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"    as t0
+    join "sap.hana-app.cuan.db.cuan::CUAND_P_MODELFIT" as t1
+       on t0."MANDT"    = t1."MANDT"
+      and t0."DB_KEY"   = t1."PARENT_KEY"
+    join "sap.hana-app.cuan.db.cuan::CUAND_TRAINMODEL" as t2
+       on t1."MANDT"   = t2."MANDT"
+      and t1."DB_KEY"  = t2."PARENT_KEY"
+      and t2."VERSION" = :lc_trainmodel_version_actv
+    join "sap.hana-app.cuan.db.cuan::CUAND_PM_MODEL_R"  as t3
+       on t2."MANDT"      = t3."MANDT"
+      and t2."MODEL_GUID" = t3."MODEL_GUID"
+    where t0."MANDT"  = session_context('CLIENT') 
+      and t0."DB_KEY" = :ip_model_guid
+      and t3."ID"     = to_int(-1)
+;
+
+select count(*) into l_model_def_exists from :lt_tr_model_def;
+if :l_model_def_exists > 0 then
+  select top 1 "MODEL" into l_model_def from :lt_tr_model_def;
+  call "sap.hana-app.cuan.cpred.reuse.internal::PR_MODEL_DEF_DESERIALIZE"(:l_model_def,ot_model_def);
+else
+  call "sap.hana-app.cuan.cpred.reuse.internal::PR_MODEL_DEF_FALLBACK"(
+    :IP_MODEL_GUID,
+    ot_model_def
+  );
+end if;
+
+--------------------------------------------------------------------------------
+-- Adjust start/end date
+--------------------------------------------------------------------------------
+select top 1 "VALUE" into l_scenario_parameters from :ot_model_def where to_nvarchar("NAME") = '$$scenario_parameters$$';
+
+-- SG - apply dynamic date +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+CALL "sap.hana-app.cuan.cpred.reuse.internal::PR_APPL_DYN_DATE"(l_scenario_parameters, l_scenario_parameters, l_use_old_shift);
+-- SG - add dynamic date -------------------------------------------------------
+
+call "sap.hana-app.cuan.cpred.reuse.internal::PR_TO_NAME_VALUE"(l_scenario_parameters,lt_scenario_parameters);
+
+IF l_use_old_shift = 'X' THEN
+  
+  	-- get old values; use '' if not found
+	select case when "VALUE" is null then '' else "VALUE" end
+	  into l_ip_doc_date_start
+	  from "sap.hana-app.sys::DUMMY" as t1
+	  left join :lt_scenario_parameters as t2
+	     on t2."NAME" = 'IP_DOC_DATE_START';
+	select case when "VALUE" is null then '' else "VALUE" end
+	  into l_ip_doc_date_end
+	  from "sap.hana-app.sys::DUMMY" as t1
+	  left join :lt_scenario_parameters as t2
+	     on t2."NAME" = 'IP_DOC_DATE_END';
+	
+	--check if both are provide
+	if :l_ip_doc_date_start <> '' and l_ip_doc_date_end <> '' then
+	
+		lt_scenario_parameters =
+		select	-- all but DATE 
+		    "NAME",
+		    "VALUE"
+		  from :lt_scenario_parameters
+		  where "NAME" not in ('IP_DOC_DATE_START', 'IP_DOC_DATE_END')
+		union all -- add new DATE_START
+		select 
+		    'IP_DOC_DATE_START' as "NAME",
+		    to_nvarchar(add_days(current_date,days_between(to_date(:l_ip_doc_date_end),to_date(:l_ip_doc_date_start)))) as "VALUE"
+		  from "sap.hana-app.sys::DUMMY" 
+		union all -- add new DATE_END
+		select
+		    'IP_DOC_DATE_END' as "NAME",
+		    to_nvarchar(current_date) as "VALUE"
+		  from "sap.hana-app.sys::DUMMY"
+		;	
+   else 
+		lt_scenario_parameters =
+		select
+		    "NAME",
+		    "VALUE"
+		  from :lt_scenario_parameters
+		  where "NAME" not in ('IP_DOC_DATE_START', 'IP_DOC_DATE_END')
+		union all
+		select 
+		    'IP_DOC_DATE_START' as "NAME",
+		    to_nvarchar(:l_ip_doc_date_start)
+		  from "sap.hana-app.sys::DUMMY" union all
+		select
+		    'IP_DOC_DATE_END' as "NAME",
+		    to_nvarchar(:l_ip_doc_date_end)
+		  from "sap.hana-app.sys::DUMMY"
+		;	
+   end if;   -- if :l_ip_doc_date_start <> '' and l_ip_doc_date_end <> '' then
+	
+	    -- HANA seems to need explicit type cast
+		lt_scenario_parameters_nvarchar = select cast(name as nvarchar(255)) as name, cast(value as nvarchar(255)) as value from :lt_scenario_parameters;
+		-- confusing: result is a table with one STRING record
+		call "sap.hana-app.cuan.cpred.reuse.internal::PR_NAME_VALUE_TO_STRING"( :lt_scenario_parameters_nvarchar, lt_scenario_parameters_new );	
+		
+		-- replace old $$scenario_parameters$$ with new entry
+		ot_model_def =
+		select
+		    "NAME",
+		    "VALUE"
+		  from :ot_model_def
+		  where to_varchar("NAME") <> '$$scenario_parameters$$'
+		union all
+		select
+		    to_varchar('$$scenario_parameters$$') as "NAME",
+		    to_nclob("STRING") as "VALUE"
+		  from :lt_scenario_parameters_new
+		;
+	
+ELSE
+	-- dyn date -> also need to adjust ot_model_def
+	ot_model_def =
+		select
+		    "NAME",
+		    "VALUE"
+		  from :ot_model_def
+		  where to_varchar("NAME") <> '$$scenario_parameters$$'
+		union all
+		select
+		    to_varchar('$$scenario_parameters$$') as "NAME",
+		    to_nclob(:l_scenario_parameters) as "VALUE"
+		  from "sap.hana-app.sys::DUMMY"
+		;	
+END IF;
+--------------------------------------------------------------------------------
+
+ot_model_def =
+select
+    "NAME",
+    "VALUE"
+  from :ot_model_def
+union all
+select
+    '$$implementation_method$$' as "NAME",
+    "PRED_PROCESS" as "VALUE"
+  from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"    as t0
+  join "sap.hana-app.cuan.db.cuan::CUAND_P_MODELFIT" as t1
+     on t0."MANDT"  = t1."MANDT"
+    and t0."DB_KEY" = t1."PARENT_KEY"
+  join "sap.hana-app.cuan.db.cuan::CUAND_TRAINMODEL" as t2
+     on t1."MANDT"   = t2."MANDT"
+    and t1."DB_KEY"  = t2."PARENT_KEY"
+    and t2."VERSION" = :lc_trainmodel_version_actv
+  where t0."MANDT"  = session_context('CLIENT')
+    and t0."DB_KEY" = :ip_model_guid
+union all
+select
+    '$$implementation_method_cat$$' as "NAME",
+    "PROCESS_CAT" as "VALUE"
+  from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"    as t0
+  join "sap.hana-app.cuan.db.cuan::CUAND_P_MODELFIT" as t1
+     on t0."MANDT"  = t1."MANDT"
+    and t0."DB_KEY" = t1."PARENT_KEY"
+  join "sap.hana-app.cuan.db.cuan::CUAND_TRAINMODEL" as t2
+     on t1."MANDT"   = t2."MANDT"
+    and t1."DB_KEY"  = t2."PARENT_KEY"
+    and t2."VERSION" = :lc_trainmodel_version_actv
+--  join "CUAN_PMIMPL" as t3
+    join
+    (
+      select tt1.process_id,
+             tt1.model_execution,
+             tt1.model_training,
+             tt1.datasource_id,
+             tt1.process_cat,
+             tt1.pmml_import
+        from            "sap.hana-app.cuan.db.cuan::CUANC_PM_PROCESS" as tt1
+        left outer join "sap.hana-app.cuan.db.cuan::CUANW_PS_IM"      as tt2 on  tt1.process_id                = tt2.predictivescenimplementation
+        where tt2.predictivescenimplementation is null
+          and tt1.client = session_context('CLIENT')
+
+      union all 
+      select predictivescenimplementation   as process_id,
+             prdtvscenimplmtnmodelexecution as model_execution,
+             prdtvscenimplmtnmodeltraining  as model_training,
+             predictivescenario             as datasource_id,
+             predictivescenimplmtncategory  as process_cat,
+             prdtvscenimplmtnimportclass    as pmml_import
+        from "sap.hana-app.cuan.db.cuan::CUANW_PS_IM"
+        where predictivescenarioversion = 'A'    
+    ) as t3
+    on t1."PRED_PROCESS" = t3."PROCESS_ID"
+  where t0."MANDT"  = session_context('CLIENT')
+    and t0."DB_KEY" = :ip_model_guid
+;
+
+--==============================================================================
+-- Read Model
+--==============================================================================
+ot_model =
+  select
+      "ID",
+      to_nclob(t3."MODEL") as "MODEL"
+    from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"    as t0
+    join "sap.hana-app.cuan.db.cuan::CUAND_P_MODELFIT" as t1
+       on t0."MANDT"    = t1."MANDT"
+      and t0."DB_KEY"   = t1."PARENT_KEY"
+    join "sap.hana-app.cuan.db.cuan::CUAND_TRAINMODEL" as t2
+       on t1."MANDT"   = t2."MANDT"
+      and t1."DB_KEY"  = t2."PARENT_KEY"
+      and t2."VERSION" = :lc_trainmodel_version_actv
+    join "sap.hana-app.cuan.db.cuan::CUAND_PM_MODEL_R"  as t3
+       on t2."MANDT"      = t3."MANDT"
+      and t2."MODEL_GUID" = t3."MODEL_GUID"
+    where t0."MANDT"  = session_context('CLIENT') 
+      and t0."DB_KEY" = :ip_model_guid
+      and t3."ID"     = to_int(0)
+;
+
+end
+
+/*
+call "_SYS_BIC"."sap.hana-app.cuan.cpred.reuse.internal/PR_READ_MODEL_DEF"('',?,?);
+*/

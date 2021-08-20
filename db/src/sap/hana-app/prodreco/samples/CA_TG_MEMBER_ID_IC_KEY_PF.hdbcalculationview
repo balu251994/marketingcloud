@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.prodreco.samples::CA_TG_MEMBER_ID_IC_KEY_PF" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_TG_MEMBER_ID_IC_KEY"/>
+  <metadata changedAt="2018-08-15 11:30:07.398" createdAt="2018-08-15 11:30:07.398"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="39"/>
+  <dataSources>
+    <DataSource id="CUAN_D_TG_MEMBER">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_TG_MEMBER</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_TG_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_TG_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="TargetGroupMember">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="DELETION_TYPE"/>
+        <viewAttribute id="MEMBER_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_TG_MEMBER"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;DELETION_TYPE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="ICRoot">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_ROOT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="TGMemberIDKey" cardinality="C1_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="MEMBER_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="TargetGroupMember">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEMBER_KEY" source="MEMBER_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <input node="ICRoot">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEMBER_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="MEMBER_KEY"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="TargetGroup">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="DYNAMIC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_TG_ROOT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (in (&quot;DYNAMIC&quot;,'','X'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="ValidTGMember" cardinality="C1_N" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="MEMBER_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="TargetGroup">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <input node="TGMemberIDKey">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEMBER_KEY" source="MEMBER_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$MANDT$MANDT"/>
+      <joinAttribute name="JOIN$DB_KEY$PARENT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="ValidTGMember">
+    <descriptions defaultDescription="CA_TG_MEMBER_ID_IC_KEY"/>
+    <attributes>
+      <attribute id="PREFILTER_KEY" key="true" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PREFILTER_KEY"/>
+        <keyMapping columnObjectName="ValidTGMember" columnName="MEMBER_KEY"/>
+      </attribute>
+      <attribute id="PREFILTER_VALUE" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PREFILTER_VALUE"/>
+        <keyMapping columnObjectName="ValidTGMember" columnName="ID"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="328.62787058726843" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TargetGroupMember" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="91.99999999999997" y="536.9999976158142"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ICRoot" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="301.9999999999999" y="536.9999976158142"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TGMemberIDKey" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="118.66666666666666" y="376.9999988079071"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="TargetGroupMember" modelObjectNameSpace="TGMemberIDKey" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="ICRoot" modelObjectNameSpace="TGMemberIDKey" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TargetGroup" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="395.833295839905" y="376.9999988079071"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ValidTGMember" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="328.12787058726843" y="217"/>
+        <rectangleSize height="82" width="161"/>
+      </shape>
+    
+      <shape modelObjectName="TargetGroup" modelObjectNameSpace="ValidTGMember" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="TGMemberIDKey" modelObjectNameSpace="ValidTGMember" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

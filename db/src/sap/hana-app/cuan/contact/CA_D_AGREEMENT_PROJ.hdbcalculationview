@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_AGREEMENT_PROJ" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Accounts Agreements"/>
+  <metadata changedAt="2019-02-05 13:10:52.966"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="29"/>
+  <dataSources>
+    <DataSource id="CA_D_AGREEMENT">
+      <resourceUri>sap.hana-app.cuan.contact::CA_D_AGREEMENT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="CA_D_AGREEMENT">
+    <descriptions/>
+    <attributes>
+      <attribute id="MKT_AGRMT_ACCOUNT_LONGITUDE" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Geolocation"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_LONGITUDE"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_LATITUDE" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Latitude"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_LATITUDE"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_HOUSE_NUM" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement House Number"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_HOUSE_NUM"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_STREET" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Street"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_STREET"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_POSTCODE" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Postcode"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_POSTCODE"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_CITY" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement City"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_CITY"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_REGION" order="7" attributeHierarchyActive="false" descriptionColumnName="MKT_AGREEMENT_ACCOUNT_REGION_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Region"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_REGION"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_COUNTRY" order="8" attributeHierarchyActive="false" descriptionColumnName="MKT_AGREEMENT_ACCOUNT_COUNTRY_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Country/Region"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_COUNTRY"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_LOCATION_NAME" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Location Name"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_LOCATION_NAME"/>
+      </attribute>
+      <attribute id="ACCOUNT_MARKETINGLOCATIONEXTERNALID" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location ID"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MARKETINGLOCATIONEXTERNALID"/>
+      </attribute>
+      <attribute id="ACCOUNT_MARKETINGLOCATIONORIGIN" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Origin"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MARKETINGLOCATIONORIGIN"/>
+      </attribute>
+      <attribute id="SAPCLIENT" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAPCLIENT"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="SAPCLIENT"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_UUID" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Key"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTUUID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_ORIGIN" order="14" attributeHierarchyActive="false" descriptionColumnName="MKT_AGREEMENT_ACCOUNT_ORIGINNAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Origin"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_ORIGINNAME" hidden="true" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTORIGINNAME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_EXTERNALID" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement External ID"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTEXTERNALID"/>
+      </attribute>
+      <attribute id="INTERACTIONCONTACTUUID" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact UUID"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="INTERACTIONCONTACTUUID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_ISBUNDLE" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bundle"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTISBUNDLE"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_ISBUNDLEMEMBER" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bundle Member"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTISBUNDLEMEMBER"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_CANCELLATIONREASON" order="20" attributeHierarchyActive="false" descriptionColumnName="MKT_AGRMT_ACCOUNT_CANCLNREASONNAME" displayAttribute="false">
+        <descriptions defaultDescription="Cancellation Reason"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTCANCELLATIONREASON"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_CANCLNREASONNAME" hidden="true" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTCANCLNREASONNAME"/>
+      </attribute>
+      <attribute id="ACCOUNT_CONTACTID" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact ID"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="CONTACTID"/>
+      </attribute>
+      <attribute id="ACCOUNT_CONTACTORIGIN" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Origin"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="CONTACTORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_TYPE" order="24" attributeHierarchyActive="false" descriptionColumnName="MKT_AGREEMENT_ACCOUNT_TYPENAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Type"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTTYPE"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_TYPENAME" hidden="true" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTTYPENAME"/>
+      </attribute>
+      <attribute id="ACCOUNT_MARKETINGAREA" order="26" attributeHierarchyActive="false" descriptionColumnName="MKT_AGREEMENT_ACCOUNT_MKT_AREA_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MARKETINGAREA"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_STARTDATETIME" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Start Date/Time"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTSTARTDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_ENDDATETIME" order="28" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement End Date/Time"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTENDDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_ISCANCELED" order="29" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Cancelled"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTISCANCELED"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_BUNDLEORIGIN" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Origin"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTBUNDLEORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_BUNDLEEXTERNALID" order="31" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle External ID"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTBUNDLEEXTERNALID"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_BUNDLESTARTDATETIME" order="32" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Start Date/Time"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTBUNDLESTARTDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_TERMSUUID" order="33" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Terms Key"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTTERMSUUID"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_TERMSSTARTDATETIME" order="34" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Validity Start Date/Time"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTTERMSSTARTDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_TERMSENDDATETIME" order="35" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Validity End Date/Time"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTTERMSENDDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_STATUS" order="36" attributeHierarchyActive="false" descriptionColumnName="MKT_AGRMT_ACCOUNT_STATUS_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Status"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTSTATUS"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_STATUS_NAME" hidden="true" order="37" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_STATUS_NAME"/>
+      </attribute>
+      <attribute id="ACCOUNT_DERIVED_STATUS" order="38" attributeHierarchyActive="false" descriptionColumnName="ACCOUNT_AGR_DERIVED_STATUS_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Current Status"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="DERIVED_STATUS"/>
+      </attribute>
+      <attribute id="ACCOUNT_AGR_DERIVED_STATUS_NAME" hidden="true" order="39" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="AGR_DERIVED_STATUS_NAME"/>
+      </attribute>
+      <attribute id="ACCOUNT_PRODUCTORIGIN" order="40" attributeHierarchyActive="false" descriptionColumnName="AGRMT_ACCOUNT_PRODUCT_ORIGIN_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Product Origin"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="PRODUCTORIGIN"/>
+      </attribute>
+      <attribute id="AGRMT_ACCOUNT_PRODUCT_ORIGIN_DESC" hidden="true" order="41" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="AGRMT_PRODUCT_ORIGIN_DESC"/>
+      </attribute>
+      <attribute id="ACCOUNT_PRODUCTID" order="42" attributeHierarchyActive="false" descriptionColumnName="ACCOUNT_D_AGRMT_PRODUCT_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Product ID"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="PRODUCTID"/>
+      </attribute>
+      <attribute id="ACCOUNT_D_AGRMT_PRODUCT_NAME" hidden="true" order="43" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="D_AGRMT_PRODUCT_NAME"/>
+      </attribute>
+      <attribute id="AGRMT_ACCOUNT_PRODUCT_CATEGORY_KEY" order="44" attributeHierarchyActive="false" descriptionColumnName="MKT_AGRMT_ACCOUNT_PRODUCT_CATEGORY_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Product Category"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="AGRMT_PRODUCT_CATEGORY_KEY"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_PRODUCT_CATEGORY_NAME" hidden="true" order="45" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_PRODUCT_CATEGORY_NAME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_RENEWALTYPE" order="46" attributeHierarchyActive="false" descriptionColumnName="MKT_ARMT_ACCOUNT_RENEWAL_TYPE_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Renewal Type"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTRENEWALTYPE"/>
+      </attribute>
+      <attribute id="MKT_ARMT_ACCOUNT_RENEWAL_TYPE_NAME" hidden="true" order="47" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_ARMT_RENEWAL_TYPE_NAME"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_CANCLNCONDITIONS" order="48" attributeHierarchyActive="false" descriptionColumnName="MKT_AGRMT_ACCOUNT_CANCLNCONDITIONSNAME" displayAttribute="false">
+        <descriptions defaultDescription="Cancellation Conditions"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTCANCLNCONDITIONS"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_CANCLNCONDITIONSNAME" hidden="true" order="49" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTCANCLNCONDITIONSNAME"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_CANCLNDCSNTODATETIME" order="50" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latest Date/Time for Cancellation Before Automatic Renewal"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTCANCLNDCSNTODATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_PROLNGNDCSNFROMDTETME" order="51" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Earliest Date/Time for Prolongation"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTPROLNGNDCSNFROMDTETME"/>
+      </attribute>
+      <attribute id="MKT_ACCOUNT_AGRPAYMENTISINADVANCE" order="52" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Payment in Advance"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRPAYMENTISINADVANCE"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_PAYMENTFREQUENCY" order="53" attributeHierarchyActive="false" descriptionColumnName="MKT_AGRMT_ACCOUNT_PAYMENTFREQUENCYNAME" displayAttribute="false">
+        <descriptions defaultDescription="Payment Frequency"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTPAYMENTFREQUENCY"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_PAYMENTFREQUENCYNAME" hidden="true" order="54" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTPAYMENTFREQUENCYNAME"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_BUNDLEPRODUCTORIGIN" order="55" attributeHierarchyActive="false" descriptionColumnName="MKT_AGRMT_ACCOUNT_BUNDLEPRODUCTORIGIN_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Product Origin"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTBUNDLEPRODUCTORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_BUNDLEPRODUCTORIGIN_NAME" hidden="true" order="56" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTBUNDLEPRODUCTORIGIN_NAME"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_BUNDLEPRODUCTID" order="57" attributeHierarchyActive="false" descriptionColumnName="MKT_AGRMT_ACCOUNT_BUNDLEPRODUCTID_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Product ID"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTBUNDLEPRODUCTID"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_BUNDLEPRODUCTID_NAME" hidden="true" order="58" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTBUNDLEPRODUCTID_NAME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_IA_STATUS" order="59" attributeHierarchyActive="false" descriptionColumnName="MKT_AGREEMENT_ACCOUNT_IA_STATUS_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Interaction Status"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENT_IA_STATUS"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_IA_STATUS_NAME" hidden="true" order="60" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENT_IA_STATUS_NAME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_IA_TYPE" order="61" attributeHierarchyActive="false" descriptionColumnName="MKT_AGREEMENT_ACCOUNT_TYPE_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Interaction Type"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENT_IA_TYPE"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_TYPE_NAME" hidden="true" order="62" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENT_TYPE_NAME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_IA_REASON" order="63" attributeHierarchyActive="false" descriptionColumnName="MKT_AGREEMENT_ACCOUNT_IA_REASON_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Interaction Reason"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENT_IA_REASON"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_IA_REASON_NAME" hidden="true" order="64" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENT_IA_REASON_NAME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_IA_TIMESTAMP" order="65" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Interaction Timestamp"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENT_IA_TIMESTAMP"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_REGION_DESC" hidden="true" order="66" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Region Description"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENT_REGION_DESC"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_COUNTRY_DESC" hidden="true" order="67" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Country/Region Description"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENT_COUNTRY_DESC"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_PAYMENTMETHOD" order="68" attributeHierarchyActive="false" descriptionColumnName="ACCOUNT_AGR_PAYMENT_METHOD_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Payment Method"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTPAYMENTMETHOD"/>
+      </attribute>
+      <attribute id="ACCOUNT_AGR_PAYMENT_METHOD_NAME" hidden="true" order="69" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="AGR_PAYMENT_METHOD_NAME"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_CORRESPONDENCEMEDIUM" order="70" attributeHierarchyActive="false" descriptionColumnName="ACCOUNT_AGR_CORR_MEDIUM_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Correspondence Medium"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMTCORRESPONDENCEMEDIUM"/>
+      </attribute>
+      <attribute id="ACCOUNT_AGR_CORR_MEDIUM_NAME" hidden="true" order="71" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="AGR_CORR_MEDIUM_NAME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENT_ACCOUNT_MKT_AREA_DESC" order="72" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGREEMENTMKT_AREA_DESC"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_OCCUPANCY_TYPE" order="73" attributeHierarchyActive="false" descriptionColumnName="MKT_AGRMT_ACCOUNT_OCCUPANCY_TYPE_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Occupancy Type"/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_OCCUPANCY_TYPE"/>
+      </attribute>
+      <attribute id="MKT_AGRMT_ACCOUNT_OCCUPANCY_TYPE_NAME" hidden="true" order="74" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_AGREEMENT" columnName="MKT_AGRMT_OCCUPANCY_TYPE_NAME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

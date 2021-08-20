@@ -1,0 +1,777 @@
+{
+   "sap.hana-app.cuan.db.cuan::CUANC_AGR_CANC_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_AGR_CANC_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_AGR_CANR_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_AGR_CANR_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_AGR_ORIG_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_AGR_ORIG_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_AGR_PAYF_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_AGR_PAYF_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_AGR_TYPE_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_AGR_TYPE_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_CHNNL_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_CHNNL_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_CH_ASGN": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_CH_ASGN"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_CMM_MED": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_CMM_MED"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_CMM_M_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_CMM_M_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_IATYP_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_IATYP_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_IA_RS_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_IA_RS_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_IA_TYPE": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_IA_TYPE"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_MP_CONS": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_MP_CONS"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_MP_MAP": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_MP_MAP"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_ORIGN_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_ORIGN_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_RECENCY": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_RECENCY"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_SCORE": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_SCORE"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CE_VA_ST_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_VA_ST_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_CLNTMAP": {
+        "target":   {
+ "object": "hdbtables::CUANC_CLNTMAP"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_DA_TYPE_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_DA_TYPE_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_DEVICE_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_DEVICE_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_LOC_ORI_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_LOC_ORI_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_LOC_TYPE_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_LOC_TYPE_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_PM_DS_PAR": {
+        "target":   {
+ "object": "hdbtables::CUANC_PM_DS_PAR"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_PM_DS_PA_D": {
+        "target":   {
+ "object": "hdbtables::CUANC_PM_DS_PA_D"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_PM_PRC_PAR": {
+        "target":   {
+ "object": "hdbtables::CUANC_PM_PRC_PAR"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_PM_PRC_P_D": {
+        "target":   {
+ "object": "hdbtables::CUANC_PM_PRC_P_D"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_PM_PROCESS": {
+        "target":   {
+ "object": "hdbtables::CUANC_PM_PROCESS"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_PM_SCN_PAR": {
+        "target":   {
+ "object": "hdbtables::CUANC_PM_SCN_PAR"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_PM_SCN_P_D": {
+        "target":   {
+ "object": "hdbtables::CUANC_PM_SCN_P_D"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_PM_UI_THRS": {
+        "target":   {
+ "object": "hdbtables::CUANC_PM_UI_THRS"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_PROD_ORI_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_PROD_ORI_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_T016T": {
+        "target":   {
+ "object": "hdbtables::CUANC_T016T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_TARGETCURR": {
+        "target":   {
+ "object": "hdbtables::CUANC_TARGETCURR"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_TPFKT": {
+        "target":   {
+ "object": "hdbtables::CUANC_TPFKT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANC_TSABT": {
+        "target":   {
+ "object": "hdbtables::CUANC_TSABT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_AGR_EXT_ID": {
+        "target":   {
+ "object": "hdbtables::CUAND_AGR_EXT_ID"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_AGR_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_AGR_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_AGR_TS": {
+        "target":   {
+ "object": "hdbtables::CUAND_AGR_TS"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IA_DA": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IA_DA"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IA_INTR": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IA_INTR"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IA_OFFR": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IA_OFFR"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IA_OREF": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IA_OREF"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IA_PCAT": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IA_PCAT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IA_PROD": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IA_PROD"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IA_RT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IA_TAG": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IA_TAG"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ATTH": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IC_ATTH"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IC_FCET": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IC_FCET"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IC_LOC": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IC_LOC"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IC_MA": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IC_MA"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IC_MKTA": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IC_MKTA"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IC_REL": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IC_REL"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IC_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IOI": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IOI"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_IOI_T": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IOI_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_MAC_T": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_MAC_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CE_MP_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_MP_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CPN_CODE": {
+        "target":   {
+ "object": "hdbtables::CUAND_CPN_CODE"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CPN_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_CPN_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CPN_TEXT": {
+        "target":   {
+ "object": "hdbtables::CUAND_CPN_TEXT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CPN_USAGE": {
+        "target":   {
+ "object": "hdbtables::CUAND_CPN_USAGE"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_CP_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_CP_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_DA_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_DA_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_DETAILFIT": {
+        "target":   {
+ "object": "hdbtables::CUAND_DETAILFIT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_EVT_PRTCPN": {
+        "target":   {
+ "object": "hdbtables::CUAND_EVT_PRTCPN"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_INI_IOI": {
+        "target":   {
+ "object": "hdbtables::CUAND_INI_IOI"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT": {
+        "target":   {
+ "object": "hdbtables::CUAND_JS_CONTACT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_LM_STG": {
+        "target":   {
+ "object": "hdbtables::CUAND_LM_STG"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_LM_STG_T": {
+        "target":   {
+ "object": "hdbtables::CUAND_LM_STG_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_LOC_FACET": {
+        "target":   {
+ "object": "hdbtables::CUAND_LOC_FACET"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_LOY_MEMBER": {
+        "target":   {
+ "object": "hdbtables::CUAND_LOY_MEMBER"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_LOY_PGM_RT": {
+        "target":   {
+ "object": "hdbtables::CUAND_LOY_PGM_RT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_LOY_TIER": {
+        "target":   {
+ "object": "hdbtables::CUAND_LOY_TIER"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_MC_CONTENT": {
+        "target":   {
+ "object": "hdbtables::CUAND_MC_CONTENT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_ME_ME_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_ME_ME_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_MKT_EVT_RT": {
+        "target":   {
+ "object": "hdbtables::CUAND_MKT_EVT_RT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_MOD_CONFIG": {
+        "target":   {
+ "object": "hdbtables::CUAND_MOD_CONFIG"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_OFFER_COUP": {
+        "target":   {
+ "object": "hdbtables::CUAND_OFFER_COUP"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_OFFER_FCT": {
+        "target":   {
+ "object": "hdbtables::CUAND_OFFER_FCT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_OFFER_ML": {
+        "target":   {
+ "object": "hdbtables::CUAND_OFFER_ML"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_OFFER_PCAT": {
+        "target":   {
+ "object": "hdbtables::CUAND_OFFER_PCAT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_OFFER_PROD": {
+        "target":   {
+ "object": "hdbtables::CUAND_OFFER_PROD"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_OFFER_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_OFFER_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_OFR_CX_UID": {
+        "target":   {
+ "object": "hdbtables::CUAND_OFR_CX_UID"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PCAT_DESC": {
+        "target":   {
+ "object": "hdbtables::CUAND_PCAT_DESC"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PCH_DESC": {
+        "target":   {
+ "object": "hdbtables::CUAND_PCH_DESC"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PCH_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_PCH_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PM_MODEL_R": {
+        "target":   {
+ "object": "hdbtables::CUAND_PM_MODEL_R"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_PM_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PM_TO": {
+        "target":   {
+ "object": "hdbtables::CUAND_PM_TO"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG": {
+        "target":   {
+ "object": "hdbtables::CUAND_PROD_CATEG"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PROD_DESC": {
+        "target":   {
+ "object": "hdbtables::CUAND_PROD_DESC"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PROD_FACET": {
+        "target":   {
+ "object": "hdbtables::CUAND_PROD_FACET"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PROD_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_PROD_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_PROD_TOCAT": {
+        "target":   {
+ "object": "hdbtables::CUAND_PROD_TOCAT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_P_MODELFIT": {
+        "target":   {
+ "object": "hdbtables::CUAND_P_MODELFIT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_SP_ENGAGMT": {
+        "target":   {
+ "object": "hdbtables::CUAND_SP_ENGAGMT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_SP_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_SP_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_SP_SCR_PST": {
+        "target":   {
+ "object": "hdbtables::CUAND_SP_SCR_PST"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_SP_SENTIMT": {
+        "target":   {
+ "object": "hdbtables::CUAND_SP_SENTIMT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_SP_VERSION": {
+        "target":   {
+ "object": "hdbtables::CUAND_SP_VERSION"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAND_TRAINMODEL": {
+        "target":   {
+ "object": "hdbtables::CUAND_TRAINMODEL"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANI_PM_DUMMY": {
+        "target":   {
+ "object": "hdbtables::CUANI_PM_DUMMY"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUANW_PS_IM": {
+        "target":   {
+ "object": "hdbtables::CUANW_PS_IM"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_COMCAT_RT": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_COMCAT_RT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_INI_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_INI_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_INI_TG": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_INI_TG"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_SVY_ANS": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_SVY_ANS"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_SVY_ANS_T": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_SVY_ANS_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_SVY_NAM_T": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_SVY_NAM_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_SVY_QNT": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_SVY_QNT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_SVY_QNT_T": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_SVY_QNT_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_SVY_RESPA": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_SVY_RESPA"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_SVY_RESPD": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_SVY_RESPD"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_SVY_RESPQ": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_SVY_RESPQ"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_SVY_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_SVY_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_TG_MEMBER": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_TG_MEMBER"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_D_TG_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_TG_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::CUAN_TC_CONTROL": {
+        "target":   {
+ "object": "hdbtables::CUAN_TC_CONTROL"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::DD07T": {
+        "target":   {
+ "object": "hdbtables::DD07T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::DD07V": {
+        "target":   {
+ "object": "hdbtables::DD07V"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::HPAC_MKT_AREA_T": {
+        "target":   {
+ "object": "hdbtables::HPAC_MKT_AREA_T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::HPAC_STATUST": {
+        "target":   {
+ "object": "hdbtables::HPAC_STATUST"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::HPAI_OBJTYPNAME": {
+        "target":   {
+ "object": "hdbtables::HPAI_OBJTYPNAME"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::HPA_D_BRAND_DESC": {
+        "target":   {
+ "object": "hdbtables::HPA_D_BRAND_DESC"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::HPA_D_BRAND_ROOT": {
+        "target":   {
+ "object": "hdbtables::HPA_D_BRAND_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::HPA_MKT_SWITCH": {
+        "target":   {
+ "object": "hdbtables::HPA_MKT_SWITCH"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_CX_BASKET": {
+        "target":   {
+ "object": "hdbtables::PRECO_CX_BASKET"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_CX_ITEM": {
+        "target":   {
+ "object": "hdbtables::PRECO_CX_ITEM"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_CX_ITEM_R": {
+        "target":   {
+ "object": "hdbtables::PRECO_CX_ITEM_R"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_CX_RESULTS": {
+        "target":   {
+ "object": "hdbtables::PRECO_CX_RESULTS"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_CX_TASK": {
+        "target":   {
+ "object": "hdbtables::PRECO_CX_TASK"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_CX_TRANS": {
+        "target":   {
+ "object": "hdbtables::PRECO_CX_TRANS"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_CX_TSK_PAR": {
+        "target":   {
+ "object": "hdbtables::PRECO_CX_TSK_PAR"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_CX_USER": {
+        "target":   {
+ "object": "hdbtables::PRECO_CX_USER"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_D_ALGO_TYP": {
+        "target":   {
+ "object": "hdbtables::PRECO_D_ALGO_TYP"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_D_CFUI_REC": {
+        "target":   {
+ "object": "hdbtables::PRECO_D_CFUI_REC"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_D_SASS_SET": {
+        "target":   {
+ "object": "hdbtables::PRECO_D_SASS_SET"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::PRECO_D_TOPN": {
+        "target":   {
+ "object": "hdbtables::PRECO_D_TOPN"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::T002": {
+        "target":   {
+ "object": "hdbtables::T002"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::T002T": {
+        "target":   {
+ "object": "hdbtables::T002T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::T005": {
+        "target":   {
+ "object": "hdbtables::T005"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::T005T": {
+        "target":   {
+ "object": "hdbtables::T005T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::T005U": {
+        "target":   {
+ "object": "hdbtables::T005U"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TB027T": {
+        "target":   {
+ "object": "hdbtables::TB027T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TCURF": {
+        "target":   {
+ "object": "hdbtables::TCURF"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TCURN": {
+        "target":   {
+ "object": "hdbtables::TCURN"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TCURR": {
+        "target":   {
+ "object": "hdbtables::TCURR"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TCURV": {
+        "target":   {
+ "object": "hdbtables::TCURV"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TCURX": {
+        "target":   {
+ "object": "hdbtables::TCURX"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TSAD15T": {
+        "target":   {
+ "object": "hdbtables::TSAD15T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TSAD3T": {
+        "target":   {
+ "object": "hdbtables::TSAD3T"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TTZ5": {
+        "target":   {
+ "object": "hdbtables::TTZ5"  
+		}
+	},
+   "sap.hana-app.cuan.db.cuan::TTZ5S": {
+        "target":   {
+ "object": "hdbtables::TTZ5S"  
+		}
+	} 
+}

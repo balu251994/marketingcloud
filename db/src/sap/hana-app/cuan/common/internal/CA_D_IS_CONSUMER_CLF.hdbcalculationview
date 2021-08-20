@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.common.internal::CA_D_IS_CONSUMER_CLF" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_D_IS_CONSUMER_CLF"/>
+  <metadata changedAt="2015-08-19 11:42:02.497"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="DD07T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="IS_CONSUMER_DESC"/>
+        <viewAttribute id="DOMNAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#DD07T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DDLANGUAGE" source="DDLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AS4LOCAL" source="AS4LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="DOMVALUE_L"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER_DESC" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMNAME" source="DOMNAME"/>
+      </input>
+      <filter>(&quot;DDLANGUAGE&quot; ='$$language$$') AND (&quot;AS4LOCAL&quot; ='A') AND (&quot;DOMNAME&quot; ='CUAN_CE_IS_CONSUMER')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="IS_CONSUMER" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DOMVALUE_L"/>
+        <keyMapping columnObjectName="Projection_1" columnName="IS_CONSUMER"/>
+      </attribute>
+      <attribute id="IS_CONSUMER_DESC" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DDTEXT"/>
+        <keyMapping columnObjectName="Projection_1" columnName="IS_CONSUMER_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="22" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

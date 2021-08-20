@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.common::CA_D_TIME" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Date and Time in SAP System"/>
+  <metadata changedAt="2015-03-05 08:44:55.377"/>
+  <localVariables/>
+  <variableMappings/>
+  <dataSources>
+    <DataSource id="M_TIME_DIMENSION">
+      <resourceUri>sap.hana-app.cuan.db::M_TIME_DIMENSION</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="M_TIME_DIMENSION">
+    <attributes>
+      <attribute id="DATE_SQL" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date in SQL"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="DATE_SQL"/>
+      </attribute>
+      <attribute id="DATETIME_SAP" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date and Time in SAP System"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="DATETIME_SAP"/>
+      </attribute>
+      <attribute id="DATE_SAP" key="true" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date in SAP System"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="DATE_SAP"/>
+      </attribute>
+      <attribute id="YEAR" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Year"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="YEAR"/>
+      </attribute>
+      <attribute id="QUARTER" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Quarter"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="QUARTER"/>
+      </attribute>
+      <attribute id="MONTH" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Month"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="MONTH"/>
+      </attribute>
+      <attribute id="WEEK" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Week"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="WEEK"/>
+      </attribute>
+      <attribute id="CALQUARTER" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Quarter"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="CALQUARTER"/>
+      </attribute>
+      <attribute id="CALMONTH" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Month"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="CALMONTH"/>
+      </attribute>
+      <attribute id="CALWEEK" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Week"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="CALWEEK"/>
+      </attribute>
+      <attribute id="DAY" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Day"/>
+        <keyMapping columnObjectName="M_TIME_DIMENSION" columnName="DAY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

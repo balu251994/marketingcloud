@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.common.internal::CA_D_BOOLEAN" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_D_BOOLE"/>
+  <metadata changedAt="2016-02-09 09:52:25.577"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="41"/>
+  <dataSources>
+    <DataSource id="DD07T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="BOOLE_TEXT"/>
+        <viewAttribute id="BOOL_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#DD07T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMNAME" source="DOMNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DDLANGUAGE" source="DDLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AS4LOCAL" source="AS4LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLE_TEXT" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOL_KEY" source="DOMVALUE_L"/>
+      </input>
+      <filter>(&quot;DOMNAME&quot; ='BOOLEAN') AND (&quot;DDLANGUAGE&quot; ='$$language$$') AND (&quot;AS4LOCAL&quot; ='A') AND (in (&quot;BOOL_KEY&quot;,'-','X'))</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="BOOL_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BOOL_KEY"/>
+        <keyMapping columnObjectName="Projection_1" columnName="BOOL_KEY"/>
+      </attribute>
+      <attribute id="BOOL_TEXT" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BOOL_TEXT"/>
+        <keyMapping columnObjectName="Projection_1" columnName="BOOLE_TEXT"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="22" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

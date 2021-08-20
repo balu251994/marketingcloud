@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.score.internal::CA_D_LAST_SCORE_VERSION" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_D_PERSISTENT_SCORE"/>
+  <metadata changedAt="2016-10-14 10:13:44.106" createdAt="2016-10-14 10:13:44.106"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUAND_SP_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_SP_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PM_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_SP_VERSION">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_SP_VERSION</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="SP_ROOT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SCORE_GUID"/>
+        <viewAttribute id="ORIGIN_DB_KEY"/>
+        <viewAttribute id="ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_SP_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_GUID" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ORIGIN_DB_KEY" source="ORIGIN_DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ORIGIN" source="ORIGIN"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;ORIGIN&quot; ='01')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PM_ROOT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="MODEL_GUID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="PREDICTIVE_KPI"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PM_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MODEL_GUID" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PREDICTIVE_KPI" source="PREDICTIVE_KPI"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;STATUS&quot; ='3')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="GET_SCORE_GUID" cardinality="C1_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SCORE_GUID"/>
+        <viewAttribute id="PREDICTIVE_KPI"/>
+        <viewAttribute hidden="true" id="JOIN$ORIGIN_DB_KEY$MODEL_GUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#SP_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_GUID" source="SCORE_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ORIGIN_DB_KEY$MODEL_GUID" source="ORIGIN_DB_KEY"/>
+      </input>
+      <input node="#PM_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PREDICTIVE_KPI" source="PREDICTIVE_KPI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ORIGIN_DB_KEY$MODEL_GUID" source="MODEL_GUID"/>
+      </input>
+      <joinAttribute name="JOIN$ORIGIN_DB_KEY$MODEL_GUID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="SP_VERSION">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="SCORE_GUID"/>
+        <viewAttribute id="VERSION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_SP_VERSION">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_GUID" source="SCORE_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+      </input>
+      <filter>(&quot;CLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_VERSION" cardinality="CN_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="SCORE_GUID"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="PREDICTIVE_KPI"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#SP_VERSION">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_GUID" source="SCORE_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+      </input>
+      <input node="#GET_SCORE_GUID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PREDICTIVE_KPI" source="PREDICTIVE_KPI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_GUID" source="SCORE_GUID"/>
+      </input>
+      <joinAttribute name="SCORE_GUID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="SCORE_GUID"/>
+        <viewAttribute aggregationType="max" id="VERSION"/>
+        <viewAttribute id="PREDICTIVE_KPI"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_VERSION">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_GUID" source="SCORE_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PREDICTIVE_KPI" source="PREDICTIVE_KPI"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="GETMAXVERSION">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="SCORE_GUID"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="PREDICTIVE_KPI"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Aggregation">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_GUID" source="SCORE_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PREDICTIVE_KPI" source="PREDICTIVE_KPI"/>
+      </input>
+      <windowFunction>
+        <partitionViewAttributeName>CLIENT</partitionViewAttributeName>
+        <partitionViewAttributeName>PREDICTIVE_KPI</partitionViewAttributeName>
+        <order byViewAttributeName="VERSION" direction="DESC"/>
+        <rankThreshold>
+          <value>1</value>
+        </rankThreshold>
+      </windowFunction>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="GETMAXVERSION">
+    <descriptions defaultDescription="CA_D_PERSISTENT_SCORE"/>
+    <attributes>
+      <attribute id="CLIENT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CLIENT"/>
+        <keyMapping columnObjectName="GETMAXVERSION" columnName="CLIENT"/>
+      </attribute>
+      <attribute id="SCORE_GUID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SCORE_GUID"/>
+        <keyMapping columnObjectName="GETMAXVERSION" columnName="SCORE_GUID"/>
+      </attribute>
+      <attribute id="VERSION" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="VERSION"/>
+        <keyMapping columnObjectName="GETMAXVERSION" columnName="VERSION"/>
+      </attribute>
+      <attribute id="PREDICTIVE_KPI" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PREDICTIVE_KPI"/>
+        <keyMapping columnObjectName="GETMAXVERSION" columnName="PREDICTIVE_KPI"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize/>
+      </shape>
+      <shape expanded="true" modelObjectName="SP_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="513"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PM_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="513"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="GET_SCORE_GUID" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="417"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SP_VERSION" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="417"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_VERSION" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="321"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="243"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="GETMAXVERSION" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

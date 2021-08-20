@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.prodreco.algorithm.postfiltering.basketremoval::CA_FILTER_BASKET_ITEM_CATEGORY" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_FILTER_BASKET_ITEM_CATEGORY"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="84"/>
+  <dataSources>
+    <DataSource id="PRECO_CX_TASK">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TASK</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_RESULTS">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_RESULTS</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_TOCAT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_TOCAT</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_BASKET">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_BASKET</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Task">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ALGO_TYPE_ID"/>
+        <viewAttribute id="MAX_RESULT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PRECO_CX_TASK">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ALGO_TYPE_ID" source="ALGO_TYPE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+      </input>
+      <filter>(&quot;ALGO_TYPE_ID&quot; ='BASKET_CAT_REMOVAL')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="TaskResults" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute hidden="true" id="JOIN$ENGINE_ID$ENGINE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Task">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ENGINE_ID$ENGINE_ID" source="ENGINE_ID"/>
+      </input>
+      <input node="#PRECO_CX_RESULTS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ENGINE_ID$ENGINE_ID" source="ENGINE_ID"/>
+      </input>
+      <joinAttribute name="JOIN$ENGINE_ID$ENGINE_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="ProdCat">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ITEM_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_TOCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Basket">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARBINARY" id="ITEM_ID_HEX" length="16" expressionLanguage="SQL">
+          <formula>HEXTOBIN(&quot;ITEM_ID&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#PRECO_CX_BASKET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+      </input>
+      <filter>(&quot;ITEM_TYPE&quot; ='13')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="BasketProdCat" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$ITEM_KEY$ITEM_ID_HEX"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#ProdCat">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ITEM_KEY$ITEM_ID_HEX" source="ITEM_KEY"/>
+      </input>
+      <input node="#Basket">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ITEM_KEY$ITEM_ID_HEX" source="ITEM_ID_HEX"/>
+      </input>
+      <joinAttribute name="JOIN$ITEM_KEY$ITEM_ID_HEX"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="FilteredTaskResults">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARBINARY" id="RESULT_ITEM_HEX" length="16" expressionLanguage="SQL">
+          <formula>HEXTOBIN(&quot;RESULT_ITEM&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#TaskResults">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+      </input>
+      <filter>(&quot;RESULT_ITEM_TYPE&quot; ='13')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="TaskResultCat" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$ITEM_KEY$RESULT_ITEM_HEX"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#ProdCat">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ITEM_KEY$RESULT_ITEM_HEX" source="ITEM_KEY"/>
+      </input>
+      <input node="#FilteredTaskResults">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ITEM_KEY$RESULT_ITEM_HEX" source="RESULT_ITEM_HEX"/>
+      </input>
+      <joinAttribute name="JOIN$ITEM_KEY$RESULT_ITEM_HEX"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="ResultToRemove" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute hidden="true" id="JOIN$ENGINE_ID$ENGINE_ID"/>
+        <viewAttribute hidden="true" id="JOIN$CATEGORY_KEY$CATEGORY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#TaskResultCat">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CATEGORY_KEY$CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ENGINE_ID$ENGINE_ID" source="ENGINE_ID"/>
+      </input>
+      <input node="#BasketProdCat">
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CATEGORY_KEY$CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ENGINE_ID$ENGINE_ID" source="ENGINE_ID"/>
+      </input>
+      <joinAttribute name="JOIN$CATEGORY_KEY$CATEGORY_KEY"/>
+      <joinAttribute name="JOIN$ENGINE_ID$ENGINE_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="AggResultToRemove">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="TO_REMOVE" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>'X'</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#ResultToRemove">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Results" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="TO_REMOVE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#TaskResults">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+      </input>
+      <input node="#AggResultToRemove">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TO_REMOVE" source="TO_REMOVE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+      <joinAttribute name="RESULT_ITEM"/>
+      <joinAttribute name="RESULT_ITEM_TYPE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="FilteredResults">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="TO_REMOVE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Results">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TO_REMOVE" source="TO_REMOVE"/>
+      </input>
+      <filter>(isNull(&quot;TO_REMOVE&quot;))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="Rank">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="SCORE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#FilteredResults">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+      </input>
+      <windowFunction>
+        <partitionViewAttributeName>TASK_ID</partitionViewAttributeName>
+        <order byViewAttributeName="SCORE" direction="DESC"/>
+        <rankThreshold>
+          <value>100</value>
+        </rankThreshold>
+        <rankViewAttributeName>RANK</rankViewAttributeName>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="FilteredMaxResult" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="MAX_RESULT"/>
+        <viewAttribute id="RANK"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="TO_KEEP" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;RANK&quot;&lt;=&quot;MAX_RESULT&quot;,'X','')</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#Rank">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RANK" source="RANK"/>
+      </input>
+      <input node="#Task">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="FinalFilter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="TO_KEEP"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#FilteredMaxResult">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TO_KEEP" source="TO_KEEP"/>
+      </input>
+      <filter>(&quot;TO_KEEP&quot; ='X')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="FinalFilter">
+    <descriptions/>
+    <attributes>
+      <attribute id="TASK_ID" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Task ID"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="TASK_ID"/>
+      </attribute>
+      <attribute id="RESULT_ITEM" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Result Item"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="RESULT_ITEM"/>
+      </attribute>
+      <attribute id="RESULT_ITEM_TYPE" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Result Item Type"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="RESULT_ITEM_TYPE"/>
+      </attribute>
+      <attribute id="SCORE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Score"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="SCORE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="555" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Task" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="520" y="1035"/>
+        <rectangleSize height="64" width="211"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TaskResults" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="468" y="939"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ProdCat" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="227" y="861"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Basket" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="381" y="861"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="BasketProdCat" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="346" y="765"/>
+        <rectangleSize height="82" width="170"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FilteredTaskResults" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="861"/>
+        <rectangleSize height="64" width="191"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TaskResultCat" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="162" y="765"/>
+        <rectangleSize height="82" width="170"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ResultToRemove" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="341" y="669"/>
+        <rectangleSize height="82" width="180"/>
+      </shape>
+      <shape expanded="true" modelObjectName="AggResultToRemove" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="341" y="591"/>
+        <rectangleSize height="64" width="180"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Results" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="468" y="495"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FilteredResults" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="468" y="417"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Rank" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="468" y="339"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FilteredMaxResult" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="540" y="243"/>
+        <rectangleSize height="82" width="170"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FinalFilter" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="548" y="165"/>
+        <rectangleSize height="64" width="155"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.prodreco.internal::CA_D_CUAN_PRODUCT_VARIANT_TO_BASE_MAP" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_D_CUAN_PRODUCT_ROOT"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="37"/>
+  <dataSources>
+    <DataSource id="CUAND_PROD_FACET" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_FACET</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_TSK_PAR">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TSK_PAR</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_ROOT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="facet">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="VALID" length="1" expressionLanguage="SQL">
+          <formula>to_nvarchar('X')</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#CUAND_PROD_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="preco_cx_tsk_par">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ALGO_TYPE_PARAM_ID"/>
+        <viewAttribute id="PARAM_OPTION"/>
+        <viewAttribute id="VALUE_FROM"/>
+        <viewAttribute id="VALUE_TO"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PRECO_CX_TSK_PAR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ALGO_TYPE_PARAM_ID" source="ALGO_TYPE_PARAM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARAM_OPTION" source="PARAM_OPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_FROM" source="VALUE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_TO" source="VALUE_TO"/>
+      </input>
+      <filter>(&quot;ALGO_TYPE_PARAM_ID&quot; ='CONVERT_TO_BASE')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="BaseProductFacet" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="BASE_PRODUCT_KEY"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="VALID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#facet">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BASE_PRODUCT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALID" source="VALID"/>
+      </input>
+      <input node="#preco_cx_tsk_par">
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALID" source="VALUE_FROM"/>
+      </input>
+      <joinAttribute name="VALID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="cuand_prod_root">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IS_BASE_PRODUCT"/>
+        <viewAttribute id="BASE_PRODUCT_ID"/>
+        <viewAttribute id="BASE_PRODUCT_ORIGIN"/>
+        <viewAttribute id="PROD_VARIANT_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_BASE_PRODUCT" source="IS_BASE_PRODUCT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BASE_PRODUCT_ID" source="BASE_PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BASE_PRODUCT_ORIGIN" source="BASE_PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_VARIANT_TYPE" source="PROD_VARIANT_TYPE"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="ConvertVariantToBase" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IS_BASE_PRODUCT"/>
+        <viewAttribute id="PROD_VARIANT_TYPE"/>
+        <viewAttribute id="BASE_PRODUCT_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$BASE_PRODUCT_ID$PRODUCT_ID"/>
+        <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+        <viewAttribute hidden="true" id="JOIN$BASE_PRODUCT_ORIGIN$PRODUCT_ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARBINARY" id="RESULT_KEY" length="16" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isnull(&quot;BASE_PRODUCT_KEY&quot;),&quot;DB_KEY&quot;,if(&quot;IS_BASE_PRODUCT&quot; = 'X',&#xD;
+  &quot;DB_KEY&quot;,&#xD;
+  if(&quot;PROD_VARIANT_TYPE&quot;!='V',&quot;DB_KEY&quot;,&quot;BASE_PRODUCT_KEY&quot;)&#xD;
+))&#xD;
+&#xD;
+&#xD;
+&#xD;
+</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#cuand_prod_root">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_BASE_PRODUCT" source="IS_BASE_PRODUCT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_VARIANT_TYPE" source="PROD_VARIANT_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BASE_PRODUCT_ID$PRODUCT_ID" source="BASE_PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BASE_PRODUCT_ORIGIN$PRODUCT_ORIGIN" source="BASE_PRODUCT_ORIGIN"/>
+      </input>
+      <input node="#BaseProductFacet">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BASE_PRODUCT_KEY" source="BASE_PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BASE_PRODUCT_ID$PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$BASE_PRODUCT_ORIGIN$PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+      </input>
+      <joinAttribute name="JOIN$MANDT$MANDT"/>
+      <joinAttribute name="JOIN$BASE_PRODUCT_ID$PRODUCT_ID"/>
+      <joinAttribute name="JOIN$BASE_PRODUCT_ORIGIN$PRODUCT_ORIGIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="RESULT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#ConvertVariantToBase">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_KEY" source="RESULT_KEY"/>
+      </input>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Aggregation">
+    <descriptions/>
+    <attributes>
+      <attribute id="DB_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DB_KEY"/>
+        <keyMapping columnObjectName="Aggregation" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="RESULT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RESULT_KEY"/>
+        <keyMapping columnObjectName="Aggregation" columnName="RESULT_KEY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="110" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="facet" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="120" y="435"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="preco_cx_tsk_par" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="274" y="435"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="BaseProductFacet" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="339"/>
+        <rectangleSize height="82" width="182"/>
+      </shape>
+      <shape expanded="true" modelObjectName="cuand_prod_root" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="339"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ConvertVariantToBase" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="75" y="243"/>
+        <rectangleSize height="82" width="211"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="110" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

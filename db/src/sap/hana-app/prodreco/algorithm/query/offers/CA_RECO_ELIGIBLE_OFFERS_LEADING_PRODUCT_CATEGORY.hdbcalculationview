@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.prodreco.algorithm.query.offers::CA_RECO_ELIGIBLE_OFFERS_LEADING_PRODUCT_CATEGORY" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <descriptions defaultDescription="CA_RECO_ALL_OFFER"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="56"/>
+  <dataSources>
+    <DataSource id="PRECO_CX_TASK">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TASK</resourceUri>
+    </DataSource>
+    <DataSource id="CA_RECO_ELIGIBLE_OFFERS">
+      <resourceUri>sap.hana-app.prodreco.algorithm.query.offers::CA_RECO_ELIGIBLE_OFFERS</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_RESULTS">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_RESULTS</resourceUri>
+    </DataSource>
+    <DataSource id="TaskswithLeadingItems$$$$PRECO_CX_RESULTS$$">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_RESULTS</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_OFFER_PCAT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_OFFER_PCAT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_CATEG" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_CATEG</resourceUri>
+    </DataSource>
+    <DataSource id="PRECO_CX_TSK_PAR">
+      <resourceUri>sap.hana-app.cuan.db.cuan::PRECO_CX_TSK_PAR</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_CUAN_PRODUCT_VARIANT_TO_BASE_MAP_GENERIC">
+      <resourceUri>sap.hana-app.prodreco.internal::CA_D_CUAN_PRODUCT_VARIANT_TO_BASE_MAP_GENERIC</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_TOCAT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_TOCAT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Tasks" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="MAX_RESULT"/>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="ALGO_TYPE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PRECO_CX_TASK">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ALGO_TYPE_ID" source="ALGO_TYPE_ID"/>
+      </input>
+      <filter>(&quot;ALGO_TYPE_ID&quot; ='CEI_OFFERS_ELG_LEADING_PROD_CAT')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="EligibleTasksOffers" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="OFFER_ROOT_KEY"/>
+        <viewAttribute id="MAX_RESULT"/>
+        <viewAttribute id="ENGINE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Tasks">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+      </input>
+      <input node="#CA_RECO_ELIGIBLE_OFFERS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER_ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+      </input>
+      <joinAttribute name="TASK_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="LeadingItems">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="LEADING_ITEM"/>
+        <viewAttribute id="LEADING_ITEM_TYPE"/>
+        <viewAttribute id="SCORE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PRECO_CX_RESULTS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM" source="RESULT_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="TaskswithLeadingItems" joinOrder="OUTSIDE_IN">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="LEADING_ITEM_TYPE"/>
+        <viewAttribute id="LEADING_ITEM"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#TaskswithLeadingItems$$$$PRECO_CX_RESULTS$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_TYPE" source="RESULT_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM" source="RESULT_ITEM"/>
+      </input>
+      <input node="#LeadingItems"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="offer_prod_category">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OFFER_ROOT_KEY"/>
+        <viewAttribute id="PROD_CATEGORY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_OFFER_PCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OFFER_ROOT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CATEGORY_KEY" source="PROD_CATEGORY_KEY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="prod_category">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="SelectedHierarchy">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="PARAM_OPTION"/>
+        <viewAttribute id="ALGO_TYPE_PARAM_ID"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#PRECO_CX_TSK_PAR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARAM_OPTION" source="PARAM_OPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ALGO_TYPE_PARAM_ID" source="ALGO_TYPE_PARAM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="VALUE_FROM"/>
+      </input>
+      <filter>(&quot;PARAM_OPTION&quot; ='EQ') AND (&quot;ALGO_TYPE_PARAM_ID&quot; ='HIERARCHY_ID') AND (&quot;HIERARCHY_ID&quot; !='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="FilteredHierarchy" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute hidden="true" id="JOIN$HIERARCHY_ID$HIERARCHY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#SelectedHierarchy">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HIERARCHY_ID$HIERARCHY_ID" source="HIERARCHY_ID"/>
+      </input>
+      <input node="#prod_category">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$HIERARCHY_ID$HIERARCHY_ID" source="HIERARCHY_ID"/>
+      </input>
+      <joinAttribute name="JOIN$HIERARCHY_ID$HIERARCHY_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="EligibleTasksOffersProductsCategory" cardinality="C1_N" dynamic="false" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="PROD_CATEGORY_KEY"/>
+        <viewAttribute id="MAX_RESULT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#EligibleTasksOffers">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="OFFER_ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+      </input>
+      <input node="#offer_prod_category">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CATEGORY_KEY" source="PROD_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="OFFER_ROOT_KEY"/>
+      </input>
+      <joinAttribute name="ROOT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="LeadingProductCategories">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="LEADING_ITEM_TYPE"/>
+        <viewAttribute id="ENGINE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#LeadingItems">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="LEADING_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_TYPE" source="LEADING_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+      </input>
+      <filter>(&quot;LEADING_ITEM_TYPE&quot; ='19')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Leading_Products">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="LEADING_ITEM_TYPE"/>
+        <viewAttribute id="LEADING_ITEM"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARBINARY" id="LEADING_ITEM_VARBIN" length="16" expressionLanguage="COLUMN_ENGINE">
+          <formula>hextoraw(&quot;LEADING_ITEM&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#LeadingItems">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_TYPE" source="LEADING_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM" source="LEADING_ITEM"/>
+      </input>
+      <filter>(&quot;LEADING_ITEM_TYPE&quot; ='13')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="MapVariantToBase">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="RESULT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CA_D_CUAN_PRODUCT_VARIANT_TO_BASE_MAP_GENERIC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_KEY" source="RESULT_KEY"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="leadingItemsConverted" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="LEADING_ITEM"/>
+        <viewAttribute id="LEADING_ITEM_TYPE"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$LEADING_ITEM_VARBIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#MapVariantToBase">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM" source="RESULT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$LEADING_ITEM_VARBIN" source="DB_KEY"/>
+      </input>
+      <input node="#Leading_Products">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_TYPE" source="LEADING_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$LEADING_ITEM_VARBIN" source="LEADING_ITEM_VARBIN"/>
+      </input>
+      <joinAttribute name="JOIN$DB_KEY$LEADING_ITEM_VARBIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="ProductCategory">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_TOCAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="prodToCategory" cardinality="C1_N" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="LEADING_ITEM"/>
+        <viewAttribute id="LEADING_ITEM_TYPE"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#leadingItemsConverted">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM" source="LEADING_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_TYPE" source="LEADING_ITEM_TYPE"/>
+      </input>
+      <input node="#ProductCategory">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM" source="PRODUCT_KEY"/>
+      </input>
+      <joinAttribute name="LEADING_ITEM"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="prodcategoryToCategoryID" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="LEADING_ITEM"/>
+        <viewAttribute id="LEADING_ITEM_TYPE"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#prodToCategory">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM" source="LEADING_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LEADING_ITEM_TYPE" source="LEADING_ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+      </input>
+      <input node="#FilteredHierarchy">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+      </input>
+      <joinAttribute name="CATEGORY_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="LeadingProductCategoryfiltered" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$CATEGORY_ID$CATEGORY_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#FilteredHierarchy">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CATEGORY_ID$CATEGORY_ID" source="CATEGORY_ID"/>
+      </input>
+      <input node="#LeadingProductCategories">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CATEGORY_ID$CATEGORY_ID" source="CATEGORY_ID"/>
+      </input>
+      <joinAttribute name="JOIN$CATEGORY_ID$CATEGORY_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="OfferForLeadingCategory" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ENGINE_ID"/>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="PROD_CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="MAX_RESULT"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="TO_KEEP_FROM_LEADING_CAT" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isnull(&quot;CATEGORY_KEY&quot;),'','X')</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#EligibleTasksOffersProductsCategory">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CATEGORY_KEY" source="PROD_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+      </input>
+      <input node="#LeadingProductCategoryfiltered">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ENGINE_ID" source="ENGINE_ID"/>
+      </input>
+      <joinAttribute name="PROD_CATEGORY_KEY"/>
+      <joinAttribute name="TASK_ID"/>
+      <joinAttribute name="ENGINE_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="OfferForLeadingProduct" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="PROD_CATEGORY_KEY"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="TO_KEEP_FROM_LEADING_CAT"/>
+        <viewAttribute id="MAX_RESULT"/>
+        <viewAttribute hidden="true" id="JOIN$ENGINE_ID$ENGINE_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="TO_KEEP_FROM_LEADING_PROD" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isnull(&quot;CATEGORY_KEY&quot;),'','X')</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#OfferForLeadingCategory">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CATEGORY_KEY" source="PROD_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TO_KEEP_FROM_LEADING_CAT" source="TO_KEEP_FROM_LEADING_CAT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ENGINE_ID$ENGINE_ID" source="ENGINE_ID"/>
+      </input>
+      <input node="#prodcategoryToCategoryID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ENGINE_ID$ENGINE_ID" source="ENGINE_ID"/>
+      </input>
+      <joinAttribute name="PROD_CATEGORY_KEY"/>
+      <joinAttribute name="JOIN$ENGINE_ID$ENGINE_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="FilteredOffers" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="TO_KEEP_FROM_LEADING_PROD"/>
+        <viewAttribute id="TO_KEEP_FROM_LEADING_CAT"/>
+        <viewAttribute id="MAX_RESULT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#OfferForLeadingProduct">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TO_KEEP_FROM_LEADING_PROD" source="TO_KEEP_FROM_LEADING_PROD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TO_KEEP_FROM_LEADING_CAT" source="TO_KEEP_FROM_LEADING_CAT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+      </input>
+      <filter>&quot;TO_KEEP_FROM_LEADING_PROD&quot; = 'X' or &quot;TO_KEEP_FROM_LEADING_CAT&quot; = 'X'</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="Rank">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="MAX_RESULT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#FilteredOffers">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+      </input>
+      <windowFunction dynamicPartitionAttributes="true">
+        <partitionViewAttributeName>TASK_ID</partitionViewAttributeName>
+        <order byViewAttributeName="SCORE" direction="DESC"/>
+        <rankThreshold>
+          <value>100</value>
+        </rankThreshold>
+        <rankViewAttributeName>RANK</rankViewAttributeName>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="MaxResults">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="ITEM_TYPE"/>
+        <viewAttribute id="ITEM_ID"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="MAX_RESULT"/>
+        <viewAttribute id="RANK"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="TO_KEEP" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;RANK&quot;&lt;=&quot;MAX_RESULT&quot;,'X','')</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#Rank">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ITEM_ID" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RESULT" source="MAX_RESULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RANK" source="RANK"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="FinalFilter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TASK_ID"/>
+        <viewAttribute id="RESULT_ITEM_TYPE"/>
+        <viewAttribute id="RESULT_ITEM"/>
+        <viewAttribute id="SCORE"/>
+        <viewAttribute id="TO_KEEP"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#MaxResults">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TASK_ID" source="TASK_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM_TYPE" source="ITEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="RESULT_ITEM" source="ITEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE" source="SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TO_KEEP" source="TO_KEEP"/>
+      </input>
+      <filter>(&quot;TO_KEEP&quot; ='X')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="FinalFilter">
+    <descriptions/>
+    <attributes>
+      <attribute id="TASK_ID" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TASK_ID"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="TASK_ID"/>
+      </attribute>
+      <attribute id="RESULT_ITEM_TYPE" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RESULT_ITEM_TYPE"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="RESULT_ITEM_TYPE"/>
+      </attribute>
+      <attribute id="RESULT_ITEM" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="RESULT_ITEM"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="RESULT_ITEM"/>
+      </attribute>
+      <attribute id="SCORE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SCORE"/>
+        <keyMapping columnObjectName="FinalFilter" columnName="SCORE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="548" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Tasks" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="47" y="861"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="EligibleTasksOffers" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="765"/>
+        <rectangleSize height="82" width="191"/>
+      </shape>
+      <shape expanded="true" modelObjectName="LeadingItems" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="449" y="957"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="TaskswithLeadingItems" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="321" y="861"/>
+        <rectangleSize height="82" width="181"/>
+      </shape>
+      <shape expanded="true" modelObjectName="offer_prod_category" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="227" y="765"/>
+        <rectangleSize height="64" width="171"/>
+      </shape>
+      <shape expanded="true" modelObjectName="prod_category" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="710" y="861"/>
+        <rectangleSize height="64" width="167"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SelectedHierarchy" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="537" y="861"/>
+        <rectangleSize height="64" width="159"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FilteredHierarchy" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="640" y="765"/>
+        <rectangleSize height="66" width="179"/>
+      </shape>
+      <shape expanded="true" modelObjectName="EligibleTasksOffersProductsCategory" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="175" y="669"/>
+        <rectangleSize height="82" width="274"/>
+      </shape>
+      <shape expanded="true" modelObjectName="LeadingProductCategories" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="412" y="765"/>
+        <rectangleSize height="64" width="214"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Leading_Products" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="891" y="861"/>
+        <rectangleSize height="64" width="155"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MapVariantToBase" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="1060" y="861"/>
+        <rectangleSize height="64" width="232"/>
+      </shape>
+      <shape expanded="true" modelObjectName="leadingItemsConverted" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="873" y="765"/>
+        <rectangleSize height="82" width="191"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ProductCategory" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="1078" y="765"/>
+        <rectangleSize height="64" width="161"/>
+      </shape>
+      <shape expanded="true" modelObjectName="prodToCategory" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="879" y="669"/>
+        <rectangleSize height="82" width="178"/>
+      </shape>
+      <shape expanded="true" modelObjectName="prodcategoryToCategoryID" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="623" y="573"/>
+        <rectangleSize height="82" width="212"/>
+      </shape>
+      <shape expanded="true" modelObjectName="LeadingProductCategoryfiltered" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="463" y="669"/>
+        <rectangleSize height="82" width="231"/>
+      </shape>
+      <shape expanded="true" modelObjectName="OfferForLeadingCategory" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="408" y="573"/>
+        <rectangleSize height="82" width="201"/>
+      </shape>
+      <shape expanded="true" modelObjectName="OfferForLeadingProduct" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="523" y="477"/>
+        <rectangleSize height="82" width="191"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FilteredOffers" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="548" y="399"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Rank" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="548" y="321"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MaxResults" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="548" y="243"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="FinalFilter" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="548" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

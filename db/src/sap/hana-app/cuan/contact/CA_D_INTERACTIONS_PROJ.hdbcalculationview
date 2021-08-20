@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_INTERACTIONS_PROJ" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Interactions"/>
+  <metadata changedAt="2020-04-23 09:15:03.581"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="25"/>
+  <dataSources>
+    <DataSource id="CA_D_INTERACTIONS">
+      <resourceUri>sap.hana-app.cuan.contact::CA_D_INTERACTIONS</resourceUri>
+    </DataSource>
+  </dataSources>
+<calculationViews/>
+  <logicalModel id="CA_D_INTERACTIONS">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="MANDT"/>
+      </attribute>
+      <attribute id="IA_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Key1"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="ID_ORIGIN" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID Origin"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="ID_ORIGIN"/>
+      </attribute>
+      <attribute id="ID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="ID"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM" order="5" attributeHierarchyActive="false" descriptionColumnName="COMM_MEDIUM_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Communication Medium"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="IA_TYPE" order="6" attributeHierarchyActive="false" descriptionColumnName="IA_TYPE_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Type"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="TIMESTAMP" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Timestamp"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TIMESTAMP"/>
+      </attribute>
+      <attribute id="CAMPAIGN_ID" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CRM Campaign"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="CAMPAIGN_ID"/>
+      </attribute>
+      <attribute id="INITIATIVE_ID" order="9" attributeHierarchyActive="false" descriptionColumnName="INITIATIVE_ID_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Campaign"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="INITIATIVE_ID"/>
+      </attribute>
+      <attribute id="INI_VERSION" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Campaign Version"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="INI_VERSION"/>
+      </attribute>
+      <attribute id="SOURCE_SYSTEM_TYPE" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Source System Type"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="SOURCE_SYSTEM_TYPE"/>
+      </attribute>
+      <attribute id="SOURCE_SYSTEM_ID" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Source System ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="SOURCE_SYSTEM_ID"/>
+      </attribute>
+      <attribute id="SOURCE_OBJECT_TYPE" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Source Object Type"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="SOURCE_OBJECT_TYPE"/>
+      </attribute>
+      <attribute id="SOURCE_OBJECT_ID" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Source Object ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="SOURCE_OBJECT_ID"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IA_DATE" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Date"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DATE"/>
+      </attribute>
+      <attribute id="CONTENT_TITLE" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Content Title"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="CONTENT_TITLE"/>
+      </attribute>
+      <attribute id="MARKETING_ORCHESTRATION_ID" order="18" attributeHierarchyActive="false" descriptionColumnName="MARKETING_ORCHESTRATION_ID_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Message"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="MARKETING_ORCHESTRATION_ID"/>
+      </attribute>
+      <attribute id="LAUNCH_TEXT" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Text of Launch URL"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="LAUNCH_TEXT"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM" order="20" attributeHierarchyActive="false" descriptionColumnName="INTEREST_ITEM_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Item of Interest"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="INTEREST_ITEM"/>
+      </attribute>
+      <attribute id="DIRECTION" order="21" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_DIRECTION_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Direction of Interaction"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DIRECTION"/>
+      </attribute>
+      <attribute id="CHANNEL" order="22" attributeHierarchyActive="false" descriptionColumnName="CHANNEL_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Channel"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="CHANNEL"/>
+      </attribute>
+      <attribute id="TAG_TYPE" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Tag Type"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TAG_TYPE"/>
+      </attribute>
+      <attribute id="TAG" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Tag"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TAG"/>
+      </attribute>
+      <attribute id="YEAR" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Year"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="YEAR"/>
+      </attribute>
+      <attribute id="CALQUARTER" order="26" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Quarter"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="CALQUARTER"/>
+      </attribute>
+      <attribute id="CALMONTH" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Month"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="CALMONTH"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM_DESC" hidden="true" order="28" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="COMM_MEDIUM_DESC"/>
+      </attribute>
+      <attribute id="IA_TYPE_DESC" hidden="true" order="29" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_TYPE_DESC"/>
+      </attribute>
+      <attribute id="INITIATIVE_ID_DESC" hidden="true" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="INITIATIVE_ID_DESC"/>
+      </attribute>
+      <attribute id="MARKETING_ORCHESTRATION_ID_DESC" hidden="true" order="31" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="MARKETING_ORCHESTRATION_ID_DESC"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM_DESC" hidden="true" order="32" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="INTEREST_ITEM_DESC"/>
+      </attribute>
+      <attribute id="CHANNEL_DESC" hidden="true" order="33" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="CHANNEL_DESC"/>
+      </attribute>
+      <attribute id="IA_LATITUDE" order="34" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latitude"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_LATITUDE"/>
+      </attribute>
+      <attribute id="IA_LONGITUDE" order="35" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Geolocation"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_LONGITUDE"/>
+      </attribute>
+      <attribute id="BOOLEAN1" order="36" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="BOOLEAN1"/>
+      </attribute>
+      <attribute id="BOOLEAN2" order="37" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="BOOLEAN2"/>
+      </attribute>
+      <attribute id="BOOLEAN3" order="38" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="BOOLEAN3"/>
+      </attribute>
+      <attribute id="BOOLEAN4" order="39" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="BOOLEAN4"/>
+      </attribute>
+      <attribute id="TIME1" order="40" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TIME1"/>
+      </attribute>
+      <attribute id="DATE1" order="41" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DATE1"/>
+      </attribute>
+      <attribute id="DATE2" order="42" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DATE2"/>
+      </attribute>
+      <attribute id="DATE3" order="43" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DATE3"/>
+      </attribute>
+      <attribute id="NUMBER1" order="44" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="NUMBER1"/>
+      </attribute>
+      <attribute id="NUMBER2" order="45" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="NUMBER2"/>
+      </attribute>
+      <attribute id="NUMBER3" order="46" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="NUMBER3"/>
+      </attribute>
+      <attribute id="TEXT20_1" order="47" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT20_1"/>
+      </attribute>
+      <attribute id="TEXT20_2" order="48" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT20_2"/>
+      </attribute>
+      <attribute id="TIMESTAMP1" order="49" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TIMESTAMP1"/>
+      </attribute>
+      <attribute id="TIMESTAMP2" order="50" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TIMESTAMP2"/>
+      </attribute>
+      <attribute id="DECIMAL1" order="51" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DECIMAL1"/>
+      </attribute>
+      <attribute id="DECIMAL2" order="52" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DECIMAL2"/>
+      </attribute>
+      <attribute id="DECIMAL3" order="53" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DECIMAL3"/>
+      </attribute>
+      <attribute id="TEXT40_1" order="54" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT40_1"/>
+      </attribute>
+      <attribute id="TEXT40_2" order="55" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT40_2"/>
+      </attribute>
+      <attribute id="TEXT80_1" order="56" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT80_1"/>
+      </attribute>
+      <attribute id="TEXT80_2" order="57" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT80_2"/>
+      </attribute>
+      <attribute id="TEXT120_1" order="58" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT120_1"/>
+      </attribute>
+      <attribute id="TEXT120_2" order="59" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT120_2"/>
+      </attribute>
+      <attribute id="TEXT255_1" order="60" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT255_1"/>
+      </attribute>
+      <attribute id="TEXT255_2" order="61" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TEXT255_2"/>
+      </attribute>
+      <attribute id="IA_REASON" order="62" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_IA_REASON_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Reason"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_REASON"/>
+      </attribute>
+      <attribute id="IS_ANONYMOUS" order="63" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Is Anonymous"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IS_ANONYMOUS"/>
+      </attribute>
+      <attribute id="SOURCE_OBJECT_ADD_ID" order="64" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Source Object Additional ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="SOURCE_OBJECT_ADD_ID"/>
+      </attribute>
+      <attribute id="SOURCE_OBJECT_STATUS_CODE" order="65" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Business Document Status Code"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="SOURCE_OBJECT_STATUS_CODE"/>
+      </attribute>
+      <attribute id="DEVICE_FT" order="66" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Device"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DEVICE_FT"/>
+      </attribute>
+      <attribute id="IA_PROJ_DEVICETYPE" order="67" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_DEVICETYPENAME" displayAttribute="false">
+        <descriptions defaultDescription="Device Type"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DEVICETYPE"/>
+      </attribute>
+      <attribute id="IA_PROJ_DEVICETYPENAME" hidden="true" order="68" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DEVICETYPENAME"/>
+      </attribute>
+      <attribute id="SOURCE_DATA_URL_S" order="69" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Source Data URL"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="SOURCE_DATA_URL_S"/>
+      </attribute>
+      <attribute id="CURRENCY" order="70" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Currency"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="CURRENCY"/>
+      </attribute>
+      <attribute id="IA_TIMESTAMP_END" order="71" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Activity End Date"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="TIMESTAMP_END"/>
+      </attribute>
+      <attribute id="IA_PROJ_QUANTIFIER" order="72" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Quantifier"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_QUANTIFIER"/>
+      </attribute>
+      <attribute id="IA_PROJ_IA_REASON_DESC" hidden="true" order="73" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_REASON_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_STATUS" order="74" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_STATUS_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Status"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_STATUS"/>
+      </attribute>
+      <attribute id="IA_PROJ_MKT_AREA_ID" order="75" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_MKT_AREA_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="IA_PROJ_STATUS_DESC" hidden="true" order="76" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_STATUS_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_LOC_ID" order="77" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_LOCATION_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="LOC_ID"/>
+      </attribute>
+      <attribute id="IA_PROJ_LOC_ORIGIN" order="78" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_LOC_ORIGIN_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Origin"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="LOC_ORIGIN"/>
+      </attribute>
+      <attribute id="IA_PROJ_LOC_ORIGIN_DESC" hidden="true" order="79" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="LOC_ORIGIN_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_LOC_TYPE_DESC" order="80" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Location Type Description"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="LOC_TYPE_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_LOC_TYPE" order="81" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_LOC_TYPE_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Type"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="LOC_TYPE"/>
+      </attribute>
+      <attribute id="IA_PROJ_LOCATION_NAME" order="82" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Name"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="LOCATION_NAME"/>
+      </attribute>
+      <attribute id="IA_PROJ_SRID" order="83" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Spatial Reference Identifier"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_SRID"/>
+      </attribute>
+      <attribute id="IA_PROJ_LONGITUDE_WGS84" order="84" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Geolocation"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_LONGITUDE_WGS84"/>
+      </attribute>
+      <attribute id="IA_PROJ_LATITUDE_WGS84" order="85" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latitude"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_LATITUDE_WGS84"/>
+      </attribute>
+      <attribute id="IA_PROJ_LONGITUDE_BD09" order="86" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Geolocation"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_LONGITUDE_BD09"/>
+      </attribute>
+      <attribute id="IA_PROJ_LATITUDE_BD09" order="87" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latitude for Baidu"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_LATITUDE_BD09"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRODUCT_KEY" order="88" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_D_PRODUCT_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Key"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PRODUCT_KEY"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRODUCT_CATEGORY_KEY" order="89" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_PRODUCT_CATEGORY_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Category Key"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PRODUCT_CATEGORY_KEY"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRODUCT_CATEGORY_NAME" order="90" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Category Name"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PRODUCT_CATEGORY_NAME"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRODUCT_CATEGORY_DESCRIPTION" order="91" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Category Description"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PRODUCT_CATEGORY_DESCRIPTION"/>
+      </attribute>
+      <attribute id="IA_PROJ_HIERARCHY_ID" order="92" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_HIERARCHY_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Product Hierarchy ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_HIERARCHY_ID"/>
+      </attribute>
+      <attribute id="IA_PROJ_CATEGORY_ID" order="93" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_PRODUCT_CATEGORY_DESCRIPTION" displayAttribute="false">
+        <descriptions defaultDescription="Product Category ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_CATEGORY_ID"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRODUCT_ID" order="94" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_D_PRODUCT_DESCRIPTION" displayAttribute="false">
+        <descriptions defaultDescription="Product ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PRODUCT_ID"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRODUCT_ORIGIN" order="95" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_PRODUCT_ORIGIN_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Product Origin"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PRODUCT_ORIGIN"/>
+      </attribute>
+      <attribute id="IA_PROJ_D_PRODUCT_DESCRIPTION" order="96" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Description"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_D_PRODUCT_DESCRIPTION"/>
+      </attribute>
+      <attribute id="IA_PROJ_D_PRODUCT_NAME" order="97" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Name"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_D_PRODUCT_NAME"/>
+      </attribute>
+      <attribute id="IA_PROJ_PROD_CURRENCY" order="98" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Currency"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PROD_CURRENCY"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRODUCT_ORIGIN_DESC" order="99" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Origin Description"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PRODUCT_ORIGIN_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRODUCT_NAV_URL" order="100" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Navigation URL"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PRODUCT_NAV_URL"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRODUCT_IMAGE_URL" order="101" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Image URL"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_PRODUCT_IMAGE_URL"/>
+      </attribute>
+      <attribute id="IA_PROJ_HIERARCHY_DESC" hidden="true" order="102" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Hierarchy Description"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_HIERARCHY_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_DIGITAL_ASSET_URL" order="103" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Digital Asset URL"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DIGITAL_ASSET_URL"/>
+      </attribute>
+      <attribute id="IA_PROJ_DIGITAL_ASSET_SYSTEM" order="104" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Digital Asset System"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DIGITAL_ASSET_SYSTEM"/>
+      </attribute>
+      <attribute id="IA_PROJ_DIGITAL_ASSET_ID" order="105" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Digital Asset ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DIGITAL_ASSET_ID"/>
+      </attribute>
+      <attribute id="IA_PROJ_DIGITAL_ASSET_NAME" order="106" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Digital Asset Name"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DIGITAL_ASSET_NAME"/>
+      </attribute>
+      <attribute id="IA_PROJ_DIGITAL_ASSET_MIME_TYPE" order="107" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Digital Asset Mime Type"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DIGITAL_ASSET_MIME_TYPE"/>
+      </attribute>
+      <attribute id="IA_PROJ_DIGITAL_ASSET_QUANTIFIER" order="108" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Digital Asset Quantifier"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DIGITAL_ASSET_QUANTIFIER"/>
+      </attribute>
+      <attribute id="IA_PROJ_DIGITAL_ASSET_VALUATION" order="109" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Digital Asset Valuation"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DIGITAL_ASSET_VALUATION"/>
+      </attribute>
+      <attribute id="IA_PROJ_MKT_AREA_DESC" hidden="true" order="110" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area Description"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_MKT_AREA_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_DIRECTION_DESC" hidden="true" order="111" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Direction of Interaction Description"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="DIRECTION_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_PROCESSING_TIME_HOURS" order="112" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Processing Time in Hours"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="PROCESSING_TIME_HOURS"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRIORITY" order="113" attributeHierarchyActive="false" descriptionColumnName="IA_PROJ_PRIORITY_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Priority"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="PRIORITY"/>
+      </attribute>
+      <attribute id="IA_PROJ_PRIORITY_DESC" hidden="true" order="114" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Priority Description"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="PRIORITY_DESC"/>
+      </attribute>
+    
+      <attribute id="IA_PROJ_REFERRALSOURCE" order="115" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Referral Source"/>
+    
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="REFERRALSOURCE"/>
+    
+      </attribute>
+      <attribute id="IA_PROJ_REFERRALSOURCECATEGORY" order="116" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Referral Source Category"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="REFERRALSOURCECATEGORY"/>
+      </attribute>
+    
+      <attribute id="IA_PROJ_LANGUAGE_CODE" order="117" descriptionColumnName="IA_PROJ_LANGUAGE_DESC" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Interaction Language"/>
+    
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_LANGUAGE_CODE"/>
+    
+      </attribute>
+      <attribute id="IA_PROJ_LANGUAGE_DESC" hidden="true" order="118" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription=""/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_LANGUAGE_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_MKT_AGREEMENTORIGIN" order="119" descriptionColumnName="IA_PROJ_MKT_AGREEMENTORIGINNAME" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Interaction Agreement Origin"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_MKT_AGREEMENTORIGIN"/>
+      </attribute>
+      <attribute id="IA_PROJ_VALUATION" order="120" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Valuation"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="VALUATION"/>
+      </attribute>
+    
+      <attribute id="IA_PROJ_MKT_AGREEMENTEXTERNALID" order="121" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Interaction Agreement ID"/>
+    
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_MKT_AGREEMENTEXTERNALID"/>
+    
+      </attribute>
+      <attribute id="IA_PROJ_MKT_AGREEMENTORIGINNAME" hidden="true" order="122" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription=""/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_MKT_AGREEMENTORIGINNAME"/>
+      </attribute>
+    
+      <attribute id="IA_PROJ_LAUNCH_URL_S" order="123" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Launch URL"/>
+    
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="LAUNCH_URL_S"/>
+    
+      </attribute>
+    
+      <attribute id="IA_PROJ_DIGACC_ID" order="124" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Digital Account"/>
+    
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DIGACC_ID"/>
+    
+      </attribute>
+      <attribute id="IA_PROJ_DIGACC_TYPE" order="125" descriptionColumnName="IA_PROJ_DA_TYPE_DESC" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Digital Account Type"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DIGACC_TYPE"/>
+      </attribute>
+      <attribute id="IA_PROJ_DA_TYPE_DESC" hidden="true" order="126" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription=""/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_DA_TYPE_DESC"/>
+      </attribute>
+      <attribute id="IA_PROJ_SOURCE_TIMESTAMP" order="127" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Source Timestamp"/>
+        <keyMapping columnObjectName="CA_D_INTERACTIONS" columnName="IA_SOURCE_TIMESTAMP"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+<layout>
+  <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="93" y="105"/>
+        <rectangleSize height="0" width="167"/>
+      </shape>
+    </shapes>
+</layout>
+</Calculation:scenario>

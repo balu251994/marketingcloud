@@ -1,0 +1,7 @@
+{
+   "sap.hana-app.sys::DUMMY": {
+        "target":   {
+ "object": "hdbtables::DUMMY"  
+		}
+	} 
+}

@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_CONTACT_MKTG_LOCATION" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Contact Marketing Location"/>
+  <metadata changedAt="2020-02-06 09:25:53.506"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="24"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_LOC" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_LOC</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_LOC_FACET" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_LOC_FACET</resourceUri>
+    </DataSource>
+    <DataSource id="T005T" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T005T</resourceUri>
+    </DataSource>
+    <DataSource id="T005U" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T005U</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_LOC_ORI_T" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_LOC_ORI_T</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_LOC_TYPE_T" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_LOC_TYPE_T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_CE_IC_LOC" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="LOC_ORIGIN"/>
+        <viewAttribute id="LOC_ID"/></viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_LOC"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_LOC_FACET" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LOC_ID"/>
+        <viewAttribute id="LOCATION_NAME"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="TYPE"/>
+      
+        <viewAttribute id="POSTCODE"/>
+      
+        <viewAttribute id="LOC_ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_LOC_FACET"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')  AND (&quot;OBSOLETE&quot; !='X')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_LOC_ID" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="LOC_ID"/>
+        <viewAttribute id="LOCATION_NAME"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="POSTCODE"/>
+        <viewAttribute id="LOC_ORIGIN"/>
+        <viewAttribute hidden="true" id="JOIN$LOC_ID$LOC_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_CE_IC_LOC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOC_ID$LOC_ID" source="LOC_ID"/>
+      </input>
+      <input node="Projection_LOC_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ID" source="LOC_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_NAME" source="LOCATION_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE" source="POSTCODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ORIGIN" source="LOC_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOC_ID$LOC_ID" source="LOC_ID"/>
+      </input>
+      <joinAttribute name="JOIN$LOC_ID$LOC_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_LOC_COUNTRY_DESC" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="LOC_ID"/>
+        <viewAttribute id="LOCATION_NAME"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="LANDX50"/>
+      
+        <viewAttribute id="POSTCODE"/>
+      
+        <viewAttribute id="LOC_ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_LOC_ID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ID" source="LOC_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_NAME" source="LOCATION_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE" source="POSTCODE"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ORIGIN" source="LOC_ORIGIN"/>
+      </input>
+      <input node="T005T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANDX50" source="LANDX50"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="LAND1"/>
+      </input>
+      <joinAttribute name="COUNTRY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_LOC_REGION_DESC" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BEZEI"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="LOC_ID"/>
+        <viewAttribute id="LOCATION_NAME"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="LANDX50"/>
+      
+        <viewAttribute id="POSTCODE"/>
+      
+        <viewAttribute id="LOC_ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_LOC_COUNTRY_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ID" source="LOC_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_NAME" source="LOCATION_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANDX50" source="LANDX50"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE" source="POSTCODE"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ORIGIN" source="LOC_ORIGIN"/>
+      </input>
+      <input node="T005U">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BEZEI" source="BEZEI"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="BLAND"/>
+      </input>
+      <joinAttribute name="COUNTRY"/>
+      <joinAttribute name="REGION"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_LOC_ORIGIN_DESC" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="LOC_ID"/>
+        <viewAttribute id="LOCATION_NAME"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="LANDX50"/>
+        <viewAttribute id="BEZEI"/>
+      
+        <viewAttribute id="POSTCODE"/>
+      
+        <viewAttribute id="LOC_ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_LOC_REGION_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ID" source="LOC_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_NAME" source="LOCATION_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANDX50" source="LANDX50"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BEZEI" source="BEZEI"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE" source="POSTCODE"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ORIGIN" source="LOC_ORIGIN"/>
+      </input>
+      <input node="CUANC_LOC_ORI_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ORIGIN" source="LOC_ORIGIN"/>
+      </input>
+      <joinAttribute name="LOC_ORIGIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_LOC_TYPE_DESC" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="LOC_TYPE_DESC"/>
+        <viewAttribute id="ROOT_KEY"/>
+        <viewAttribute id="LOC_ID"/>
+        <viewAttribute id="LOCATION_NAME"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="LATITUDE"/>
+        <viewAttribute id="LONGITUDE"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="LANDX50"/>
+        <viewAttribute id="BEZEI"/>
+      
+        <viewAttribute id="POSTCODE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_LOC_ORIGIN_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ROOT_KEY" source="ROOT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ID" source="LOC_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_NAME" source="LOCATION_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LATITUDE" source="LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LONGITUDE" source="LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANDX50" source="LANDX50"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BEZEI" source="BEZEI"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE" source="POSTCODE"/>
+      </input>
+      <input node="CUANC_LOC_TYPE_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOC_TYPE_DESC" source="LOC_TYPE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="LOC_TYPE"/>
+      </input>
+      <joinAttribute name="TYPE"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_LOC_TYPE_DESC">
+    <descriptions/>
+    <attributes>
+      <attribute id="CONTACTUUID" order="1" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="ROOT_KEY"/>
+      </attribute>
+      <attribute id="CNTCTMARKETINGLOCATIONID" order="2" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false" descriptionColumnName="CNTCTMARKETINGLOCATIONNAME">
+        <descriptions defaultDescription="Marketing Location ID"/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="LOC_ID"/>
+      </attribute>
+      <attribute id="CNTCTMARKETINGLOCATIONTYPE" order="3" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="CNTCTMKTGLOCATIONTYPENAME" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Type"/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="TYPE"/>
+      </attribute>
+      <attribute id="CNTCTMKTGLOCATIONTYPENAME" hidden="true" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="LOC_TYPE_DESC"/>
+      </attribute>
+      <attribute id="CNTCTMARKETINGLOCATIONNAME" order="5" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Name"/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="LOCATION_NAME"/>
+      </attribute>
+      <attribute id="CNTCTMARKETINGLOCATIONCOUNTRY" order="6" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="CNTCTMKTGLOCATIONCOUNTRYNAME" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Country/Region"/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="COUNTRY"/>
+      </attribute>
+      <attribute id="CNTCTMKTGLOCATIONCOUNTRYNAME" hidden="true" order="7" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="LANDX50"/>
+      </attribute>
+      <attribute id="CNTCTMARKETINGLOCATIONREGION" order="8" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="CNTCTMKTGLOCATIONREGIONNAME" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Region"/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="REGION"/>
+      </attribute>
+      <attribute id="CNTCTMKTGLOCATIONREGIONNAME" hidden="true" order="9" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="BEZEI"/>
+      </attribute>
+      <attribute id="CNTCTMARKETINGLOCATIONCITYNAME" order="10" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location City"/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="CITY"/>
+      </attribute>
+      <attribute id="CNTCTMARKETINGLOCATIONLATITUDE" order="11" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Latitude"/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="LATITUDE"/>
+      </attribute>
+      <attribute id="CNTCTMKTGLOCATIONLONGITUDE" order="12" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Geolocation"/>
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="LONGITUDE"/>
+      </attribute>
+    
+      <attribute id="CNTCTMKTGLOCATIONPOSTALCODE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Marketing Location Postal Code"/>
+    
+        <keyMapping columnObjectName="Join_LOC_TYPE_DESC" columnName="POSTCODE"/>
+    
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_CE_IC_LOC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="647"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_LOC_FACET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="647"/>
+        <rectangleSize height="64" width="145"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_LOC_ID" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="551"/>
+        <rectangleSize height="72" width="140"/>
+      </shape>
+      <shape modelObjectName="Projection_CE_IC_LOC" modelObjectNameSpace="Join_LOC_ID" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_LOC_FACET" modelObjectNameSpace="Join_LOC_ID" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_LOC_COUNTRY_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="453"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_LOC_ID" modelObjectNameSpace="Join_LOC_COUNTRY_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::T005T" modelObjectNameSpace="Join_LOC_COUNTRY_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_LOC_REGION_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="357"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_LOC_COUNTRY_DESC" modelObjectNameSpace="Join_LOC_REGION_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::T005U" modelObjectNameSpace="Join_LOC_REGION_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_LOC_ORIGIN_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="261"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_LOC_REGION_DESC" modelObjectNameSpace="Join_LOC_ORIGIN_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::CUANC_LOC_ORI_T" modelObjectNameSpace="Join_LOC_ORIGIN_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_LOC_TYPE_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    
+      <shape modelObjectName="Join_LOC_ORIGIN_DESC" modelObjectNameSpace="Join_LOC_TYPE_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::CUANC_LOC_TYPE_T" modelObjectNameSpace="Join_LOC_TYPE_DESC" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

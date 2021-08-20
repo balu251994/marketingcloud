@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact::CA_LOYALTY_TIER" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription=""/>
+  <metadata changedAt="2018-07-23 12:30:21.814"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="26"/>
+  <dataSources>
+    <DataSource id="CUAND_LOY_MEMBER" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_LOY_MEMBER</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_FCET" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_FCET</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_LOY_PGM_RT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_LOY_PGM_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_LOY_TIER" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_LOY_TIER</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Member" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LOYALTYPROGRAMUUID"/>
+        <viewAttribute id="LOYALTYIDORIGIN"/>
+        <viewAttribute id="LOYALTYTIER"/>
+        <viewAttribute id="LOYALTYMEMBERSHIPNUMBER"/>
+        <viewAttribute id="LOYALTYMEMBERUUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_LOY_MEMBER">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMUUID" source="LOYALTYPROGRAMUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYIDORIGIN" source="LOYALTYIDORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYTIER" source="LOYALTYTIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYMEMBERSHIPNUMBER" source="LOYALTYMEMBERSHIPNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYMEMBERUUID" source="LOYALTYMEMBERUUID"/>
+      </input>
+      <filter>(&quot;MANDT&quot;='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_FCET" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_IC_FCET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      </input>
+      <filter>(&quot;MANDT&quot;='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Program" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LOYALTYPROGRAMNAME"/>
+        <viewAttribute id="LOYALTYPROGRAMUUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_LOY_PGM_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMNAME" source="LOYALTYPROGRAMNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMUUID" source="LOYALTYPROGRAMUUID"/>
+      </input>
+      <filter>(&quot;MANDT&quot;='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Tier" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LOYALTYTIERNAME"/>
+        <viewAttribute id="LOYALTYPROGRAMUUID"/>
+        <viewAttribute id="LOYALTYTIER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_LOY_TIER">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYTIERNAME" source="LOYALTYTIERNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMUUID" source="LOYALTYPROGRAMUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYTIER" source="LOYALTYTIER"/>
+      </input>
+      <filter>(&quot;MANDT&quot;='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_Member_FCET" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LOYALTYPROGRAMUUID"/>
+        <viewAttribute id="LOYALTYTIER"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LOYALTYMEMBERUUID"/>
+        <viewAttribute hidden="true" id="JOIN$LOYALTYMEMBERSHIPNUMBER$ID"/>
+        <viewAttribute hidden="true" id="JOIN$LOYALTYIDORIGIN$ID_ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_Member">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMUUID" source="LOYALTYPROGRAMUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYTIER" source="LOYALTYTIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYMEMBERUUID" source="LOYALTYMEMBERUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOYALTYMEMBERSHIPNUMBER$ID" source="LOYALTYMEMBERSHIPNUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOYALTYIDORIGIN$ID_ORIGIN" source="LOYALTYIDORIGIN"/>
+      </input>
+      <input node="#Projection_FCET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOYALTYMEMBERSHIPNUMBER$ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$LOYALTYIDORIGIN$ID_ORIGIN" source="ID_ORIGIN"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="JOIN$LOYALTYMEMBERSHIPNUMBER$ID"/>
+      <joinAttribute name="JOIN$LOYALTYIDORIGIN$ID_ORIGIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_Program" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LOYALTYPROGRAMUUID"/>
+        <viewAttribute id="LOYALTYPROGRAMNAME"/>
+        <viewAttribute id="LOYALTYTIER"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LOYALTYMEMBERUUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_Member_FCET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMUUID" source="LOYALTYPROGRAMUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYTIER" source="LOYALTYTIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYMEMBERUUID" source="LOYALTYMEMBERUUID"/>
+      </input>
+      <input node="#Projection_Program">
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMNAME" source="LOYALTYPROGRAMNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMUUID" source="LOYALTYPROGRAMUUID"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="LOYALTYPROGRAMUUID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_Tier" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LOY_PROGRAM_NAME"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="LOYALTYMEMBERUUID"/>
+        <viewAttribute id="LOYALTYPROGRAMUUID"/>
+        <viewAttribute id="LOYALTYTIER"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="ID" length="32" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;LOYALTYMEMBERUUID&quot;</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#Join_Program">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOY_PROGRAM_NAME" source="LOYALTYPROGRAMNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYMEMBERUUID" source="LOYALTYMEMBERUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMUUID" source="LOYALTYPROGRAMUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYTIER" source="LOYALTYTIER"/>
+      </input>
+      <input node="#Projection_Tier">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="LOYALTYTIERNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYPROGRAMUUID" source="LOYALTYPROGRAMUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOYALTYTIER" source="LOYALTYTIER"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="LOYALTYPROGRAMUUID"/>
+      <joinAttribute name="LOYALTYTIER"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_Tier">
+    <descriptions/>
+    <attributes>
+      <attribute id="NAME" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Tier Name"/>
+        <keyMapping columnObjectName="Join_Tier" columnName="NAME"/>
+      </attribute>
+      <attribute id="LOY_PROGRAM_NAME" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Program Name"/>
+        <keyMapping columnObjectName="Join_Tier" columnName="LOY_PROGRAM_NAME"/>
+      </attribute>
+      <attribute id="DB_KEY" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_Tier" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="MANDT" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_Tier" columnName="MANDT"/>
+      </attribute>
+      <attribute id="ID" hidden="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID"/>
+        <keyMapping columnObjectName="Join_Tier" columnName="ID"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_Member" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_FCET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_Program" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_Tier" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_Member_FCET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_Program" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_Tier" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

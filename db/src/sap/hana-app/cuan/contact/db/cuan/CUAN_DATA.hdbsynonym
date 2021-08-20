@@ -1,0 +1,97 @@
+{
+   "sap.hana-app.cuan.contact.db.cuan::CUANC_AGR_ORIG_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_AGR_ORIG_T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUANC_CE_CMM_M_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_CMM_M_T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUANC_CE_IATYP_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_IATYP_T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUANC_CE_IA_RS_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_IA_RS_T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUANC_CE_ORIGN_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_CE_ORIGN_T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUANC_DA_TYPE_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_DA_TYPE_T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUANC_DEVICE_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_DEVICE_T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUANC_LOC_ORI_T": {
+        "target":   {
+ "object": "hdbtables::CUANC_LOC_ORI_T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUAND_CE_IA_RT": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IA_RT"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUAND_CE_IC_REL": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IC_REL"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUAND_CE_IC_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_CE_IC_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUAND_LOC_FACET": {
+        "target":   {
+ "object": "hdbtables::CUAND_LOC_FACET"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUAND_ME_ME_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAND_ME_ME_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::CUAN_D_INI_ROOT": {
+        "target":   {
+ "object": "hdbtables::CUAN_D_INI_ROOT"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::DD07T": {
+        "target":   {
+ "object": "hdbtables::DD07T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::HPAC_MKT_AREA_T": {
+        "target":   {
+ "object": "hdbtables::HPAC_MKT_AREA_T"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::HPAI_OBJTYPNAME": {
+        "target":   {
+ "object": "hdbtables::HPAI_OBJTYPNAME"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::T002": {
+        "target":   {
+ "object": "hdbtables::T002"  
+		}
+	},
+   "sap.hana-app.cuan.contact.db.cuan::T002T": {
+        "target":   {
+ "object": "hdbtables::T002T"  
+		}
+	} 
+}

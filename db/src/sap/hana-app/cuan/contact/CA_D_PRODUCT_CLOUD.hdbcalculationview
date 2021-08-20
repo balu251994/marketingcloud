@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact::CA_D_PRODUCT_CLOUD" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Product"/>
+  <metadata changedAt="2018-06-28 15:03:12.299"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="47"/>
+  <dataSources>
+    <DataSource id="CUAND_PROD_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_FACET">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_FACET</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_DESC">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_DESC</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_PROD_ORI_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_PROD_ORI_T</resourceUri>
+    </DataSource>
+    <DataSource id="HPA_D_BRAND_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::HPA_D_BRAND_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="HPA_D_BRAND_DESC">
+      <resourceUri>sap.hana-app.cuan.db.cuan::HPA_D_BRAND_DESC</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ROOT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="IMAGE_URL"/>
+        <viewAttribute id="NAV_URL"/>
+        <viewAttribute id="CURRENCY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_PROD_FACET">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="IS_ADDITIONAL_PRODUCT_ORIGIN"/>
+        <viewAttribute id="BRAND_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_ADDITIONAL_PRODUCT_ORIGIN" source="IS_ADDITIONAL_PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;IS_ADDITIONAL_PRODUCT_ORIGIN&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_DESC">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGU" source="LANGU"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_DESC" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IMAGE_URL"/>
+        <viewAttribute id="NAV_URL"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      </input>
+      <input node="#Projection_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PRODUCT_KEY"/>
+      </input>
+      <joinAttribute name="DB_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_FACET" cardinality="C1_N" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="IMAGE_URL"/>
+        <viewAttribute id="NAV_URL"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="BRAND_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      </input>
+      <input node="#Proj_PROD_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+      </input>
+      <joinAttribute name="PRODUCT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ORI_DESC">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ORIGIN_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUANC_PROD_ORI_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN_DESC" source="PRODUCT_ORIGIN_DESC"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BRAND_ID" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#HPA_D_BRAND_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <filter>(&quot;MANDT&quot;='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BRAND_DESC" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGUAGE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#HPA_D_BRAND_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+      </input>
+      <filter>(&quot;MANDT&quot;='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_BRAND" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="LANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_BRAND_ID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <input node="#Projection_BRAND_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="JOIN$DB_KEY$PARENT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_BRAND_DESC" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="LANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PRODUCT_IMAGE_URL"/>
+        <viewAttribute id="PRODUCT_NAV_URL"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="BRAND_NAME"/>
+        <viewAttribute id="LANGUAGE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+      </input>
+      <input node="#Join_BRAND">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_NAME" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="ID"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="BRAND_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_ORI_T" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PRODUCT_ORIGIN_DESC"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PRODUCT_IMAGE_URL"/>
+        <viewAttribute id="PRODUCT_NAV_URL"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="BRAND_NAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_BRAND_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_IMAGE_URL" source="PRODUCT_IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_NAV_URL" source="PRODUCT_NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_NAME" source="BRAND_NAME"/>
+      </input>
+      <input node="#Projection_ORI_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN_DESC" source="PRODUCT_ORIGIN_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+      </input>
+      <joinAttribute name="PRODUCT_ORIGIN"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_ORI_T">
+    <descriptions/>
+    <attributes>
+      <attribute id="DB_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Key"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="PRODUCT_IMAGE_URL" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Image URL"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="PRODUCT_IMAGE_URL"/>
+      </attribute>
+      <attribute id="PRODUCT_NAV_URL" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Navigation URL"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="PRODUCT_NAV_URL"/>
+      </attribute>
+      <attribute id="CURRENCY" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Currency"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="CURRENCY"/>
+      </attribute>
+      <attribute id="PRODUCT_ORIGIN_DESC" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Origin Description"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="PRODUCT_ORIGIN_DESC"/>
+      </attribute>
+      <attribute id="D_PRODUCT_NAME" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Name"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="NAME"/>
+      </attribute>
+      <attribute id="D_PRODUCT_DESCRIPTION" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Description"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="DESCRIPTION"/>
+      </attribute>
+      <attribute id="PRODUCT_ORIGIN" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Origin"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="PRODUCT_ORIGIN"/>
+      </attribute>
+      <attribute id="PRODUCT_ID" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product ID"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="PRODUCT_ID"/>
+      </attribute>
+      <attribute id="BRAND_ID" order="10" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="BRAND_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Brand ID"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="BRAND_ID"/>
+      </attribute>
+      <attribute id="BRAND_NAME" hidden="true" order="11" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Brand Name"/>
+        <keyMapping columnObjectName="Join_ORI_T" columnName="BRAND_NAME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="252" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="549"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_PROD_FACET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="549"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="453"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_FACET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="357"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_ORI_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="175" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_BRAND_ID" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="407" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_BRAND_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="561" y="453"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_BRAND" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="407" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_BRAND_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="329" y="261"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_ORI_T" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="252" y="165"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

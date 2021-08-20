@@ -1,0 +1,1152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact::CA_D_PRODUCT_INTERACTIONS" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Product"/>
+  <metadata changedAt="2020-04-23 08:56:00.217"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="39"/>
+  <dataSources>
+    <DataSource id="CUAND_PROD_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_FACET">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_FACET</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IA_PROD">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_PROD</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_PROD_DESC">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_PROD_DESC</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_PRODUCT_CATEGORY">
+      <resourceUri>sap.hana-app.cuan.contact::CA_D_PRODUCT_CATEGORY</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ROOT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IMAGE_URL"/>
+        <viewAttribute id="NAV_URL"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="BOOLEAN5"/>
+        <viewAttribute id="BOOLEAN6"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="NUMBER4"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="DECIMAL4"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="QUANTITY1"/>
+        <viewAttribute id="UNIT_OF_MEASURE1"/>
+        <viewAttribute id="AMOUNT1"/>
+        <viewAttribute id="AMOUNT2"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN5" source="BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN6" source="BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER4" source="NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL4" source="DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY1" source="QUANTITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE1" source="UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT1" source="AMOUNT1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT2" source="AMOUNT2"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_PROD_FACET">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="IS_ADDITIONAL_PRODUCT_ORIGIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_PROD_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_ADDITIONAL_PRODUCT_ORIGIN" source="IS_ADDITIONAL_PRODUCT_ORIGIN"/>
+      </input>
+      <filter>(&quot;IS_ADDITIONAL_PRODUCT_ORIGIN&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_FACET" cardinality="C1_N" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IMAGE_URL"/>
+        <viewAttribute id="NAV_URL"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="BOOLEAN5"/>
+        <viewAttribute id="BOOLEAN6"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="NUMBER4"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="DECIMAL4"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="QUANTITY1"/>
+        <viewAttribute id="UNIT_OF_MEASURE1"/>
+        <viewAttribute id="AMOUNT1"/>
+        <viewAttribute id="AMOUNT2"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN5" source="BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN6" source="BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER4" source="NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL4" source="DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY1" source="QUANTITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE1" source="UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT1" source="AMOUNT1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT2" source="AMOUNT2"/>
+      </input>
+      <input node="#Proj_PROD_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="DB_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_IA_PROD">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="UNIT_OF_MEASURE"/>
+        <viewAttribute id="IA_PROD_BOOLEAN1"/>
+        <viewAttribute id="IA_PROD_BOOLEAN2"/>
+        <viewAttribute id="IA_PROD_BOOLEAN3"/>
+        <viewAttribute id="IA_PROD_BOOLEAN4"/>
+        <viewAttribute id="IA_PROD_BOOLEAN5"/>
+        <viewAttribute id="IA_PROD_BOOLEAN6"/>
+        <viewAttribute id="IA_PROD_TIME1"/>
+        <viewAttribute id="IA_PROD_DATE1"/>
+        <viewAttribute id="IA_PROD_DATE2"/>
+        <viewAttribute id="IA_PROD_DATE3"/>
+        <viewAttribute id="IA_PROD_NUMBER1"/>
+        <viewAttribute id="IA_PROD_NUMBER2"/>
+        <viewAttribute id="IA_PROD_NUMBER3"/>
+        <viewAttribute id="IA_PROD_NUMBER4"/>
+        <viewAttribute id="IA_PROD_NUMBER5"/>
+        <viewAttribute id="IA_PROD_NUMBER6"/>
+        <viewAttribute id="IA_PROD_TIMESTAMP1"/>
+        <viewAttribute id="IA_PROD_TIMESTAMP2"/>
+        <viewAttribute id="IA_PROD_DECIMAL1"/>
+        <viewAttribute id="IA_PROD_DECIMAL2"/>
+        <viewAttribute id="IA_PROD_DECIMAL3"/>
+        <viewAttribute id="IA_PROD_DECIMAL4"/>
+        <viewAttribute id="IA_PROD_TEXT40_1"/>
+        <viewAttribute id="IA_PROD_TEXT40_2"/>
+        <viewAttribute id="IA_PROD_TEXT120_1"/>
+        <viewAttribute id="IA_PROD_TEXT120_2"/>
+        <viewAttribute id="IA_PROD_TEXT255_1"/>
+        <viewAttribute id="IA_PROD_TEXT255_2"/>
+        <viewAttribute id="IA_PROD_UNIT_OF_MEASURE1"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_IA_PROD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE" source="UNIT_OF_MEASURE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN5" source="BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN6" source="BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER4" source="NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER5" source="NUMBER5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER6" source="NUMBER6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL4" source="DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_UNIT_OF_MEASURE1" source="UNIT_OF_MEASURE1"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_IA_PROD" cardinality="CN_1" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PRODUCT_IMAGE_URL"/>
+        <viewAttribute id="PRODUCT_NAV_URL"/>
+        <viewAttribute id="PROD_BOOLEAN1"/>
+        <viewAttribute id="PROD_BOOLEAN2"/>
+        <viewAttribute id="PROD_BOOLEAN3"/>
+        <viewAttribute id="PROD_BOOLEAN4"/>
+        <viewAttribute id="PROD_BOOLEAN5"/>
+        <viewAttribute id="PROD_BOOLEAN6"/>
+        <viewAttribute id="PROD_DATE1"/>
+        <viewAttribute id="PROD_DATE2"/>
+        <viewAttribute id="PROD_DATE3"/>
+        <viewAttribute id="PROD_NUMBER1"/>
+        <viewAttribute id="PROD_NUMBER2"/>
+        <viewAttribute id="PROD_NUMBER3"/>
+        <viewAttribute id="PROD_NUMBER4"/>
+        <viewAttribute id="PROD_TIMESTAMP1"/>
+        <viewAttribute id="PROD_TIMESTAMP2"/>
+        <viewAttribute id="PROD_DECIMAL1"/>
+        <viewAttribute id="PROD_DECIMAL2"/>
+        <viewAttribute id="PROD_DECIMAL3"/>
+        <viewAttribute id="PROD_DECIMAL4"/>
+        <viewAttribute id="PROD_TEXT40_1"/>
+        <viewAttribute id="PROD_TEXT40_2"/>
+        <viewAttribute id="PROD_TEXT120_1"/>
+        <viewAttribute id="PROD_TEXT120_2"/>
+        <viewAttribute id="PROD_TEXT255_1"/>
+        <viewAttribute id="PROD_TEXT255_2"/>
+        <viewAttribute id="PROD_QUANTITY1"/>
+        <viewAttribute id="PROD_UNIT_OF_MEASURE1"/>
+        <viewAttribute id="PROD_AMOUNT1"/>
+        <viewAttribute id="PROD_AMOUNT2"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="UNIT_OF_MEASURE"/>
+        <viewAttribute id="IA_PROD_BOOLEAN1"/>
+        <viewAttribute id="IA_PROD_BOOLEAN2"/>
+        <viewAttribute id="IA_PROD_BOOLEAN3"/>
+        <viewAttribute id="IA_PROD_BOOLEAN4"/>
+        <viewAttribute id="IA_PROD_BOOLEAN5"/>
+        <viewAttribute id="IA_PROD_BOOLEAN6"/>
+        <viewAttribute id="IA_PROD_TIME1"/>
+        <viewAttribute id="IA_PROD_DATE1"/>
+        <viewAttribute id="IA_PROD_DATE2"/>
+        <viewAttribute id="IA_PROD_DATE3"/>
+        <viewAttribute id="IA_PROD_NUMBER1"/>
+        <viewAttribute id="IA_PROD_NUMBER2"/>
+        <viewAttribute id="IA_PROD_NUMBER3"/>
+        <viewAttribute id="IA_PROD_NUMBER4"/>
+        <viewAttribute id="IA_PROD_NUMBER5"/>
+        <viewAttribute id="IA_PROD_NUMBER6"/>
+        <viewAttribute id="IA_PROD_TIMESTAMP1"/>
+        <viewAttribute id="IA_PROD_TIMESTAMP2"/>
+        <viewAttribute id="IA_PROD_DECIMAL1"/>
+        <viewAttribute id="IA_PROD_DECIMAL2"/>
+        <viewAttribute id="IA_PROD_DECIMAL3"/>
+        <viewAttribute id="IA_PROD_DECIMAL4"/>
+        <viewAttribute id="IA_PROD_TEXT40_1"/>
+        <viewAttribute id="IA_PROD_TEXT40_2"/>
+        <viewAttribute id="IA_PROD_TEXT120_1"/>
+        <viewAttribute id="IA_PROD_TEXT120_2"/>
+        <viewAttribute id="IA_PROD_TEXT255_1"/>
+        <viewAttribute id="IA_PROD_TEXT255_2"/>
+        <viewAttribute id="IA_PROD_UNIT_OF_MEASURE1"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Proj_IA_PROD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE" source="UNIT_OF_MEASURE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN1" source="IA_PROD_BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN2" source="IA_PROD_BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN3" source="IA_PROD_BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN4" source="IA_PROD_BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN5" source="IA_PROD_BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN6" source="IA_PROD_BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIME1" source="IA_PROD_TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE1" source="IA_PROD_DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE2" source="IA_PROD_DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE3" source="IA_PROD_DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER1" source="IA_PROD_NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER2" source="IA_PROD_NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER3" source="IA_PROD_NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER4" source="IA_PROD_NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER5" source="IA_PROD_NUMBER5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER6" source="IA_PROD_NUMBER6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIMESTAMP1" source="IA_PROD_TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIMESTAMP2" source="IA_PROD_TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL1" source="IA_PROD_DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL2" source="IA_PROD_DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL3" source="IA_PROD_DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL4" source="IA_PROD_DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT40_1" source="IA_PROD_TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT40_2" source="IA_PROD_TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT120_1" source="IA_PROD_TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT120_2" source="IA_PROD_TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT255_1" source="IA_PROD_TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT255_2" source="IA_PROD_TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_UNIT_OF_MEASURE1" source="IA_PROD_UNIT_OF_MEASURE1"/>
+      </input>
+      <input node="#Join_FACET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_IMAGE_URL" source="IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_NAV_URL" source="NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN5" source="BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN6" source="BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER4" source="NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL4" source="DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_QUANTITY1" source="QUANTITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_UNIT_OF_MEASURE1" source="UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_AMOUNT1" source="AMOUNT1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_AMOUNT2" source="AMOUNT2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="PRODUCT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PROD_DESC" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="PRODUCT_NAME"/>
+        <viewAttribute id="PRODUCT_DESCRIPTION"/>
+        <viewAttribute id="PRODUCT_IMAGE_URL"/>
+        <viewAttribute id="PRODUCT_NAV_URL"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="UNIT_OF_MEASURE"/>
+        <viewAttribute id="IA_PROD_BOOLEAN1"/>
+        <viewAttribute id="IA_PROD_BOOLEAN2"/>
+        <viewAttribute id="IA_PROD_BOOLEAN3"/>
+        <viewAttribute id="IA_PROD_BOOLEAN4"/>
+        <viewAttribute id="IA_PROD_BOOLEAN5"/>
+        <viewAttribute id="IA_PROD_BOOLEAN6"/>
+        <viewAttribute id="IA_PROD_TIME1"/>
+        <viewAttribute id="IA_PROD_DATE1"/>
+        <viewAttribute id="IA_PROD_DATE2"/>
+        <viewAttribute id="IA_PROD_DATE3"/>
+        <viewAttribute id="IA_PROD_NUMBER1"/>
+        <viewAttribute id="IA_PROD_NUMBER2"/>
+        <viewAttribute id="IA_PROD_NUMBER3"/>
+        <viewAttribute id="IA_PROD_NUMBER4"/>
+        <viewAttribute id="IA_PROD_NUMBER5"/>
+        <viewAttribute id="IA_PROD_NUMBER6"/>
+        <viewAttribute id="IA_PROD_TIMESTAMP1"/>
+        <viewAttribute id="IA_PROD_TIMESTAMP2"/>
+        <viewAttribute id="IA_PROD_DECIMAL1"/>
+        <viewAttribute id="IA_PROD_DECIMAL2"/>
+        <viewAttribute id="IA_PROD_DECIMAL3"/>
+        <viewAttribute id="IA_PROD_DECIMAL4"/>
+        <viewAttribute id="IA_PROD_TEXT40_1"/>
+        <viewAttribute id="IA_PROD_TEXT40_2"/>
+        <viewAttribute id="IA_PROD_TEXT120_1"/>
+        <viewAttribute id="IA_PROD_TEXT120_2"/>
+        <viewAttribute id="IA_PROD_TEXT255_1"/>
+        <viewAttribute id="IA_PROD_TEXT255_2"/>
+        <viewAttribute id="IA_PROD_UNIT_OF_MEASURE1"/>
+        <viewAttribute id="PROD_BOOLEAN1"/>
+        <viewAttribute id="PROD_BOOLEAN2"/>
+        <viewAttribute id="PROD_BOOLEAN3"/>
+        <viewAttribute id="PROD_BOOLEAN4"/>
+        <viewAttribute id="PROD_BOOLEAN5"/>
+        <viewAttribute id="PROD_BOOLEAN6"/>
+        <viewAttribute id="PROD_DATE1"/>
+        <viewAttribute id="PROD_DATE2"/>
+        <viewAttribute id="PROD_DATE3"/>
+        <viewAttribute id="PROD_NUMBER1"/>
+        <viewAttribute id="PROD_NUMBER2"/>
+        <viewAttribute id="PROD_NUMBER3"/>
+        <viewAttribute id="PROD_NUMBER4"/>
+        <viewAttribute id="PROD_TIMESTAMP1"/>
+        <viewAttribute id="PROD_TIMESTAMP2"/>
+        <viewAttribute id="PROD_DECIMAL1"/>
+        <viewAttribute id="PROD_DECIMAL2"/>
+        <viewAttribute id="PROD_DECIMAL3"/>
+        <viewAttribute id="PROD_DECIMAL4"/>
+        <viewAttribute id="PROD_TEXT40_1"/>
+        <viewAttribute id="PROD_TEXT40_2"/>
+        <viewAttribute id="PROD_TEXT120_1"/>
+        <viewAttribute id="PROD_TEXT120_2"/>
+        <viewAttribute id="PROD_TEXT255_1"/>
+        <viewAttribute id="PROD_TEXT255_2"/>
+        <viewAttribute id="PROD_QUANTITY1"/>
+        <viewAttribute id="PROD_UNIT_OF_MEASURE1"/>
+        <viewAttribute id="PROD_AMOUNT1"/>
+        <viewAttribute id="PROD_AMOUNT2"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_IA_PROD">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_IMAGE_URL" source="PRODUCT_IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_NAV_URL" source="PRODUCT_NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE" source="UNIT_OF_MEASURE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN1" source="IA_PROD_BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN2" source="IA_PROD_BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN3" source="IA_PROD_BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN4" source="IA_PROD_BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN5" source="IA_PROD_BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN6" source="IA_PROD_BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIME1" source="IA_PROD_TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE1" source="IA_PROD_DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE2" source="IA_PROD_DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE3" source="IA_PROD_DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER1" source="IA_PROD_NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER2" source="IA_PROD_NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER3" source="IA_PROD_NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER4" source="IA_PROD_NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER5" source="IA_PROD_NUMBER5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER6" source="IA_PROD_NUMBER6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIMESTAMP1" source="IA_PROD_TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIMESTAMP2" source="IA_PROD_TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL1" source="IA_PROD_DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL2" source="IA_PROD_DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL3" source="IA_PROD_DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL4" source="IA_PROD_DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT40_1" source="IA_PROD_TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT40_2" source="IA_PROD_TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT120_1" source="IA_PROD_TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT120_2" source="IA_PROD_TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT255_1" source="IA_PROD_TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT255_2" source="IA_PROD_TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_UNIT_OF_MEASURE1" source="IA_PROD_UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN1" source="PROD_BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN2" source="PROD_BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN3" source="PROD_BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN4" source="PROD_BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN5" source="PROD_BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN6" source="PROD_BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DATE1" source="PROD_DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DATE2" source="PROD_DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DATE3" source="PROD_DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER1" source="PROD_NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER2" source="PROD_NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER3" source="PROD_NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER4" source="PROD_NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TIMESTAMP1" source="PROD_TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TIMESTAMP2" source="PROD_TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL1" source="PROD_DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL2" source="PROD_DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL3" source="PROD_DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL4" source="PROD_DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT40_1" source="PROD_TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT40_2" source="PROD_TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT120_1" source="PROD_TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT120_2" source="PROD_TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT255_1" source="PROD_TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT255_2" source="PROD_TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_QUANTITY1" source="PROD_QUANTITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_UNIT_OF_MEASURE1" source="PROD_UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_AMOUNT1" source="PROD_AMOUNT1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_AMOUNT2" source="PROD_AMOUNT2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <input node="#CUAND_PROD_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="PRODUCT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PROD_CAT" cardinality="CN_N" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="D_PRODUCT_NAME"/>
+        <viewAttribute id="D_PRODUCT_DESCRIPTION"/>
+        <viewAttribute id="PRODUCT_IMAGE_URL"/>
+        <viewAttribute id="PRODUCT_NAV_URL"/>
+        <viewAttribute id="PRODUCT_ORIGIN"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="PRODUCT_KEY"/>
+        <viewAttribute id="UNIT_OF_MEASURE"/>
+        <viewAttribute id="IA_PROD_BOOLEAN1"/>
+        <viewAttribute id="IA_PROD_BOOLEAN2"/>
+        <viewAttribute id="IA_PROD_BOOLEAN3"/>
+        <viewAttribute id="IA_PROD_BOOLEAN4"/>
+        <viewAttribute id="IA_PROD_BOOLEAN5"/>
+        <viewAttribute id="IA_PROD_BOOLEAN6"/>
+        <viewAttribute id="IA_PROD_TIME1"/>
+        <viewAttribute id="IA_PROD_DATE1"/>
+        <viewAttribute id="IA_PROD_DATE2"/>
+        <viewAttribute id="IA_PROD_DATE3"/>
+        <viewAttribute id="IA_PROD_NUMBER1"/>
+        <viewAttribute id="IA_PROD_NUMBER2"/>
+        <viewAttribute id="IA_PROD_NUMBER3"/>
+        <viewAttribute id="IA_PROD_NUMBER4"/>
+        <viewAttribute id="IA_PROD_NUMBER5"/>
+        <viewAttribute id="IA_PROD_NUMBER6"/>
+        <viewAttribute id="IA_PROD_TIMESTAMP1"/>
+        <viewAttribute id="IA_PROD_TIMESTAMP2"/>
+        <viewAttribute id="IA_PROD_DECIMAL1"/>
+        <viewAttribute id="IA_PROD_DECIMAL2"/>
+        <viewAttribute id="IA_PROD_DECIMAL3"/>
+        <viewAttribute id="IA_PROD_DECIMAL4"/>
+        <viewAttribute id="IA_PROD_TEXT40_1"/>
+        <viewAttribute id="IA_PROD_TEXT40_2"/>
+        <viewAttribute id="IA_PROD_TEXT120_1"/>
+        <viewAttribute id="IA_PROD_TEXT120_2"/>
+        <viewAttribute id="IA_PROD_TEXT255_1"/>
+        <viewAttribute id="IA_PROD_TEXT255_2"/>
+        <viewAttribute id="IA_PROD_UNIT_OF_MEASURE1"/>
+        <viewAttribute id="PROD_BOOLEAN1"/>
+        <viewAttribute id="PROD_BOOLEAN2"/>
+        <viewAttribute id="PROD_BOOLEAN3"/>
+        <viewAttribute id="PROD_BOOLEAN4"/>
+        <viewAttribute id="PROD_BOOLEAN5"/>
+        <viewAttribute id="PROD_BOOLEAN6"/>
+        <viewAttribute id="PROD_DATE1"/>
+        <viewAttribute id="PROD_DATE2"/>
+        <viewAttribute id="PROD_DATE3"/>
+        <viewAttribute id="PROD_NUMBER1"/>
+        <viewAttribute id="PROD_NUMBER2"/>
+        <viewAttribute id="PROD_NUMBER3"/>
+        <viewAttribute id="PROD_NUMBER4"/>
+        <viewAttribute id="PROD_TIMESTAMP1"/>
+        <viewAttribute id="PROD_TIMESTAMP2"/>
+        <viewAttribute id="PROD_DECIMAL1"/>
+        <viewAttribute id="PROD_DECIMAL2"/>
+        <viewAttribute id="PROD_DECIMAL3"/>
+        <viewAttribute id="PROD_DECIMAL4"/>
+        <viewAttribute id="PROD_TEXT40_1"/>
+        <viewAttribute id="PROD_TEXT40_2"/>
+        <viewAttribute id="PROD_TEXT120_1"/>
+        <viewAttribute id="PROD_TEXT120_2"/>
+        <viewAttribute id="PROD_TEXT255_1"/>
+        <viewAttribute id="PROD_TEXT255_2"/>
+        <viewAttribute id="PROD_QUANTITY1"/>
+        <viewAttribute id="PROD_UNIT_OF_MEASURE1"/>
+        <viewAttribute id="PROD_AMOUNT1"/>
+        <viewAttribute id="PROD_AMOUNT2"/>
+        <viewAttribute id="PRODUCT_CATEGORY_KEY"/>
+        <viewAttribute id="PRODUCT_CATEGORY_NAME"/>
+        <viewAttribute id="PRODUCT_CATEGORY_DESCRIPTION"/>
+        <viewAttribute id="HIERARCHY_ID"/>
+        <viewAttribute id="CATEGORY_ID"/>
+        <viewAttribute id="PROD_CAT_BOOLEAN1"/>
+        <viewAttribute id="PROD_CAT_BOOLEAN2"/>
+        <viewAttribute id="PROD_CAT_BOOLEAN3"/>
+        <viewAttribute id="PROD_CAT_DATE1"/>
+        <viewAttribute id="PROD_CAT_DATE2"/>
+        <viewAttribute id="PROD_CAT_NUMBER1"/>
+        <viewAttribute id="PROD_CAT_NUMBER2"/>
+        <viewAttribute id="PROD_CAT_DECIMAL1"/>
+        <viewAttribute id="PROD_CAT_DECIMAL2"/>
+        <viewAttribute id="PROD_CAT_TEXT40_1"/>
+        <viewAttribute id="PROD_CAT_TEXT120_1"/>
+        <viewAttribute id="PROD_CAT_TEXT255_1"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_PROD_DESC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="D_PRODUCT_NAME" source="PRODUCT_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="D_PRODUCT_DESCRIPTION" source="PRODUCT_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_IMAGE_URL" source="PRODUCT_IMAGE_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_NAV_URL" source="PRODUCT_NAV_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ORIGIN" source="PRODUCT_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="UNIT_OF_MEASURE" source="UNIT_OF_MEASURE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN1" source="IA_PROD_BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN2" source="IA_PROD_BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN3" source="IA_PROD_BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN4" source="IA_PROD_BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN5" source="IA_PROD_BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_BOOLEAN6" source="IA_PROD_BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIME1" source="IA_PROD_TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE1" source="IA_PROD_DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE2" source="IA_PROD_DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DATE3" source="IA_PROD_DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER1" source="IA_PROD_NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER2" source="IA_PROD_NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER3" source="IA_PROD_NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER4" source="IA_PROD_NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER5" source="IA_PROD_NUMBER5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_NUMBER6" source="IA_PROD_NUMBER6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIMESTAMP1" source="IA_PROD_TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TIMESTAMP2" source="IA_PROD_TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL1" source="IA_PROD_DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL2" source="IA_PROD_DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL3" source="IA_PROD_DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_DECIMAL4" source="IA_PROD_DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT40_1" source="IA_PROD_TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT40_2" source="IA_PROD_TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT120_1" source="IA_PROD_TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT120_2" source="IA_PROD_TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT255_1" source="IA_PROD_TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_TEXT255_2" source="IA_PROD_TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_PROD_UNIT_OF_MEASURE1" source="IA_PROD_UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN1" source="PROD_BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN2" source="PROD_BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN3" source="PROD_BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN4" source="PROD_BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN5" source="PROD_BOOLEAN5"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_BOOLEAN6" source="PROD_BOOLEAN6"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DATE1" source="PROD_DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DATE2" source="PROD_DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DATE3" source="PROD_DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER1" source="PROD_NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER2" source="PROD_NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER3" source="PROD_NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_NUMBER4" source="PROD_NUMBER4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TIMESTAMP1" source="PROD_TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TIMESTAMP2" source="PROD_TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL1" source="PROD_DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL2" source="PROD_DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL3" source="PROD_DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_DECIMAL4" source="PROD_DECIMAL4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT40_1" source="PROD_TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT40_2" source="PROD_TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT120_1" source="PROD_TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT120_2" source="PROD_TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT255_1" source="PROD_TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_TEXT255_2" source="PROD_TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_QUANTITY1" source="PROD_QUANTITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_UNIT_OF_MEASURE1" source="PROD_UNIT_OF_MEASURE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_AMOUNT1" source="PROD_AMOUNT1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_AMOUNT2" source="PROD_AMOUNT2"/>
+      </input>
+      <input node="#CA_D_PRODUCT_CATEGORY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_CATEGORY_KEY" source="PRODUCT_CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_CATEGORY_NAME" source="PRODUCT_CATEGORY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_CATEGORY_DESCRIPTION" source="PRODUCT_CATEGORY_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HIERARCHY_ID" source="HIERARCHY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_ID" source="CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROD_CAT_TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_KEY" source="PRODUCT_KEY"/>
+      </input>
+      <joinAttribute name="PRODUCT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_PROD_CAT">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="MANDT"/>
+      </attribute>
+      <attribute id="D_PRODUCT_NAME" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Name"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="D_PRODUCT_NAME"/>
+      </attribute>
+      <attribute id="D_PRODUCT_DESCRIPTION" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Description"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="D_PRODUCT_DESCRIPTION"/>
+      </attribute>
+      <attribute id="PRODUCT_IMAGE_URL" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Image URL"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PRODUCT_IMAGE_URL"/>
+      </attribute>
+      <attribute id="PRODUCT_NAV_URL" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Navigation URL"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PRODUCT_NAV_URL"/>
+      </attribute>
+      <attribute id="PRODUCT_ORIGIN" order="6" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Origin"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PRODUCT_ORIGIN"/>
+      </attribute>
+      <attribute id="PRODUCT_ID" order="7" semanticType="empty" attributeHierarchyActive="false" descriptionColumnName="D_PRODUCT_DESCRIPTION" displayAttribute="false">
+        <descriptions defaultDescription="Product ID"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PRODUCT_ID"/>
+      </attribute>
+      <attribute id="IA_KEY" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Key"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="PRODUCT_KEY" order="9" attributeHierarchyActive="false" descriptionColumnName="D_PRODUCT_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Key"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PRODUCT_KEY"/>
+      </attribute>
+      <attribute id="UNIT_OF_MEASURE" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Unit Of Measure"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="UNIT_OF_MEASURE"/>
+      </attribute>
+      <attribute id="IA_PROD_BOOLEAN1" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_BOOLEAN1"/>
+      </attribute>
+      <attribute id="IA_PROD_BOOLEAN2" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_BOOLEAN2"/>
+      </attribute>
+      <attribute id="IA_PROD_BOOLEAN3" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_BOOLEAN3"/>
+      </attribute>
+      <attribute id="IA_PROD_BOOLEAN4" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_BOOLEAN4"/>
+      </attribute>
+      <attribute id="IA_PROD_BOOLEAN5" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_BOOLEAN5"/>
+      </attribute>
+      <attribute id="IA_PROD_BOOLEAN6" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_BOOLEAN6"/>
+      </attribute>
+      <attribute id="IA_PROD_TIME1" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_TIME1"/>
+      </attribute>
+      <attribute id="IA_PROD_DATE1" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_DATE1"/>
+      </attribute>
+      <attribute id="IA_PROD_DATE2" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_DATE2"/>
+      </attribute>
+      <attribute id="IA_PROD_DATE3" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_DATE3"/>
+      </attribute>
+      <attribute id="IA_PROD_NUMBER1" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_NUMBER1"/>
+      </attribute>
+      <attribute id="IA_PROD_NUMBER2" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_NUMBER2"/>
+      </attribute>
+      <attribute id="IA_PROD_NUMBER3" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_NUMBER3"/>
+      </attribute>
+      <attribute id="IA_PROD_NUMBER4" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_NUMBER4"/>
+      </attribute>
+      <attribute id="IA_PROD_NUMBER5" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_NUMBER5"/>
+      </attribute>
+      <attribute id="IA_PROD_NUMBER6" order="26" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_NUMBER6"/>
+      </attribute>
+      <attribute id="IA_PROD_TIMESTAMP1" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_TIMESTAMP1"/>
+      </attribute>
+      <attribute id="IA_PROD_TIMESTAMP2" order="28" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_TIMESTAMP2"/>
+      </attribute>
+      <attribute id="IA_PROD_DECIMAL1" order="29" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_DECIMAL1"/>
+      </attribute>
+      <attribute id="IA_PROD_DECIMAL2" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_DECIMAL2"/>
+      </attribute>
+      <attribute id="IA_PROD_DECIMAL3" order="31" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_DECIMAL3"/>
+      </attribute>
+      <attribute id="IA_PROD_DECIMAL4" order="32" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_DECIMAL4"/>
+      </attribute>
+      <attribute id="IA_PROD_TEXT40_1" order="33" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_TEXT40_1"/>
+      </attribute>
+      <attribute id="IA_PROD_TEXT40_2" order="34" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_TEXT40_2"/>
+      </attribute>
+      <attribute id="IA_PROD_TEXT120_1" order="35" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_TEXT120_1"/>
+      </attribute>
+      <attribute id="IA_PROD_TEXT120_2" order="36" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_TEXT120_2"/>
+      </attribute>
+      <attribute id="IA_PROD_TEXT255_1" order="37" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_TEXT255_1"/>
+      </attribute>
+      <attribute id="IA_PROD_TEXT255_2" order="38" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_TEXT255_2"/>
+      </attribute>
+      <attribute id="IA_PROD_UNIT_OF_MEASURE1" order="39" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="IA_PROD_UNIT_OF_MEASURE1"/>
+      </attribute>
+      <attribute id="PROD_BOOLEAN1" order="40" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_BOOLEAN1"/>
+      </attribute>
+      <attribute id="PROD_BOOLEAN2" order="41" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_BOOLEAN2"/>
+      </attribute>
+      <attribute id="PROD_BOOLEAN3" order="42" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_BOOLEAN3"/>
+      </attribute>
+      <attribute id="PROD_BOOLEAN4" order="43" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_BOOLEAN4"/>
+      </attribute>
+      <attribute id="PROD_BOOLEAN5" order="44" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_BOOLEAN5"/>
+      </attribute>
+      <attribute id="PROD_BOOLEAN6" order="45" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_BOOLEAN6"/>
+      </attribute>
+      <attribute id="PROD_DATE1" order="46" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_DATE1"/>
+      </attribute>
+      <attribute id="PROD_DATE2" order="47" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_DATE2"/>
+      </attribute>
+      <attribute id="PROD_DATE3" order="48" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_DATE3"/>
+      </attribute>
+      <attribute id="PROD_NUMBER1" order="49" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_NUMBER1"/>
+      </attribute>
+      <attribute id="PROD_NUMBER2" order="50" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_NUMBER2"/>
+      </attribute>
+      <attribute id="PROD_NUMBER3" order="51" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_NUMBER3"/>
+      </attribute>
+      <attribute id="PROD_NUMBER4" order="52" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_NUMBER4"/>
+      </attribute>
+      <attribute id="PROD_TIMESTAMP1" order="53" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_TIMESTAMP1"/>
+      </attribute>
+      <attribute id="PROD_TIMESTAMP2" order="54" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_TIMESTAMP2"/>
+      </attribute>
+      <attribute id="PROD_DECIMAL1" order="55" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_DECIMAL1"/>
+      </attribute>
+      <attribute id="PROD_DECIMAL2" order="56" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_DECIMAL2"/>
+      </attribute>
+      <attribute id="PROD_DECIMAL3" order="57" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_DECIMAL3"/>
+      </attribute>
+      <attribute id="PROD_DECIMAL4" order="58" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_DECIMAL4"/>
+      </attribute>
+      <attribute id="PROD_TEXT40_1" order="59" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_TEXT40_1"/>
+      </attribute>
+      <attribute id="PROD_TEXT40_2" order="60" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_TEXT40_2"/>
+      </attribute>
+      <attribute id="PROD_TEXT120_1" order="61" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_TEXT120_1"/>
+      </attribute>
+      <attribute id="PROD_TEXT120_2" order="62" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_TEXT120_2"/>
+      </attribute>
+      <attribute id="PROD_TEXT255_1" order="63" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_TEXT255_1"/>
+      </attribute>
+      <attribute id="PROD_TEXT255_2" order="64" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_TEXT255_2"/>
+      </attribute>
+      <attribute id="PROD_QUANTITY1" order="65" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_QUANTITY1"/>
+      </attribute>
+      <attribute id="PROD_UNIT_OF_MEASURE1" order="66" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_UNIT_OF_MEASURE1"/>
+      </attribute>
+      <attribute id="PROD_AMOUNT1" order="67" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_AMOUNT1"/>
+      </attribute>
+      <attribute id="PROD_AMOUNT2" order="68" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_AMOUNT2"/>
+      </attribute>
+      <attribute id="PRODUCT_CATEGORY_KEY" order="69" attributeHierarchyActive="false" descriptionColumnName="PRODUCT_CATEGORY_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Product Category Key"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PRODUCT_CATEGORY_KEY"/>
+      </attribute>
+      <attribute id="PRODUCT_CATEGORY_NAME" order="70" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Category Name"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PRODUCT_CATEGORY_NAME"/>
+      </attribute>
+      <attribute id="PRODUCT_CATEGORY_DESCRIPTION" order="71" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Category Description"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PRODUCT_CATEGORY_DESCRIPTION"/>
+      </attribute>
+      <attribute id="HIERARCHY_ID" order="72" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Hierarchy ID"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="HIERARCHY_ID"/>
+      </attribute>
+      <attribute id="CATEGORY_ID" order="73" attributeHierarchyActive="false" descriptionColumnName="PRODUCT_CATEGORY_DESCRIPTION" displayAttribute="false">
+        <descriptions defaultDescription="Product Category ID"/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="CATEGORY_ID"/>
+      </attribute>
+      <attribute id="PROD_CAT_BOOLEAN1" order="74" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_BOOLEAN1"/>
+      </attribute>
+      <attribute id="PROD_CAT_BOOLEAN2" order="75" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_BOOLEAN2"/>
+      </attribute>
+      <attribute id="PROD_CAT_BOOLEAN3" order="76" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_BOOLEAN3"/>
+      </attribute>
+      <attribute id="PROD_CAT_DATE1" order="77" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_DATE1"/>
+      </attribute>
+      <attribute id="PROD_CAT_DATE2" order="78" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_DATE2"/>
+      </attribute>
+      <attribute id="PROD_CAT_NUMBER1" order="79" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_NUMBER1"/>
+      </attribute>
+      <attribute id="PROD_CAT_NUMBER2" order="80" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_NUMBER2"/>
+      </attribute>
+      <attribute id="PROD_CAT_DECIMAL1" order="81" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_DECIMAL1"/>
+      </attribute>
+      <attribute id="PROD_CAT_DECIMAL2" order="82" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_DECIMAL2"/>
+      </attribute>
+      <attribute id="PROD_CAT_TEXT40_1" order="83" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_TEXT40_1"/>
+      </attribute>
+      <attribute id="PROD_CAT_TEXT120_1" order="84" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_TEXT120_1"/>
+      </attribute>
+      <attribute id="PROD_CAT_TEXT255_1" order="85" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_PROD_CAT" columnName="PROD_CAT_TEXT255_1"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="551"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_PROD_FACET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="551"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_FACET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="455"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_IA_PROD" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="455"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_IA_PROD" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="359"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PROD_DESC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="263"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PROD_CAT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

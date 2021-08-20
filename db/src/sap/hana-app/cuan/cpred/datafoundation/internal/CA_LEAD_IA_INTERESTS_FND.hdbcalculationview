@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.cpred.datafoundation.internal::CA_LEAD_IA_INTERESTS_FND" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_LEAD_INTERACTIONS"/>
+  <localVariables>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="IP_JOIN_SET_ID"/>
+      <variableProperties datatype="NVARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="i_scenario_parameters" parameter="true">
+      <descriptions defaultDescription="i_scenario_parameters"/>
+      <variableProperties datatype="NCLOB" defaultValue="&quot;IP_DOC_DATE_START&quot;:&quot;1000-12-31&quot;,&quot;IP_DOC_DATE_END&quot;:&quot;9999-12-31&quot;" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="41"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_CH_ASGN">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_CH_ASGN</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_JS_CONTACT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANI_PM_DUMMY">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANI_PM_DUMMY</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IA_INTR">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_INTR</resourceUri>
+    </DataSource>
+    <DataSource id="M_TIME_DIMENSION">
+      <resourceUri>sap.hana-app.cuan.db::M_TIME_DIMENSION</resourceUri>
+    </DataSource>
+  </dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="COLUMN_ENGINE">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="CONTENT_TITLE"/>
+        <viewAttribute id="IA_REASON"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="LAUNCH_TEXT"/>
+        <viewAttribute id="LAUNCH_URL"/>
+        <viewAttribute id="SOURCE_DATA_URL"/>
+      
+        <viewAttribute id="AMOUNT"/>
+        <viewAttribute id="CURRENCY"/>
+      
+      <viewAttribute id="IA_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="BIGINT" id="DAYS_OLD" expressionLanguage="COLUMN_ENGINE">
+          <formula>daysbetween(date(&quot;TIMESTAMP&quot;), now())</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="DATE" id="date_start" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(strlen('$$i_scenario_parameters$$')&lt;45,'1000-01-01', rightstr(leftstr('$$i_scenario_parameters$$', instr('$$i_scenario_parameters$$', 'IP_DOC_DATE_START')+29),10) )</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="DATE" id="date_end" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(strlen('$$i_scenario_parameters$$')&lt;45,'9999-01-01', rightstr(leftstr('$$i_scenario_parameters$$', instr('$$i_scenario_parameters$$', 'IP_DOC_DATE_END')+27),10)  )</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="IA_TYPE_REASON" length="40" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;IA_TYPE&quot; + &quot;IA_REASON&quot;</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="MANDT"/></input>
+    <filter>(&quot;CLIENT&quot; ='$$client$$') AND (&quot;COMM_MEDIUM&quot; !='SYSTEM') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;OBSOLETE&quot; ='') AND (&quot;IA_DATE&quot; &gt;=&quot;date_start&quot;) AND (&quot;IA_DATE&quot; &lt;=&quot;date_end&quot;)</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="DISABLED"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUANC_CE_CH_ASGN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="MANDT"/></input>
+    <filter>(&quot;CLIENT&quot; ='$$client$$') AND (&quot;DISABLED&quot; ='')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="JOIN_SET_ID"/>
+        <viewAttribute id="CONTACT_KEY"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUAND_JS_CONTACT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="ID"/>
+      </input>
+    <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;JOIN_SET_ID&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="DAYS_OLD"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CONTENT_TITLE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="IA_TYPE_REASON"/>
+        <viewAttribute id="LAUNCH_TEXT"/>
+        <viewAttribute id="LAUNCH_URL"/>
+        <viewAttribute id="SOURCE_DATA_URL"/>
+        <viewAttribute id="AMOUNT" aggregationType="sum"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="CLIENT"/>
+      <viewAttribute id="IA_STATUS"/>
+      <viewAttribute hidden="true" id="JOIN$CONTACT_KEY$CONTACT_KEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DAYS_OLD" source="DAYS_OLD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTENT_TITLE" source="CONTENT_TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_REASON" source="IA_TYPE_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_TEXT" source="LAUNCH_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_URL" source="LAUNCH_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_DATA_URL" source="SOURCE_DATA_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <input node="Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+    <joinAttribute name="JOIN$CONTACT_KEY$CONTACT_KEY"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="EMPTY_JS"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUANI_PM_DUMMY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/></input>
+    <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;EMPTY_JS&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_5" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="DAYS_OLD"/>
+        <viewAttribute id="CONTENT_TITLE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="IA_TYPE_REASON"/>
+        <viewAttribute id="LAUNCH_TEXT"/>
+        <viewAttribute id="LAUNCH_URL"/>
+        <viewAttribute id="SOURCE_DATA_URL"/>
+        <viewAttribute id="AMOUNT" aggregationType="sum"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="CLIENT"/>
+      
+      <viewAttribute id="IA_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DAYS_OLD" source="DAYS_OLD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTENT_TITLE" source="CONTENT_TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_REASON" source="IA_TYPE_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_TEXT" source="LAUNCH_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_URL" source="LAUNCH_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_DATA_URL" source="SOURCE_DATA_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+      </input>
+      <input node="Projection_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="HPA_CLIENT"/>
+      </input>
+    <joinAttribute name="CLIENT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="DAYS_OLD"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CONTENT_TITLE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="IA_TYPE_REASON"/>
+        <viewAttribute id="LAUNCH_TEXT"/>
+        <viewAttribute id="LAUNCH_URL"/>
+        <viewAttribute id="SOURCE_DATA_URL"/>
+      
+        <viewAttribute id="AMOUNT" aggregationType="sum"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="CLIENT"/>
+      
+      <viewAttribute id="IA_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DAYS_OLD" source="DAYS_OLD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTENT_TITLE" source="CONTENT_TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_REASON" source="IA_TYPE_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_TEXT" source="LAUNCH_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_URL" source="LAUNCH_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_DATA_URL" source="SOURCE_DATA_URL"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="Join_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DAYS_OLD" source="DAYS_OLD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTENT_TITLE" source="CONTENT_TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_REASON" source="IA_TYPE_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_TEXT" source="LAUNCH_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_URL" source="LAUNCH_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_DATA_URL" source="SOURCE_DATA_URL"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+      </input>
+    </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="leftOuter">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="DAYS_OLD"/>
+        <viewAttribute id="CONTENT_TITLE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="IA_TYPE_REASON"/>
+        <viewAttribute id="LAUNCH_TEXT"/>
+        <viewAttribute id="LAUNCH_URL_NCLOB"/>
+        <viewAttribute id="SOURCE_DATA_URL_NCLOB"/>
+      
+        <viewAttribute id="AMOUNT" aggregationType="sum"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="CLIENT"/>
+      
+      <viewAttribute id="IA_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="LAUNCH_URL" length="5000" expressionLanguage="COLUMN_ENGINE">
+          <formula>string(&quot;LAUNCH_URL_NCLOB&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="SOURCE_DATA_URL" length="5000" expressionLanguage="COLUMN_ENGINE">
+          <formula>string(&quot;SOURCE_DATA_URL_NCLOB&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Union_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DAYS_OLD" source="DAYS_OLD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTENT_TITLE" source="CONTENT_TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_REASON" source="IA_TYPE_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_TEXT" source="LAUNCH_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_URL_NCLOB" source="LAUNCH_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_DATA_URL_NCLOB" source="SOURCE_DATA_URL"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+      </input>
+      <input node="Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+      </input>
+    <joinAttribute name="IA_TYPE"/>
+    <joinAttribute name="COMM_MEDIUM"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="INTEREST_ITEM"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUAND_CE_IA_INTR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/></input>
+    <filter>(&quot;HPA_CLIENT&quot; ='$$client$$')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_N" joinType="leftOuter">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="INTEREST_ITEM"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="IA_KEY_BIN"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="DAYS_OLD"/>
+        <viewAttribute id="CONTENT_TITLE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="IA_TYPE_REASON"/>
+        <viewAttribute id="LAUNCH_TEXT"/>
+        <viewAttribute id="SOURCE_DATA_URL"/>
+        <viewAttribute id="LAUNCH_URL"/>
+      
+        <viewAttribute id="AMOUNT" aggregationType="sum"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="CLIENT"/>
+      
+      <viewAttribute id="IA_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="CONTACT_KEY" length="32" expressionLanguage="SQL">
+          <formula>to_nvarchar(&quot;CONTACT_KEY_BIN&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="IA_KEY" length="32" expressionLanguage="SQL">
+          <formula>to_nvarchar(&quot;IA_KEY_BIN&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY_BIN" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DAYS_OLD" source="DAYS_OLD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTENT_TITLE" source="CONTENT_TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_REASON" source="IA_TYPE_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_TEXT" source="LAUNCH_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_DATA_URL" source="SOURCE_DATA_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_URL" source="LAUNCH_URL"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+      </input>
+      <input node="Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM" source="INTEREST_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY_BIN" source="PARENT_KEY"/>
+      </input>
+    <joinAttribute name="IA_KEY_BIN"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_1" joinType="leftOuter">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="INTEREST_ITEM"/>
+        <viewAttribute id="INTERACTION_YEAR"/>
+        <viewAttribute id="INTERACTION_QUARTER"/>
+        <viewAttribute id="INTERACTION_MONTH"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="DAYS_OLD"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CONTENT_TITLE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="IA_TYPE_REASON"/>
+        <viewAttribute id="LAUNCH_TEXT"/>
+        <viewAttribute id="SOURCE_DATA_URL"/>
+        <viewAttribute id="LAUNCH_URL"/>
+      
+        <viewAttribute id="AMOUNT" aggregationType="sum"/>
+        <viewAttribute id="CURRENCY"/>
+        <viewAttribute id="CLIENT"/>
+      
+      <viewAttribute id="IA_STATUS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM" source="INTEREST_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DAYS_OLD" source="DAYS_OLD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTENT_TITLE" source="CONTENT_TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_REASON" source="IA_TYPE_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_TEXT" source="LAUNCH_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_DATA_URL" source="SOURCE_DATA_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_URL" source="LAUNCH_URL"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+      </input>
+      <input node="M_TIME_DIMENSION">
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTION_YEAR" source="YEAR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTION_QUARTER" source="CALQUARTER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTION_MONTH" source="CALMONTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="DATE_SAP"/>
+      </input>
+    <joinAttribute name="IA_DATE"/>
+  </calculationView>
+</calculationViews>
+  <logicalModel id="Join_4">
+    <descriptions/>
+    <attributes>
+      <attribute id="INTEREST_ITEM" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="INTEREST_ITEM"/>
+        <keyMapping columnObjectName="Join_4" columnName="INTEREST_ITEM"/>
+      </attribute>
+      <attribute id="INTERACTION_YEAR" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="YEAR"/>
+        <keyMapping columnObjectName="Join_4" columnName="INTERACTION_YEAR"/>
+      </attribute>
+      <attribute id="INTERACTION_QUARTER" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CALQUARTER"/>
+        <keyMapping columnObjectName="Join_4" columnName="INTERACTION_QUARTER"/>
+      </attribute>
+      <attribute id="INTERACTION_MONTH" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CALMONTH"/>
+        <keyMapping columnObjectName="Join_4" columnName="INTERACTION_MONTH"/>
+      </attribute>
+      <attribute id="IA_TYPE" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_TYPE"/>
+        <keyMapping columnObjectName="Join_4" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMM_MEDIUM"/>
+        <keyMapping columnObjectName="Join_4" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="CHANNEL" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CHANNEL"/>
+        <keyMapping columnObjectName="Join_4" columnName="CHANNEL"/>
+      </attribute>
+      <attribute id="IA_DATE" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_DATE"/>
+        <keyMapping columnObjectName="Join_4" columnName="IA_DATE"/>
+      </attribute>
+      <attribute id="DAYS_OLD" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DAYS_OLD"/>
+        <keyMapping columnObjectName="Join_4" columnName="DAYS_OLD"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="Join_4" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IA_KEY" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_KEY"/>
+        <keyMapping columnObjectName="Join_4" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="CONTENT_TITLE" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTENT_TITLE"/>
+        <keyMapping columnObjectName="Join_4" columnName="CONTENT_TITLE"/>
+      </attribute>
+      <attribute id="MKT_AREA_ID" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MKT_AREA_ID"/>
+        <keyMapping columnObjectName="Join_4" columnName="MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="IA_TYPE_REASON" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_TYPE_REASON"/>
+        <keyMapping columnObjectName="Join_4" columnName="IA_TYPE_REASON"/>
+      </attribute>
+      <attribute id="LAUNCH_TEXT" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAUNCH_TEXT"/>
+        <keyMapping columnObjectName="Join_4" columnName="LAUNCH_TEXT"/>
+      </attribute>
+      <attribute id="LAUNCH_URL" order="17" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAUNCH_URL"/>
+        <keyMapping columnObjectName="Join_4" columnName="LAUNCH_URL"/>
+      </attribute>
+      <attribute id="SOURCE_DATA_URL" order="18" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_DATA_URL"/>
+        <keyMapping columnObjectName="Join_4" columnName="SOURCE_DATA_URL"/>
+      </attribute>
+      <attribute id="SOURCE_AMOUNT" order="19" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="AMOUNT"/>
+        <keyMapping columnObjectName="Join_4" columnName="AMOUNT"/>
+      </attribute>
+      <attribute id="CURRENCY" order="20" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="CURRENCY"/>
+        <keyMapping columnObjectName="Join_4" columnName="CURRENCY"/>
+      </attribute>
+      <attribute id="IA_STATUS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="IA_STATUS"/>
+        <keyMapping columnObjectName="Join_4" columnName="IA_STATUS"/>
+      </attribute>
+      <attribute id="CLIENT$local">
+        <keyMapping columnObjectName="Join_4" columnName="CLIENT"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures>
+      <measure id="NO_OF_INTERACTIONS" hidden="false" order="12" aggregationType="sum" measureType="simple" aggregatable="true" calculatedMeasureType="counter" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <descriptions defaultDescription="NO_OF_INTERACTIONS"/>
+        <exceptionAggregation exceptionAggregationType="countDistinct">
+          <attribute attributeName="IA_KEY"/>
+        </exceptionAggregation>
+        <formula>1</formula>
+      
+        
+        
+        
+        
+        
+        
+        </measure>
+    
+      <measure id="AMOUNT" order="22" semanticType="amount" aggregationType="sum" measureType="amount" datatype="DECIMAL" length="31" scale="2" expressionLanguage="COLUMN_ENGINE" unconverted="false">
+        <descriptions defaultDescription="Converted Amount"/>
+        <unitCurrencyAttribute attributeName="WAERS" dimensionUri="sap.hana-app.cuan.common.internal::CA_D_TARGETCURR"/>
+    
+        <currencyConversion generateOutputUnitCurrencyAttribute="true" outputUnitCurrencyAttributeName="AMOUNT_CURRENCY" convert="true" accuracy="COMPATIBILITY" method="ERP" lookup="REGULAR">
+    
+          <client>
+    
+            <value>$$client$$</value>
+    
+          </client>
+    
+          <currencyConversionTables rates="sap.hana-app.cuan.db.cuan::TCURR" configuration="sap.hana-app.cuan.db.cuan::TCURV" prefactors="sap.hana-app.cuan.db.cuan::TCURF" notations="sap.hana-app.cuan.db.cuan::TCURN" precisions="sap.hana-app.cuan.db.cuan::TCURX"/>
+    
+          <outputDataType datatype="DECIMAL" length="31" scale="2"/>
+    
+          <sourceCurrency>
+    
+            <attribute attributeName="CURRENCY"/>
+    
+          </sourceCurrency>
+    
+          <erpDecimalShift>true</erpDecimalShift>
+    
+          <targetCurrency>
+    
+            <attribute attributeName="WAERS" dimensionUri="sap.hana-app.cuan.common.internal::CA_D_TARGETCURR"/>
+    
+          </targetCurrency>
+    
+          <referenceDate>
+    
+            <attribute attributeName="IA_DATE"/>
+    
+          </referenceDate>
+    
+          <exchangeRateType>M</exchangeRateType>
+    
+        </currencyConversion>
+        <formula>&quot;SOURCE_AMOUNT&quot;</formula>
+        
+        </measure>
+    </calculatedMeasures>
+    <restrictedMeasures/>
+    <localDimensions/>
+  
+    <sharedDimensions>
+  
+      <logicalJoin associatedObjectUri="sap.hana-app.cuan.common.internal::CA_D_TARGETCURR">
+  
+        <attributes>
+  
+          <attributeRef>CLIENT$local</attributeRef>
+  
+        </attributes>
+  
+        <associatedAttributeNames>
+  
+          <attributeName>MANDT</attributeName>
+  
+        </associatedAttributeNames>
+  
+        <properties cardinality="CN_1" joinType="referential" joinOperator="Equal"/>
+  
+        <associatedAttributeFeatures>
+  
+          <attributeReference attributeName="MANDT" hidden="true"/>
+  
+          <attributeReference attributeName="ISOCD" hidden="true"/>
+  
+        </associatedAttributeFeatures>
+  
+      </logicalJoin>
+  
+    </sharedDimensions>
+  </logicalModel>
+<layout>
+  <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="459" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302" y="1016"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="545" y="711"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="512" y="1016"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="485" y="856"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="1016"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="248" y="856"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="275" y="715"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="505" y="551"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Union_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="295" y="551"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="434" y="391"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="434" y="251"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db::M_TIME_DIMENSION" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_4" modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape><shape><upperLeftCorner/><rectangleSize/></shape>
+      <shape modelObjectName="sap.hana-app.cuan.common.internal::CA_D_TARGETCURR" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_COMCAT" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Communication Category"/>
+  <metadata changedAt="2016-08-25 09:53:38.1"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="35"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_OREF">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_OREF</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_COMCAT_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_COMCAT_RT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_AD_OREF">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OBJECT_TYPE"/>
+        <viewAttribute id="OBJECT_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IA_OREF"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;OBJECT_TYPE&quot; ='CUAN_COMMUNICATION_CATEGORY')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_COMM_CAT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="IS_NEWSLETTER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_COMCAT_RT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_COMM_CAT" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="IS_NEWSLETTER"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute hidden="true" id="JOIN$OBJECT_ID$ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_AD_OREF">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$OBJECT_ID$ID" source="OBJECT_ID"/>
+      </input>
+      <input node="Projection_COMM_CAT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_NEWSLETTER" source="IS_NEWSLETTER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$OBJECT_ID$ID" source="ID"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="JOIN$OBJECT_ID$ID"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_COMM_CAT">
+    <descriptions/>
+    <attributes>
+      <attribute id="COMM_CAT_PARENT_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Key"/>
+        <keyMapping columnObjectName="Join_COMM_CAT" columnName="PARENT_KEY"/>
+      </attribute>
+      <attribute id="COMM_CAT_NAME" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Communication Category"/>
+        <keyMapping columnObjectName="Join_COMM_CAT" columnName="NAME"/>
+      </attribute>
+      <attribute id="COMM_CAT_DESCRIPTION" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Communication Category Description"/>
+        <keyMapping columnObjectName="Join_COMM_CAT" columnName="DESCRIPTION"/>
+      </attribute>
+      <attribute id="COMM_CAT_MKT_AREA_ID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Communication Category Marketing Area ID"/>
+        <keyMapping columnObjectName="Join_COMM_CAT" columnName="MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="COMM_CAT_ID" order="5" attributeHierarchyActive="false" displayAttribute="false" descriptionColumnName="COMM_CAT_NAME">
+        <descriptions defaultDescription="Communication Category ID"/>
+        <keyMapping columnObjectName="Join_COMM_CAT" columnName="ID"/>
+      </attribute>
+      <attribute id="COMM_CAT_IS_NEWSLETTER" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Is Newsletter"/>
+        <keyMapping columnObjectName="Join_COMM_CAT" columnName="IS_NEWSLETTER"/>
+      </attribute>
+      <attribute id="COMM_CAT_MANDT" order="7" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_COMM_CAT" columnName="MANDT"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_AD_OREF" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_COMM_CAT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_COMM_CAT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    
+      <shape modelObjectName="Projection_AD_OREF" modelObjectNameSpace="Join_COMM_CAT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_COMM_CAT" modelObjectNameSpace="Join_COMM_CAT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

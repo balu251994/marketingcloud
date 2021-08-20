@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.internal::CA_COUNTRY_PERMISSION_MERGE_BASE_CUST" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_COUNTRY_COMM_MEDIUM_3"/>
+  <metadata changedAt="2017-08-15 14:37:47.118"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CA_COUNTRY_PERMISSION_BASE">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_COUNTRY_PERMISSION_BASE</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_MP_CONS">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_MP_CONS</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="lt_cust4expl">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CONSENT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CA_COUNTRY_PERMISSION_BASE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSENT" source="CONSENT"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="lt_cust_exploded">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CONSENT"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="INBOUND_STORAGE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUANC_CE_MP_CONS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSENT" source="CONSENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INBOUND_STORAGE" source="INBOUND_STORAGE"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="no_CommMedium">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CONSENT"/>
+        <viewAttribute id="INBOUND_STORAGE"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#lt_cust_exploded">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSENT" source="CONSENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INBOUND_STORAGE" source="INBOUND_STORAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <filter>(&quot;COMM_MEDIUM&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Wildcart_CommMedium" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CONSENT"/>
+        <viewAttribute id="CONSENT_CUST"/>
+        <viewAttribute id="INBOUND_STORAGE_CUST"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="CONSENT_CALC" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;COMM_DIRECTION&quot; = 'I','',&#xD;
+if(isnull(&quot;CONSENT_CUST&quot;),&quot;CONSENT&quot;,&quot;CONSENT_CUST&quot;))</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="INBOUND_STORAGE_CALC" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;COMM_DIRECTION&quot; = 'O','',&#xD;
+if(isnull(&quot;INBOUND_STORAGE_CUST&quot;),' ',&quot;INBOUND_STORAGE_CUST&quot;)&#xD;
+)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#lt_cust4expl">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSENT" source="CONSENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <input node="#no_CommMedium">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSENT_CUST" source="CONSENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INBOUND_STORAGE_CUST" source="INBOUND_STORAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="COMM_DIRECTION"/>
+      <joinAttribute name="LAND1"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CONSENT"/>
+        <viewAttribute id="INBOUND_STORAGE"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#lt_cust_exploded">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSENT" source="CONSENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INBOUND_STORAGE" source="INBOUND_STORAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Explicit_CommMedium" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CONSENT"/>
+        <viewAttribute id="INBOUND_STORAGE"/>
+        <viewAttribute id="CONSENT_CUST"/>
+        <viewAttribute id="INBOUND_STORAGE_CUST"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="CONSENT_CALC" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isnull(&quot;CONSENT_CUST&quot;),&quot;CONSENT&quot;,&quot;CONSENT_CUST&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="INBOUND_STORAGE_CALC" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;COMM_DIRECTION&quot; = 'O','',&#xD;
+if(isnull(&quot;INBOUND_STORAGE_CUST&quot;),&quot;INBOUND_STORAGE&quot;,&quot;INBOUND_STORAGE_CUST&quot;)&#xD;
+)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#Wildcart_CommMedium">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSENT" source="CONSENT_CALC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INBOUND_STORAGE" source="INBOUND_STORAGE_CALC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSENT_CUST" source="CONSENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INBOUND_STORAGE_CUST" source="INBOUND_STORAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="COMM_DIRECTION"/>
+      <joinAttribute name="LAND1"/>
+      <joinAttribute name="COMM_MEDIUM"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Explicit_CommMedium">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MANDT"/>
+        <keyMapping columnObjectName="Explicit_CommMedium" columnName="MANDT"/>
+      </attribute>
+      <attribute id="COMM_DIRECTION" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMM_DIRECTION"/>
+        <keyMapping columnObjectName="Explicit_CommMedium" columnName="COMM_DIRECTION"/>
+      </attribute>
+      <attribute id="COUNTRY" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COUNTRY"/>
+        <keyMapping columnObjectName="Explicit_CommMedium" columnName="LAND1"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMM_MEDIUM"/>
+        <keyMapping columnObjectName="Explicit_CommMedium" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="CONSENT" hidden="true" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONSENT"/>
+        <keyMapping columnObjectName="Explicit_CommMedium" columnName="CONSENT_CALC"/>
+      </attribute>
+      <attribute id="INBOUND_STORAGE" hidden="true" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="INBOUND_STORAGE"/>
+        <keyMapping columnObjectName="Explicit_CommMedium" columnName="INBOUND_STORAGE_CALC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="CONSENT_CALC" hidden="false" order="5" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONSENT_CALC"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;COMM_DIRECTION&quot;='I','',&quot;CONSENT&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="INBOUND_STORAGE_CALC" hidden="false" order="6" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="INBOUND_STORAGE_CALC"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;COMM_DIRECTION&quot; = 'O','',&quot;INBOUND_STORAGE&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="186" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="lt_cust4expl" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="lt_cust_exploded" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="233" y="435"/>
+        <rectangleSize height="64" width="201"/>
+      </shape>
+      <shape expanded="true" modelObjectName="no_CommMedium" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="357"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Wildcart_CommMedium" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="109" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="263" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Explicit_CommMedium" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="186" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

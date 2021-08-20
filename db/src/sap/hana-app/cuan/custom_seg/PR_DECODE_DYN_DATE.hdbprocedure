@@ -1,0 +1,31 @@
+PROCEDURE "sap.hana-app.cuan.custom_seg::PR_DECODE_DYN_DATE" (  		-- todo replace schema
+		IN IP_STRING NCLOB,
+		OUT	OP_LOW int,
+		OUT OP_HIGH int,
+		OUT	OP_UNIT NCLOB
+	)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER 
+	--DEFAULT SCHEMA <default_schema_name>
+	READS SQL DATA AS
+	
+	
+BEGIN
+	
+	declare l_string nclob;
+	declare lc_separator NVARCHAR(1) := ';';
+		
+	l_string := IP_STRING;
+  
+ 	-- fixed format is: 'low;high;unit' - e.g. '-3;-1;YEAR' 
+ 	OP_LOW = substr_before(:l_string, lc_separator);
+ 	l_string = substr_after(:l_string, lc_separator);
+ 
+ 	OP_HIGH = substr_before(:l_string, lc_separator);
+ 	l_string = substr_after(:l_string, lc_separator);
+
+ 	OP_UNIT = l_string;
+ 
+END;
+
+-- call "_SYS_BIC"."sap.hana-app.cuan.custom_seg::PR_DECODE_DYN_DATE"('-3;-1;YEAR',?,?,?) 

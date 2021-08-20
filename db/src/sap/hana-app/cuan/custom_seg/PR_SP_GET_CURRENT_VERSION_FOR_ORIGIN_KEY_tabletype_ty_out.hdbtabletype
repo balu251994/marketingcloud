@@ -1,0 +1,1 @@
+TYPE "sap.hana-app.cuan.custom_seg::PR_SP_GET_CURRENT_VERSION_FOR_ORIGIN_KEY/tabletype/ty_out" AS TABLE  ( "SCORE_GUID" NVARCHAR(32)  CS_STRING, "VERSION" DECIMAL(21,7) CS_FIXED ) 

@@ -1,0 +1,1 @@
+TYPE "sap.hana-app.cuan.custom_seg::PR_NAME_VALUE_TO_STRING/tabletype/it_name_value" AS TABLE  ( "NAME" NVARCHAR(255)  CS_STRING, "VALUE" NVARCHAR(255)  CS_STRING ) 

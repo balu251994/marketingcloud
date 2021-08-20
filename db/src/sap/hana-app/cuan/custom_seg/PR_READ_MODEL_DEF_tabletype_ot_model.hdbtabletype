@@ -1,0 +1,1 @@
+TYPE "sap.hana-app.cuan.custom_seg::PR_READ_MODEL_DEF/tabletype/ot_model" AS TABLE  ( "ID" INT CS_INT, "MODEL" CLOB  MEMORY THRESHOLD 1000   ) 

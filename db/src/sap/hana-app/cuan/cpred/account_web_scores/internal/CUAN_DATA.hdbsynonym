@@ -1,0 +1,7 @@
+{
+   "sap.hana-app.cuan.cpred.account_web_scores.internal::TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS" 
+		}
+	} 
+}

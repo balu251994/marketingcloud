@@ -1,0 +1,9 @@
+PROCEDURE "sap.hana-app.cuan.custom_seg::PR_MP_MKTA_SEPARATION_SWITCH"( OUT SWITCH NVARCHAR(1) )
+  	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+
+BEGIN
+	select IS_ACTIVE into SWITCH from "sap.hana-app.cuan.db.cuan::HPA_MKT_SWITCH"
+		where MKT_SWITCH = "MKT_SWITCH" and mandt = session_context('CLIENT');
+END;

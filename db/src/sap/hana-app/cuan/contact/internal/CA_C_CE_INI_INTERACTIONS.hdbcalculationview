@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.internal::CA_C_CE_INI_INTERACTIONS" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_C_CE_INI_INTERACTIONS"/>
+  <metadata changedAt="2018-01-10 12:09:42.311"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="31"/>
+  <dataSources>
+    <DataSource id="CUAN_D_INI_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_INI_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_INI_TG">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_INI_TG</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_TG_MEMBER">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_TG_MEMBER</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_INI_IOI">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_INI_IOI</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_INI">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="INTIATIVE_ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="START_DATE"/>
+        <viewAttribute id="END_DATE"/>
+        <viewAttribute id="CAMPAIGN_KEY"/>
+        <viewAttribute id="LIFE_CYCLE_STATUS"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+        <viewAttribute id="PROCESS_TYPE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DECIMAL" id="TIMESTAMP" length="21" scale="7" expressionLanguage="COLUMN_ENGINE">
+          <formula>if( &quot;START_DATE&quot; != '00000000', decfloat( &quot;START_DATE&quot; + '000000' ), &quot;CREA_DATE_TIME&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#CUAN_D_INI_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTIATIVE_ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CAMPAIGN_KEY" source="CAMPAIGN_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LIFE_CYCLE_STATUS" source="LIFE_CYCLE_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (not in (&quot;LIFE_CYCLE_STATUS&quot;,'3','4')) AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (not in (&quot;PROCESS_TYPE&quot;,'01','03','04'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_INI_TG" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OBJECT_GUID"/>
+        <viewAttribute id="INITIATIVE_ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="START_DATE"/>
+        <viewAttribute id="END_DATE"/>
+        <viewAttribute id="CAMPAIGN_KEY"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="TARGET_GROUP_KEY"/>
+        <viewAttribute id="INITIATIVE_DB_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_INI">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_GUID" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_ID" source="INTIATIVE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CAMPAIGN_KEY" source="CAMPAIGN_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+      </input>
+      <input node="#CUAN_D_INI_TG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP_KEY" source="TARGET_GROUP_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_GUID" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="OBJECT_GUID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_TG_MEMBER">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="DELETION_TYPE"/>
+        <viewAttribute id="MEMBER_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAN_D_TG_MEMBER">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DELETION_TYPE" source="DELETION_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEMBER_KEY" source="MEMBER_KEY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;DELETION_TYPE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_TG_MEMBER" cardinality="CN_N" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OBJECT_GUID"/>
+        <viewAttribute id="INITIATIVE_ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="START_DATE"/>
+        <viewAttribute id="END_DATE"/>
+        <viewAttribute id="CAMPAIGN_KEY"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="TG_MEMBER_KEY"/>
+        <viewAttribute id="INITIATIVE_DB_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute hidden="true" id="JOIN$TARGET_GROUP_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="COMM_MEDIUM" length="20" expressionLanguage="COLUMN_ENGINE">
+          <formula>'BUSINESS_DOCUMENT'</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="IA_TYPE" length="20" expressionLanguage="COLUMN_ENGINE">
+          <formula>'CEI_INITIATIVE'</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#Join_INI_TG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_GUID" source="OBJECT_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_ID" source="INITIATIVE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CAMPAIGN_KEY" source="CAMPAIGN_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_DB_KEY" source="INITIATIVE_DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TARGET_GROUP_KEY$PARENT_KEY" source="TARGET_GROUP_KEY"/>
+      </input>
+      <input node="#Projection_TG_MEMBER">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TG_MEMBER_KEY" source="MEMBER_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$TARGET_GROUP_KEY$PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$TARGET_GROUP_KEY$PARENT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_INI_IOI" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OBJECT_GUID"/>
+        <viewAttribute id="INITIATIVE_ID"/>
+        <viewAttribute id="INITIATIVE_NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="START_DATE"/>
+        <viewAttribute id="END_DATE"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="SOURCE_OBJECT_ID"/>
+        <viewAttribute id="SOURCE_OBJECT_ADD_ID"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="CAMPAIGN_KEY"/>
+        <viewAttribute id="INTEREST_ITEM"/>
+        <viewAttribute id="TG_MEMBER_KEY"/>
+        <viewAttribute id="INITIATIVE_DB_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_TG_MEMBER">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_GUID" source="OBJECT_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_ID" source="INITIATIVE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_ID" source="INITIATIVE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_ADD_ID" source="INITIATIVE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CAMPAIGN_KEY" source="CAMPAIGN_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TG_MEMBER_KEY" source="TG_MEMBER_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_DB_KEY" source="INITIATIVE_DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+      </input>
+      <input node="#CUAND_INI_IOI">
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM" source="INTEREST_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_DB_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="INITIATIVE_DB_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_INI_IOI">
+    <descriptions/>
+    <attributes>
+      <attribute id="OBJECT_GUID" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="OBJECT_GUID"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="OBJECT_GUID"/>
+      </attribute>
+      <attribute id="INITIATIVE_ID" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="INITIATIVE_ID"/>
+      </attribute>
+      <attribute id="INITIATIVE_NAME" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="NAME"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="INITIATIVE_NAME"/>
+      </attribute>
+      <attribute id="DESCRIPTION" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DESCRIPTION"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="DESCRIPTION"/>
+      </attribute>
+      <attribute id="START_DATE" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="START_DATE"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="START_DATE"/>
+      </attribute>
+      <attribute id="END_DATE" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="END_DATE"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="END_DATE"/>
+      </attribute>
+      <attribute id="IA_KEY" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_KEY"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="SOURCE_OBJECT_ID" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_OBJECT_ID"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="SOURCE_OBJECT_ID"/>
+      </attribute>
+      <attribute id="SOURCE_OBJECT_ADD_ID" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_OBJECT_ADD_ID"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="SOURCE_OBJECT_ADD_ID"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMM_MEDIUM_1"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="INITIATIVE_DB_KEY" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="INITIATIVE_DB_KEY"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="INITIATIVE_DB_KEY"/>
+      </attribute>
+      <attribute id="TIMESTAMP" hidden="false" order="18" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="TIMESTAMP"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="INTEREST_ITEM"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="INTEREST_ITEM"/>
+      </attribute>
+      <attribute id="MANDT" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="MANDT"/>
+      </attribute>
+      <attribute id="MKT_AREA_ID" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MKT_AREA_ID"/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="TG_MEMBER_KEY$local">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="TG_MEMBER_KEY"/>
+      </attribute>
+      <attribute id="CAMPAIGN_KEY$local">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="CAMPAIGN_KEY"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM$local">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="IA_TYPE$local">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM$local">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_INI_IOI" columnName="INTEREST_ITEM"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="ID_ORIGIN" hidden="false" order="1" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID_ORIGIN"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="20" scale="0">
+          <formula>'CEI_INITIATIVE'</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="SOURCE_DATA_URL" hidden="false" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_DATA_URL"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1" scale="0">
+          <formula>''</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="CONTENT_DATA" hidden="false" order="5" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTENT_DATA"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1" scale="0">
+          <formula>''</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="LAUNCH_URL" hidden="false" order="6" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAUNCH_URL"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1" scale="0">
+          <formula>''</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures>
+      <measure id="QUANTIFIER" hidden="false" order="2" aggregationType="sum" measureType="simple" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <descriptions defaultDescription="QUANTIFIER"/>
+        <formula>1</formula>
+      </measure>
+      <measure id="IA_CNT" hidden="false" order="3" aggregationType="sum" measureType="simple" calculatedMeasureType="counter" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <descriptions defaultDescription="IA_CNT"/>
+        <exceptionAggregation exceptionAggregationType="countDistinct">
+          <attribute attributeName="IA_KEY"/>
+        </exceptionAggregation>
+        <formula>1</formula>
+      </measure>
+    </calculatedMeasures>
+    <restrictedMeasures/>
+    <localDimensions/>
+    <sharedDimensions>
+      <logicalJoin associatedObjectUri="sap.hana-app.cuan.contact::CA_D_INTERACTION_CONTACT">
+        <attributes>
+          <attributeRef>#TG_MEMBER_KEY$local</attributeRef>
+        </attributes>
+        <associatedAttributeNames>
+          <attributeName>CONTACT_KEY</attributeName>
+        </associatedAttributeNames>
+        <properties cardinality="CN_1" joinOperator="Equal" joinType="inner"/>
+        <associatedAttributeFeatures>
+          <attributeReference alias="D_INTERACTION_CONTACT_MANDT" attributeName="MANDT" hidden="true">
+            <descriptions defaultDescription=""/>
+          </attributeReference>
+        </associatedAttributeFeatures>
+      </logicalJoin>
+      <logicalJoin associatedObjectUri="sap.hana-app.cuan.common.internal::CA_D_CE_CH_ASGN">
+        <attributes>
+          <attributeRef>#COMM_MEDIUM$local</attributeRef>
+          <attributeRef>#IA_TYPE$local</attributeRef>
+        </attributes>
+        <associatedAttributeNames>
+          <attributeName>COMM_MEDIUM</attributeName>
+          <attributeName>IA_TYPE</attributeName>
+        </associatedAttributeNames>
+        <properties cardinality="CN_1" joinOperator="Equal" joinType="inner"/>
+        <associatedAttributeFeatures>
+          <attributeReference alias="D_CE_CH_ASGN_MANDT" attributeName="MANDT" hidden="true">
+            <descriptions defaultDescription=""/>
+          </attributeReference>
+          <attributeReference alias="D_CE_CH_ASGN_IA_TYPE" attributeName="IA_TYPE" hidden="true">
+            <descriptions defaultDescription=""/>
+          </attributeReference>
+          <attributeReference alias="D_CE_CH_ASGN_COMM_MEDIUM" attributeName="COMM_MEDIUM" hidden="true">
+            <descriptions defaultDescription=""/>
+          </attributeReference>
+        </associatedAttributeFeatures>
+      </logicalJoin>
+      <logicalJoin associatedObjectUri="sap.hana-app.cuan.common.internal::CA_D_CE_IA_TYPE">
+        <attributes>
+          <attributeRef>#IA_TYPE$local</attributeRef>
+        </attributes>
+        <associatedAttributeNames>
+          <attributeName>IA_TYPE</attributeName>
+        </associatedAttributeNames>
+        <properties cardinality="CN_1" joinOperator="Equal" joinType="leftOuter"/>
+        <associatedAttributeFeatures>
+          <attributeReference alias="CA_D_CE_IA_TYPE_MANDT" attributeName="MANDT" hidden="true"/>
+        </associatedAttributeFeatures>
+      </logicalJoin>
+      <logicalJoin associatedObjectUri="sap.hana-app.cuan.common.internal::CA_D_IC_REL_TO_COMP">
+        <attributes>
+          <attributeRef>#TG_MEMBER_KEY$local</attributeRef>
+        </attributes>
+        <associatedAttributeNames>
+          <attributeName>IC_CONTACT_KEY</attributeName>
+        </associatedAttributeNames>
+        <properties cardinality="CN_1" joinOperator="Equal" joinType="leftOuter"/>
+        <associatedAttributeFeatures>
+          <attributeReference alias="CA_D_IC_REL_TO_COMP_MANDT" attributeName="MANDT" hidden="true"/>
+          <attributeReference alias="COMPANY_KEY" attributeName="IC_COMPANY_KEY">
+            <descriptions defaultDescription=""/>
+          </attributeReference>
+          <attributeReference attributeName="IC_CONTACT_KEY" hidden="true"/>
+        </associatedAttributeFeatures>
+      </logicalJoin>
+      <logicalJoin associatedObjectUri="sap.hana-app.cuan.common.internal::CA_D_CE_ITEM_OF_INTEREST">
+        <attributes>
+          <attributeRef>#INTEREST_ITEM$local</attributeRef>
+        </attributes>
+        <associatedAttributeNames>
+          <attributeName>INTEREST_ITEM</attributeName>
+        </associatedAttributeNames>
+        <properties cardinality="CN_1" joinOperator="Equal" joinType="leftOuter"/>
+        <associatedAttributeFeatures>
+          <attributeReference alias="D_CE_ITEM_OF_INTEREST_MANDT" attributeName="MANDT" hidden="true">
+            <descriptions defaultDescription=""/>
+          </attributeReference>
+          <attributeReference alias="D_CE_ITEM_OF_INTEREST" attributeName="INTEREST_ITEM" hidden="true">
+            <descriptions defaultDescription=""/>
+          </attributeReference>
+        </associatedAttributeFeatures>
+      </logicalJoin>
+    </sharedDimensions>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_INI" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="565"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_INI_TG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="469"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_TG_MEMBER" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="469"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_TG_MEMBER" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="373"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_INI_IOI" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="275"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape modelObjectName="Join_INI_IOI" modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository">
+        <upperLeftCorner x="447" y="112"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.contact::CA_D_INTERACTION_CONTACT" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+        <upperLeftCorner x="867" y="16"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.common.internal::CA_D_CE_CH_ASGN" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+        <upperLeftCorner x="16" y="257"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.common.internal::CA_D_CE_IA_TYPE" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+        <upperLeftCorner x="867" y="289"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.common.internal::CA_D_IC_REL_TO_COMP" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+        <upperLeftCorner x="16" y="144"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.common.internal::CA_D_CE_ITEM_OF_INTEREST" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+        <upperLeftCorner x="871" y="551"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

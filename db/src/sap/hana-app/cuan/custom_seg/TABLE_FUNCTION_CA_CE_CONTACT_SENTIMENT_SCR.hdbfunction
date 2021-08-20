@@ -1,0 +1,126 @@
+FUNCTION "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_CONTACT_SENTIMENT_SCR" (IP_MODEL_GUID VARCHAR (32), IP_JOIN_SET_ID VARCHAR (32))
+RETURNS TABLE ("CONTACT_KEY" VARBINARY (16), "SCORE_VALUE" DECIMAL (15, 2), "SCORE_DESC" NVARCHAR (40), "UNIT" NVARCHAR (5), "UNIT.description" NVARCHAR (20), "RANK" INTEGER)
+LANGUAGE SQLSCRIPT
+SQL SECURITY INVOKER AS
+
+lc_scenario_id              nvarchar(60) := 'CONTACT_SENTIMENT_SCORE';
+l_model_guid                varchar(32);
+
+begin
+	if to_varchar(:ip_model_guid) <> '' then
+	   l_model_guid := :ip_model_guid;
+	else
+	  select top 1
+	      "DB_KEY"
+	    into l_model_guid
+	    from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"
+	    where "MANDT" = session_context('CLIENT')
+	      and "PREDICTIVE_KPI" = :lc_scenario_id
+	      and status = '3'
+	  ;
+	end if;
+
+if to_varchar(:l_model_guid) <> '' then
+----------------------------------------------------------------------------------------
+-- Get score_guid and current persisted version
+----------------------------------------------------------------------------------------
+declare lv_score_guid nvarchar(32) default '';
+declare lv_version decimal(21,7) default 0;
+call "sap.hana-app.cuan.cpred.reuse.internal::PR_SP_GET_CURRENT_VERSION_FOR_ORIGIN_KEY"(
+  '01',
+  :l_model_guid,
+  lt_sp_version
+);
+select top 1
+    case when score_guid is not null then score_guid else '' end into lv_score_guid
+  from "sap.hana-app.sys::DUMMY"
+  left join :lt_sp_version
+     on 1= 1
+;
+select top 1
+    case when score_guid is not null then version else 0 end into lv_version
+  from "sap.hana-app.sys::DUMMY"
+  left join :lt_sp_version
+     on 1= 1
+;
+----------------------------------------------------------------------------------------
+-- No persisted version exists: Calculate score real-time 
+----------------------------------------------------------------------------------------
+if :lv_score_guid = '' then
+  lt_result_value = 
+	  select
+	      contact_key,
+	      score_value
+	    from "sap.hana-app.cuan.contact.score.internal::TABLE_FUNCTION_CA_CE_CONTACT_SENTIMENT_RT"(
+	      :l_model_guid,
+	      :ip_join_set_id
+	    )
+  ;
+----------------------------------------------------------------------------------------
+-- Read from persistence table (No joinset given)
+----------------------------------------------------------------------------------------
+elseif :ip_join_set_id = '' then
+  lt_result_value = 
+	  select
+	      contact_key,
+	      score_value
+	    from "sap.hana-app.cuan.db.cuan::CUAND_SP_SENTIMT" as t1
+	    where t1.client = session_context('CLIENT')
+	      and t1.score_guid = :lv_score_guid
+	      and t1.version = :lv_version
+	  ;
+----------------------------------------------------------------------------------------
+-- Read from persistence table (Restrict by joinset)
+----------------------------------------------------------------------------------------
+else
+  lt_result_value = 
+	  select
+	      contact_key,
+	      score_value
+	    from "sap.hana-app.cuan.db.cuan::CUAND_SP_SENTIMT" as t1
+	    join "sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT" as t2
+	       on t1.client      = t2.mandt
+	      and t2.join_set_id = :ip_join_set_id
+	      and t1.contact_key = t2.id
+	    where t1.client = session_context('CLIENT')
+	      and t1.score_guid = :lv_score_guid
+	      and t1.version = :lv_version
+	  ;
+
+end if;
+
+  lt_result_w_rank =
+		select a.*, max(rank) as rank
+		from :lt_result_value as a
+		left join "sap.hana-app.cuan.db.cuan::CUANC_PM_UI_THRS" as b
+		on b.scenario_id = lc_scenario_id 
+		where b.threshold_value <= a.score_value
+		group by a.contact_key, a.score_value;
+   
+  var_out = 	   
+	select
+       a."CONTACT_KEY",    
+       a."SCORE_VALUE",
+       '' 		as "SCORE_DESC",
+       '' 		as "UNIT",
+       '' 		as "UNIT.description",
+   	 	case when b.rank is null 
+   	 	then 0
+   	 	else b.rank 
+   	 	end as "RANK"
+     from :lt_result_value as a
+     left join :lt_result_w_rank as b
+     on a.contact_key = b.contact_key;
+    
+   return 
+   	select 
+       "CONTACT_KEY",    
+       "SCORE_VALUE",
+       "SCORE_DESC",
+       "UNIT",
+       "UNIT.description",
+   	   "RANK"
+   	 from :var_out;
+   	
+end if;
+end;

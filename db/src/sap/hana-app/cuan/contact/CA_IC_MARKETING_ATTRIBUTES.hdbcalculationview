@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_IC_MARKETING_ATTRIBUTES" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Marketing Attributes"/>
+  <metadata changedAt="2016-02-23 10:10:04.603"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="32"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_MAC_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_MAC_T</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_MA">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_MA</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_REL">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_REL</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Categorie_Text">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute id="CATEGORY_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_MAC_T"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Marketing_Attributes_IC">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="VALUE"/>
+        <viewAttribute id="IC_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_MA">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_KEY" source="ROOT_KEY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="MA_IC_CATEGORY" cardinality="C1_1" dynamic="false" joinType="textTable" languageColumn="LANGU">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CATEGORY_DESC"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="VALUE"/>
+        <viewAttribute id="IC_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Marketing_Attributes_IC">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="VALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_KEY" source="IC_KEY"/>
+      </input>
+      <input node="Categorie_Text">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESC" source="CATEGORY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="CATEGORY_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IC_REL">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="IC_COMPANY_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="RELATION_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_REL">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_COMPANY_KEY" source="CONTACT_KEY_TO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="PARENT_KEY"/></input>
+      <filter>(&quot;RELATION_TYPE&quot; ='01')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_IC_REL" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CATEGORY_DESC"/>
+        <viewAttribute id="CATEGORY_KEY"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="VALUE"/>
+        <viewAttribute id="IC_KEY"/>
+        <viewAttribute id="IC_COMPANY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="MA_IC_CATEGORY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESC" source="CATEGORY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_KEY" source="CATEGORY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="VALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_KEY" source="IC_KEY"/>
+      </input>
+      <input node="Projection_IC_REL">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_COMPANY_KEY" source="IC_COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="IC_KEY"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_IC_REL">
+    <descriptions/>
+    <attributes>
+      <attribute id="CATEGORY_DESC" hidden="true" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_IC_REL" columnName="CATEGORY_DESC"/>
+      </attribute>
+      <attribute id="CATEGORY_KEY" key="true" order="3" attributeHierarchyActive="false" descriptionColumnName="CATEGORY_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Attribute Category"/>
+        <keyMapping columnObjectName="Join_IC_REL" columnName="CATEGORY_KEY"/>
+      </attribute>
+      <attribute id="MANDT" key="true" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_IC_REL" columnName="MANDT"/>
+      </attribute>
+      <attribute id="VALUE" key="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Attribute"/>
+        <keyMapping columnObjectName="Join_IC_REL" columnName="VALUE"/>
+      </attribute>
+      <attribute id="IC_KEY" key="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_IC_REL" columnName="IC_KEY"/>
+      </attribute>
+      <attribute id="IC_COMPANY_KEY" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Company Key"/>
+        <keyMapping columnObjectName="Join_IC_REL" columnName="IC_COMPANY_KEY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures>
+      <measure id="DUMMY" hidden="false" order="1" aggregationType="sum" measureType="simple" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <descriptions defaultDescription="Dummy"/>
+        <formula>1</formula>
+      </measure>
+    </calculatedMeasures>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="324" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Categorie_Text" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="536"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Marketing_Attributes_IC" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302" y="536"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MA_IC_CATEGORY" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="118" y="376"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Marketing_Attributes_IC" modelObjectNameSpace="MA_IC_CATEGORY" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Categorie_Text" modelObjectNameSpace="MA_IC_CATEGORY" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_IC_REL" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="396" y="376"/>
+        <rectangleSize height="51" width="151"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_IC_REL" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="314" y="217"/>
+        <rectangleSize height="51" width="181"/>
+      </shape>
+    
+      <shape modelObjectName="MA_IC_CATEGORY" modelObjectNameSpace="Join_IC_REL" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_IC_REL" modelObjectNameSpace="Join_IC_REL" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

@@ -1,0 +1,33 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_NAME_VALUE_TO_STRING" (  in it_name_value "sap.hana-app.cuan.custom_seg::PR_NAME_VALUE_TO_STRING/tabletype/it_name_value" ,  out ot_string "sap.hana-app.cuan.custom_seg::PR_NAME_VALUE_TO_STRING/tabletype/ot_string"  ) language SQLSCRIPT sql security invoker reads sql data as lc_sep_1 char(1):= ',';
+lc_sep_2 char(1):= '"';
+lc_sep_3 char(1):= ':';
+
+begin
+
+  declare l_string nclob := '';
+  declare cursor c_name_value for
+    select
+        "NAME", "VALUE"
+      from :it_name_value
+  ;
+  declare l_row integer := 0;
+  
+  for ls_name_value as c_name_value DO
+
+    select
+           :l_string           || case when l_row > 0 then :lc_sep_1 else '' end || :lc_sep_2
+        || to_nclob(ls_name_value.name)  || :lc_sep_2 || :lc_sep_3 || :lc_sep_2
+        || to_nclob(ls_name_value.value) || :lc_sep_2
+      into l_string
+      from "sap.hana-app.sys::DUMMY";
+
+    l_row := to_int(1);
+  end for;
+  
+  ot_string =
+    select
+      :l_string as "STRING"
+      from "sap.hana-app.sys::DUMMY"
+  ;
+
+end

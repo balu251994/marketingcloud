@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.common.internal::CA_D_IA_TYPE_CLF" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_D_IA_TYPE_CLF"/>
+  <metadata changedAt="2018-07-19 15:33:09.053"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUANC_CE_IATYP_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_IATYP_T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_TYPE_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="CUANC_CE_IATYP_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_DESC" source="IA_TYPE_DESC"/>
+      </input>
+      <filter>(&quot;SPRAS&quot; ='$$language$$') AND (&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="IA_TYPE" order="1" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="IA_TYPE"/>
+        <keyMapping columnObjectName="Projection_1" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="IA_TYPE_DESC" order="2" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="IA_TYPE_DESC"/>
+        <keyMapping columnObjectName="Projection_1" columnName="IA_TYPE_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="92" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="217"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape></shapes>
+  </layout>
+</Calculation:scenario>

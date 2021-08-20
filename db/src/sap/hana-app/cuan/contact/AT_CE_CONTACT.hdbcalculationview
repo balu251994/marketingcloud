@@ -1,0 +1,1832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::AT_CE_CONTACT" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" dimensionType="STANDARD" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Contacts"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUAN_D_TG_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_TG_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="T005T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T005T</resourceUri>
+    </DataSource>
+    <DataSource id="DD07T_1">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+    <DataSource id="TB027T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::TB027T</resourceUri>
+    </DataSource>
+    <DataSource id="DD07T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07T</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_TSABT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_TSABT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_TPFKT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_TPFKT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_T016T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_T016T</resourceUri>
+    </DataSource>
+    <DataSource id="T005U">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T005U</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_VA_ST_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_VA_ST_T</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_TG_MEMBER">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_TG_MEMBER</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="MEMBER_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_TG_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP_NAME"/></input>
+      <filter>(&quot;MEMBER_TYPE&quot; ='03')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_ROOT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;OBSOLETE&quot; ='') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;ANONYMIZED&quot; ='') AND (in (&quot;IC_TYPE&quot;,'00','01')) AND (&quot;END_OF_PURPOSE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="SPRAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="T005T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="LANDX50"/></input>
+      <filter>(&quot;SPRAS&quot; ='$$language$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SEX.description"/>
+        <viewAttribute id="DOMVALUE_L"/>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="AS4LOCAL"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="DD07T_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX.description" source="DDTEXT"/></input>
+      <filter>(&quot;DOMNAME&quot; ='AD_SEX') AND (&quot;DDLANGUAGE&quot; ='$$language$$') AND (&quot;AS4LOCAL&quot; ='A')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MARITAL_STATUS.description"/>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="MARST"/>
+        <viewAttribute id="SPRAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="TB027T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS.description" source="BEZ20"/></input>
+      <filter>(&quot;SPRAS&quot; ='$$language$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="IS_CONSUMER.description"/>
+        <viewAttribute id="DOMVALUE_L"/>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="AS4LOCAL"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="DD07T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER.description" source="DDTEXT"/></input>
+      <filter>(&quot;DOMNAME&quot; ='CUAN_CE_IS_CONSUMER') AND (&quot;DDLANGUAGE&quot; ='$$language$$') AND (&quot;AS4LOCAL&quot; ='A')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ABTNR.description"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="SPRAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANC_TSABT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR.description" source="VTEXT"/></input>
+      <filter>(&quot;SPRAS&quot; ='$$language$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_8" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PAFKT.description"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANC_TPFKT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT.description" source="VTEXT"/></input>
+      <filter>(&quot;SPRAS&quot; ='$$language$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_9" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="BRSCH.description"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="SPRAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANC_T016T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH.description" source="BRTXT"/></input>
+      <filter>(&quot;SPRAS&quot; ='$$language$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_10" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="REGION.description"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="BLAND"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="T005U">
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION.description" source="BEZEI"/></input>
+      <filter>(&quot;SPRAS&quot; ='$$language$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_11" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="VALIDATION_STATUS.description"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LANGU"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANC_CE_VA_ST_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS.description" source="VALIDATION_STATUS_DESCR"/></input>
+      <filter>(&quot;LANGU&quot; ='$$language$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" dynamic="false" joinType="inner" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="MEMBER_KEY"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="MEMBER_TYPE"/>
+        <viewAttribute hidden="true" id="JOIN$PARENT_KEY$DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAN_D_TG_MEMBER">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEMBER_KEY" source="MEMBER_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_KEY$DB_KEY" source="PARENT_KEY"/>
+      </input>
+      <input node="Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEMBER_TYPE" source="MEMBER_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARENT_KEY$DB_KEY" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="JOIN$PARENT_KEY$DB_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" dynamic="false" joinType="textTable" languageColumn="SPRAS" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="SPRAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_OF_PURPOSE" source="END_OF_PURPOSE"/>
+      </input>
+      <input node="Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="LAND1"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="COUNTRY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_N" dynamic="false" joinType="leftOuter" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+      </input>
+      <input node="Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="MEMBER_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="DB_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_1" dynamic="false" joinType="leftOuter" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="SEX.description"/>
+        <viewAttribute id="DOMVALUE_L"/>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="AS4LOCAL"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+      </input>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX.description" source="SEX.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMVALUE_L" source="DOMVALUE_L"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMNAME" source="DOMNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DDLANGUAGE" source="DDLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AS4LOCAL" source="AS4LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="DOMVALUE_L"/>
+      </input>
+      <joinAttribute name="SEX"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="C1_1" dynamic="false" joinType="textTable" languageColumn="SPRAS" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="SEX.description"/>
+        <viewAttribute id="DOMVALUE_L"/>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="MARITAL_STATUS.description"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX.description" source="SEX.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMVALUE_L" source="DOMVALUE_L"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMNAME" source="DOMNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DDLANGUAGE" source="DDLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AS4LOCAL" source="AS4LOCAL"/>
+      </input>
+      <input node="Projection_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS.description" source="MARITAL_STATUS.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARST"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="MARITAL_STATUS"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="CN_1" dynamic="false" joinType="leftOuter" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="SEX.description"/>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="AS4LOCAL"/>
+        <viewAttribute id="MARITAL_STATUS.description"/>
+        <viewAttribute id="IS_CONSUMER.description"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX.description" source="SEX.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DOMNAME" source="DOMNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DDLANGUAGE" source="DDLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AS4LOCAL" source="AS4LOCAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS.description" source="MARITAL_STATUS.description"/>
+      </input>
+      <input node="Projection_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER.description" source="IS_CONSUMER.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="DOMVALUE_L"/>
+      </input>
+      <joinAttribute name="IS_CONSUMER"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_7" cardinality="C1_1" dynamic="false" joinType="textTable" languageColumn="SPRAS" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="SEX.description"/>
+        <viewAttribute id="MARITAL_STATUS.description"/>
+        <viewAttribute id="IS_CONSUMER.description"/>
+        <viewAttribute id="ABTNR.description"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX.description" source="SEX.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS.description" source="MARITAL_STATUS.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER.description" source="IS_CONSUMER.description"/>
+      </input>
+      <input node="Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR.description" source="ABTNR.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="ABTNR"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_8" cardinality="C1_1" dynamic="false" joinType="textTable" languageColumn="SPRAS" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="SEX.description"/>
+        <viewAttribute id="MARITAL_STATUS.description"/>
+        <viewAttribute id="IS_CONSUMER.description"/>
+        <viewAttribute id="ABTNR.description"/>
+        <viewAttribute id="PAFKT.description"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX.description" source="SEX.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS.description" source="MARITAL_STATUS.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER.description" source="IS_CONSUMER.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR.description" source="ABTNR.description"/>
+      </input>
+      <input node="Projection_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT.description" source="PAFKT.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="PAFKT"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_9" cardinality="C1_1" dynamic="false" joinType="textTable" languageColumn="SPRAS" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="LAND1"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="SEX.description"/>
+        <viewAttribute id="MARITAL_STATUS.description"/>
+        <viewAttribute id="IS_CONSUMER.description"/>
+        <viewAttribute id="ABTNR.description"/>
+        <viewAttribute id="PAFKT.description"/>
+        <viewAttribute id="BRSCH.description"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAND1" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX.description" source="SEX.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS.description" source="MARITAL_STATUS.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER.description" source="IS_CONSUMER.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR.description" source="ABTNR.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT.description" source="PAFKT.description"/>
+      </input>
+      <input node="Projection_9">
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH.description" source="BRSCH.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="BRSCH"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_10" cardinality="C1_1" dynamic="false" joinType="textTable" languageColumn="SPRAS" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="SPRAS"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="SEX.description"/>
+        <viewAttribute id="MARITAL_STATUS.description"/>
+        <viewAttribute id="IS_CONSUMER.description"/>
+        <viewAttribute id="ABTNR.description"/>
+        <viewAttribute id="PAFKT.description"/>
+        <viewAttribute id="BRSCH.description"/>
+        <viewAttribute id="REGION.description"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_9">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SPRAS" source="SPRAS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX.description" source="SEX.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS.description" source="MARITAL_STATUS.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER.description" source="IS_CONSUMER.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR.description" source="ABTNR.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT.description" source="PAFKT.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH.description" source="BRSCH.description"/>
+      </input>
+      <input node="Projection_10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION.description" source="REGION.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="LAND1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="BLAND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="COUNTRY"/>
+      <joinAttribute name="REGION"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="multiJoinNode" cardinality="C1_1" dynamic="false" joinType="textTable" languageColumn="LANGU" optimizeJoinColumns="false">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="NAME_FIRST"/>
+        <viewAttribute id="NAME_LAST"/>
+        <viewAttribute id="TITLE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="SEX"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="FOR_REVIEW"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="VALIDATION_STATUS"/>
+        <viewAttribute id="TITLE_FT"/>
+        <viewAttribute id="COUNTRY_FT"/>
+        <viewAttribute id="REGION_FT"/>
+        <viewAttribute id="LANGUAGE_FT"/>
+        <viewAttribute id="SEX_FT"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="BRSCH_FT"/>
+        <viewAttribute id="ABTNR_FT"/>
+        <viewAttribute id="PAFKT_FT"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="MARITAL_STATUS_FT"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IS_CONTACT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="COUNTRY.description"/>
+        <viewAttribute id="TARGET_GROUP"/>
+        <viewAttribute id="TARGET_GROUP.description"/>
+        <viewAttribute id="SEX.description"/>
+        <viewAttribute id="MARITAL_STATUS.description"/>
+        <viewAttribute id="IS_CONSUMER.description"/>
+        <viewAttribute id="ABTNR.description"/>
+        <viewAttribute id="PAFKT.description"/>
+        <viewAttribute id="BRSCH.description"/>
+        <viewAttribute id="REGION.description"/>
+        <viewAttribute id="VALIDATION_STATUS.description"/>
+        <viewAttribute id="LANGU"/>
+        <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE" source="LANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX" source="SEX"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FOR_REVIEW" source="FOR_REVIEW"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_FT" source="TITLE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_FT" source="COUNTRY_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION_FT" source="REGION_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_FT" source="LANGUAGE_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX_FT" source="SEX_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH_FT" source="BRSCH_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR_FT" source="ABTNR_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT_FT" source="PAFKT_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS_FT" source="MARITAL_STATUS_FT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONTACT" source="IS_CONTACT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY.description" source="COUNTRY.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP" source="TARGET_GROUP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP.description" source="TARGET_GROUP.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SEX.description" source="SEX.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS.description" source="MARITAL_STATUS.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER.description" source="IS_CONSUMER.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR.description" source="ABTNR.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT.description" source="PAFKT.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH.description" source="BRSCH.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION.description" source="REGION.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      </input>
+      <input node="Projection_11">
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS.description" source="VALIDATION_STATUS.description"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGU" source="LANGU"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALIDATION_STATUS" source="VALIDATION_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="VALIDATION_STATUS"/>
+      <joinAttribute name="JOIN$MANDT$MANDT"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="multiJoinNode">
+    <descriptions/>
+    <attributes>
+      <attribute id="NAME_TEXT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Full Name"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="NAME_TEXT"/>
+      </attribute>
+      <attribute id="NAME_FIRST" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="First Name"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="NAME_FIRST"/>
+      </attribute>
+      <attribute id="NAME_LAST" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Last Name"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="NAME_LAST"/>
+      </attribute>
+      <attribute id="TITLE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Title"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="TITLE"/>
+      </attribute>
+      <attribute id="COUNTRY" order="5" attributeHierarchyActive="false" descriptionColumnName="COUNTRY.description" displayAttribute="false">
+        <descriptions defaultDescription="Country/Region"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="COUNTRY"/>
+      </attribute>
+      <attribute id="REGION" order="6" attributeHierarchyActive="false" descriptionColumnName="REGION.description" displayAttribute="false">
+        <descriptions defaultDescription="Region"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="REGION"/>
+      </attribute>
+      <attribute id="CITY1" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="City"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="CITY1"/>
+      </attribute>
+      <attribute id="POSTCODE1" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Postal Code"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="POSTCODE1"/>
+      </attribute>
+      <attribute id="LANGUAGE" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Language"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="LANGUAGE"/>
+      </attribute>
+      <attribute id="SEX" order="10" attributeHierarchyActive="false" descriptionColumnName="SEX.description" displayAttribute="false">
+        <descriptions defaultDescription="Gender"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="SEX"/>
+      </attribute>
+      <attribute id="KUNNR" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Account ID"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="KUNNR"/>
+      </attribute>
+      <attribute id="COMPANY_NAME" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Account"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="COMPANY_NAME"/>
+      </attribute>
+      <attribute id="SMTP_ADDR" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Email"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="SMTP_ADDR"/>
+      </attribute>
+      <attribute id="FOR_REVIEW" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="For Review"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="FOR_REVIEW"/>
+      </attribute>
+      <attribute id="EMAIL_OPTIN" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Email Opt-In"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="EMAIL_OPTIN"/>
+      </attribute>
+      <attribute id="PHONE_OPTIN" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Phone Opt-In"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="PHONE_OPTIN"/>
+      </attribute>
+      <attribute id="TELNR_LONG" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Phone"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="TELNR_LONG"/>
+      </attribute>
+      <attribute id="DB_KEY" key="true" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Database Key"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="VALIDATION_STATUS" order="19" attributeHierarchyActive="false" descriptionColumnName="VALIDATION_STATUS.description" displayAttribute="false">
+        <descriptions defaultDescription="Contact Level"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="VALIDATION_STATUS"/>
+      </attribute>
+      <attribute id="TITLE_FT" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Title"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="TITLE_FT"/>
+      </attribute>
+      <attribute id="COUNTRY_FT" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Country/Region"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="COUNTRY_FT"/>
+      </attribute>
+      <attribute id="REGION_FT" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Region"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="REGION_FT"/>
+      </attribute>
+      <attribute id="LANGUAGE_FT" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Language"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="LANGUAGE_FT"/>
+      </attribute>
+      <attribute id="SEX_FT" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Gender"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="SEX_FT"/>
+      </attribute>
+      <attribute id="TELNR_MOBILE" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Mobile"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="TELNR_MOBILE"/>
+      </attribute>
+      <attribute id="BRSCH" order="26" attributeHierarchyActive="false" descriptionColumnName="BRSCH.description" displayAttribute="false">
+        <descriptions defaultDescription="Industry"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="BRSCH"/>
+      </attribute>
+      <attribute id="ABTNR" order="27" attributeHierarchyActive="false" descriptionColumnName="ABTNR.description" displayAttribute="false">
+        <descriptions defaultDescription="Department"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="ABTNR"/>
+      </attribute>
+      <attribute id="PAFKT" order="28" attributeHierarchyActive="false" descriptionColumnName="PAFKT.description" displayAttribute="false">
+        <descriptions defaultDescription="Job Function"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="PAFKT"/>
+      </attribute>
+      <attribute id="BRSCH_FT" order="29" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Industry"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="BRSCH_FT"/>
+      </attribute>
+      <attribute id="ABTNR_FT" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Department"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="ABTNR_FT"/>
+      </attribute>
+      <attribute id="PAFKT_FT" order="31" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Function"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="PAFKT_FT"/>
+      </attribute>
+      <attribute id="MARITAL_STATUS" order="32" attributeHierarchyActive="false" descriptionColumnName="MARITAL_STATUS.description" displayAttribute="false">
+        <descriptions defaultDescription="Marital Status"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="MARITAL_STATUS"/>
+      </attribute>
+      <attribute id="MARITAL_STATUS_FT" order="33" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marital Status"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="MARITAL_STATUS_FT"/>
+      </attribute>
+      <attribute id="DATE_OF_BIRTH" order="34" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date of Birth"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="DATE_OF_BIRTH"/>
+      </attribute>
+      <attribute id="ANONYMIZED" order="35" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Anonymized"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="ANONYMIZED"/>
+      </attribute>
+      <attribute id="IS_CONTACT" order="36" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Is Contact"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="IS_CONTACT"/>
+      </attribute>
+      <attribute id="IS_CONSUMER" order="37" attributeHierarchyActive="false" descriptionColumnName="IS_CONSUMER.description" displayAttribute="false">
+        <descriptions defaultDescription="Is Consumer/Prospect"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="IS_CONSUMER"/>
+      </attribute>
+      <attribute id="LCHG_DATE_TIME" order="38" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Last Change Date"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="LCHG_DATE_TIME"/>
+      </attribute>
+      <attribute id="TARGET_GROUP" order="39" attributeHierarchyActive="false" descriptionColumnName="TARGET_GROUP.description" displayAttribute="false">
+        <descriptions defaultDescription="Target Group"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="TARGET_GROUP"/>
+      </attribute>
+      <attribute id="CONSUMER_ACCOUNT_ID" order="42" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Consumer Account ID"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="CONSUMER_ACCOUNT_ID"/>
+      </attribute>
+      <attribute id="LAST_IA_TIMESTAMP" hidden="true" order="43" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAST_IA_TIMESTAMP"/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="LAST_IA_TIMESTAMP"/>
+      </attribute>
+      <attribute id="COUNTRY.description" hidden="true" order="44" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="COUNTRY.description"/>
+      </attribute>
+      <attribute id="REGION.description" hidden="true" order="45" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="REGION.description"/>
+      </attribute>
+      <attribute id="SEX.description" hidden="true" order="46" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="SEX.description"/>
+      </attribute>
+      <attribute id="VALIDATION_STATUS.description" hidden="true" order="47" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="VALIDATION_STATUS.description"/>
+      </attribute>
+      <attribute id="BRSCH.description" hidden="true" order="48" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="BRSCH.description"/>
+      </attribute>
+      <attribute id="ABTNR.description" hidden="true" order="49" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="ABTNR.description"/>
+      </attribute>
+      <attribute id="PAFKT.description" hidden="true" order="50" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="PAFKT.description"/>
+      </attribute>
+      <attribute id="MARITAL_STATUS.description" hidden="true" order="51" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="MARITAL_STATUS.description"/>
+      </attribute>
+      <attribute id="IS_CONSUMER.description" hidden="true" order="52" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="IS_CONSUMER.description"/>
+      </attribute>
+      <attribute id="TARGET_GROUP.description" hidden="true" order="53" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="multiJoinNode" columnName="TARGET_GROUP.description"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="LAST_IA_DATE" hidden="false" order="40" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date of Latest Change"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE" length="0" scale="0">
+          <formula>date(&quot;LAST_IA_TIMESTAMP&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="AGE" hidden="false" order="41" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Age"/>
+        <keyCalculation datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+          <formula>if (&quot;DATE_OF_BIRTH&quot; = '00000000' OR &quot;DATE_OF_BIRTH&quot; = '', 0, (rounddown((int(component(now(), 1) * 10000)+ int(component(now(), 2) * 100) + int(component(now(), 3))-int(&quot;DATE_OF_BIRTH&quot;))/10000, 0)))</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="482" y="112"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="91" y="1231"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="512" y="1231"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302" y="1231"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="369" y="1031"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="441" y="931"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="543" y="831"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="277" y="731"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_8" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="514" y="631"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_9" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="213" y="531"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_10" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="450" y="431"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_11" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="548" y="331"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="133" y="1131"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.db.cuan::CUAN_D_TG_MEMBER" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="485" y="1131"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="159" y="1031"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="186" y="931"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="213" y="831"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="516" y="731"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_5" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_6" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="304" y="631"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_6" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_7" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="487" y="531"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_7" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_8" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_9" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="240" y="431"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_8" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_9" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_10" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="267" y="331"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_9" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_10" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="multiJoinNode" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="482" y="192"/>
+        <rectangleSize width="160"/>
+      </shape>
+      <shape modelObjectName="Join_10" modelObjectNameSpace="multiJoinNode" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_11" modelObjectNameSpace="multiJoinNode" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

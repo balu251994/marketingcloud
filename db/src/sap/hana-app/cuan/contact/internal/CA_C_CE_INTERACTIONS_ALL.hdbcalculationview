@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.internal::CA_C_CE_INTERACTIONS_ALL" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_C_INTERACTIONS_ALL"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CA_C_CE_INI_INTERACTIONS">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_C_CE_INI_INTERACTIONS</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_INTERACTIONS">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_D_INTERACTIONS</resourceUri>
+    </DataSource>
+  </dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_ALL">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="INITIATIVE_ID"/>
+        <viewAttribute id="INI_VERSION"/>
+        <viewAttribute id="SOURCE_SYSTEM_TYPE"/>
+        <viewAttribute id="SOURCE_SYSTEM_ID"/>
+        <viewAttribute id="SOURCE_OBJECT_TYPE"/>
+        <viewAttribute id="SOURCE_OBJECT_ID"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="CONTENT_TITLE"/>
+        <viewAttribute id="MARKETING_ORCHESTRATION_ID"/>
+        <viewAttribute id="LAUNCH_TEXT"/>
+        <viewAttribute id="INTEREST_ITEM"/>
+        <viewAttribute id="DIRECTION"/>
+        <viewAttribute id="CHANNEL"/>
+        <viewAttribute id="YEAR"/>
+        <viewAttribute id="CALQUARTER"/>
+        <viewAttribute id="CALMONTH"/>
+        <viewAttribute id="COMM_MEDIUM_DESC"/>
+        <viewAttribute id="IA_TYPE_DESC"/>
+        <viewAttribute id="INTEREST_ITEM_DESC"/>
+        <viewAttribute id="CHANNEL_DESC"/>
+        <viewAttribute id="IA_CNT"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="OBJECT_GUID"/>
+        <viewAttribute id="START_DATE"/>
+        <viewAttribute id="END_DATE"/>
+        <viewAttribute id="INITIATIVE_DB_KEY"/>
+        <viewAttribute id="SOURCE_OBJECT_ADD_ID"/>
+        <viewAttribute id="QUANTIFIER"/>
+        <viewAttribute id="SOURCE_DATA_URL"/>
+        <viewAttribute id="CONTENT_DATA"/>
+        <viewAttribute id="LAUNCH_URL"/>
+        <viewAttribute id="NAME_TEXT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CONSUMER_ACCOUNT_ID"/>
+        <viewAttribute id="COUNTRY_DESC"/>
+        <viewAttribute id="INITIATIVE_NAME"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="LAST_IA_TIMESTAMP"/>
+        <viewAttribute id="INITIATIVE_ID_DESC"/>
+        <viewAttribute id="MARKETING_ORCHESTRATION_ID_DESC"/>
+        <viewAttribute id="IA_LATITUDE"/>
+        <viewAttribute id="IA_LONGITUDE"/>
+        <viewAttribute id="BOOLEAN1"/>
+        <viewAttribute id="BOOLEAN2"/>
+        <viewAttribute id="BOOLEAN3"/>
+        <viewAttribute id="BOOLEAN4"/>
+        <viewAttribute id="TIME1"/>
+        <viewAttribute id="DATE1"/>
+        <viewAttribute id="DATE2"/>
+        <viewAttribute id="DATE3"/>
+        <viewAttribute id="NUMBER1"/>
+        <viewAttribute id="NUMBER2"/>
+        <viewAttribute id="NUMBER3"/>
+        <viewAttribute id="TEXT20_1"/>
+        <viewAttribute id="TEXT20_2"/>
+        <viewAttribute id="TIMESTAMP1"/>
+        <viewAttribute id="TIMESTAMP2"/>
+        <viewAttribute id="DECIMAL1"/>
+        <viewAttribute id="DECIMAL2"/>
+        <viewAttribute id="DECIMAL3"/>
+        <viewAttribute id="TEXT40_1"/>
+        <viewAttribute id="TEXT40_2"/>
+        <viewAttribute id="TEXT80_1"/>
+        <viewAttribute id="TEXT80_2"/>
+        <viewAttribute id="TEXT120_1"/>
+        <viewAttribute id="TEXT120_2"/>
+        <viewAttribute id="TEXT255_1"/>
+        <viewAttribute id="TEXT255_2"/>
+        <viewAttribute id="LAST_INBOUND_IA_TIMESTAMP"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="CA_C_CE_INI_INTERACTIONS">
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MANDT" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ID" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_ID" source="INITIATIVE_ID"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="INI_VERSION" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SOURCE_SYSTEM_TYPE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SOURCE_SYSTEM_ID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SOURCE_OBJECT_TYPE" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_ID" source="SOURCE_OBJECT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="IA_DATE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CONTENT_TITLE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_ORCHESTRATION_ID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LAUNCH_TEXT" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM" source="INTEREST_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="YEAR" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CALQUARTER" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CALMONTH" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="COMM_MEDIUM_DESC" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_DESC" source="IA_TYPE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM_DESC" source="INTEREST_ITEM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL_DESC" source="CHANNEL_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_CNT" source="IA_CNT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_GUID" source="OBJECT_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="START_DATE" source="START_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_DB_KEY" source="INITIATIVE_DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_ADD_ID" source="SOURCE_OBJECT_ADD_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTIFIER" source="QUANTIFIER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_DATA_URL" source="SOURCE_DATA_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTENT_DATA" source="CONTENT_DATA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_URL" source="LAUNCH_URL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME_TEXT" source="NAME_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONSUMER_ACCOUNT_ID" source="CONSUMER_ACCOUNT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY_DESC" source="COUNTRY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_NAME" source="INITIATIVE_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_IA_TIMESTAMP" source="LAST_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="INITIATIVE_ID_DESC" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MARKETING_ORCHESTRATION_ID_DESC" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="IA_LATITUDE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="IA_LONGITUDE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BOOLEAN1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BOOLEAN2" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BOOLEAN3" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="BOOLEAN4" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TIME1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DATE1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DATE2" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DATE3" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="NUMBER1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="NUMBER2" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="NUMBER3" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT20_1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT20_2" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TIMESTAMP1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TIMESTAMP2" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DECIMAL1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DECIMAL2" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DECIMAL3" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT40_1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT40_2" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT80_1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT80_2" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT120_1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT120_2" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT255_1" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TEXT255_2" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_INBOUND_IA_TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="CA_D_INTERACTIONS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_ID" source="INITIATIVE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INI_VERSION" source="INI_VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_SYSTEM_TYPE" source="SOURCE_SYSTEM_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_SYSTEM_ID" source="SOURCE_SYSTEM_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_TYPE" source="SOURCE_OBJECT_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_ID" source="SOURCE_OBJECT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTENT_TITLE" source="CONTENT_TITLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_ORCHESTRATION_ID" source="MARKETING_ORCHESTRATION_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAUNCH_TEXT" source="LAUNCH_TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM" source="INTEREST_ITEM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL" source="CHANNEL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CALQUARTER" source="CALQUARTER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CALMONTH" source="CALMONTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM_DESC" source="COMM_MEDIUM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_DESC" source="IA_TYPE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_ITEM_DESC" source="INTEREST_ITEM_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CHANNEL_DESC" source="CHANNEL_DESC"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="IA_CNT" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DESCRIPTION" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="OBJECT_GUID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="START_DATE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="END_DATE" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="INITIATIVE_DB_KEY" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SOURCE_OBJECT_ADD_ID" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="QUANTIFIER" source="QUANTIFIER"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SOURCE_DATA_URL" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CONTENT_DATA" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LAUNCH_URL" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="NAME_TEXT" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CONSUMER_ACCOUNT_ID" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="COUNTRY_DESC" null="true" value=""/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="INITIATIVE_NAME" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LAST_IA_TIMESTAMP" null="true" value=""/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INITIATIVE_ID_DESC" source="INITIATIVE_ID_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETING_ORCHESTRATION_ID_DESC" source="MARKETING_ORCHESTRATION_ID_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_LATITUDE" source="IA_LATITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_LONGITUDE" source="IA_LONGITUDE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN1" source="BOOLEAN1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN2" source="BOOLEAN2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN3" source="BOOLEAN3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BOOLEAN4" source="BOOLEAN4"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIME1" source="TIME1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE1" source="DATE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE2" source="DATE2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE3" source="DATE3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER1" source="NUMBER1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER2" source="NUMBER2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER3" source="NUMBER3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_1" source="TEXT20_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT20_2" source="TEXT20_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP1" source="TIMESTAMP1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP2" source="TIMESTAMP2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL1" source="DECIMAL1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL2" source="DECIMAL2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DECIMAL3" source="DECIMAL3"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_1" source="TEXT40_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT40_2" source="TEXT40_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_1" source="TEXT80_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT80_2" source="TEXT80_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_1" source="TEXT120_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT120_2" source="TEXT120_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_1" source="TEXT255_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TEXT255_2" source="TEXT255_2"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_INBOUND_IA_TIMESTAMP" source="LAST_INBOUND_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+      </input>
+    </calculationView>
+</calculationViews>
+  <logicalModel id="Union_ALL">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MANDT"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="MANDT"/>
+      </attribute>
+      <attribute id="IA_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_KEY"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="ID_ORIGIN" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID_ORIGIN"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="ID_ORIGIN"/>
+      </attribute>
+      <attribute id="ID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="ID"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM" order="5" attributeHierarchyActive="false" descriptionColumnName="COMM_MEDIUM.description" displayAttribute="false">
+        <descriptions defaultDescription="COMM_MEDIUM"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="IA_TYPE" order="6" attributeHierarchyActive="false" descriptionColumnName="IA_TYPE.description" displayAttribute="false">
+        <descriptions defaultDescription="IA_TYPE"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="TIMESTAMP" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TIMESTAMP"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TIMESTAMP"/>
+      </attribute>
+      <attribute id="INITIATIVE_ID" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="INITIATIVE_ID"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="INITIATIVE_ID"/>
+      </attribute>
+      <attribute id="INI_VERSION" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="INI_VERSION"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="INI_VERSION"/>
+      </attribute>
+      <attribute id="SOURCE_SYSTEM_TYPE" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_SYSTEM_TYPE"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="SOURCE_SYSTEM_TYPE"/>
+      </attribute>
+      <attribute id="SOURCE_SYSTEM_ID" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_SYSTEM_ID"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="SOURCE_SYSTEM_ID"/>
+      </attribute>
+      <attribute id="SOURCE_OBJECT_TYPE" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_OBJECT_TYPE"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="SOURCE_OBJECT_TYPE"/>
+      </attribute>
+      <attribute id="SOURCE_OBJECT_ID" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_OBJECT_ID"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="SOURCE_OBJECT_ID"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IA_DATE" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_DATE"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="IA_DATE"/>
+      </attribute>
+      <attribute id="CONTENT_TITLE" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTENT_TITLE"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="CONTENT_TITLE"/>
+      </attribute>
+      <attribute id="MARKETING_ORCHESTRATION_ID" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MARKETING_ORCHESTRATION_ID"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="MARKETING_ORCHESTRATION_ID"/>
+      </attribute>
+      <attribute id="LAUNCH_TEXT" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAUNCH_TEXT"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="LAUNCH_TEXT"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM" order="19" attributeHierarchyActive="false" descriptionColumnName="INTEREST_ITEM.description" displayAttribute="false">
+        <descriptions defaultDescription="INTEREST_ITEM"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="INTEREST_ITEM"/>
+      </attribute>
+      <attribute id="DIRECTION" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DIRECTION"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="DIRECTION"/>
+      </attribute>
+      <attribute id="CHANNEL" order="21" attributeHierarchyActive="false" descriptionColumnName="CHANNEL.description" displayAttribute="false">
+        <descriptions defaultDescription="CHANNEL"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="CHANNEL"/>
+      </attribute>
+      <attribute id="YEAR" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="YEAR"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="YEAR"/>
+      </attribute>
+      <attribute id="CALQUARTER" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CALQUARTER"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="CALQUARTER"/>
+      </attribute>
+      <attribute id="CALMONTH" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CALMONTH"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="CALMONTH"/>
+      </attribute>
+      <attribute id="DESCRIPTION" order="26" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DESCRIPTION"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="DESCRIPTION"/>
+      </attribute>
+      <attribute id="SOURCE_DATA_URL" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_DATA_URL"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="SOURCE_DATA_URL"/>
+      </attribute>
+      <attribute id="LAUNCH_URL" order="28" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAUNCH_URL"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="LAUNCH_URL"/>
+      </attribute>
+      <attribute id="COUNTRY_DESC" order="29" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COUNTRY_DESC"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="COUNTRY_DESC"/>
+      </attribute>
+      <attribute id="CONTENT_DATA" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTENT_DATA"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="CONTENT_DATA"/>
+      </attribute>
+      <attribute id="COUNTRY" order="31" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COUNTRY"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="COUNTRY"/>
+      </attribute>
+      <attribute id="INITIATIVE_NAME" order="32" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="INITIATIVE_NAME"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="INITIATIVE_NAME"/>
+      </attribute>
+      <attribute id="SOURCE_OBJECT_ADD_ID" order="33" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SOURCE_OBJECT_ADD_ID"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="SOURCE_OBJECT_ADD_ID"/>
+      </attribute>
+      <attribute id="KUNNR" order="35" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="KUNNR"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="KUNNR"/>
+      </attribute>
+      <attribute id="COMPANY_KEY" order="36" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANY_KEY"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="COMPANY_KEY"/>
+      </attribute>
+      <attribute id="BOOLEAN1" order="37" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BOOLEAN1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="BOOLEAN1"/>
+      </attribute>
+      <attribute id="BOOLEAN2" order="38" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BOOLEAN2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="BOOLEAN2"/>
+      </attribute>
+      <attribute id="BOOLEAN3" order="39" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BOOLEAN3"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="BOOLEAN3"/>
+      </attribute>
+      <attribute id="BOOLEAN4" order="40" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BOOLEAN4"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="BOOLEAN4"/>
+      </attribute>
+      <attribute id="TIME1" order="41" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TIME1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TIME1"/>
+      </attribute>
+      <attribute id="DATE1" order="42" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DATE1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="DATE1"/>
+      </attribute>
+      <attribute id="DATE2" order="43" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DATE2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="DATE2"/>
+      </attribute>
+      <attribute id="DATE3" order="44" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DATE3"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="DATE3"/>
+      </attribute>
+      <attribute id="NUMBER1" order="45" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="NUMBER1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="NUMBER1"/>
+      </attribute>
+      <attribute id="NUMBER2" order="46" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="NUMBER2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="NUMBER2"/>
+      </attribute>
+      <attribute id="NUMBER3" order="47" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="NUMBER3"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="NUMBER3"/>
+      </attribute>
+      <attribute id="TEXT20_1" order="48" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT20_1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT20_1"/>
+      </attribute>
+      <attribute id="TEXT20_2" order="49" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT20_2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT20_2"/>
+      </attribute>
+      <attribute id="TIMESTAMP1" order="50" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TIMESTAMP1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TIMESTAMP1"/>
+      </attribute>
+      <attribute id="TIMESTAMP2" order="51" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TIMESTAMP2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TIMESTAMP2"/>
+      </attribute>
+      <attribute id="DECIMAL1" order="52" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DECIMAL1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="DECIMAL1"/>
+      </attribute>
+      <attribute id="DECIMAL2" order="53" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DECIMAL2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="DECIMAL2"/>
+      </attribute>
+      <attribute id="DECIMAL3" order="54" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DECIMAL3"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="DECIMAL3"/>
+      </attribute>
+      <attribute id="TEXT40_1" order="55" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT40_1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT40_1"/>
+      </attribute>
+      <attribute id="TEXT40_2" order="56" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT40_2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT40_2"/>
+      </attribute>
+      <attribute id="TEXT80_1" order="57" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT80_1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT80_1"/>
+      </attribute>
+      <attribute id="TEXT80_2" order="58" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT80_2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT80_2"/>
+      </attribute>
+      <attribute id="TEXT120_1" order="59" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT120_1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT120_1"/>
+      </attribute>
+      <attribute id="TEXT120_2" order="60" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT120_2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT120_2"/>
+      </attribute>
+      <attribute id="TEXT255_1" order="61" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT255_1"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT255_1"/>
+      </attribute>
+      <attribute id="TEXT255_2" order="62" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TEXT255_2"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="TEXT255_2"/>
+      </attribute>
+      <attribute id="LAST_IA_TIMESTAMP" order="63" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAST_IA_TIMESTAMP"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="LAST_IA_TIMESTAMP"/>
+      </attribute>
+      <attribute id="CHANNEL.description" hidden="true" order="64" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Union_ALL" columnName="CHANNEL_DESC"/>
+      </attribute>
+      <attribute id="INTEREST_ITEM.description" hidden="true" order="65" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Union_ALL" columnName="INTEREST_ITEM_DESC"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM.description" hidden="true" order="66" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Union_ALL" columnName="COMM_MEDIUM_DESC"/>
+      </attribute>
+      <attribute id="IA_TYPE.description" hidden="true" order="67" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Union_ALL" columnName="IA_TYPE_DESC"/>
+      </attribute>
+      <attribute id="LAST_INBOUND_IA_TIMESTAMP" order="68" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="LAST_INBOUND_IA_TIMESTAMP"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="LAST_INBOUND_IA_TIMESTAMP"/>
+      </attribute>
+      <attribute id="MKT_AREA_ID" order="69" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MKT_AREA_ID"/>
+        <keyMapping columnObjectName="Union_ALL" columnName="MKT_AREA_ID"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="IA_CNT" order="25" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="IA_CNT"/>
+        <measureMapping columnObjectName="Union_ALL" columnName="IA_CNT"/>
+      </measure>
+      <measure id="QUANTIFIER" order="34" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="QUANTIFIER"/>
+        <measureMapping columnObjectName="Union_ALL" columnName="QUANTIFIER"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+<layout>
+  <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="92" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_ALL" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="217"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    </shapes>
+</layout>
+</Calculation:scenario>

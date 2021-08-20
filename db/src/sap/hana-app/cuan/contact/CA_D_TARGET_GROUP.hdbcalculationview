@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_TARGET_GROUP" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Target Group"/>
+  <metadata changedAt="2016-08-23 17:12:07.71"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="29"/>
+  <dataSources>
+    <DataSource id="CUAN_D_TG_MEMBER">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_TG_MEMBER</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_TG_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_TG_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_TG_M">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="MEMBER_KEY"/>
+        <viewAttribute id="DELETION_TYPE"/>
+        <viewAttribute id="MANDT_1"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUAN_D_TG_MEMBER">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_1" source="MANDT"/>
+      </input>
+    <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;DELETION_TYPE&quot; ='')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_TG_R" filterExpressionLanguage="COLUMN_ENGINE">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="TARGET_GROUP_NAME"/>
+        <viewAttribute id="MEMBER_TYPE"/>
+        <viewAttribute id="_DATAAGING"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUAN_D_TG_ROOT"/>
+    <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;MEMBER_TYPE&quot; ='03') AND (in (&quot;_DATAAGING&quot;,'','00000000'))</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_TG_M_R" cardinality="CN_1" joinType="inner">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="TARGET_GROUP_DB_KEY"/>
+        <viewAttribute id="TARGET_GROUP_MEMBER_KEY"/>
+        <viewAttribute id="TARGET_GROUP_ID"/>
+        <viewAttribute id="TARGET_GROUP_NAME"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="Projection_TG_M">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP_DB_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP_MEMBER_KEY" source="MEMBER_KEY"/>
+      </input>
+      <input node="Projection_TG_R">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP_ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP_NAME" source="TARGET_GROUP_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TARGET_GROUP_DB_KEY" source="DB_KEY"/>
+      </input>
+    <joinAttribute name="MANDT"/>
+    <joinAttribute name="TARGET_GROUP_DB_KEY"/>
+  </calculationView>
+</calculationViews>
+  <logicalModel id="Join_TG_M_R">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_TG_M_R" columnName="MANDT"/>
+      </attribute>
+      <attribute id="TARGET_GROUP_DB_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Target Group Key"/>
+        <keyMapping columnObjectName="Join_TG_M_R" columnName="TARGET_GROUP_DB_KEY"/>
+      </attribute>
+      <attribute id="TARGET_GROUP_MEMBER_KEY" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Target Group Member Key"/>
+        <keyMapping columnObjectName="Join_TG_M_R" columnName="TARGET_GROUP_MEMBER_KEY"/>
+      </attribute>
+      <attribute id="TARGET_GROUP" order="4" attributeHierarchyActive="false" descriptionColumnName="TARGET_GROUP_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Target Group"/>
+        <keyMapping columnObjectName="Join_TG_M_R" columnName="TARGET_GROUP_ID"/>
+      </attribute>
+      <attribute id="TARGET_GROUP_DESC" hidden="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_TG_M_R" columnName="TARGET_GROUP_NAME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+<layout>
+  <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="221" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_TG_M" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="376"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_TG_R" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302" y="376"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_TG_M_R" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="221" y="217"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Projection_TG_M" modelObjectNameSpace="Join_TG_M_R" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_TG_R" modelObjectNameSpace="Join_TG_M_R" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+</layout>
+</Calculation:scenario>

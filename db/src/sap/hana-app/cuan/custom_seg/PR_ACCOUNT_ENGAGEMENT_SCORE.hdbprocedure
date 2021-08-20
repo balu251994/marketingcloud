@@ -1,0 +1,80 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_ACCOUNT_ENGAGEMENT_SCORE" (  in i_scenario_parameters NCLOB ,  in i_datasource_parameters NCLOB ,  in i_selected_variables NCLOB ,  in i_model_parameters NCLOB ,  in ip_join_set_id VARCHAR(32) ,  out var_out "sap.hana-app.cuan.custom_seg::PR_ACCOUNT_ENGAGEMENT_SCORE/tabletype/var_out"  ) language SQLSCRIPT sql security invoker reads sql data as 
+BEGIN
+
+	declare lv_last_n_days             		integer;
+	declare lv_outlier_percentile   		integer;
+	declare lv_weight                       double;
+	declare lv_num_of_ia_max  				double;
+	declare lv_num_of_ia_reference  		double;
+    
+	--read model parameters from model definition
+	call "sap.hana-app.cuan.cpred.reuse.internal::PR_TO_NAME_VALUE"(
+	    :i_model_parameters,
+	    lt_model_parameters
+	 );  	  
+	select "VALUE" into lv_last_n_days	        from :lt_model_parameters where "NAME" = 'LAST_N_DAYS';	
+	select "VALUE" into lv_outlier_percentile	from :lt_model_parameters where "NAME" = 'OUTLIER_PERCENTILE';	
+	select "VALUE" into lv_weight	            from :lt_model_parameters where "NAME" = 'WEIGHT';	
+
+	--catch input parameters outside of meaningful values
+	select
+		CASE WHEN :lv_outlier_percentile > 100 THEN 100
+		     WHEN :lv_outlier_percentile < 0   THEN 1
+		     ELSE :lv_outlier_percentile 
+		END into lv_outlier_percentile          from "sap.hana-app.sys::DUMMY";
+	select
+		CASE WHEN :lv_weight > 1 THEN 1.0
+		     WHEN :lv_weight < 0 THEN 0.0
+		     ELSE :lv_weight 
+		END into lv_weight          from "sap.hana-app.sys::DUMMY";
+	
+	--count average number of interactions of account
+	lt_num_of_ia_of_account =	
+		select account_key, sum(NUM_IA_IC_ACCOUNT_AVG) as "NUM_OF_IA"
+		from "sap.hana-app.cuan.cust_retention.score.internal::CA_ACCOUNT_ENGAGEMENT_SCORE"(PLACEHOLDER."$$IP_LAST_N_DAYS$$" => :lv_last_n_days,
+		                                                                                              PLACEHOLDER."$$IP_WEIGHT$$"      => :lv_weight)
+		group by account_key;
+
+    select max("NUM_OF_IA") into lv_num_of_ia_max 
+	from :lt_num_of_ia_of_account;
+	
+	select
+	    max(case when
+	        "ROW_NUMBER" = floor( "ROW_COUNT" * (100 - :lv_outlier_percentile) / 100 ) 
+	        then "NUM_OF_IA" 
+	        else null end) 
+	   into lv_num_of_ia_reference
+	from (
+	    select
+	        "NUM_OF_IA",
+	        row_number() over (order BY "NUM_OF_IA") as "ROW_NUMBER",
+	        count(*) over ()                         as "ROW_COUNT"
+	      from :lt_num_of_ia_of_account
+	);
+	
+	if :ip_join_set_id = '' then
+	  var_out =  
+	  	select
+	  		account_key                         as "KEY",
+	  		case when num_of_ia / :lv_num_of_ia_reference > 1
+	  		then round(((100 - :lv_outlier_percentile) + num_of_ia * :lv_outlier_percentile / :lv_num_of_ia_max),  0)
+	  		else round((num_of_ia / :lv_num_of_ia_reference * (100 - :lv_outlier_percentile)), 0)
+	  		end                                  as "SCORE"
+	  	from :lt_num_of_ia_of_account;
+	else
+	  var_out = 
+		  select
+	  		account_key                          as "KEY",
+	  		case when num_of_ia / :lv_num_of_ia_reference > 1
+	  		then round(((100 - :lv_outlier_percentile) + num_of_ia * :lv_outlier_percentile / :lv_num_of_ia_max),  0)
+	  		else round((num_of_ia / :lv_num_of_ia_reference * (100 - :lv_outlier_percentile)), 0)
+	  		end                                  as "SCORE"
+		  from :lt_num_of_ia_of_account as t1
+		  inner join "sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT"   as t2
+		    on t2.join_set_id = :ip_join_set_id
+		      and t1.account_key = t2.id
+		  where t2.mandt = session_context('CLIENT')
+		  ;
+	end if;
+
+END;

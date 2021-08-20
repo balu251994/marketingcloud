@@ -1,0 +1,11 @@
+procedure "sap.hana-app.cuan.custom_seg::PR_MODEL_DEF_DESERIALIZE" (  in i_json NCLOB ,  out ot_model_def "sap.hana-app.cuan.custom_seg::PR_MODEL_DEF_DESERIALIZE/tabletype/ot_model_def"  ) language SQLSCRIPT sql security invoker reads sql data as begin
+
+ot_model_def =
+select '$$target_variable$$'       as "NAME", substr_before(substr_after(:i_json,'"$$target_variable$$":"'      ),'","$$scenario_parameters$$"'  ) as "VALUE" from "sap.hana-app.sys::DUMMY" union all
+select '$$scenario_parameters$$'   as "NAME", substr_before(substr_after(:i_json,'"$$scenario_parameters$$":{'  ),'},"$$datasource_parameters$$"') as "VALUE" from "sap.hana-app.sys::DUMMY" union all
+select '$$datasource_parameters$$' as "NAME", substr_before(substr_after(:i_json,'"$$datasource_parameters$$":{'),'},"$$selected_variables$$"'   ) as "VALUE" from "sap.hana-app.sys::DUMMY" union all
+select '$$selected_variables$$'    as "NAME", substr_before(substr_after(:i_json,'"$$selected_variables$$":['   ),'],"$$model_parameters$$"'     ) as "VALUE" from "sap.hana-app.sys::DUMMY" union all
+select '$$model_parameters$$'      as "NAME", substr_before(substr_after(:i_json,'"$$model_parameters$$":{'     ),'}}'                           ) as "VALUE" from "sap.hana-app.sys::DUMMY"
+;
+
+end

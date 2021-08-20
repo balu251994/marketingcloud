@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.internal::CA_D_AGREEMENT_INTERACTIONS" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_D_AGREEMENT_INTERACTIONS"/>
+  <metadata changedAt="2017-11-09 11:58:06.005"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="61"/>
+  <dataSources>
+    <DataSource id="CUAND_AGR_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_AGR_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_AGR_EXT_ID">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_AGR_EXT_ID</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="P_Agreement_Root">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="MKT_AGREEMENTORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTEXTERNALID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="CUAND_AGR_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTORIGIN" source="MKT_AGREEMENTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTEXTERNALID"/>
+      </input>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="P_Interactions_Root">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MKT_AGREEMENTORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTEXTERNALID"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_STATUS"/>
+        <viewAttribute id="IA_REASON"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="OBSOLETE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTORIGIN" source="MKT_AGREEMENTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_REASON" source="IA_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;OBSOLETE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="J_Agreement_Root_Interactions" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_STATUS"/>
+        <viewAttribute id="IA_REASON"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute hidden="true" id="JOIN$MKT_AGREEMENTORIGIN$MKT_AGREEMENTORIGIN"/>
+        <viewAttribute hidden="true" id="JOIN$MKT_AGREEMENTEXTERNALID$MKT_AGREEMENTEXTERNALID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="P_Agreement_Root">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKT_AGREEMENTORIGIN$MKT_AGREEMENTORIGIN" source="MKT_AGREEMENTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKT_AGREEMENTEXTERNALID$MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTEXTERNALID"/>
+      </input>
+      <input node="P_Interactions_Root">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_REASON" source="IA_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKT_AGREEMENTORIGIN$MKT_AGREEMENTORIGIN" source="MKT_AGREEMENTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKT_AGREEMENTEXTERNALID$MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTEXTERNALID"/>
+      </input>
+      <joinAttribute name="SAPCLIENT"/>
+      <joinAttribute name="INTERACTIONCONTACTUUID"/>
+      <joinAttribute name="JOIN$MKT_AGREEMENTORIGIN$MKT_AGREEMENTORIGIN"/>
+      <joinAttribute name="JOIN$MKT_AGREEMENTEXTERNALID$MKT_AGREEMENTEXTERNALID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="P_Agreement_Ext_ID">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="MKT_AGRMTADDLEXTERNALORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTADDLEXTERNALID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="CUAND_AGR_EXT_ID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTADDLEXTERNALORIGIN" source="MKT_AGRMTADDLEXTERNALORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTADDLEXTERNALID" source="MKT_AGREEMENTADDLEXTERNALID"/>
+      </input>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="P_Interactions_Ext_ID">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MKT_AGREEMENTORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTEXTERNALID"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_STATUS"/>
+        <viewAttribute id="IA_REASON"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="OBSOLETE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTORIGIN" source="MKT_AGREEMENTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_REASON" source="IA_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;COMM_MEDIUM&quot; !='System') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;OBSOLETE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="J_Agreement_Ext_ID_Interactions" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_STATUS"/>
+        <viewAttribute id="IA_REASON"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute hidden="true" id="JOIN$MKT_AGRMTADDLEXTERNALORIGIN$MKT_AGREEMENTORIGIN"/>
+        <viewAttribute hidden="true" id="JOIN$MKT_AGREEMENTADDLEXTERNALID$MKT_AGREEMENTEXTERNALID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="P_Agreement_Ext_ID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKT_AGRMTADDLEXTERNALORIGIN$MKT_AGREEMENTORIGIN" source="MKT_AGRMTADDLEXTERNALORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKT_AGREEMENTADDLEXTERNALID$MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTADDLEXTERNALID"/>
+      </input>
+      <input node="P_Interactions_Ext_ID">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_REASON" source="IA_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKT_AGRMTADDLEXTERNALORIGIN$MKT_AGREEMENTORIGIN" source="MKT_AGREEMENTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKT_AGREEMENTADDLEXTERNALID$MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTEXTERNALID"/>
+      </input>
+      <joinAttribute name="SAPCLIENT"/>
+      <joinAttribute name="JOIN$MKT_AGRMTADDLEXTERNALORIGIN$MKT_AGREEMENTORIGIN"/>
+      <joinAttribute name="JOIN$MKT_AGREEMENTADDLEXTERNALID$MKT_AGREEMENTEXTERNALID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:UnionView" id="U_Agreement_Interactions">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_STATUS"/>
+        <viewAttribute id="IA_REASON"/>
+        <viewAttribute id="TIMESTAMP"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="J_Agreement_Root_Interactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_REASON" source="IA_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="J_Agreement_Ext_ID_Interactions">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_STATUS" source="IA_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_REASON" source="IA_REASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+      </input>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="U_Agreement_Interactions">
+    <descriptions/>
+    <attributes>
+      <attribute id="SAPCLIENT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAP Client"/>
+        <keyMapping columnObjectName="U_Agreement_Interactions" columnName="SAPCLIENT"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTUUID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Key"/>
+        <keyMapping columnObjectName="U_Agreement_Interactions" columnName="MKT_AGREEMENTUUID"/>
+      </attribute>
+      <attribute id="INTERACTIONCONTACTUUID" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact UUID"/>
+        <keyMapping columnObjectName="U_Agreement_Interactions" columnName="INTERACTIONCONTACTUUID"/>
+      </attribute>
+      <attribute id="IA_TYPE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Interaction Type"/>
+        <keyMapping columnObjectName="U_Agreement_Interactions" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="IA_STATUS" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Interaction Status"/>
+        <keyMapping columnObjectName="U_Agreement_Interactions" columnName="IA_STATUS"/>
+      </attribute>
+      <attribute id="IA_REASON" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Interaction Reason"/>
+        <keyMapping columnObjectName="U_Agreement_Interactions" columnName="IA_REASON"/>
+      </attribute>
+      <attribute id="TIMESTAMP" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Interaction Timestamp"/>
+        <keyMapping columnObjectName="U_Agreement_Interactions" columnName="TIMESTAMP"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="253" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="P_Agreement_Root" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="377"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="P_Interactions_Root" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="377"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="J_Agreement_Root_Interactions" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="281"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="P_Agreement_Root" modelObjectNameSpace="J_Agreement_Root_Interactions" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="P_Interactions_Root" modelObjectNameSpace="J_Agreement_Root_Interactions" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="P_Agreement_Ext_ID" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="377"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="P_Interactions_Ext_ID" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="484" y="377"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="J_Agreement_Ext_ID_Interactions" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="281"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="P_Agreement_Ext_ID" modelObjectNameSpace="J_Agreement_Ext_ID_Interactions" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="P_Interactions_Ext_ID" modelObjectNameSpace="J_Agreement_Ext_ID_Interactions" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="U_Agreement_Interactions" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="253" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

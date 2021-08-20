@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.internal::CA_D_AGREEMENT_WITH_TERMS" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_D_AGREEMENT_WITH_TERMS"/>
+  <metadata changedAt="2018-10-17 17:56:22.643"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="37"/>
+  <dataSources>
+    <DataSource id="CA_D_AGREEMENT_ROOT">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_D_AGREEMENT_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_AGREEMENT_TERMS">
+      <resourceUri>sap.hana-app.cuan.contact.internal::CA_D_AGREEMENT_TERMS</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="P_Agreement_Root">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="MKT_AGREEMENTORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTEXTERNALID"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="MKT_AGREEMENTISBUNDLE"/>
+        <viewAttribute id="MKT_AGREEMENTISBUNDLEMEMBER"/>
+        <viewAttribute id="MKT_AGRMTCANCELLATIONREASON"/>
+        <viewAttribute id="CONTACTID"/>
+        <viewAttribute id="CONTACTORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTTYPE"/>
+        <viewAttribute id="MKT_AGREEMENTSTARTDATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTENDDATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTISCANCELED"/>
+        <viewAttribute id="MKT_AGREEMENTBUNDLEORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTBUNDLEEXTERNALID"/>
+        <viewAttribute id="MKT_AGRMTBUNDLESTARTDATETIME"/>
+        <viewAttribute id="MARKETINGAREA"/>
+        <viewAttribute id="MARKETINGLOCATIONORIGIN"/>
+        <viewAttribute id="MARKETINGLOCATIONEXTERNALID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CA_D_AGREEMENT_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTORIGIN" source="MKT_AGREEMENTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTISBUNDLE" source="MKT_AGREEMENTISBUNDLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTISBUNDLEMEMBER" source="MKT_AGREEMENTISBUNDLEMEMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCANCELLATIONREASON" source="MKT_AGRMTCANCELLATIONREASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACTID" source="CONTACTID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACTORIGIN" source="CONTACTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTTYPE" source="MKT_AGREEMENTTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTSTARTDATETIME" source="MKT_AGREEMENTSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTENDDATETIME" source="MKT_AGREEMENTENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTISCANCELED" source="MKT_AGREEMENTISCANCELED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTBUNDLEORIGIN" source="MKT_AGREEMENTBUNDLEORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTBUNDLEEXTERNALID" source="MKT_AGREEMENTBUNDLEEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTBUNDLESTARTDATETIME" source="MKT_AGRMTBUNDLESTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGAREA" source="MARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGLOCATIONORIGIN" source="MARKETINGLOCATIONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGLOCATIONEXTERNALID" source="MARKETINGLOCATIONEXTERNALID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="P_Agreement_Terms">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="MKT_AGREEMENTTERMSUUID"/>
+        <viewAttribute id="MKT_AGRMTTERMSSTARTDATETIME"/>
+        <viewAttribute id="MKT_AGRMTTERMSENDDATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTSTATUS"/>
+        <viewAttribute id="PRODUCTORIGIN"/>
+        <viewAttribute id="PRODUCTID"/>
+        <viewAttribute id="MKT_AGRMTCANCLNDCSNTODATETIME"/>
+        <viewAttribute id="MKT_AGRMTCANCLNCONDITIONS"/>
+        <viewAttribute id="MKT_AGRPAYMENTISINADVANCE"/>
+        <viewAttribute id="MKT_AGREEMENTRENEWALTYPE"/>
+        <viewAttribute id="MKT_AGRMTPROLNGNDCSNFROMDTETME"/>
+        <viewAttribute id="MKT_AGREEMENTPAYMENTFREQUENCY"/>
+        <viewAttribute id="MKT_AGREEMENTCURRENTSTATUS"/>
+        <viewAttribute id="MKT_AGRMTBUNDLEPRODUCTORIGIN"/>
+        <viewAttribute id="MKT_AGRMTBUNDLEPRODUCTID"/>
+        <viewAttribute id="MKT_AGRMTCORRESPONDENCEMEDIUM"/>
+        <viewAttribute id="MKT_AGREEMENTPAYMENTMETHOD"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CA_D_AGREEMENT_TERMS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTTERMSUUID" source="MKT_AGREEMENTTERMSUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTTERMSSTARTDATETIME" source="MKT_AGRMTTERMSSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTTERMSENDDATETIME" source="MKT_AGRMTTERMSENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTSTATUS" source="MKT_AGREEMENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTORIGIN" source="PRODUCTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTID" source="PRODUCTID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCANCLNDCSNTODATETIME" source="MKT_AGRMTCANCLNDCSNTODATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCANCLNCONDITIONS" source="MKT_AGRMTCANCLNCONDITIONS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRPAYMENTISINADVANCE" source="MKT_AGRMTPAYMENTISINADVANCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTRENEWALTYPE" source="MKT_AGREEMENTRENEWALTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTPROLNGNDCSNFROMDTETME" source="MKT_AGRMTPROLNGNDCSNFROMDTETME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTPAYMENTFREQUENCY" source="MKT_AGREEMENTPAYMENTFREQUENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTCURRENTSTATUS" source="MKT_AGREEMENTCURRENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTBUNDLEPRODUCTORIGIN" source="MKT_AGRMTBUNDLEPRODUCTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTBUNDLEPRODUCTID" source="MKT_AGRMTBUNDLEPRODUCTID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCORRESPONDENCEMEDIUM" source="MKT_AGRMTCORRESPONDENCEMEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTPAYMENTMETHOD" source="MKT_AGREEMENTPAYMENTMETHOD"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="J_Agreement_Terms" cardinality="C1_N" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="MKT_AGREEMENTORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTEXTERNALID"/>
+        <viewAttribute id="MKT_AGREEMENTISBUNDLE"/>
+        <viewAttribute id="MKT_AGREEMENTISBUNDLEMEMBER"/>
+        <viewAttribute id="MKT_AGRMTCANCELLATIONREASON"/>
+        <viewAttribute id="CONTACTID"/>
+        <viewAttribute id="CONTACTORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTTYPE"/>
+        <viewAttribute id="MKT_AGREEMENTSTARTDATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTENDDATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTISCANCELED"/>
+        <viewAttribute id="MKT_AGREEMENTBUNDLEORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTBUNDLEEXTERNALID"/>
+        <viewAttribute id="MKT_AGRMTBUNDLESTARTDATETIME"/>
+        <viewAttribute id="MARKETINGAREA"/>
+        <viewAttribute id="MKT_AGREEMENTTERMSUUID"/>
+        <viewAttribute id="MKT_AGRMTTERMSSTARTDATETIME"/>
+        <viewAttribute id="MKT_AGRMTTERMSENDDATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTSTATUS"/>
+        <viewAttribute id="PRODUCTID"/>
+        <viewAttribute id="PRODUCTORIGIN"/>
+        <viewAttribute id="MKT_AGRMTCANCLNCONDITIONS"/>
+        <viewAttribute id="MKT_AGRPAYMENTISINADVANCE"/>
+        <viewAttribute id="MKT_AGRMTCANCLNDCSNTODATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTRENEWALTYPE"/>
+        <viewAttribute id="MKT_AGRMTPROLNGNDCSNFROMDTETME"/>
+        <viewAttribute id="MKT_AGREEMENTPAYMENTFREQUENCY"/>
+        <viewAttribute id="MKT_AGREEMENTCURRENTSTATUS"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="MKT_AGRMTBUNDLEPRODUCTORIGIN"/>
+        <viewAttribute id="MKT_AGRMTBUNDLEPRODUCTID"/>
+        <viewAttribute id="MARKETINGLOCATIONORIGIN"/>
+        <viewAttribute id="MARKETINGLOCATIONEXTERNALID"/>
+        <viewAttribute id="MKT_AGRMTCORRESPONDENCEMEDIUM"/>
+        <viewAttribute id="MKT_AGREEMENTPAYMENTMETHOD"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="TIMESTAMP" id="MKT_AGRMTTERMSSTARTDATETIME_TS" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;MKT_AGRMTTERMSSTARTDATETIME&quot;</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="TIMESTAMP" id="MKT_AGRMTTERMSENDDATETIME_TS" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;MKT_AGRMTTERMSENDDATETIME&quot;</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#P_Agreement_Root">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTORIGIN" source="MKT_AGREEMENTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTISBUNDLE" source="MKT_AGREEMENTISBUNDLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTISBUNDLEMEMBER" source="MKT_AGREEMENTISBUNDLEMEMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCANCELLATIONREASON" source="MKT_AGRMTCANCELLATIONREASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACTID" source="CONTACTID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACTORIGIN" source="CONTACTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTTYPE" source="MKT_AGREEMENTTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTSTARTDATETIME" source="MKT_AGREEMENTSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTENDDATETIME" source="MKT_AGREEMENTENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTISCANCELED" source="MKT_AGREEMENTISCANCELED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTBUNDLEORIGIN" source="MKT_AGREEMENTBUNDLEORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTBUNDLEEXTERNALID" source="MKT_AGREEMENTBUNDLEEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTBUNDLESTARTDATETIME" source="MKT_AGRMTBUNDLESTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGAREA" source="MARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGLOCATIONORIGIN" source="MARKETINGLOCATIONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGLOCATIONEXTERNALID" source="MARKETINGLOCATIONEXTERNALID"/>
+      </input>
+      <input node="#P_Agreement_Terms">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTTERMSUUID" source="MKT_AGREEMENTTERMSUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTTERMSSTARTDATETIME" source="MKT_AGRMTTERMSSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTTERMSENDDATETIME" source="MKT_AGRMTTERMSENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTSTATUS" source="MKT_AGREEMENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTID" source="PRODUCTID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTORIGIN" source="PRODUCTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCANCLNCONDITIONS" source="MKT_AGRMTCANCLNCONDITIONS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRPAYMENTISINADVANCE" source="MKT_AGRPAYMENTISINADVANCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCANCLNDCSNTODATETIME" source="MKT_AGRMTCANCLNDCSNTODATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTRENEWALTYPE" source="MKT_AGREEMENTRENEWALTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTPROLNGNDCSNFROMDTETME" source="MKT_AGRMTPROLNGNDCSNFROMDTETME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTPAYMENTFREQUENCY" source="MKT_AGREEMENTPAYMENTFREQUENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTCURRENTSTATUS" source="MKT_AGREEMENTCURRENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTBUNDLEPRODUCTORIGIN" source="MKT_AGRMTBUNDLEPRODUCTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTBUNDLEPRODUCTID" source="MKT_AGRMTBUNDLEPRODUCTID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCORRESPONDENCEMEDIUM" source="MKT_AGRMTCORRESPONDENCEMEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTPAYMENTMETHOD" source="MKT_AGREEMENTPAYMENTMETHOD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+      </input>
+      <joinAttribute name="SAPCLIENT"/>
+      <joinAttribute name="MKT_AGREEMENTUUID"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="J_Agreement_Terms">
+    <descriptions/>
+    <attributes>
+      <attribute id="SAPCLIENT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAP Client"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="SAPCLIENT"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTUUID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Key"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTUUID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTORIGIN" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Origin"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTEXTERNALID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement External ID"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTEXTERNALID"/>
+      </attribute>
+      <attribute id="INTERACTIONCONTACTUUID" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact UUID"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="INTERACTIONCONTACTUUID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTISBUNDLE" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bundle"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTISBUNDLE"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTISBUNDLEMEMBER" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bundle Member"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTISBUNDLEMEMBER"/>
+      </attribute>
+      <attribute id="MKT_AGRMTCANCELLATIONREASON" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Cancellation Reason "/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTCANCELLATIONREASON"/>
+      </attribute>
+      <attribute id="CONTACTID" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact ID"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="CONTACTID"/>
+      </attribute>
+      <attribute id="CONTACTORIGIN" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Origin"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="CONTACTORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTTYPE" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Type "/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTTYPE"/>
+      </attribute>
+      <attribute id="MARKETINGAREA" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area "/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MARKETINGAREA"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTSTARTDATETIME" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Start Date/Time"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTSTARTDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTENDDATETIME" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement End Date/Time "/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTENDDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTISCANCELED" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Cancelled "/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTISCANCELED"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTBUNDLEORIGIN" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Origin"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTBUNDLEORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTBUNDLEEXTERNALID" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle External ID"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTBUNDLEEXTERNALID"/>
+      </attribute>
+      <attribute id="MKT_AGRMTBUNDLESTARTDATETIME" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Start Date/Time"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTBUNDLESTARTDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTTERMSUUID" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Terms Key"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTTERMSUUID"/>
+      </attribute>
+      <attribute id="MKT_AGRMTTERMSSTARTDATETIME" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Validity Start Date/Time "/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTTERMSSTARTDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGRMTTERMSENDDATETIME" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Validity End Date/Time"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTTERMSENDDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTSTATUS" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Status"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTSTATUS"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTCURRENTSTATUS" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Current Status"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTCURRENTSTATUS"/>
+      </attribute>
+      <attribute id="PRODUCTORIGIN" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product Origin"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="PRODUCTORIGIN"/>
+      </attribute>
+      <attribute id="PRODUCTID" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Product ID"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="PRODUCTID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTRENEWALTYPE" order="26" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Renewal Type"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTRENEWALTYPE"/>
+      </attribute>
+      <attribute id="MKT_AGRMTCANCLNCONDITIONS" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Cancellation Conditions "/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTCANCLNCONDITIONS"/>
+      </attribute>
+      <attribute id="MKT_AGRMTCANCLNDCSNTODATETIME" order="28" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latest Date/Time for Cancellation Before Automatic Renewal"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTCANCLNDCSNTODATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGRMTPROLNGNDCSNFROMDTETME" order="29" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Earliest Date/Time for Prolongation  "/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTPROLNGNDCSNFROMDTETME"/>
+      </attribute>
+      <attribute id="MKT_AGRPAYMENTISINADVANCE" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Payment in Advance "/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRPAYMENTISINADVANCE"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTPAYMENTFREQUENCY" order="31" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Payment Frequency"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTPAYMENTFREQUENCY"/>
+      </attribute>
+      <attribute id="MKT_AGRMTBUNDLEPRODUCTORIGIN" order="32" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bundle Product Origin"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTBUNDLEPRODUCTORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGRMTBUNDLEPRODUCTID" order="33" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bundle Product ID"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTBUNDLEPRODUCTID"/>
+      </attribute>
+      <attribute id="MARKETINGLOCATIONORIGIN" order="34" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Origin"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MARKETINGLOCATIONORIGIN"/>
+      </attribute>
+      <attribute id="MARKETINGLOCATIONEXTERNALID" order="35" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location ID"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MARKETINGLOCATIONEXTERNALID"/>
+      </attribute>
+      <attribute id="MKT_AGRMTCORRESPONDENCEMEDIUM" order="36" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Correspondence Medium"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGRMTCORRESPONDENCEMEDIUM"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTPAYMENTMETHOD" order="37" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Payment Method"/>
+        <keyMapping columnObjectName="J_Agreement_Terms" columnName="MKT_AGREEMENTPAYMENTMETHOD"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="124" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="P_Agreement_Root" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="64" width="155"/>
+      </shape>
+      <shape expanded="true" modelObjectName="P_Agreement_Terms" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="191" y="261"/>
+        <rectangleSize height="64" width="198"/>
+      </shape>
+      <shape expanded="true" modelObjectName="J_Agreement_Terms" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="101" y="165"/>
+        <rectangleSize height="82" width="187"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

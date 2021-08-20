@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.common.internal::CA_D_CE_IA_TYPE" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_D_CE_IA_TYPE"/>
+  <metadata changedAt="2016-03-10 15:03:23.305"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUANC_CE_IA_TYPE">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_IA_TYPE</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_IATYP_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_IATYP_T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IA_TYPE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="DIRECTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUANC_CE_IA_TYPE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_IATYP_T" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="DIRECTION"/>
+        <viewAttribute id="IA_TYPE_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_IA_TYPE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+      </input>
+      <input node="#CUANC_CE_IATYP_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE_DESC" source="IA_TYPE_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="IA_TYPE"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_IATYP_T">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MANDT"/>
+        <keyMapping columnObjectName="Join_IATYP_T" columnName="MANDT"/>
+      </attribute>
+      <attribute id="DIRECTION" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DIRECTION"/>
+        <keyMapping columnObjectName="Join_IATYP_T" columnName="DIRECTION"/>
+      </attribute>
+      <attribute id="IA_TYPE" order="3" attributeHierarchyActive="false" descriptionColumnName="IA_TYPE_DESC" displayAttribute="false">
+        <descriptions defaultDescription="IA_TYPE"/>
+        <keyMapping columnObjectName="Join_IATYP_T" columnName="IA_TYPE"/>
+      </attribute>
+      <attribute id="IA_TYPE_DESC" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IA_TYPE_DESC"/>
+        <keyMapping columnObjectName="Join_IATYP_T" columnName="IA_TYPE_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="22" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_IA_TYPE" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_IATYP_T" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

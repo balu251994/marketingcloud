@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_LANDING_PAGE" applyPrivilegeType="NONE" defaultLanguage="$$language$$" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" hierarchiesSQLEnabled="false" xscCompatibilityMode="true" deprecated="true">
+<origin/>
+  <descriptions defaultDescription="Landing Page"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="39"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CP_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CP_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.db.cuan::CUAND_MC_CONTENT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_MC_CONTENT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_IA_RT" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="SOURCE_OBJECT_ID"/>
+        <viewAttribute id="SOURCE_OBJECT_TYPE"/>
+        <viewAttribute id="MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IA_RT"/>
+      <filter>(in (&quot;SOURCE_OBJECT_TYPE&quot;,'I_MKT_MARKETINGCONTENTTP','CUAN_CONTENT_PAGE')) AND (&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_Landing_PG" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="LANGUAGE_DEFAULT"/>
+        <viewAttribute hidden="true" id="JOIN$SOURCE_OBJECT_ID$DB_KEY_NVC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_IA_RT">
+        <mapping source="DB_KEY" target="DB_KEY" xsi:type="Calculation:AttributeMapping"/>
+        <mapping source="MANDT" target="MANDT" xsi:type="Calculation:AttributeMapping"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SOURCE_OBJECT_ID$DB_KEY_NVC" source="SOURCE_OBJECT_ID"/>
+      </input>
+      <input node="Union_Form_LPG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_DEFAULT" source="LANGUAGE_DEFAULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SOURCE_OBJECT_ID$DB_KEY_NVC" source="DB_KEY_NVC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="JOIN$SOURCE_OBJECT_ID$DB_KEY_NVC"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:UnionView" id="Union_Form_LPG">
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="LANGUAGE_DEFAULT"/>
+        <viewAttribute id="DB_KEY_NVC"/>
+      
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/></viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_Form" emptyUnionBehavior="NO_ROW">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MKT_AREA_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_DEFAULT" source="LANGUAGE_DEFAULT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_NVC" source="DB_KEY_NVC"/>
+      </input>
+      <input node="Projection_LPG" emptyUnionBehavior="NO_ROW">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="MARKETINGCONTENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="MARKETINGCONTENTNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AREA_ID" source="MARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="MARKETINGCONTENTTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STATUS" source="MARKETINGCONTENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LANGUAGE_DEFAULT" source="MKTGCNTNTDEFAULTLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="MARKETINGCONTENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_NVC" source="DB_KEY_NVC"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Form">
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="STATUS"/>
+        <viewAttribute id="LANGUAGE_DEFAULT"/>
+        <viewAttribute id="DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute id="DB_KEY_NVC" datatype="NVARCHAR" length="50" expressionLanguage="SQL">
+          <formula>to_nvarchar(&quot;DB_KEY&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input emptyUnionBehavior="undefined" node="CUAND_CP_ROOT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_LPG" filterExpressionLanguage="SQL">
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="MARKETINGCONTENT"/>
+        <viewAttribute id="MARKETINGCONTENTNAME"/>
+        <viewAttribute id="MARKETINGAREA"/>
+      
+        <viewAttribute id="MARKETINGCONTENTTYPE"/>
+        <viewAttribute id="MARKETINGCONTENTSTATUS"/>
+        <viewAttribute id="MKTGCNTNTDEFAULTLANGUAGE"/>
+        <viewAttribute id="MARKETINGCONTENTUUID"/></viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute id="DB_KEY_NVC" datatype="NVARCHAR" length="50" expressionLanguage="SQL">
+          <formula>TO_NVARCHAR(&quot;MARKETINGCONTENTUUID&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="sap.hana-app.cuan.db.cuan::CUAND_MC_CONTENT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_Landing_PG">
+    <descriptions/>
+    <attributes>
+      <attribute id="LP_TYPE" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Landing Page Type"/>
+        <keyMapping columnObjectName="Join_Landing_PG" columnName="TYPE"/>
+      </attribute>
+      <attribute id="LP_MKT_AREA_ID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Landing Page Marketing Area ID"/>
+        <keyMapping columnObjectName="Join_Landing_PG" columnName="MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="LP_NAME" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Landing Page"/>
+        <keyMapping columnObjectName="Join_Landing_PG" columnName="NAME"/>
+      </attribute>
+      <attribute id="LP_STATUS" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Landing Page Status"/>
+        <keyMapping columnObjectName="Join_Landing_PG" columnName="STATUS"/>
+      </attribute>
+      <attribute id="LP_LANGUAGE_DEFAULT" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Landing Page Default Language"/>
+        <keyMapping columnObjectName="Join_Landing_PG" columnName="LANGUAGE_DEFAULT"/>
+      </attribute>
+      <attribute id="LP_ID" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Landing Page ID"/>
+        <keyMapping columnObjectName="Join_Landing_PG" columnName="ID"/>
+      </attribute>
+      <attribute id="LP_IA_DB_KEY" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Key"/>
+        <keyMapping columnObjectName="Join_Landing_PG" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="LP_MANDT" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_Landing_PG" columnName="MANDT"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape modelObjectName="Output" modelObjectNameSpace="MeasureGroup" expanded="true">
+        <upperLeftCorner x="328" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_IA_RT" modelObjectNameSpace="CalculationView" expanded="true">
+        <upperLeftCorner x="395" y="376"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_Landing_PG" modelObjectNameSpace="CalculationView" expanded="true">
+        <upperLeftCorner x="328" y="217"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Projection_IA_RT" modelObjectNameSpace="Join_Landing_PG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Union_Form_LPG" modelObjectNameSpace="Join_Landing_PG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="446" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_Form_LPG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="118" y="380"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_Form" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="521"/>
+        <rectangleSize width="160"/>
+      </shape>
+    
+      <shape expanded="true" modelObjectName="Projection_LPG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302" y="521"/>
+        <rectangleSize height="30" width="160"/>
+      </shape></shapes>
+  </layout>
+</Calculation:scenario>

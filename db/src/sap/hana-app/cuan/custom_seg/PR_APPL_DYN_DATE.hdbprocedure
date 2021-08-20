@@ -1,0 +1,101 @@
+PROCEDURE "sap.hana-app.cuan.custom_seg::PR_APPL_DYN_DATE" (
+		IN  IP_SCENARIO_PARAMETER NCLOB,
+		OUT OP_SCENARIO_PARAMETER NCLOB, 
+		OUT OP_OLD_SHIFT NVARCHAR(1)
+	)	 
+	 
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER 
+	--DEFAULT SCHEMA <default_schema_name>
+	READS SQL DATA AS
+BEGIN
+
+	declare l_dyn_date_json	nclob;
+
+	declare l_low 	int;
+	declare l_high 	int;
+	declare l_unit 	nclob;
+	
+	declare l_date_start date;	
+	declare l_date_end   date;
+		
+	declare l_inject int := 0;	
+	
+	--
+	OP_OLD_SHIFT := ' ';
+			
+	-- convert parameter string to name/value table	
+	CALL "sap.hana-app.cuan.cpred.reuse.internal::PR_TO_NAME_VALUE"(IP_SCENARIO_PARAMETER, lt_scenario_parameters);
+	
+	-- get dyn date entry
+	SELECT CASE WHEN "VALUE" IS NULL THEN '' ELSE "VALUE" END
+	  INTO l_dyn_date_json
+	  FROM "sap.hana-app.sys::DUMMY" as T1
+	  LEFT JOIN :lt_scenario_parameters as T2
+	     ON T2."NAME" = 'IP_DOC_DATE_DYN';
+
+	IF :l_dyn_date_json = '' THEN
+		--empty
+		l_inject := 0;
+		OP_OLD_SHIFT := ' ';
+	ELSE
+		-- decode dynamic date
+		CALL "sap.hana-app.cuan.cpred.reuse.internal::PR_DECODE_DYN_DATE"(
+			l_dyn_date_json,
+			l_low,
+			l_high,
+			l_unit
+		);
+	
+		-- calc dates
+		IF :l_unit = 'IGNORE' THEN
+			-- do nothing
+			l_inject := 0;
+			OP_OLD_SHIFT := ' ';
+		ELSEIF :l_unit = 'USEFIXDATE' THEN
+	 		l_inject := 0;																	-- keep DATE_START and DATE_END
+	 		OP_OLD_SHIFT := 'X';
+	 	ELSEIF :l_unit = 'DAY' THEN
+			l_date_start = ADD_DAYS(CURRENT_DATE, :l_low);
+		    l_date_end   = ADD_DAYS(CURRENT_DATE, :l_high);
+		    l_inject := 1;
+		    OP_OLD_SHIFT := ' ';
+		ELSEIF :l_unit = 'MONTH' THEN
+			l_date_start = ADD_DAYS(LAST_DAY(ADD_MONTHS((CURRENT_DATE), :l_low - 1)),1);	-- day -> day in wanted-1 month -> end of prev month -> +1 day -> 1st day of wanted month
+		    l_date_end   = LAST_DAY(ADD_MONTHS((CURRENT_DATE), :l_high));					-- day -> day in wanted   month -> last day
+		    l_inject := 1;
+		    OP_OLD_SHIFT := ' ';
+		ELSEIF :l_unit = 'YEAR' THEN
+			l_date_start = CONCAT(lpad(YEAR(ADD_YEARS(CURRENT_DATE, :l_low)),4,'0'),'0101');			-- day -> day in wanted year -> set MMDD to start / Jan  1st
+		    l_date_end   = CONCAT(lpad(YEAR(ADD_YEARS(CURRENT_DATE, :l_high)),4,'0'),'1231');			-- day -> day in wanted year -> set MMDD to end   / Dec 31st
+		    l_inject := 1;
+		    OP_OLD_SHIFT := ' ';
+		ELSE
+			-- todo throw error - unsupported unit
+		END IF; 
+	END IF;
+	-- create adjusted name/value table	
+	IF :l_inject = 1 THEN
+	     -- can't DELETE/INSERT on internal table - so here's a UNION ALL work around
+	     -- to_nclob is important, otherwise missleading error messages
+		 lt_scenario_parameters2 = 
+		 	SELECT * 
+		 		FROM :lt_scenario_parameters
+		 		where NAME not in ('IP_DOC_DATE_START','IP_DOC_DATE_END','IP_DOC_DATE_DYN')
+		 	UNION ALL
+		 		SELECT 'IP_DOC_DATE_START' as "NAME", to_nclob(:l_date_start) as "VALUE" from "sap.hana-app.sys::DUMMY"
+		 	UNION ALL
+		 		SELECT 'IP_DOC_DATE_END' as "NAME", to_nclob(:l_date_end) as "VALUE" from "sap.hana-app.sys::DUMMY"
+	 		;
+	
+	ELSE
+		-- keep one to one except IP_DOC_DATE_DYN
+		 lt_scenario_parameters2 = SELECT * FROM :lt_scenario_parameters where NAME not in ('IP_DOC_DATE_DYN');
+	END IF;	
+	
+	-- create new scenario parameter string form adjusted name value table
+    lt_scenario_parameters2_nvarchar = select cast(name as nvarchar(255)) as name, cast(value as nvarchar(255)) as value from :lt_scenario_parameters2;
+	CALL "sap.hana-app.cuan.cpred.reuse.internal::PR_NAME_VALUE_TO_STRING"(:lt_scenario_parameters2_nvarchar, tmp_string_table);
+	SELECT TOP 1 STRING into OP_SCENARIO_PARAMETER from :tmp_string_table;
+	
+END;

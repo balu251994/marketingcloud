@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.internal::CA_D_AGREEMENT_ROOT" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_D_AGREEMENT_ROOT"/>
+  <metadata changedAt="2018-09-28 09:42:54.515"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUAND_AGR_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_AGR_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="P_Agreement_Root">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="MKT_AGREEMENTORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTEXTERNALID"/>
+        <viewAttribute id="MKT_AGREEMENTISBUNDLE"/>
+        <viewAttribute id="MKT_AGREEMENTISBUNDLEMEMBER"/>
+        <viewAttribute id="MKT_AGRMTCANCELLATIONREASON"/>
+        <viewAttribute id="CONTACTID"/>
+        <viewAttribute id="CONTACTORIGIN"/>
+        <viewAttribute id="INTERACTIONCONTACTUUID"/>
+        <viewAttribute id="MKT_AGREEMENTTYPE"/>
+        <viewAttribute id="MARKETINGAREA"/>
+        <viewAttribute id="MKT_AGREEMENTSTARTDATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTENDDATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTISCANCELED"/>
+        <viewAttribute id="MKT_AGREEMENTBUNDLEORIGIN"/>
+        <viewAttribute id="MKT_AGREEMENTBUNDLEEXTERNALID"/>
+        <viewAttribute id="MKT_AGRMTBUNDLESTARTDATETIME"/>
+        <viewAttribute id="MARKETINGLOCATIONORIGIN"/>
+        <viewAttribute id="MARKETINGLOCATIONEXTERNALID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_AGR_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTORIGIN" source="MKT_AGREEMENTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTEXTERNALID" source="MKT_AGREEMENTEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTISBUNDLE" source="MKT_AGREEMENTISBUNDLE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTISBUNDLEMEMBER" source="MKT_AGREEMENTISBUNDLEMEMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCANCELLATIONREASON" source="MKT_AGRMTCANCELLATIONREASON"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACTID" source="CONTACTID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACTORIGIN" source="CONTACTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INTERACTIONCONTACTUUID" source="INTERACTIONCONTACTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTTYPE" source="MKT_AGREEMENTTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGAREA" source="MARKETINGAREA"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTSTARTDATETIME" source="MKT_AGREEMENTSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTENDDATETIME" source="MKT_AGREEMENTENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTISCANCELED" source="MKT_AGREEMENTISCANCELED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTBUNDLEORIGIN" source="MKT_AGREEMENTBUNDLEORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTBUNDLEEXTERNALID" source="MKT_AGREEMENTBUNDLEEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTBUNDLESTARTDATETIME" source="MKT_AGRMTBUNDLESTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGLOCATIONORIGIN" source="MARKETINGLOCATIONORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARKETINGLOCATIONEXTERNALID" source="MARKETINGLOCATIONEXTERNALID"/>
+      </input>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="P_Agreement_Root">
+    <descriptions/>
+    <attributes>
+      <attribute id="SAPCLIENT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAP Client"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="SAPCLIENT"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTUUID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Key"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTUUID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTORIGIN" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Origin"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTEXTERNALID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement External ID"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTEXTERNALID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTISBUNDLE" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bundle"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTISBUNDLE"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTISBUNDLEMEMBER" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Bundle Member"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTISBUNDLEMEMBER"/>
+      </attribute>
+      <attribute id="MKT_AGRMTCANCELLATIONREASON" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Cancellation Reason"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGRMTCANCELLATIONREASON"/>
+      </attribute>
+      <attribute id="CONTACTID" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact ID"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="CONTACTID"/>
+      </attribute>
+      <attribute id="CONTACTORIGIN" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Origin"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="CONTACTORIGIN"/>
+      </attribute>
+      <attribute id="INTERACTIONCONTACTUUID" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact UUID"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="INTERACTIONCONTACTUUID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTTYPE" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Type"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTTYPE"/>
+      </attribute>
+      <attribute id="MARKETINGAREA" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MARKETINGAREA"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTSTARTDATETIME" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Start Date/Time"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTSTARTDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTENDDATETIME" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement End Date/Time"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTENDDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTISCANCELED" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Cancelled"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTISCANCELED"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTBUNDLEORIGIN" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Origin"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTBUNDLEORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTBUNDLEEXTERNALID" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle External ID"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGREEMENTBUNDLEEXTERNALID"/>
+      </attribute>
+      <attribute id="MKT_AGRMTBUNDLESTARTDATETIME" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Start Date/Time"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MKT_AGRMTBUNDLESTARTDATETIME"/>
+      </attribute>
+      <attribute id="MARKETINGLOCATIONORIGIN" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location Origin"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MARKETINGLOCATIONORIGIN"/>
+      </attribute>
+      <attribute id="MARKETINGLOCATIONEXTERNALID" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Location ID"/>
+        <keyMapping columnObjectName="P_Agreement_Root" columnName="MARKETINGLOCATIONEXTERNALID"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="22" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="P_Agreement_Root" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

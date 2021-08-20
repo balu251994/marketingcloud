@@ -1,0 +1,2129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.cpred.datafoundation.internal::CA_LEAD_CONTACTS_FND" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_LEAD_CONTACTS_FND"/>
+  <metadata changedAt="2018-02-26 17:38:52.22"/>
+  <localVariables>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="IP_JOIN_SET_ID"/>
+      <variableProperties datatype="NVARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="i_scenario_parameters" parameter="true">
+      <descriptions defaultDescription="i_scenario_parameters"/>
+      <variableProperties datatype="NCLOB" defaultValue="&quot;IP_DOC_DATE_START&quot;:&quot;1000-12-31&quot;,&quot;IP_DOC_DATE_END&quot;:&quot;9999-12-31&quot;" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_INTERACTION_SCORING">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.contact::CA_INTERACTION_SCORING"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_CONTACT_PHONE_AFFINITY">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_PHONE_AFFINITY"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_CONTACT_PHONE_AFFINITY">
+      <targetVariable name="i_scenario_parameters" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_PHONE_AFFINITY"/>
+      <localVariable>i_scenario_parameters</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_CONTACT_MOBILE_PUSH_AFFINITY">
+      <targetVariable name="i_scenario_parameters" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_MOBILE_PUSH_AFFINITY"/>
+      <localVariable>i_scenario_parameters</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_CONTACT_MOBILE_PUSH_AFFINITY">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_MOBILE_PUSH_AFFINITY"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_CONTACT_EMAIL_AFFINITY">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_EMAIL_AFFINITY"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_CONTACT_EMAIL_AFFINITY">
+      <targetVariable name="i_scenario_parameters" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_EMAIL_AFFINITY"/>
+      <localVariable>i_scenario_parameters</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_MKT_PERMISSIONS_JS">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="MobileOptIn$$$$sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS$$">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="MobilePushOpt$$$$sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS$$">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+  </variableMappings>
+  <informationModelLayout relativeWidthScenario="50"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_REL">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_REL</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_JS_CONTACT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANI_PM_DUMMY">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANI_PM_DUMMY</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CA_INTERACTION_SCORING">
+      <resourceUri>sap.hana-app.cuan.contact::CA_INTERACTION_SCORING</resourceUri>
+    </DataSource>
+    <DataSource id="CA_CONTACT_PHONE_AFFINITY">
+      <resourceUri>sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_PHONE_AFFINITY</resourceUri>
+    </DataSource>
+    <DataSource id="CA_CONTACT_MOBILE_PUSH_AFFINITY">
+      <resourceUri>sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_MOBILE_PUSH_AFFINITY</resourceUri>
+    </DataSource>
+    <DataSource id="CA_CONTACT_EMAIL_AFFINITY">
+      <resourceUri>sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_EMAIL_AFFINITY</resourceUri>
+    </DataSource>
+    <DataSource id="CA_MKT_PERMISSIONS_JS">
+      <resourceUri>sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS">
+      <resourceUri>sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS</resourceUri>
+    </DataSource>
+    <DataSource id="MobileOptIn$$$$sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS$$">
+      <resourceUri>sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS</resourceUri>
+    </DataSource>
+    <DataSource id="MobilePushOpt$$$$sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS$$">
+      <resourceUri>sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="SEX"/></input>
+      <filter>(&quot;CLIENT&quot; ='$$client$$') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;ANONYMIZED&quot; ='') AND (&quot;OBSOLETE&quot; ='') AND (in (&quot;IC_TYPE&quot;,'00','01')) AND (&quot;END_OF_PURPOSE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="RELATION_TYPE"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IC_COMPANY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_REL">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_COMPANY_KEY" source="CONTACT_KEY_TO"/>
+      </input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;RELATION_TYPE&quot; ='01')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="JOIN_SET_ID"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_JS_CONTACT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;JOIN_SET_ID&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_4" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$CONTACT_KEY$ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$ID" source="CONTACT_KEY"/>
+      </input>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$ID" source="ID"/>
+      </input>
+      <joinAttribute name="JOIN$CONTACT_KEY$ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="EMPTY_JS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANI_PM_DUMMY"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;EMPTY_JS&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_5" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute hidden="true" id="JOIN$CLIENT$MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$MANDT" source="CLIENT"/>
+      </input>
+      <input node="Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="JOIN$CLIENT$MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="HPA_CLIENT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="Join_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="CLIENT"/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="Join_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="IC_COMPANY_KEY_BIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="NVARCHAR" id="CONTACT_KEY" length="32" expressionLanguage="SQL">
+          <formula>to_nvarchar(&quot;CONTACT_KEY_BIN&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="NVARCHAR" id="IC_COMPANY_KEY" length="32" expressionLanguage="SQL">
+          <formula>to_nvarchar(&quot;IC_COMPANY_KEY_BIN&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Union_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+      </input>
+      <input node="Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_COMPANY_KEY_BIN" source="IC_COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_BIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="IC_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="BRSCH"/></input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;OBSOLETE&quot; ='') AND (&quot;ANONYMIZED&quot; ='') AND (&quot;_DATAAGING&quot; ='00000000') AND (&quot;IC_TYPE&quot; ='02')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COMPANY_KEY_BIN"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$IC_COMPANY_KEY_BIN$COMPANY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="AGE" expressionLanguage="COLUMN_ENGINE">
+          <formula>IF (&quot;DATE_OF_BIRTH&quot; = '00000000',
+NULL,
+IF (int(midstr(&quot;DATE_OF_BIRTH&quot;,5,2)) &gt; int(midstr(string(now()),6,2)),
+	int(midstr(string(now()),0,4)) - int(midstr(&quot;DATE_OF_BIRTH&quot;,0,4)) - 1,
+	IF (int(midstr(&quot;DATE_OF_BIRTH&quot;,5,2)) &lt; int(midstr(string(now()),6,2)),
+int(midstr(string(now()),0,4)) - int(midstr(&quot;DATE_OF_BIRTH&quot;,0,4)) , 
+IF (int(midstr(&quot;DATE_OF_BIRTH&quot;,7,2)) &gt; int(midstr(string(now()),9,2)),
+int(midstr(string(now()),0,4)) - int(midstr(&quot;DATE_OF_BIRTH&quot;,0,4)) - 1,
+int(midstr(string(now()),0,4)) - int(midstr(&quot;DATE_OF_BIRTH&quot;,0,4))) ) )
+)
+</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="IC_COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$IC_COMPANY_KEY_BIN$COMPANY_KEY" source="IC_COMPANY_KEY_BIN"/>
+      </input>
+      <input node="Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY_BIN" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COMPANY_COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="COMPANY_REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="COMPANY_CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="COMPANYBRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$IC_COMPANY_KEY_BIN$COMPANY_KEY" source="COMPANY_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$IC_COMPANY_KEY_BIN$COMPANY_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COMPANY_KEY_BIN"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="AGE"/>
+        <viewAttribute id="ACTIVITY_SCORE"/>
+        <viewAttribute id="SENTIMENT_SCORE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY_BIN" source="COMPANY_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COMPANY_COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="COMPANY_REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="COMPANY_CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="COMPANYBRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AGE" source="AGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+      </input>
+      <input node="CA_INTERACTION_SCORING">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVITY_SCORE" source="ACTIVITY_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SENTIMENT_SCORE" source="SENTIMENT_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_BIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COMPANY_KEY_BIN"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="AGE"/>
+        <viewAttribute id="ACTIVITY_SCORE"/>
+        <viewAttribute id="SENTIMENT_SCORE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="SUCCESS_RATE_PHONECALLS"/>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY_BIN" source="COMPANY_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COMPANY_COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="COMPANY_REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="COMPANY_CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="COMPANYBRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AGE" source="AGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVITY_SCORE" source="ACTIVITY_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SENTIMENT_SCORE" source="SENTIMENT_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+      </input>
+      <input node="CA_CONTACT_PHONE_AFFINITY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_WEEKDAY" source="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUCCESS_RATE_PHONECALLS" source="SUCCESS_RATE_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_UNSUCCESFULL_PHONECALLS" source="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_BIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_13" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COMPANY_KEY_BIN"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="AGE"/>
+        <viewAttribute id="ACTIVITY_SCORE"/>
+        <viewAttribute id="SENTIMENT_SCORE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="SUCCESS_RATE_PHONECALLS"/>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+        <viewAttribute id="CONTACT_KEY_BIN_1"/>
+        <viewAttribute id="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="MOB_OFFER_CLICK_RATE"/>
+        <viewAttribute id="MOB_PUSH_BOUNCE_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_6">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY_BIN" source="COMPANY_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COMPANY_COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="COMPANY_REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="COMPANY_CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="COMPANYBRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AGE" source="AGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVITY_SCORE" source="ACTIVITY_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SENTIMENT_SCORE" source="SENTIMENT_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_WEEKDAY" source="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUCCESS_RATE_PHONECALLS" source="SUCCESS_RATE_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_UNSUCCESFULL_PHONECALLS" source="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN_1" source="CONTACT_KEY_BIN"/>
+      </input>
+      <input node="CA_CONTACT_MOBILE_PUSH_AFFINITY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_NOTIF_OPEN_RATE" source="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_OFFER_CLICK_RATE" source="MOB_OFFER_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_BOUNCE_RATE" source="MOB_PUSH_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" source="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" source="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_BIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_7" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="EMAIL_OPEN_RATE"/>
+        <viewAttribute id="EMAIL_CLICK_RATE"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <viewAttribute id="NO_OF_EMAILS_OPENED"/>
+        <viewAttribute id="NO_OF_EMAILS_CLICKED"/>
+        <viewAttribute id="NO_OF_EMAILS_OUTBOUND"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <viewAttribute id="NO_OF_EMAILS_SENT"/>
+        <viewAttribute id="EMAIL_BOUNCE_RATE"/>
+        <viewAttribute id="NO_OF_SMS_SENT"/>
+        <viewAttribute id="NO_OF_SMS_OUTBOUND"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_SOFT"/>
+        <viewAttribute id="SMS_BOUNCE_RATE"/>
+        <viewAttribute id="COMPANY_KEY_BIN"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="AGE"/>
+        <viewAttribute id="ACTIVITY_SCORE"/>
+        <viewAttribute id="SENTIMENT_SCORE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="SUCCESS_RATE_PHONECALLS"/>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+        <viewAttribute id="CONTACT_KEY_BIN_1"/>
+        <viewAttribute id="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="MOB_OFFER_CLICK_RATE"/>
+        <viewAttribute id="MOB_PUSH_BOUNCE_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_13">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY_BIN" source="COMPANY_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COMPANY_COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="COMPANY_REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="COMPANY_CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="COMPANYBRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AGE" source="AGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVITY_SCORE" source="ACTIVITY_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SENTIMENT_SCORE" source="SENTIMENT_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_WEEKDAY" source="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUCCESS_RATE_PHONECALLS" source="SUCCESS_RATE_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_UNSUCCESFULL_PHONECALLS" source="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN_1" source="CONTACT_KEY_BIN_1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_NOTIF_OPEN_RATE" source="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_OFFER_CLICK_RATE" source="MOB_OFFER_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_BOUNCE_RATE" source="MOB_PUSH_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" source="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" source="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </input>
+      <input node="CA_CONTACT_EMAIL_AFFINITY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPEN_RATE" source="EMAIL_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_CLICK_RATE" source="EMAIL_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED" source="PEAK_EMAIL_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED" source="PEAK_EMAIL_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED_WEEKDAY" source="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED_WEEKDAY" source="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OPENED" source="NO_OF_EMAILS_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_CLICKED" source="NO_OF_EMAILS_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OUTBOUND" source="NO_OF_EMAILS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_HARD" source="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_SOFT" source="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_SENT" source="NO_OF_EMAILS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_BOUNCE_RATE" source="EMAIL_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_SENT" source="NO_OF_SMS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_OUTBOUND" source="NO_OF_SMS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_HARD" source="NO_OF_SMS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_SOFT" source="NO_OF_SMS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMS_BOUNCE_RATE" source="SMS_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_BIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="EmailOptin">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CA_MKT_PERMISSIONS_JS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="OPT_IN"/>
+      </input>
+      <filter>(&quot;OUTBOUND_COMM_MEDIUM&quot; ='EMAIL') AND (&quot;COMM_MEDIUM&quot; ='EMAIL')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="EmailOptin"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_8" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="COMPANY_KEY_BIN"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="AGE"/>
+        <viewAttribute id="ACTIVITY_SCORE"/>
+        <viewAttribute id="SENTIMENT_SCORE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="SUCCESS_RATE_PHONECALLS"/>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+        <viewAttribute id="EMAIL_OPEN_RATE"/>
+        <viewAttribute id="EMAIL_CLICK_RATE"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <viewAttribute id="NO_OF_EMAILS_OPENED"/>
+        <viewAttribute id="NO_OF_EMAILS_CLICKED"/>
+        <viewAttribute id="NO_OF_EMAILS_OUTBOUND"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <viewAttribute id="NO_OF_EMAILS_SENT"/>
+        <viewAttribute id="EMAIL_BOUNCE_RATE"/>
+        <viewAttribute id="NO_OF_SMS_SENT"/>
+        <viewAttribute id="NO_OF_SMS_OUTBOUND"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_SOFT"/>
+        <viewAttribute id="SMS_BOUNCE_RATE"/>
+        <viewAttribute id="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="MOB_OFFER_CLICK_RATE"/>
+        <viewAttribute id="MOB_PUSH_BOUNCE_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY_BIN" source="COMPANY_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COMPANY_COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="COMPANY_REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="COMPANY_CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="COMPANYBRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AGE" source="AGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVITY_SCORE" source="ACTIVITY_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SENTIMENT_SCORE" source="SENTIMENT_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_WEEKDAY" source="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUCCESS_RATE_PHONECALLS" source="SUCCESS_RATE_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_UNSUCCESFULL_PHONECALLS" source="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPEN_RATE" source="EMAIL_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_CLICK_RATE" source="EMAIL_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED" source="PEAK_EMAIL_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED" source="PEAK_EMAIL_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED_WEEKDAY" source="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED_WEEKDAY" source="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OPENED" source="NO_OF_EMAILS_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_CLICKED" source="NO_OF_EMAILS_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OUTBOUND" source="NO_OF_EMAILS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_HARD" source="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_SOFT" source="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_SENT" source="NO_OF_EMAILS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_BOUNCE_RATE" source="EMAIL_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_SENT" source="NO_OF_SMS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_OUTBOUND" source="NO_OF_SMS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_HARD" source="NO_OF_SMS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_SOFT" source="NO_OF_SMS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMS_BOUNCE_RATE" source="SMS_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_NOTIF_OPEN_RATE" source="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_OFFER_CLICK_RATE" source="MOB_OFFER_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_BOUNCE_RATE" source="MOB_PUSH_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" source="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" source="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </input>
+      <input node="Aggregation_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="CONTACT_FACET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="SMTP_ADDR"/>
+      <joinAttribute name="CONTACT_KEY_BIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PhoneOptin">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="OPT_IN"/>
+      </input>
+      <filter>(&quot;OUTBOUND_COMM_MEDIUM&quot; ='PHONE') AND (&quot;COMM_MEDIUM&quot; ='PHONE')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_9" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="COMPANY_KEY_BIN"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="AGE"/>
+        <viewAttribute id="ACTIVITY_SCORE"/>
+        <viewAttribute id="SENTIMENT_SCORE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="SUCCESS_RATE_PHONECALLS"/>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+        <viewAttribute id="EMAIL_OPEN_RATE"/>
+        <viewAttribute id="EMAIL_CLICK_RATE"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <viewAttribute id="NO_OF_EMAILS_OPENED"/>
+        <viewAttribute id="NO_OF_EMAILS_CLICKED"/>
+        <viewAttribute id="NO_OF_EMAILS_OUTBOUND"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <viewAttribute id="NO_OF_EMAILS_SENT"/>
+        <viewAttribute id="EMAIL_BOUNCE_RATE"/>
+        <viewAttribute id="NO_OF_SMS_SENT"/>
+        <viewAttribute id="NO_OF_SMS_OUTBOUND"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_SOFT"/>
+        <viewAttribute id="SMS_BOUNCE_RATE"/>
+        <viewAttribute id="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="MOB_OFFER_CLICK_RATE"/>
+        <viewAttribute id="MOB_PUSH_BOUNCE_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY_BIN" source="COMPANY_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COMPANY_COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="COMPANY_REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="COMPANY_CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="COMPANYBRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AGE" source="AGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVITY_SCORE" source="ACTIVITY_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SENTIMENT_SCORE" source="SENTIMENT_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_WEEKDAY" source="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUCCESS_RATE_PHONECALLS" source="SUCCESS_RATE_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_UNSUCCESFULL_PHONECALLS" source="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPEN_RATE" source="EMAIL_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_CLICK_RATE" source="EMAIL_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED" source="PEAK_EMAIL_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED" source="PEAK_EMAIL_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED_WEEKDAY" source="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED_WEEKDAY" source="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OPENED" source="NO_OF_EMAILS_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_CLICKED" source="NO_OF_EMAILS_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OUTBOUND" source="NO_OF_EMAILS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_HARD" source="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_SOFT" source="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_SENT" source="NO_OF_EMAILS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_BOUNCE_RATE" source="EMAIL_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_SENT" source="NO_OF_SMS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_OUTBOUND" source="NO_OF_SMS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_HARD" source="NO_OF_SMS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_SOFT" source="NO_OF_SMS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMS_BOUNCE_RATE" source="SMS_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_NOTIF_OPEN_RATE" source="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_OFFER_CLICK_RATE" source="MOB_OFFER_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_BOUNCE_RATE" source="MOB_PUSH_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" source="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" source="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </input>
+      <input node="PhoneOptin">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="CONTACT_FACET_ID"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_BIN"/>
+      <joinAttribute name="TELNR_LONG"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="MobileOptIn">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="MOBILE_OPTIN"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="MobileOptIn$$$$sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOBILE_OPTIN" source="OPT_IN"/>
+      </input>
+      <filter>(&quot;OUTBOUND_COMM_MEDIUM&quot; ='PHONE') AND (&quot;COMM_MEDIUM&quot; ='MOBILE')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_10" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MOBILE_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="COMPANY_KEY_BIN"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="AGE"/>
+        <viewAttribute id="ACTIVITY_SCORE"/>
+        <viewAttribute id="SENTIMENT_SCORE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="SUCCESS_RATE_PHONECALLS"/>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+        <viewAttribute id="EMAIL_OPEN_RATE"/>
+        <viewAttribute id="EMAIL_CLICK_RATE"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <viewAttribute id="NO_OF_EMAILS_OPENED"/>
+        <viewAttribute id="NO_OF_EMAILS_CLICKED"/>
+        <viewAttribute id="NO_OF_EMAILS_OUTBOUND"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <viewAttribute id="NO_OF_EMAILS_SENT"/>
+        <viewAttribute id="EMAIL_BOUNCE_RATE"/>
+        <viewAttribute id="NO_OF_SMS_SENT"/>
+        <viewAttribute id="NO_OF_SMS_OUTBOUND"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_SOFT"/>
+        <viewAttribute id="SMS_BOUNCE_RATE"/>
+        <viewAttribute id="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK"/>
+        <viewAttribute id="MOB_OFFER_CLICK_RATE"/>
+        <viewAttribute id="MOB_PUSH_BOUNCE_RATE"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_9">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY_BIN" source="COMPANY_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COMPANY_COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="COMPANY_REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="COMPANY_CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="COMPANYBRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AGE" source="AGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVITY_SCORE" source="ACTIVITY_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SENTIMENT_SCORE" source="SENTIMENT_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_WEEKDAY" source="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUCCESS_RATE_PHONECALLS" source="SUCCESS_RATE_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_UNSUCCESFULL_PHONECALLS" source="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPEN_RATE" source="EMAIL_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_CLICK_RATE" source="EMAIL_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED" source="PEAK_EMAIL_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED" source="PEAK_EMAIL_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED_WEEKDAY" source="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED_WEEKDAY" source="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OPENED" source="NO_OF_EMAILS_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_CLICKED" source="NO_OF_EMAILS_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OUTBOUND" source="NO_OF_EMAILS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_HARD" source="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_SOFT" source="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_SENT" source="NO_OF_EMAILS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_BOUNCE_RATE" source="EMAIL_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_SENT" source="NO_OF_SMS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_OUTBOUND" source="NO_OF_SMS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_HARD" source="NO_OF_SMS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_SOFT" source="NO_OF_SMS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMS_BOUNCE_RATE" source="SMS_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_NOTIF_OPEN_RATE" source="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_OFFER_CLICK_RATE" source="MOB_OFFER_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_BOUNCE_RATE" source="MOB_PUSH_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" source="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" source="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </input>
+      <input node="MobileOptIn">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOBILE_OPTIN" source="MOBILE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="CONTACT_FACET_ID"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_BIN"/>
+      <joinAttribute name="TELNR_MOBILE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="MobilePushOpt" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MOBILE_PUSH_OPTIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="MobilePushOpt$$$$sap.hana-app.cuan.cpred.datafoundation.internal::CA_MKT_PERMISSIONS_JS$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOBILE_PUSH_OPTIN" source="OPT_IN"/></input>
+      <filter>(&quot;OUTBOUND_COMM_MEDIUM&quot; ='MOBILE_APP')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="MobilePushOptin" cardinality="C1_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MOBILE_OPTIN"/>
+        <viewAttribute id="PHONE_OPTIN"/>
+        <viewAttribute id="EMAIL_OPTIN"/>
+        <viewAttribute id="COMPANY_KEY_BIN"/>
+        <viewAttribute id="COMPANY_COUNTRY"/>
+        <viewAttribute id="COMPANY_REGION"/>
+        <viewAttribute id="COMPANY_CITY1"/>
+        <viewAttribute id="COMPANY_NAME"/>
+        <viewAttribute id="COMPANYBRSCH"/>
+        <viewAttribute id="AGE"/>
+        <viewAttribute id="ACTIVITY_SCORE"/>
+        <viewAttribute id="SENTIMENT_SCORE"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY1"/>
+        <viewAttribute id="POSTCODE1"/>
+        <viewAttribute id="GENDER"/>
+        <viewAttribute id="MARITAL_STATUS"/>
+        <viewAttribute id="BRSCH"/>
+        <viewAttribute id="REGION"/>
+        <viewAttribute id="PAFKT"/>
+        <viewAttribute id="IS_CONSUMER"/>
+        <viewAttribute id="ABTNR"/>
+        <viewAttribute id="DATE_OF_BIRTH"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="SMTP_ADDR"/>
+        <viewAttribute id="TELNR_LONG"/>
+        <viewAttribute id="TELNR_MOBILE"/>
+        <viewAttribute id="CONTACT_KEY_BIN"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="COMPANY_KEY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="SUCCESS_RATE_PHONECALLS_RAW"/>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS_RAW"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS_RAW"/>
+        <viewAttribute id="EMAIL_OPEN_RATE_RAW"/>
+        <viewAttribute id="EMAIL_CLICK_RATE_RAW"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED"/>
+        <viewAttribute id="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <viewAttribute id="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <viewAttribute id="NO_OF_EMAILS_OPENED_RAW"/>
+        <viewAttribute id="NO_OF_EMAILS_CLICKED_RAW"/>
+        <viewAttribute id="NO_OF_EMAILS_OUTBOUND_RAW"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_HARD_RAW"/>
+        <viewAttribute id="NO_OF_EMAILS_BOUNCE_SOFT_RAW"/>
+        <viewAttribute id="NO_OF_EMAILS_SENT_RAW"/>
+        <viewAttribute id="EMAIL_BOUNCE_RATE_RAW"/>
+        <viewAttribute id="NO_OF_SMS_SENT_RAW"/>
+        <viewAttribute id="NO_OF_SMS_OUTBOUND_RAW"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_HARD_RAW"/>
+        <viewAttribute id="NO_OF_SMS_BOUNCE_SOFT_RAW"/>
+        <viewAttribute id="SMS_BOUNCE_RATE_RAW"/>
+        <viewAttribute id="MOB_PUSH_NOTIF_OPEN_RATE_RAW"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD_RAW"/>
+        <viewAttribute id="NO_OF_MOB_OFFER_CLICK_RAW"/>
+        <viewAttribute id="MOB_OFFER_CLICK_RATE_RAW"/>
+        <viewAttribute id="MOB_PUSH_BOUNCE_RATE_RAW"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_SENT_RAW"/>
+        <viewAttribute id="NO_OF_PUSH_NOTIF_OPENED_RAW"/>
+        <viewAttribute id="MOBILE_PUSH_OPTIN"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <viewAttribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute id="SUCCESS_RATE_PHONECALLS" datatype="DECIMAL" length="34" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;SUCCESS_RATE_PHONECALLS_RAW&quot;), 0, &quot;SUCCESS_RATE_PHONECALLS_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_UNSUCCESFULL_PHONECALLS_RAW&quot;), 0, &quot;NO_OF_UNSUCCESFULL_PHONECALLS_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_CLOSED_PHONECALLS" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_CLOSED_PHONECALLS_RAW&quot;), 0, &quot;NO_OF_CLOSED_PHONECALLS_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="EMAIL_OPEN_RATE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;EMAIL_OPEN_RATE_RAW&quot;), 0, &quot;EMAIL_OPEN_RATE_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="EMAIL_CLICK_RATE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;EMAIL_CLICK_RATE_RAW&quot;), 0, &quot;EMAIL_CLICK_RATE_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_EMAILS_OPENED" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_EMAILS_OPENED_RAW&quot;), 0, &quot;NO_OF_EMAILS_OPENED_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_EMAILS_CLICKED" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_EMAILS_CLICKED_RAW&quot;), 0, &quot;NO_OF_EMAILS_CLICKED_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_EMAILS_OUTBOUND" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_EMAILS_OUTBOUND_RAW&quot;), 0, &quot;NO_OF_EMAILS_OUTBOUND_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_EMAILS_BOUNCE_HARD" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_EMAILS_BOUNCE_HARD_RAW&quot;), 0, &quot;NO_OF_EMAILS_BOUNCE_HARD_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_EMAILS_BOUNCE_SOFT" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_EMAILS_BOUNCE_SOFT_RAW&quot;), 0, &quot;NO_OF_EMAILS_BOUNCE_SOFT_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_EMAILS_SENT" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_EMAILS_SENT_RAW&quot;), 0, &quot;NO_OF_EMAILS_SENT_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="EMAIL_BOUNCE_RATE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;EMAIL_BOUNCE_RATE_RAW&quot;), 0, &quot;EMAIL_BOUNCE_RATE_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_SMS_SENT" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_SMS_SENT_RAW&quot;), 0, &quot;NO_OF_SMS_SENT_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_SMS_OUTBOUND" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_SMS_OUTBOUND_RAW&quot;), 0, &quot;NO_OF_SMS_OUTBOUND_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_SMS_BOUNCE_HARD" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_SMS_BOUNCE_HARD_RAW&quot;), 0, &quot;NO_OF_SMS_BOUNCE_HARD_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_SMS_BOUNCE_SOFT" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_SMS_BOUNCE_SOFT_RAW&quot;), 0, &quot;NO_OF_SMS_BOUNCE_SOFT_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="SMS_BOUNCE_RATE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;SMS_BOUNCE_RATE_RAW&quot;), 0, &quot;SMS_BOUNCE_RATE_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="MOB_PUSH_NOTIF_OPEN_RATE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;MOB_PUSH_NOTIF_OPEN_RATE_RAW&quot;), 0, &quot;MOB_PUSH_NOTIF_OPEN_RATE_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_PUSH_NOTIF_BOUNCE_HARD_RAW&quot;), 0, &quot;NO_OF_PUSH_NOTIF_BOUNCE_HARD_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_MOB_OFFER_CLICK" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_MOB_OFFER_CLICK_RAW&quot;), 0, &quot;NO_OF_MOB_OFFER_CLICK_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="MOB_OFFER_CLICK_RATE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;MOB_OFFER_CLICK_RATE_RAW&quot;), 0, &quot;MOB_OFFER_CLICK_RATE_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="MOB_PUSH_BOUNCE_RATE" datatype="DECIMAL" length="34" scale="2" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;MOB_PUSH_BOUNCE_RATE_RAW&quot;), 0, &quot;MOB_PUSH_BOUNCE_RATE_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_PUSH_NOTIF_SENT" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_PUSH_NOTIF_SENT_RAW&quot;), 0, &quot;NO_OF_PUSH_NOTIF_SENT_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute id="NO_OF_PUSH_NOTIF_OPENED" datatype="DECIMAL" length="18" scale="0" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isNull(&quot;NO_OF_PUSH_NOTIF_OPENED_RAW&quot;), 0, &quot;NO_OF_PUSH_NOTIF_OPENED_RAW&quot;)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Join_10">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOBILE_OPTIN" source="MOBILE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE_OPTIN" source="PHONE_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPTIN" source="EMAIL_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY_BIN" source="COMPANY_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_COUNTRY" source="COMPANY_COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_REGION" source="COMPANY_REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_CITY1" source="COMPANY_CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_NAME" source="COMPANY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYBRSCH" source="COMPANYBRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AGE" source="AGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVITY_SCORE" source="ACTIVITY_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SENTIMENT_SCORE" source="SENTIMENT_SCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE1" source="POSTCODE1"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="GENDER" source="GENDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MARITAL_STATUS" source="MARITAL_STATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRSCH" source="BRSCH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PAFKT" source="PAFKT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_CONSUMER" source="IS_CONSUMER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ABTNR" source="ABTNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DATE_OF_BIRTH" source="DATE_OF_BIRTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMTP_ADDR" source="SMTP_ADDR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_LONG" source="TELNR_LONG"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TELNR_MOBILE" source="TELNR_MOBILE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY_BIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMPANY_KEY" source="COMPANY_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_WEEKDAY" source="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SUCCESS_RATE_PHONECALLS_RAW" source="SUCCESS_RATE_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_UNSUCCESFULL_PHONECALLS_RAW" source="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS_RAW" source="NO_OF_CLOSED_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_OPEN_RATE_RAW" source="EMAIL_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_CLICK_RATE_RAW" source="EMAIL_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED" source="PEAK_EMAIL_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED" source="PEAK_EMAIL_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_CLICKED_WEEKDAY" source="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_EMAIL_OPENED_WEEKDAY" source="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OPENED_RAW" source="NO_OF_EMAILS_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_CLICKED_RAW" source="NO_OF_EMAILS_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_OUTBOUND_RAW" source="NO_OF_EMAILS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_HARD_RAW" source="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_BOUNCE_SOFT_RAW" source="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_EMAILS_SENT_RAW" source="NO_OF_EMAILS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="EMAIL_BOUNCE_RATE_RAW" source="EMAIL_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_SENT_RAW" source="NO_OF_SMS_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_OUTBOUND_RAW" source="NO_OF_SMS_OUTBOUND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_HARD_RAW" source="NO_OF_SMS_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_SMS_BOUNCE_SOFT_RAW" source="NO_OF_SMS_BOUNCE_SOFT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SMS_BOUNCE_RATE_RAW" source="SMS_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_NOTIF_OPEN_RATE_RAW" source="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_BOUNCE_HARD_RAW" source="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_MOB_OFFER_CLICK_RAW" source="NO_OF_MOB_OFFER_CLICK"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_OFFER_CLICK_RATE_RAW" source="MOB_OFFER_CLICK_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOB_PUSH_BOUNCE_RATE_RAW" source="MOB_PUSH_BOUNCE_RATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_SENT_RAW" source="NO_OF_PUSH_NOTIF_SENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_PUSH_NOTIF_OPENED_RAW" source="NO_OF_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED" source="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" source="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED" source="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" source="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </input>
+      <input node="MobilePushOpt">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MOBILE_PUSH_OPTIN" source="MOBILE_PUSH_OPTIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY_BIN" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY_BIN"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="MobilePushOptin">
+    <descriptions/>
+    <attributes>
+      <attribute id="MOBILE_OPTIN" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MOBILE_OPTIN"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="MOBILE_OPTIN"/>
+      </attribute>
+      <attribute id="PHONE_OPTIN" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PHONE_OPTIN"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PHONE_OPTIN"/>
+      </attribute>
+      <attribute id="EMAIL_OPTIN" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="EMAIL_OPTIN"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="EMAIL_OPTIN"/>
+      </attribute>
+      <attribute id="MOBILE_PUSH_OPTIN" order="13" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MOBILE_PUSH_OPTIN"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="MOBILE_PUSH_OPTIN"/>
+      </attribute>
+      <attribute id="COMPANY_KEY_BIN" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANY_KEY_BIN"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="COMPANY_KEY_BIN"/>
+      </attribute>
+      <attribute id="COMPANY_COUNTRY" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANY_COUNTRY"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="COMPANY_COUNTRY"/>
+      </attribute>
+      <attribute id="COMPANY_REGION" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANY_REGION"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="COMPANY_REGION"/>
+      </attribute>
+      <attribute id="COMPANY_CITY1" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANY_CITY1"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="COMPANY_CITY1"/>
+      </attribute>
+      <attribute id="COMPANY_NAME" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANY_NAME"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="COMPANY_NAME"/>
+      </attribute>
+      <attribute id="COMPANYBRSCH" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANYBRSCH"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="COMPANYBRSCH"/>
+      </attribute>
+      <attribute id="AGE" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="AGE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="AGE"/>
+      </attribute>
+      <attribute id="ACTIVITY_SCORE" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ACTIVITY_SCORE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="ACTIVITY_SCORE"/>
+      </attribute>
+      <attribute id="SENTIMENT_SCORE" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SENTIMENT_SCORE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="SENTIMENT_SCORE"/>
+      </attribute>
+      <attribute id="COUNTRY" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COUNTRY"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="COUNTRY"/>
+      </attribute>
+      <attribute id="CITY1" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CITY1"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="CITY1"/>
+      </attribute>
+      <attribute id="POSTCODE1" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="POSTCODE1"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="POSTCODE1"/>
+      </attribute>
+      <attribute id="GENDER" order="26" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="GENDER"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="GENDER"/>
+      </attribute>
+      <attribute id="MARITAL_STATUS" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MARITAL_STATUS"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="MARITAL_STATUS"/>
+      </attribute>
+      <attribute id="BRSCH" order="28" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BRSCH"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="BRSCH"/>
+      </attribute>
+      <attribute id="REGION" order="29" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="REGION"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="REGION"/>
+      </attribute>
+      <attribute id="PAFKT" order="30" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PAFKT"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PAFKT"/>
+      </attribute>
+      <attribute id="IS_CONSUMER" order="31" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IS_CONSUMER"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="IS_CONSUMER"/>
+      </attribute>
+      <attribute id="ABTNR" order="32" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ABTNR"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="ABTNR"/>
+      </attribute>
+      <attribute id="DATE_OF_BIRTH" order="33" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DATE_OF_BIRTH"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="DATE_OF_BIRTH"/>
+      </attribute>
+      <attribute id="IC_TYPE" order="34" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="IC_TYPE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="IC_TYPE"/>
+      </attribute>
+      <attribute id="SMTP_ADDR" order="35" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SMTP_ADDR"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="SMTP_ADDR"/>
+      </attribute>
+      <attribute id="TELNR_LONG" order="36" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TELNR_LONG"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="TELNR_LONG"/>
+      </attribute>
+      <attribute id="TELNR_MOBILE" order="37" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TELNR_MOBILE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="TELNR_MOBILE"/>
+      </attribute>
+      <attribute id="CONTACT_KEY_BIN" order="38" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY_BIN"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="CONTACT_KEY_BIN"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="39" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="COMPANY_KEY" order="40" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COMPANY_KEY"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="COMPANY_KEY"/>
+      </attribute>
+      <attribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY" order="41" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+      </attribute>
+      <attribute id="PEAK_PHONECALLS_CLOSED_TIME" order="42" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_PHONECALLS_CLOSED_TIME"/>
+      </attribute>
+      <attribute id="PEAK_EMAIL_OPENED" order="43" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_EMAIL_OPENED"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_EMAIL_OPENED"/>
+      </attribute>
+      <attribute id="PEAK_EMAIL_CLICKED" order="44" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_EMAIL_CLICKED"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_EMAIL_CLICKED"/>
+      </attribute>
+      <attribute id="PEAK_EMAIL_CLICKED_WEEKDAY" order="45" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_EMAIL_CLICKED_WEEKDAY"/>
+      </attribute>
+      <attribute id="PEAK_EMAIL_OPENED_WEEKDAY" order="46" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_EMAIL_OPENED_WEEKDAY"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_EMAIL_OPENED_WEEKDAY"/>
+      </attribute>
+      <attribute id="PEAK_MOB_PUSH_NOTIF_OPENED" order="47" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_MOB_PUSH_NOTIF_OPENED"/>
+      </attribute>
+      <attribute id="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY" order="48" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_MOB_PUSH_NOTIF_OPENED_WEEKDAY"/>
+      </attribute>
+      <attribute id="PEAK_MOB_PUSH_OFFER_CLICKED" order="49" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_MOB_PUSH_OFFER_CLICKED"/>
+      </attribute>
+      <attribute id="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY" order="50" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="PEAK_MOB_PUSH_OFFER_CLICKED_WEEKDAY"/>
+      </attribute>
+    
+      <attribute id="SUCCESS_RATE_PHONECALLS" order="51" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="SUCCESS_RATE_PHONECALLS"/>
+    
+        <keyMapping columnObjectName="MobilePushOptin" columnName="SUCCESS_RATE_PHONECALLS"/>
+    
+      </attribute>
+      <attribute id="NO_OF_UNSUCCESFULL_PHONECALLS" order="52" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+      </attribute>
+      <attribute id="NO_OF_CLOSED_PHONECALLS" order="53" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_CLOSED_PHONECALLS"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_CLOSED_PHONECALLS"/>
+      </attribute>
+      <attribute id="EMAIL_OPEN_RATE" order="54" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="EMAIL_OPEN_RATE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="EMAIL_OPEN_RATE"/>
+      </attribute>
+      <attribute id="EMAIL_CLICK_RATE" order="55" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="EMAIL_CLICK_RATE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="EMAIL_CLICK_RATE"/>
+      </attribute>
+      <attribute id="NO_OF_EMAILS_OPENED" order="56" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_EMAILS_OPENED"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_EMAILS_OPENED"/>
+      </attribute>
+      <attribute id="NO_OF_EMAILS_CLICKED" order="57" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_EMAILS_CLICKED"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_EMAILS_CLICKED"/>
+      </attribute>
+      <attribute id="NO_OF_EMAILS_OUTBOUND" order="58" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_EMAILS_OUTBOUND"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_EMAILS_OUTBOUND"/>
+      </attribute>
+      <attribute id="NO_OF_EMAILS_BOUNCE_HARD" order="59" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_EMAILS_BOUNCE_HARD"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_EMAILS_BOUNCE_HARD"/>
+      </attribute>
+      <attribute id="NO_OF_EMAILS_BOUNCE_SOFT" order="60" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_EMAILS_BOUNCE_SOFT"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_EMAILS_BOUNCE_SOFT"/>
+      </attribute>
+      <attribute id="NO_OF_EMAILS_SENT" order="61" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_EMAILS_SENT"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_EMAILS_SENT"/>
+      </attribute>
+      <attribute id="EMAIL_BOUNCE_RATE" order="62" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="EMAIL_BOUNCE_RATE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="EMAIL_BOUNCE_RATE"/>
+      </attribute>
+      <attribute id="NO_OF_SMS_SENT" order="63" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_SMS_SENT"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_SMS_SENT"/>
+      </attribute>
+      <attribute id="NO_OF_SMS_OUTBOUND" order="64" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_SMS_OUTBOUND"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_SMS_OUTBOUND"/>
+      </attribute>
+      <attribute id="NO_OF_SMS_BOUNCE_HARD" order="65" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_SMS_BOUNCE_HARD"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_SMS_BOUNCE_HARD"/>
+      </attribute>
+      <attribute id="NO_OF_SMS_BOUNCE_SOFT" order="66" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_SMS_BOUNCE_SOFT"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_SMS_BOUNCE_SOFT"/>
+      </attribute>
+      <attribute id="SMS_BOUNCE_RATE" order="67" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="SMS_BOUNCE_RATE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="SMS_BOUNCE_RATE"/>
+      </attribute>
+      <attribute id="MOB_PUSH_NOTIF_OPEN_RATE" order="68" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="MOB_PUSH_NOTIF_OPEN_RATE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="MOB_PUSH_NOTIF_OPEN_RATE"/>
+      </attribute>
+      <attribute id="NO_OF_PUSH_NOTIF_BOUNCE_HARD" order="69" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_PUSH_NOTIF_BOUNCE_HARD"/>
+      </attribute>
+      <attribute id="NO_OF_MOB_OFFER_CLICK" order="70" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_MOB_OFFER_CLICK"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_MOB_OFFER_CLICK"/>
+      </attribute>
+      <attribute id="MOB_OFFER_CLICK_RATE" order="71" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="MOB_OFFER_CLICK_RATE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="MOB_OFFER_CLICK_RATE"/>
+      </attribute>
+      <attribute id="MOB_PUSH_BOUNCE_RATE" order="72" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="MOB_PUSH_BOUNCE_RATE"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="MOB_PUSH_BOUNCE_RATE"/>
+      </attribute>
+      <attribute id="NO_OF_PUSH_NOTIF_SENT" order="73" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_PUSH_NOTIF_SENT"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_PUSH_NOTIF_SENT"/>
+      </attribute>
+      <attribute id="NO_OF_PUSH_NOTIF_OPENED" order="74" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="NO_OF_PUSH_NOTIF_OPENED"/>
+        <keyMapping columnObjectName="MobilePushOptin" columnName="NO_OF_PUSH_NOTIF_OPENED"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="HAS_ACCOUNT" hidden="false" order="1" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Company has Account"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(isnull(&quot;COMPANY_KEY&quot;) ,string('-'),string('X'))</formula>
+        </keyCalculation>
+        </calculatedAttribute>
+      <calculatedAttribute id="HAS_EMAIL" hidden="false" order="2" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="HAS_EMAIL"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;SMTP_ADDR&quot; = '',string('-'),string('X'))</formula>
+        </keyCalculation>
+        </calculatedAttribute>
+      <calculatedAttribute id="HAS_PHONE" hidden="false" order="3" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="HAS_PHONE"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;TELNR_LONG&quot; = '',string('-'),string('X'))</formula>
+        </keyCalculation>
+        </calculatedAttribute>
+      <calculatedAttribute id="HAS_MOBILE" hidden="false" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="HAS_MOBILE"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;TELNR_MOBILE&quot; = '',string('-'),string('X'))</formula>
+        </keyCalculation>
+        </calculatedAttribute>
+      <calculatedAttribute id="HAS_CITY" hidden="false" order="5" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact has City"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;CITY1&quot; = '', string('-'),string('X'))</formula>
+        </keyCalculation>
+        </calculatedAttribute>
+      <calculatedAttribute id="HAS_POSTAL_CODE" hidden="false" order="6" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact has Postal Code"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;POSTCODE1&quot; = '' ,string('-'),string('X'))</formula>
+        </keyCalculation>
+        </calculatedAttribute>
+      <calculatedAttribute id="HAS_COUNTRY" hidden="false" order="7" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact has Country"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;COUNTRY&quot; = '' ,string('-'),string('X'))</formula>
+        </keyCalculation>
+        </calculatedAttribute>
+      <calculatedAttribute id="HAS_FUNCTION" hidden="false" order="8" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact has Function"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;PAFKT&quot; = '' ,string('-'),string('X'))</formula>
+        </keyCalculation>
+        </calculatedAttribute>
+      <calculatedAttribute id="HAS_INDUSTRY" hidden="false" order="9" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact has Industry"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="1">
+          <formula>if(&quot;BRSCH&quot; = '' ,string('-'),string('X'))</formula>
+        </keyCalculation>
+        </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="405" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302" y="2041"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="550" y="1736"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="2041"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="118" y="1881"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_7" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="512" y="2041"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="413" y="1881"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_7" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="145" y="1740"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="false" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="506" y="1576"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Union_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="296" y="1576"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="399" y="1416"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="399" y="1276"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.contact::CA_INTERACTION_SCORING" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="399" y="1136"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_2" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_PHONE_AFFINITY" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_13" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="399" y="996"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_6" modelObjectNameSpace="Join_13" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_MOBILE_PUSH_AFFINITY" modelObjectNameSpace="Join_13" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="false" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="399" y="856"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_13" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_EMAIL_AFFINITY" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="EmailOptin" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="143" y="996"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="143" y="874"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="170" y="696"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_7" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PhoneOptin" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="432" y="696"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_9" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="197" y="536"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_8" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PhoneOptin" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MobileOptIn" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="564" y="536"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_10" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="516" y="376"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_9" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="MobileOptIn" modelObjectNameSpace="Join_10" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="false" modelObjectName="MobilePushOpt" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="306" y="376"/>
+        <rectangleSize height="45" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="MobilePushOptin" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="405" y="217"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Join_10" modelObjectNameSpace="MobilePushOptin" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="MobilePushOpt" modelObjectNameSpace="MobilePushOptin" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

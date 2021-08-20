@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_INTERACTION_SURVEY_PROJ" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Survey Interaction Projection"/>
+  <metadata changedAt="2019-05-21 15:19:51.715"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CA_D_INTERACTION_SURVEY">
+      <resourceUri>sap.hana-app.cuan.contact.profile::CA_D_INTERACTION_SURVEY</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="CA_D_INTERACTION_SURVEY">
+    <descriptions/>
+    <attributes>
+      <attribute id="IC_COMP_SURVEY_PROVIDER" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Provider"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="SURVEY_PROVIDER"/>
+      </attribute>
+      <attribute id="IC_COMP_SURVEY_NAME" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Name"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="SURVEY_NAME"/>
+      </attribute>
+      <attribute id="IC_COMP_QUESTION" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Question"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="QUESTION"/>
+      </attribute>
+      <attribute id="IC_COMP_MARKETING_AREA_ID" order="4" attributeHierarchyActive="false" descriptionColumnName="IC_COMP_MARKETING_AREA_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="MARKETING_AREA_ID"/>
+      </attribute>
+      <attribute id="IC_COMP_SURVEY_STATUS" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Status"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="SURVEY_STATUS"/>
+      </attribute>
+      <attribute id="IC_COMP_COMMENT_TEXT" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Free Text"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="COMMENT_TEXT"/>
+      </attribute>
+      <attribute id="IC_COMP_SURVEY_IA_CONTACT_KEY" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="SURVEY_IA_CONTACT_KEY"/>
+      </attribute>
+      <attribute id="IC_COMP_SURVEY_RESPONSE_ID" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Response ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="SURVEY_RESPONSE_ID"/>
+      </attribute>
+      <attribute id="IC_COMP_RESPONSE_AT" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Responded At"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="RESPONSE_AT"/>
+      </attribute>
+      <attribute id="IC_COMP_SURVEY_QN_ID" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Question ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="SURVEY_QN_ID"/>
+      </attribute>
+      <attribute id="IC_COMP_ANSWER" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Answer"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="ANSWER"/>
+      </attribute>
+      <attribute id="IC_COMP_SURVEY_ANS_ID_ROW" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Answer ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="SURVEY_ANS_ID_ROW"/>
+      </attribute>
+      <attribute id="IC_COMP_SURVEY_ANS_ID_COL" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Survey Answer – Column ID"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="SURVEY_ANS_ID_COL"/>
+      </attribute>
+      <attribute id="IC_COMP_MARKETING_AREA_DESC" order="14" attributeHierarchyActive="false" displayAttribute="false" hidden="true">
+        <descriptions defaultDescription="Marketing Area Description"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="MARKETING_AREA_DESC"/>
+      </attribute>
+      <attribute id="IC_COMP_SURVEY_IA_MANDT" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="CA_D_INTERACTION_SURVEY" columnName="SURVEY_IA_MANDT"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

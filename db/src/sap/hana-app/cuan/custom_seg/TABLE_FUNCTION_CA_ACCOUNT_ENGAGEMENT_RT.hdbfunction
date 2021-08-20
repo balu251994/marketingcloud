@@ -1,0 +1,110 @@
+FUNCTION "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_ACCOUNT_ENGAGEMENT_RT" ( IP_MODEL_GUID VARCHAR (32), IP_JOIN_SET_ID VARCHAR (32) ) 
+	RETURNS TABLE ( "CONTACT_KEY" VARBINARY (16), "SCORE_VALUE" DECIMAL (15, 2), "RANK" INTEGER )
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER AS
+	
+lc_scenario_id              nvarchar(60) := 'SAP_ACCOUNT_ENGAGEMENT_SCORE';
+lp_model_guid               varchar(32);
+l_scenario_parameters       nclob;
+l_target_variable           nclob;
+l_datasource_parameters     nclob;
+l_selected_variables        nclob;
+l_model_parameters          nclob;
+l_implementation_method     nclob;
+l_implementation_method_cat nclob;
+
+BEGIN
+	if to_varchar(:ip_model_guid) <> '' then
+		select :ip_model_guid into lp_model_guid from "sap.hana-app.sys::DUMMY";
+	else
+	    select top 1 to_varchar(db_key) into lp_model_guid
+		from "sap.hana-app.cuan.db.cuan::CUAND_PM_ROOT"
+		where   predictive_kpi = :lc_scenario_id 
+			and status = '3'
+			and mandt = session_context('CLIENT');
+	end if;
+
+	if to_varchar(lp_model_guid) <> '' then
+		--==============================================================================
+		-- Read Model Definition
+		--==============================================================================
+		call "sap.hana-app.cuan.cpred.reuse.internal::PR_READ_MODEL_DEF_N"(
+		  to_varchar(LP_MODEL_GUID),
+		  lt_model_def,
+		  lt_model 
+		);
+		  
+		select top 1 "VALUE" into l_scenario_parameters       from :lt_model_def where name = '$$scenario_parameters$$';
+		select top 1 "VALUE" into l_datasource_parameters     from :lt_model_def where name = '$$datasource_parameters$$';
+		select top 1 "VALUE" into l_selected_variables        from :lt_model_def where name = '$$selected_variables$$';
+		select top 1 "VALUE" into l_model_parameters          from :lt_model_def where name = '$$model_parameters$$';
+		select top 1 "VALUE" into l_implementation_method     from :lt_model_def where name = '$$implementation_method$$';
+		
+		--==============================================================================
+		-- Execute Model
+		--==============================================================================
+		if to_nvarchar( :l_implementation_method ) = 'SAP_ACCOUNT_ENGAGEMENT_SCORE' then 
+		  call "sap.hana-app.cuan.cust_retention.score.internal::PR_ACCOUNT_ENGAGEMENT_SCORE"(
+		    :l_scenario_parameters,
+		    :l_datasource_parameters,
+		    :l_selected_variables,
+		    :l_model_parameters,
+		    to_varchar(:ip_join_set_id),
+		    lt_account_engagement_score
+		  );		  
+		end if;
+		
+	    if :ip_join_set_id = '' then
+			lt_result_value =
+				select 
+					account.account_key                    as "CONTACT_KEY",
+					case when engagement.score is null
+					then 0
+					else engagement.score
+					end	                                   as "SCORE_VALUE" 
+				from "sap.hana-app.cuan.cust_retention.score.internal::CA_D_INTERACTION_ACCOUNT" as account
+				left outer join :lt_account_engagement_score as engagement
+					on account.account_key = engagement.key;
+		else
+			lt_result_value =			
+				select
+				    js.id                        as "CONTACT_KEY",
+				    case when engagement.score is null
+					then 0
+					else engagement.score
+					end	                         as "SCORE_VALUE" 
+					from "sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT" as js
+					left outer join :lt_account_engagement_score as engagement
+					    on js.id = engagement.key
+					where js.join_set_id = :ip_join_set_id;		
+		end if;
+		
+		lt_result_w_rank =
+			select a.*, max(rank) as rank
+			from :lt_result_value as a
+			left join "sap.hana-app.cuan.db.cuan::CUANC_PM_UI_THRS" as b
+			on b.scenario_id = lc_scenario_id 
+			where b.threshold_value <= a.score_value
+			group by a.contact_key, a.score_value;
+			
+		var_out = 	   
+			select
+			a."CONTACT_KEY",
+			a."SCORE_VALUE",
+	   	 	case when b.rank is null 
+	   	 	then 0
+	   	 	else b.rank 
+	   	 	end as "RANK"
+	     from :lt_result_value as a
+	     left join :lt_result_w_rank as b
+	     on a.contact_key = b.contact_key;
+	     
+		return 
+	   		select
+	   		"CONTACT_KEY",
+	   		"SCORE_VALUE",
+	   		"RANK"
+	   	from :var_out;
+
+	end if;
+END;

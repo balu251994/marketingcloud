@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.internal::CA_D_AGREEMENT_TERMS" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_D_AGREEMENT_TERMS"/>
+  <metadata changedAt="2018-10-17 17:52:03.98"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUAND_AGR_TS">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_AGR_TS</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="P_Agreement_Terms">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKT_AGREEMENTTERMSUUID"/>
+        <viewAttribute id="MKT_AGREEMENTUUID"/>
+        <viewAttribute id="MKT_AGRMTTERMSSTARTDATETIME"/>
+        <viewAttribute id="MKT_AGRMTTERMSENDDATETIME"/>
+        <viewAttribute id="MKT_AGREEMENTSTATUS"/>
+        <viewAttribute id="MKT_AGREEMENTCURRENTSTATUS"/>
+        <viewAttribute id="PRODUCTORIGIN"/>
+        <viewAttribute id="PRODUCTID"/>
+        <viewAttribute id="MKT_AGREEMENTRENEWALTYPE"/>
+        <viewAttribute id="MKT_AGRMTCANCLNCONDITIONS"/>
+        <viewAttribute id="MKT_AGRMTCANCLNDCSNTODATETIME"/>
+        <viewAttribute id="MKT_AGRMTPROLNGNDCSNFROMDTETME"/>
+        <viewAttribute id="MKT_AGRMTPAYMENTISINADVANCE"/>
+        <viewAttribute id="MKT_AGREEMENTPAYMENTFREQUENCY"/>
+        <viewAttribute id="MKT_AGRMTBUNDLEPRODUCTORIGIN"/>
+        <viewAttribute id="MKT_AGRMTBUNDLEPRODUCTID"/>
+        <viewAttribute id="MKT_AGRMTCORRESPONDENCEMEDIUM"/>
+        <viewAttribute id="MKT_AGREEMENTPAYMENTMETHOD"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_AGR_TS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTTERMSUUID" source="MKT_AGREEMENTTERMSUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTUUID" source="MKT_AGREEMENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTTERMSSTARTDATETIME" source="MKT_AGRMTTERMSSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTTERMSENDDATETIME" source="MKT_AGRMTTERMSENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTSTATUS" source="MKT_AGREEMENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTCURRENTSTATUS" source="MKT_AGREEMENTCURRENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTORIGIN" source="PRODUCTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTID" source="PRODUCTID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTRENEWALTYPE" source="MKT_AGREEMENTRENEWALTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCANCLNCONDITIONS" source="MKT_AGRMTCANCLNCONDITIONS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCANCLNDCSNTODATETIME" source="MKT_AGRMTCANCLNDCSNTODATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTPROLNGNDCSNFROMDTETME" source="MKT_AGRMTPROLNGNDCSNFROMDTETME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTPAYMENTISINADVANCE" source="MKT_AGRMTPAYMENTISINADVANCE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTPAYMENTFREQUENCY" source="MKT_AGREEMENTPAYMENTFREQUENCY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTBUNDLEPRODUCTORIGIN" source="MKT_AGRMTBUNDLEPRODUCTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTBUNDLEPRODUCTID" source="MKT_AGRMTBUNDLEPRODUCTID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGRMTCORRESPONDENCEMEDIUM" source="MKT_AGRMTCORRESPONDENCEMEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKT_AGREEMENTPAYMENTMETHOD" source="MKT_AGREEMENTPAYMENTMETHOD"/>
+      </input>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$') AND (&quot;MKT_AGREEMENTSTATUS&quot; !='I')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="P_Agreement_Terms">
+    <descriptions/>
+    <attributes>
+      <attribute id="SAPCLIENT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SAP Client"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="SAPCLIENT"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTTERMSUUID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Terms Key"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGREEMENTTERMSUUID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTUUID" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Key"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGREEMENTUUID"/>
+      </attribute>
+      <attribute id="MKT_AGRMTTERMSSTARTDATETIME" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Validity Start Date/Time"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGRMTTERMSSTARTDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGRMTTERMSENDDATETIME" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Validity End Date/Time"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGRMTTERMSENDDATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTSTATUS" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Status"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGREEMENTSTATUS"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTCURRENTSTATUS" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Current Status"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGREEMENTCURRENTSTATUS"/>
+      </attribute>
+      <attribute id="PRODUCTORIGIN" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Product Origin"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="PRODUCTORIGIN"/>
+      </attribute>
+      <attribute id="PRODUCTID" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Product ID"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="PRODUCTID"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTRENEWALTYPE" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Renewal Type"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGREEMENTRENEWALTYPE"/>
+      </attribute>
+      <attribute id="MKT_AGRMTCANCLNCONDITIONS" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Cancellation Conditions"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGRMTCANCLNCONDITIONS"/>
+      </attribute>
+      <attribute id="MKT_AGRMTCANCLNDCSNTODATETIME" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latest Date/Time for Cancellation Before Automatic Renewal"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGRMTCANCLNDCSNTODATETIME"/>
+      </attribute>
+      <attribute id="MKT_AGRMTPROLNGNDCSNFROMDTETME" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Earliest Date/Time for Prolongation"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGRMTPROLNGNDCSNFROMDTETME"/>
+      </attribute>
+      <attribute id="MKT_AGRMTPAYMENTISINADVANCE" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Payment in Advance"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGRMTPAYMENTISINADVANCE"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTPAYMENTFREQUENCY" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Payment Frequency"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGREEMENTPAYMENTFREQUENCY"/>
+      </attribute>
+      <attribute id="MKT_AGRMTBUNDLEPRODUCTORIGIN" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Product Origin"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGRMTBUNDLEPRODUCTORIGIN"/>
+      </attribute>
+      <attribute id="MKT_AGRMTBUNDLEPRODUCTID" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Related Bundle Product ID"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGRMTBUNDLEPRODUCTID"/>
+      </attribute>
+      <attribute id="MKT_AGRMTCORRESPONDENCEMEDIUM" order="18" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Correspondence Medium"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGRMTCORRESPONDENCEMEDIUM"/>
+      </attribute>
+      <attribute id="MKT_AGREEMENTPAYMENTMETHOD" order="19" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Agreement Payment Method"/>
+        <keyMapping columnObjectName="P_Agreement_Terms" columnName="MKT_AGREEMENTPAYMENTMETHOD"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="P_Agreement_Terms" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="190"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

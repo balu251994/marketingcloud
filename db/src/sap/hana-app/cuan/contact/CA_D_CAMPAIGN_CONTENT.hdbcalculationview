@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact::CA_D_CAMPAIGN_CONTENT" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Campaign Content"/>
+  <metadata changedAt="2016-09-14 14:20:56.841"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="40"/>
+  <dataSources>
+    <DataSource id="CUAND_ME_ME_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_ME_ME_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="CUAND_ME_ME_ROOT">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="MANDT"/>
+      </attribute>
+      <attribute id="DB_KEY" hidden="true" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DB_KEY"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="ID" order="3" attributeHierarchyActive="false" descriptionColumnName="MARKETING_ORCHESTRATION_ID_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Campaign Content"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="ID"/>
+      </attribute>
+      <attribute id="DESCRIPTION" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Description of Campaign Content"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="DESCRIPTION"/>
+      </attribute>
+      <attribute id="CREA_DATE_TIME" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Created On/At"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="CREA_DATE_TIME"/>
+      </attribute>
+      <attribute id="CREA_UNAME" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Created By"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="CREA_UNAME"/>
+      </attribute>
+      <attribute id="LCHG_DATE_TIME" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Last Changed On/At"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="LCHG_DATE_TIME"/>
+      </attribute>
+      <attribute id="LCHG_UNAME" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Last Changed By"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="LCHG_UNAME"/>
+      </attribute>
+      <attribute id="SEND_DATE_TIME" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date and Time of Transmission"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="SEND_DATE_TIME"/>
+      </attribute>
+      <attribute id="EXPORT_DEFINITION" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Export Definition"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="EXPORT_DEFINITION"/>
+      </attribute>
+      <attribute id="INITIATIVE" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Campaign"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="INITIATIVE"/>
+      </attribute>
+      <attribute id="INITIATIVE_VERSION" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Campaign Version"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="INITIATIVE_VERSION"/>
+      </attribute>
+      <attribute id="SENDING_PROFILE" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Sender Profile"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="SENDING_PROFILE"/>
+      </attribute>
+      <attribute id="EMAIL_TEMPLATE_ID" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Email Template ID"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="EMAIL_TEMPLATE_ID"/>
+      </attribute>
+      <attribute id="EMAIL_SUBJECT" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Email Subject"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="EMAIL_SUBJECT"/>
+      </attribute>
+      <attribute id="NO_OF_CONTACTS" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Number of Contacts"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="NO_OF_CONTACTS"/>
+      </attribute>
+      <attribute id="LANGUAGE" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Language"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="LANGUAGE"/>
+      </attribute>
+      <attribute id="STATUS" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Status of Campaign Content"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="STATUS"/>
+      </attribute>
+      <attribute id="SENDER_NAME" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Sender Name"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="SENDER_NAME"/>
+      </attribute>
+      <attribute id="SENDER_EMAIL" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Email Address of Sender"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="SENDER_EMAIL"/>
+      </attribute>
+      <attribute id="REPLY_TO_NAME" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Reply-To Name"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="REPLY_TO_NAME"/>
+      </attribute>
+      <attribute id="MKT_AREA_ID" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area ID"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="COMM_MEDIUM" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Communication Medium"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="CATEGORY" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Category of Campaign Content"/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="CATEGORY"/>
+      </attribute>
+      <attribute id="MARKETING_ORCHESTRATION_ID_DESC" hidden="true" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="CUAND_ME_ME_ROOT" columnName="NAME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

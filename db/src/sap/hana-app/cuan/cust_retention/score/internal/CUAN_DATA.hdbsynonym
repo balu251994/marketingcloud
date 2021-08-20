@@ -1,0 +1,17 @@
+{
+   "sap.hana-app.cuan.cust_retention.score.internal::PR_ACCOUNT_ENGAGEMENT_SCORE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_ACCOUNT_ENGAGEMENT_SCORE" 
+		}
+	},
+   "sap.hana-app.cuan.cust_retention.score.internal::TABLE_FUNCTION_CA_ACCOUNT_ENGAGEMENT_RT": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_ACCOUNT_ENGAGEMENT_RT" 
+		}
+	},
+   "sap.hana-app.cuan.cust_retention.score.internal::TABLE_FUNCTION_CA_ACCOUNT_ENGAGEMENT_SCR": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_ACCOUNT_ENGAGEMENT_SCR" 
+		}
+	} 
+}

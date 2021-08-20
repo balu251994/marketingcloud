@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.cpred.datafoundation.internal::CA_CONTACT_PHONE_AFFINITY" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription=""/>
+  <metadata changedAt="2017-01-18 13:00:45.306"/>
+  <localVariables>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="IP_JOIN_SET_ID"/>
+      <variableProperties datatype="NVARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="i_scenario_parameters" parameter="true">
+      <descriptions defaultDescription="i_scenario_parameters"/>
+      <variableProperties datatype="NCLOB" defaultValue="&quot;IP_DOC_DATE_START&quot;:&quot;1000-12-31&quot;,&quot;IP_DOC_DATE_END&quot;:&quot;9999-12-31&quot;" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings>
+    <mapping xsi:type="Variable:VariableMapping" dataSource="CA_D_CONTACT_TIMEZONE">
+      <targetVariable name="IP_JOIN_SET_ID" resourceUri="sap.hana-app.cuan.cpred.datafoundation.internal::CA_D_CONTACT_TIMEZONE"/>
+      <localVariable>IP_JOIN_SET_ID</localVariable>
+    </mapping>
+  </variableMappings>
+  <informationModelLayout relativeWidthScenario="39"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_JS_CONTACT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT</resourceUri>
+    </DataSource>
+    <DataSource id="CUANI_PM_DUMMY">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANI_PM_DUMMY</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_CONTACT_TIMEZONE">
+      <resourceUri>sap.hana-app.cuan.cpred.datafoundation.internal::CA_D_CONTACT_TIMEZONE</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="SOURCE_OBJECT_STATUS_CODE"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DATE" id="date_start" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(strlen('$$i_scenario_parameters$$')&lt;45,'1000-01-01', rightstr(leftstr('$$i_scenario_parameters$$', instr('$$i_scenario_parameters$$', 'IP_DOC_DATE_START')+29),10) )</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="DATE" id="date_end" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(strlen('$$i_scenario_parameters$$')&lt;45,'9999-01-01', rightstr(leftstr('$$i_scenario_parameters$$', instr('$$i_scenario_parameters$$', 'IP_DOC_DATE_END')+27),10)  )</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="MANDT"/></input>
+      <filter>(&quot;CLIENT&quot; ='$$client$$') AND (In(&quot;COMM_MEDIUM&quot;,'PHONE','BUSINESS_DOCUMENT')) AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;OBSOLETE&quot; ='') AND (&quot;IA_DATE&quot; &gt;=&quot;date_start&quot;) AND (&quot;IA_DATE&quot; &lt;=&quot;date_end&quot;) AND (In(&quot;IA_TYPE&quot;,'TELEPHONE_OUTBOUND','TELEPHONE_UNSUCESSFL'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="JOIN_SET_ID"/>
+        <viewAttribute id="CONTACT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_JS_CONTACT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="ID"/>
+      </input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;JOIN_SET_ID&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="SOURCE_OBJECT_STATUS_CODE"/>
+        <viewAttribute hidden="true" id="JOIN$CONTACT_KEY$CONTACT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_STATUS_CODE" source="SOURCE_OBJECT_STATUS_CODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <input node="Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTACT_KEY$CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$CONTACT_KEY$CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="EMPTY_JS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANI_PM_DUMMY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="MANDT"/></input>
+      <filter>(&quot;HPA_CLIENT&quot; ='$$client$$') AND (&quot;EMPTY_JS&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_5" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="SOURCE_OBJECT_STATUS_CODE"/>
+        <viewAttribute hidden="true" id="JOIN$CLIENT$HPA_CLIENT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_STATUS_CODE" source="SOURCE_OBJECT_STATUS_CODE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$HPA_CLIENT" source="CLIENT"/>
+      </input>
+      <input node="Projection_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$HPA_CLIENT" source="HPA_CLIENT"/>
+      </input>
+      <joinAttribute name="JOIN$CLIENT$HPA_CLIENT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="IA_DATE"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="HPA_CLIENT"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="SOURCE_OBJECT_STATUS_CODE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input emptyUnionBehavior="NO_ROW" node="Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_STATUS_CODE" source="SOURCE_OBJECT_STATUS_CODE"/>
+      </input>
+      <input emptyUnionBehavior="NO_ROW" node="Join_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_DATE" source="IA_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HPA_CLIENT" source="HPA_CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_STATUS_CODE" source="SOURCE_OBJECT_STATUS_CODE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="CN_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="SOURCE_OBJECT_STATUS_CODE"/>
+        <viewAttribute id="TZONE"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="TIMESTAMP" id="LOCAL_TIMESTAMP" expressionLanguage="COLUMN_ENGINE">
+          <formula>if (isNull(&quot;TZONE&quot;) or &quot;TZONE&quot; = '', longdate(null), utctolocal(longdate(&quot;TIMESTAMP&quot;),&quot;TZONE&quot;))
+</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Union_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_TYPE" source="IA_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_OBJECT_STATUS_CODE" source="SOURCE_OBJECT_STATUS_CODE"/>
+      </input>
+      <input node="CA_D_CONTACT_TIMEZONE">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TZONE" source="TZONE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="TIMESTAMP"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="IA_TYPE"/>
+        <viewAttribute id="SOURCE_OBJECT_STATUS_CODE"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="BIGINT" id="NO_OF_UNSUCCESFULL_PHONECALLS" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;IA_TYPE&quot;='TELEPHONE_UNSUCESSFL', 1, 0)</formula>
+        </calculatedViewAttribute>
+        <calculatedViewAttribute datatype="BIGINT" id="NO_OF_CLOSED_PHONECALLS" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(&quot;SOURCE_OBJECT_STATUS_CODE&quot; != '' AND &quot;IA_TYPE&quot; = 'TELEPHONE_OUTBOUND',1,0)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP" source="LOCAL_TIMESTAMP"/></input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="HOUR" expressionLanguage="COLUMN_ENGINE">
+          <formula>if((midstr(string(&quot;TIMESTAMP&quot;),12,2)!=''),int(midstr(string(&quot;TIMESTAMP&quot;),12,2)),null)</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Projection_1"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="HOUR"/>
+        <viewAttribute aggregationType="sum" id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute aggregationType="sum" id="NO_OF_CLOSED_PHONECALLS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Projection_6"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_7">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="HOUR"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Aggregation_1"/>
+      <filter>(&quot;NO_OF_CLOSED_PHONECALLS&quot; &gt;'0')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="PEAK_OPENED_HOUR">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_8">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="HOUR"/></input>
+      <windowFunction dynamicPartitionAttributes="false">
+        <partitionViewAttributeName>CONTACT_KEY</partitionViewAttributeName>
+        <order byViewAttributeName="PEAK_PHONECALLS_CLOSED_TIME" direction="ASC"/>
+        <rankThreshold>
+          <value>1</value>
+        </rankThreshold>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_8" cardinality="CN_N" joinType="inner">
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="HOUR" aggregationType="sum"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="HOUR" source="HOUR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+      </input>
+      <input node="Aggregation_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="MAX_NO_OF_CLOSED_PHONECALLS"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+      <joinAttribute name="NO_OF_CLOSED_PHONECALLS"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_3">
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MAX_NO_OF_CLOSED_PHONECALLS" aggregationType="max"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Projection_7">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="CONTACT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Aggregation_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_UNSUCCESFULL_PHONECALLS" source="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <input node="PEAK_OPENED_HOUR">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="TIMESTAMP"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="INTEGER" id="WEEKDAY" expressionLanguage="COLUMN_ENGINE">
+          <formula>weekday(date(&quot;TIMESTAMP&quot;))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="Projection_1"/>
+      <filter>(&quot;NO_OF_CLOSED_PHONECALLS&quot; &gt;'0')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="WEEKDAY"/>
+        <viewAttribute aggregationType="sum" id="NO_OF_CLOSED_PHONECALLS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Projection_2"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:RankView" id="PEAK_CLICKED_WEEKDAY">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_9">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_WEEKDAY" source="WEEKDAY"/></input>
+      <windowFunction dynamicPartitionAttributes="false">
+        <partitionViewAttributeName>CONTACT_KEY</partitionViewAttributeName>
+        <order byViewAttributeName="PEAK_PHONECALLS_CLOSED_WEEKDAY" direction="ASC"/>
+        <rankThreshold>
+          <value>1</value>
+        </rankThreshold>
+      </windowFunction>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_9" cardinality="CN_N" joinType="inner">
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="WEEKDAY" aggregationType="sum"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS" aggregationType="sum"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Aggregation_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="WEEKDAY" source="WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+      </input>
+      <input node="Aggregation_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="MAX_NO_OF_CLOSED_PHONECALLS"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+      <joinAttribute name="NO_OF_CLOSED_PHONECALLS"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_4">
+      <viewAttributes>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="MAX_NO_OF_CLOSED_PHONECALLS" aggregationType="max"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <restrictedViewAttributes/>
+      <input node="Aggregation_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MAX_NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_7" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <viewAttribute id="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <viewAttribute id="NO_OF_CLOSED_PHONECALLS"/>
+        <viewAttribute id="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <viewAttribute id="CONTACT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_UNSUCCESFULL_PHONECALLS" source="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NO_OF_CLOSED_PHONECALLS" source="NO_OF_CLOSED_PHONECALLS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_TIME" source="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <input node="PEAK_CLICKED_WEEKDAY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PEAK_PHONECALLS_CLOSED_WEEKDAY" source="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <joinAttribute name="CONTACT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_7">
+    <descriptions/>
+    <attributes>
+      <attribute id="CONTACT_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CONTACT_KEY"/>
+        <keyMapping columnObjectName="Join_7" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="PEAK_PHONECALLS_CLOSED_WEEKDAY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_7" columnName="PEAK_PHONECALLS_CLOSED_WEEKDAY"/>
+      </attribute>
+      <attribute id="PEAK_PHONECALLS_CLOSED_TIME" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PEAK_PHONECALLS_CLOSED_TIME"/>
+        <keyMapping columnObjectName="Join_7" columnName="PEAK_PHONECALLS_CLOSED_TIME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="SUCCESS_RATE_PHONECALLS" hidden="false" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SUCCESS_RATE_PHONECALLS"/>
+        <keyCalculation datatype="DECIMAL" expressionLanguage="COLUMN_ENGINE" length="34" scale="2">
+          <formula>if(&quot;NO_OF_CLOSED_PHONECALLS&quot;&gt;0  ,(&quot;NO_OF_CLOSED_PHONECALLS&quot;/(&quot;NO_OF_CLOSED_PHONECALLS&quot; + &quot;NO_OF_UNSUCCESFULL_PHONECALLS&quot;)*100),0)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="NO_OF_UNSUCCESFULL_PHONECALLS" order="5" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+        <measureMapping columnObjectName="Join_7" columnName="NO_OF_UNSUCCESFULL_PHONECALLS"/>
+      </measure>
+      <measure id="NO_OF_CLOSED_PHONECALLS" order="6" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="NO_OF_CLOSED_PHONECALLS"/>
+        <measureMapping columnObjectName="Join_7" columnName="NO_OF_CLOSED_PHONECALLS"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="353" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="301" y="1921"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="91" y="1921"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="118" y="1761"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="511" y="1921"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="410" y="1761"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_5" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="325" y="1621"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="325" y="1481"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Union_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.cpred.datafoundation.internal::CA_D_CONTACT_TIMEZONE" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="325" y="1376"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="421" y="1241"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="421" y="1126"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="484" y="981"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PEAK_OPENED_HOUR" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="458" y="536"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_8" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="484" y="661"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_7" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="255"/>
+      </shape>
+      <shape modelObjectName="Aggregation_3" modelObjectNameSpace="Join_8" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="285"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="457" y="839"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="431" y="376"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PEAK_OPENED_HOUR" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="179" y="1231"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="179" y="1126"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PEAK_CLICKED_WEEKDAY" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="197" y="679"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_9" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="197" y="821"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="255"/>
+      </shape>
+      <shape modelObjectName="Aggregation_4" modelObjectNameSpace="Join_9" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="285"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Aggregation_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="224" y="991"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+    
+      <shape expanded="true" modelObjectName="Join_7" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="353" y="217"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Join_1" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PEAK_CLICKED_WEEKDAY" modelObjectNameSpace="Join_7" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape></shapes>
+  </layout>
+</Calculation:scenario>

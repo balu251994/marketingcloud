@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.score::CA_CE_CONTACT_ENGAGEMENT_SCORE_SP" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Interest Affinity">
+    <comment text="Returns Interest Affinity from last version in persistent table "/>
+  </descriptions>
+  <metadata changedAt="2018-05-17 09:05:30.071"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="24"/>
+  <dataSources>
+    <DataSource id="CUAND_SP_ENGAGMT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_SP_ENGAGMT</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_LAST_SCORE_VERSION">
+      <resourceUri>sap.hana-app.cuan.contact.score.internal::CA_D_LAST_SCORE_VERSION</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="SP_ENGAGMT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="SCORE_GUID"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="SCORE_VALUE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_SP_ENGAGMT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_GUID" source="SCORE_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_VALUE" source="SCORE_VALUE"/>
+      </input>
+      <filter>(&quot;CLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="LAST_VERSION">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SCORE_GUID"/>
+        <viewAttribute id="VERSION"/>
+        <viewAttribute id="PREDICTIVE_KPI"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CA_D_LAST_SCORE_VERSION">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_GUID" source="SCORE_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PREDICTIVE_KPI" source="PREDICTIVE_KPI"/>
+      </input>
+      <filter>(&quot;PREDICTIVE_KPI&quot; ='SAP_CONTACT_ENGAGEMENT_SCORE')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_VERSION" cardinality="CN_1" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CLIENT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="SCORE_VALUE"/>
+        <viewAttribute hidden="true" id="JOIN$SCORE_GUID$SCORE_GUID"/>
+        <viewAttribute hidden="true" id="JOIN$VERSION$VERSION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#SP_ENGAGMT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SCORE_VALUE" source="SCORE_VALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SCORE_GUID$SCORE_GUID" source="SCORE_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$VERSION$VERSION" source="VERSION"/>
+      </input>
+      <input node="#LAST_VERSION">
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SCORE_GUID$SCORE_GUID" source="SCORE_GUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$VERSION$VERSION" source="VERSION"/>
+      </input>
+      <joinAttribute name="JOIN$SCORE_GUID$SCORE_GUID"/>
+      <joinAttribute name="JOIN$VERSION$VERSION"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_VERSION">
+    <descriptions/>
+    <attributes>
+      <attribute id="CLIENT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Join_VERSION" columnName="CLIENT"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_VERSION" columnName="CONTACT_KEY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="SCORE_VALUE" order="3" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Engagement Score"/>
+        <measureMapping columnObjectName="Join_VERSION" columnName="SCORE_VALUE"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="SP_ENGAGMT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="LAST_VERSION" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="261"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_VERSION" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

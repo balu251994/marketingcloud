@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact.score.internal.datafoundation::CA_C_CONTACT_SCORING_JS" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="CA_C_CONTACT_SCORING_JS"/>
+  <metadata changedAt="2018-02-26 15:19:57.997"/>
+  <localVariables>
+    <variable id="LEVEL1_BOUNDARY" parameter="true">
+      <descriptions defaultDescription="Data Boundary for Active Contacts"/>
+      <variableProperties datatype="SMALLINT" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+        <derivationRule inputEnabled="false">
+          <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_RECENCY</resourceUri>
+          <resultElementName>LEVEL_BOUNDARY</resultElementName>
+          <columnFilter columnName="RECENCY_LEVEL">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="10"/>
+          </columnFilter>
+          <columnFilter columnName="MANDT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$client$$"/>
+          </columnFilter>
+        </derivationRule>
+      </variableProperties>
+    </variable>
+    <variable id="LEVEL2_BOUNDARY" parameter="true">
+      <descriptions defaultDescription="Data Boundary for fairly Active Contacts"/>
+      <variableProperties datatype="SMALLINT" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+        <derivationRule>
+          <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_RECENCY</resourceUri>
+          <resultElementName>LEVEL_BOUNDARY</resultElementName>
+          <columnFilter columnName="MANDT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$client$$"/>
+          </columnFilter>
+          <columnFilter columnName="RECENCY_LEVEL">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="30"/>
+          </columnFilter>
+        </derivationRule>
+      </variableProperties>
+    </variable>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="Join Set ID"/>
+      <variableProperties datatype="VARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="34"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_JS_CONTACT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_JS_CONTACT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_IC_ROOT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="IC_TYPE"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="LAST_INBOUND_IA_TIMESTAMP"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_INBOUND_IA_TIMESTAMP" source="LAST_INBOUND_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_OF_PURPOSE" source="END_OF_PURPOSE"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;OBSOLETE&quot; ='') AND (&quot;ANONYMIZED&quot; ='') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (in (&quot;IC_TYPE&quot;,'00','01')) AND (&quot;END_OF_PURPOSE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Proj_JS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="JOIN_SET_ID"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_JS_CONTACT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN_SET_ID" source="JOIN_SET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;JOIN_SET_ID&quot; ='$$IP_JOIN_SET_ID$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_JS" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="LAST_INBOUND_IA_TIMESTAMP"/>
+        <viewAttribute hidden="true" id="JOIN$ID$DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Proj_JS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$DB_KEY" source="ID"/>
+      </input>
+      <input node="#Proj_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_INBOUND_IA_TIMESTAMP" source="LAST_INBOUND_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$DB_KEY" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$ID$DB_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_JS">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MANDT"/>
+        <keyMapping columnObjectName="Join_JS" columnName="MANDT"/>
+      </attribute>
+      <attribute id="DB_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DB_KEY"/>
+        <keyMapping columnObjectName="Join_JS" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="KUNNR" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="KUNNR"/>
+        <keyMapping columnObjectName="Join_JS" columnName="KUNNR"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="CONVERTED_DAY" hidden="false" order="5" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date in Database Format"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE">
+          <formula>date(&quot;LAST_INBOUND_IA_TIMESTAMP&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="DAYS_UNTIL_LAST_IA" hidden="false" order="6" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Days since last interaction"/>
+        <keyCalculation datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+          <formula>daysbetween(if(&quot;LAST_INBOUND_IA_TIMESTAMP&quot;=0,adddays(now(),-10000),&quot;CONVERTED_DAY&quot;),now())</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="CALCULATED_LEVEL1_DATE" hidden="false" order="7" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Data Boundary for Active Contacts"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE">
+          <formula>adddays(now(), -$$LEVEL1_BOUNDARY$$)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="CALCULATED_LEVEL2_DATE" hidden="false" order="8" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Data Boundary for fairly Active Contacts"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE">
+          <formula>adddays(now(), -$$LEVEL2_BOUNDARY$$)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="RECENCY_LEVEL" hidden="false" order="9" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latest Activity&#xD;&#xA;"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="2">
+          <formula>if(&quot;CONVERTED_DAY&quot; >= &quot;CALCULATED_LEVEL1_DATE&quot; , '10', if(&quot;CONVERTED_DAY&quot; >= &quot;CALCULATED_LEVEL2_DATE&quot;, '30', '50'))</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="LCHG_DATE_TIME" order="4" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="LCHG_DATE_TIME"/>
+        <measureMapping columnObjectName="Join_JS" columnName="LCHG_DATE_TIME"/>
+      </measure>
+      <measure id="LAST_INBOUND_IA_TIMESTAMP" order="10" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="LAST_INBOUND_IA_TIMESTAMP"/>
+        <measureMapping columnObjectName="Join_JS" columnName="LAST_INBOUND_IA_TIMESTAMP"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+    <sharedDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="99" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_IC_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="281"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_JS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="281"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_JS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="185"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Join_JS" modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository">
+        <upperLeftCorner x="72" y="174"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

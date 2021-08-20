@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_CAMPAIGN" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Campaign"/>
+  <metadata changedAt="2017-10-31 15:24:53.455"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUAN_D_INI_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_INI_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Proj_INI">
+    <descriptions/>
+    <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DESCRIPTION"/>
+        <viewAttribute id="PRIORITY"/>
+        <viewAttribute id="START_DATE"/>
+        <viewAttribute id="END_DATE"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="CAMPAIGN_ID"/>
+        <viewAttribute id="CAMPAIGN_KEY"/>
+        <viewAttribute id="CSV_FILE"/>
+        <viewAttribute id="RELEASE_STATUS"/>
+        <viewAttribute id="LIFE_CYCLE_STATUS"/>
+        <viewAttribute id="CREA_DATE_TIME"/>
+        <viewAttribute id="CREA_UNAME"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="LCHG_UNAME"/>
+        <viewAttribute id="CUAN_E_INI_ROOT"/>
+        <viewAttribute id="DEFINITION_ID"/>
+        <viewAttribute id="CSV_EXPORT_DATE"/>
+        <viewAttribute id="PERIOD_START"/>
+        <viewAttribute id="PERIOD_START_TIME"/>
+        <viewAttribute id="PERIOD_DISTANCE"/>
+        <viewAttribute id="PERIOD_UNIT"/>
+        <viewAttribute id="PERIOD_START_TIMESTMP"/>
+        <viewAttribute id="MKT_AREA_ID"/>
+        <viewAttribute id="_DATAAGING"/>
+      </viewAttributes>
+    <calculatedViewAttributes/>
+      <input node="CUAN_D_INI_ROOT"/>
+    <filter>(&quot;MANDT&quot; ='$$client$$') AND (in (&quot;_DATAAGING&quot;,'','00000000'))</filter>
+  </calculationView>
+</calculationViews>
+  <logicalModel id="Proj_INI">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client1"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="MANDT"/>
+      </attribute>
+      <attribute id="DB_KEY" hidden="true" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DB Key"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="ID" order="3" attributeHierarchyActive="false" descriptionColumnName="INITIATIVE_ID_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Campaign ID"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="ID"/>
+      </attribute>
+      <attribute id="INITIATIVE_DESC" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Campaign Description"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="DESCRIPTION"/>
+      </attribute>
+      <attribute id="PRIORITY" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Priority"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="PRIORITY"/>
+      </attribute>
+      <attribute id="START_DATE" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Start Date"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="START_DATE"/>
+      </attribute>
+      <attribute id="END_DATE" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="End Date"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="END_DATE"/>
+      </attribute>
+      <attribute id="TYPE" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Campaign Category ID"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="TYPE"/>
+      </attribute>
+      <attribute id="CAMPAIGN_ID" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CRM Campaign"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="CAMPAIGN_ID"/>
+      </attribute>
+      <attribute id="CAMPAIGN_KEY" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CRM Campaign Key"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="CAMPAIGN_KEY"/>
+      </attribute>
+      <attribute id="CSV_FILE" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Name of CSV File"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="CSV_FILE"/>
+      </attribute>
+      <attribute id="RELEASE_STATUS" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Release Status"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="RELEASE_STATUS"/>
+      </attribute>
+      <attribute id="LIFE_CYCLE_STATUS" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Lift Cycle Status"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="LIFE_CYCLE_STATUS"/>
+      </attribute>
+      <attribute id="CREA_DATE_TIME" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Created On/At"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="CREA_DATE_TIME"/>
+      </attribute>
+      <attribute id="CREA_UNAME" order="15" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Created By"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="CREA_UNAME"/>
+      </attribute>
+      <attribute id="LCHG_DATE_TIME" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Last Changed On/At"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="LCHG_DATE_TIME"/>
+      </attribute>
+      <attribute id="LCHG_UNAME" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Last Changed By"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="LCHG_UNAME"/>
+      </attribute>
+      <attribute id="CUAN_E_INI_ROOT" hidden="true" order="18" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CUAN_E_INI_ROOT"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="CUAN_E_INI_ROOT"/>
+      </attribute>
+      <attribute id="DEFINITION_ID" order="19" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Export Definition ID"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="DEFINITION_ID"/>
+      </attribute>
+      <attribute id="CSV_EXPORT_DATE" order="20" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date of CSV Export"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="CSV_EXPORT_DATE"/>
+      </attribute>
+      <attribute id="PERIOD_START" order="21" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Start Date of Execution Interval"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="PERIOD_START"/>
+      </attribute>
+      <attribute id="PERIOD_START_TIME" order="22" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Start Time of Periodic Action"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="PERIOD_START_TIME"/>
+      </attribute>
+      <attribute id="PERIOD_DISTANCE" order="23" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Value for Execution Interval"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="PERIOD_DISTANCE"/>
+      </attribute>
+      <attribute id="PERIOD_UNIT" order="24" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Unit for Execution Interval"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="PERIOD_UNIT"/>
+      </attribute>
+      <attribute id="PERIOD_START_TIMESTMP" order="25" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Start Date of Execution Interval as Timestamp"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="PERIOD_START_TIMESTMP"/>
+      </attribute>
+      <attribute id="MKT_AREA_ID" order="26" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Area ID"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="MKT_AREA_ID"/>
+      </attribute>
+      <attribute id="INITIATIVE_ID_DESC" order="27" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Campaign Title"/>
+        <keyMapping columnObjectName="Proj_INI" columnName="NAME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+<layout>
+  <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="22" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Proj_INI" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+</layout>
+</Calculation:scenario>

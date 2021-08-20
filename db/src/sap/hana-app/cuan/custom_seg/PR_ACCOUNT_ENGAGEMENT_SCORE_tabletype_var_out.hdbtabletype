@@ -1,0 +1,1 @@
+TYPE "sap.hana-app.cuan.custom_seg::PR_ACCOUNT_ENGAGEMENT_SCORE/tabletype/var_out" AS TABLE  ( "KEY" VARBINARY(16) CS_RAW, "SCORE" DOUBLE CS_DOUBLE ) 

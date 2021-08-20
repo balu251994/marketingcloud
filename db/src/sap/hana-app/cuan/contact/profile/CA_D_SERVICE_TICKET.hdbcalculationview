@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Service Ticket Dimension"/>
+  <metadata changedAt="2019-09-12 08:36:57.308"/>
+  <localVariables/>
+  <variableMappings>
+    <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="CA_D_SERVICE_TICKET_CATEGORY" value="A">
+      <targetVariable name="IP_CATEGORY_TYPE" resourceUri="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY"/>
+    </mapping>
+    <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY" value="B">
+      <targetVariable name="IP_CATEGORY_TYPE" resourceUri="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY"/>
+    </mapping>
+    <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="Join_OBJECT_CATEG$$$$sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY$$" value="C">
+      <targetVariable name="IP_CATEGORY_TYPE" resourceUri="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY"/>
+    </mapping>
+    <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="Join_CAUSE_CATEG$$$$sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY$$" value="D">
+      <targetVariable name="IP_CATEGORY_TYPE" resourceUri="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY"/>
+    </mapping>
+    <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="Join_SOLUTION_CATEG$$$$sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY$$" value="E">
+      <targetVariable name="IP_CATEGORY_TYPE" resourceUri="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY"/>
+    </mapping>
+  </variableMappings>
+  <informationModelLayout relativeWidthScenario="35"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IA_RT" clientColumn="MANDT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IA_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CA_D_SERVICE_TICKET_CATEGORY">
+      <resourceUri>sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY">
+      <resourceUri>sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY</resourceUri>
+    </DataSource>
+    <DataSource id="Join_OBJECT_CATEG$$$$sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY$$">
+      <resourceUri>sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY</resourceUri>
+    </DataSource>
+    <DataSource id="Join_CAUSE_CATEG$$$$sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY$$">
+      <resourceUri>sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY</resourceUri>
+    </DataSource>
+    <DataSource id="Join_SOLUTION_CATEG$$$$sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY$$">
+      <resourceUri>sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="IA_RT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="SOURCE_OBJECT_TYPE"/>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="DB_KEY"/></input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;ID_ORIGIN&quot; ='SAP_C4C_BUPA') AND (&quot;SOURCE_OBJECT_TYPE&quot; ='C4S_SERVICE_TICKET') AND (&quot;OBSOLETE&quot; ='') AND (in (&quot;_DATAAGING&quot;,'','00000000'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PROCESS_CATEGORY">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ST_IA_KEY"/>
+        <viewAttribute id="ST_CATEGORY_ID"/>
+        <viewAttribute id="ST_CATEGORY_NAME"/>
+        <viewAttribute id="ST_HIERARCHY_ID"/>
+        <viewAttribute id="ST_CATEGORY_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CA_D_SERVICE_TICKET_CATEGORY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PROCESS_CATEG" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="ST_PROCESS_ID"/>
+        <viewAttribute id="ST_PROCESS_NAME"/>
+        <viewAttribute id="ST_PROCESS_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="IA_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+      </input>
+      <input node="PROCESS_CATEGORY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_ID" source="ST_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_NAME" source="ST_CATEGORY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_DESC" source="ST_CATEGORY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="ST_IA_KEY"/>
+      </input>
+      <joinAttribute name="IA_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_INCIDENT_CATEG" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="ST_PROCESS_ID"/>
+        <viewAttribute id="ST_PROCESS_NAME"/>
+        <viewAttribute id="ST_PROCESS_DESC"/>
+        <viewAttribute id="ST_INCIDENT_ID"/>
+        <viewAttribute id="ST_INCIDENT_NAME"/>
+        <viewAttribute id="ST_INCIDENT_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_PROCESS_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_ID" source="ST_PROCESS_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_NAME" source="ST_PROCESS_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_DESC" source="ST_PROCESS_DESC"/>
+      </input>
+      <input node="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_ID" source="ST_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_NAME" source="ST_CATEGORY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_DESC" source="ST_CATEGORY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="ST_IA_KEY"/>
+      </input>
+      <joinAttribute name="IA_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_OBJECT_CATEG" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="ST_PROCESS_ID"/>
+        <viewAttribute id="ST_PROCESS_NAME"/>
+        <viewAttribute id="ST_PROCESS_DESC"/>
+        <viewAttribute id="ST_INCIDENT_ID"/>
+        <viewAttribute id="ST_INCIDENT_NAME"/>
+        <viewAttribute id="ST_INCIDENT_DESC"/>
+        <viewAttribute id="ST_OBJECT_ID"/>
+        <viewAttribute id="ST_OBJECT_NAME"/>
+        <viewAttribute id="ST_OBJECT_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_INCIDENT_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_ID" source="ST_PROCESS_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_NAME" source="ST_PROCESS_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_DESC" source="ST_PROCESS_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_ID" source="ST_INCIDENT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_NAME" source="ST_INCIDENT_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_DESC" source="ST_INCIDENT_DESC"/>
+      </input>
+      <input node="Join_OBJECT_CATEG$$$$sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_OBJECT_ID" source="ST_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_OBJECT_NAME" source="ST_CATEGORY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_OBJECT_DESC" source="ST_CATEGORY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="ST_IA_KEY"/>
+      </input>
+      <joinAttribute name="IA_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_CAUSE_CATEG" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="ST_PROCESS_ID"/>
+        <viewAttribute id="ST_PROCESS_NAME"/>
+        <viewAttribute id="ST_PROCESS_DESC"/>
+        <viewAttribute id="ST_INCIDENT_ID"/>
+        <viewAttribute id="ST_INCIDENT_NAME"/>
+        <viewAttribute id="ST_INCIDENT_DESC"/>
+        <viewAttribute id="ST_OBJECT_ID"/>
+        <viewAttribute id="ST_OBJECT_NAME"/>
+        <viewAttribute id="ST_OBJECT_DESC"/>
+        <viewAttribute id="ST_CAUSE_ID"/>
+        <viewAttribute id="ST_CAUSE_NAME"/>
+        <viewAttribute id="ST_CAUSE_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_OBJECT_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_ID" source="ST_PROCESS_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_NAME" source="ST_PROCESS_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_DESC" source="ST_PROCESS_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_ID" source="ST_INCIDENT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_NAME" source="ST_INCIDENT_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_DESC" source="ST_INCIDENT_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_OBJECT_ID" source="ST_OBJECT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_OBJECT_NAME" source="ST_OBJECT_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_OBJECT_DESC" source="ST_OBJECT_DESC"/>
+      </input>
+      <input node="Join_CAUSE_CATEG$$$$sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_CAUSE_ID" source="ST_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_CAUSE_NAME" source="ST_CATEGORY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_CAUSE_DESC" source="ST_CATEGORY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="ST_IA_KEY"/>
+      </input>
+      <joinAttribute name="IA_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_SOLUTION_CATEG" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="IA_KEY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="ST_PROCESS_ID"/>
+        <viewAttribute id="ST_PROCESS_NAME"/>
+        <viewAttribute id="ST_PROCESS_DESC"/>
+        <viewAttribute id="ST_INCIDENT_ID"/>
+        <viewAttribute id="ST_INCIDENT_NAME"/>
+        <viewAttribute id="ST_INCIDENT_DESC"/>
+        <viewAttribute id="ST_OBJECT_ID"/>
+        <viewAttribute id="ST_OBJECT_NAME"/>
+        <viewAttribute id="ST_OBJECT_DESC"/>
+        <viewAttribute id="ST_CAUSE_ID"/>
+        <viewAttribute id="ST_CAUSE_NAME"/>
+        <viewAttribute id="ST_CAUSE_DESC"/>
+        <viewAttribute id="ST_SOLUTION_ID"/>
+        <viewAttribute id="ST_SOLUTION_NAME"/>
+        <viewAttribute id="ST_SOLUTION_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_CAUSE_CATEG">
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="IA_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_ID" source="ST_PROCESS_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_NAME" source="ST_PROCESS_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_PROCESS_DESC" source="ST_PROCESS_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_ID" source="ST_INCIDENT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_NAME" source="ST_INCIDENT_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_INCIDENT_DESC" source="ST_INCIDENT_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_OBJECT_ID" source="ST_OBJECT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_OBJECT_NAME" source="ST_OBJECT_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_OBJECT_DESC" source="ST_OBJECT_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_CAUSE_ID" source="ST_CAUSE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_CAUSE_NAME" source="ST_CAUSE_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_CAUSE_DESC" source="ST_CAUSE_DESC"/>
+      </input>
+      <input node="Join_SOLUTION_CATEG$$$$sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY$$">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_SOLUTION_ID" source="ST_CATEGORY_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_SOLUTION_NAME" source="ST_CATEGORY_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ST_SOLUTION_DESC" source="ST_CATEGORY_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IA_KEY" source="ST_IA_KEY"/>
+      </input>
+      <joinAttribute name="IA_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_SOLUTION_CATEG">
+    <descriptions/>
+    <attributes>
+      <attribute id="ST_IA_KEY" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Interaction Key"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="IA_KEY"/>
+      </attribute>
+      <attribute id="ST_CONTACT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="ST_PROCESS_ID" order="3" attributeHierarchyActive="false" descriptionColumnName="ST_PROCESS_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Service Process Category"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_PROCESS_ID"/>
+      </attribute>
+      <attribute id="ST_PROCESS_NAME" hidden="true" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Process Name"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_PROCESS_NAME"/>
+      </attribute>
+      <attribute id="ST_PROCESS_DESC" hidden="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Process Description"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_PROCESS_DESC"/>
+      </attribute>
+      <attribute id="ST_INCIDENT_ID" order="6" attributeHierarchyActive="false" descriptionColumnName="ST_INCIDENT_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Service Incident Category"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_INCIDENT_ID"/>
+      </attribute>
+      <attribute id="ST_INCIDENT_NAME" hidden="true" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Incident Category Name"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_INCIDENT_NAME"/>
+      </attribute>
+      <attribute id="ST_INCIDENT_DESC" hidden="true" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Incident Category Description"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_INCIDENT_DESC"/>
+      </attribute>
+      <attribute id="ST_OBJECT_ID" order="9" attributeHierarchyActive="false" descriptionColumnName="ST_OBJECT_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Service Object Category"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_OBJECT_ID"/>
+      </attribute>
+      <attribute id="ST_OBJECT_NAME" hidden="true" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Object Category Name"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_OBJECT_NAME"/>
+      </attribute>
+      <attribute id="ST_OBJECT_DESC" hidden="true" order="11" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Object Category Description"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_OBJECT_DESC"/>
+      </attribute>
+      <attribute id="ST_CAUSE_ID" order="12" attributeHierarchyActive="false" descriptionColumnName="ST_CAUSE_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Service Cause Category"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_CAUSE_ID"/>
+      </attribute>
+      <attribute id="ST_CAUSE_NAME" hidden="true" order="13" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Cause Category Name"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_CAUSE_NAME"/>
+      </attribute>
+      <attribute id="ST_CAUSE_DESC" hidden="true" order="14" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Cause Category Description"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_CAUSE_DESC"/>
+      </attribute>
+      <attribute id="ST_SOLUTION_ID" order="15" attributeHierarchyActive="false" descriptionColumnName="ST_SOLUTION_NAME" displayAttribute="false">
+        <descriptions defaultDescription="Service Solution Category"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_SOLUTION_ID"/>
+      </attribute>
+      <attribute id="ST_SOLUTION_NAME" hidden="true" order="16" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Solution Category Name"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_SOLUTION_NAME"/>
+      </attribute>
+      <attribute id="ST_SOLUTION_DESC" hidden="true" order="17" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Service Solution Category Description"/>
+        <keyMapping columnObjectName="Join_SOLUTION_CATEG" columnName="ST_SOLUTION_DESC"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="149" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="IA_RT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="645"/>
+        <rectangleSize height="64" width="191"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PROCESS_CATEGORY" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="227" y="645"/>
+        <rectangleSize height="64" width="191"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PROCESS_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="549"/>
+        <rectangleSize height="82" width="240"/>
+      </shape>
+      <shape modelObjectName="IA_RT" modelObjectNameSpace="Join_PROCESS_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PROCESS_CATEGORY" modelObjectNameSpace="Join_PROCESS_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_INCIDENT_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="453"/>
+        <rectangleSize height="82" width="241"/>
+      </shape>
+      <shape modelObjectName="Join_PROCESS_CATEG" modelObjectNameSpace="Join_INCIDENT_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY" modelObjectNameSpace="Join_INCIDENT_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_OBJECT_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="357"/>
+        <rectangleSize height="82" width="241"/>
+      </shape>
+      <shape modelObjectName="Join_INCIDENT_CATEG" modelObjectNameSpace="Join_OBJECT_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY" modelObjectNameSpace="Join_OBJECT_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_CAUSE_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="261"/>
+        <rectangleSize height="82" width="241"/>
+      </shape>
+      <shape modelObjectName="Join_OBJECT_CATEG" modelObjectNameSpace="Join_CAUSE_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY" modelObjectNameSpace="Join_CAUSE_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_SOLUTION_CATEG" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="99" y="165"/>
+        <rectangleSize height="66" width="241"/>
+      </shape>
+    
+      <shape modelObjectName="Join_CAUSE_CATEG" modelObjectNameSpace="Join_SOLUTION_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="sap.hana-app.cuan.contact.profile::CA_D_SERVICE_TICKET_CATEGORY" modelObjectNameSpace="Join_SOLUTION_CATEG" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

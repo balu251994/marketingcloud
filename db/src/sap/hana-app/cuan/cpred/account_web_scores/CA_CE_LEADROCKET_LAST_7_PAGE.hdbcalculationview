@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.cpred.account_web_scores::CA_CE_LEADROCKET_LAST_7_PAGE" applyPrivilegeType="NONE" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Account Web Scores for page visits during last 7 days"/>
+  <metadata changedAt="2018-11-13 11:45:09.911"/>
+  <localVariables>
+    <variable id="IP_MODEL_GUID" parameter="true">
+      <descriptions defaultDescription="Predictive Model Key"/>
+      <variableProperties datatype="VARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="IP_JOIN_SET_ID" parameter="true">
+      <descriptions defaultDescription="Join Set ID"/>
+      <variableProperties datatype="VARCHAR" length="32" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="32"/>
+  <dataSources>
+    <DataSource id="TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS" type="TABLE_FUNCTION">
+      <resourceUri>sap.hana-app.cuan.cpred.account_web_scores.internal::TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews/>
+  <logicalModel id="TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS">
+    <descriptions/>
+    <attributes>
+      <attribute id="CONTACT_KEY" key="true" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="SCORE_DESC" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Score Description"/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS" columnName="SCORE_DESC"/>
+      </attribute>
+      <attribute id="UNIT" order="4" attributeHierarchyActive="false" descriptionColumnName="UNIT.description" displayAttribute="false">
+        <descriptions defaultDescription="Unit"/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS" columnName="UNIT"/>
+      </attribute>
+      <attribute id="RANK" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Rank"/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS" columnName="RANK"/>
+      </attribute>
+      <attribute id="UNIT.description" hidden="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS" columnName="UNIT.description"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="SCORE_VALUE" order="2" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Score Value"/>
+        <measureMapping columnObjectName="TABLE_FUNCTION_CA_CE_ACCOUNT_WEB_VISITS" columnName="SCORE_VALUE"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

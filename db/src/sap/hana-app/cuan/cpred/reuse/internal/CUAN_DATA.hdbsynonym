@@ -1,0 +1,52 @@
+{
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_APPL_DYN_DATE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_APPL_DYN_DATE" 
+		}
+	},
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_DECODE_DYN_DATE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_DECODE_DYN_DATE" 
+		}
+	},
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_MODEL_DEF_DESERIALIZE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_MODEL_DEF_DESERIALIZE" 
+		}
+	},
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_MODEL_DEF_FALLBACK": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_MODEL_DEF_FALLBACK" 
+		}
+	},
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_NAME_TO_STRING": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_NAME_TO_STRING" 
+		}
+	},
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_NAME_VALUE_TO_STRING": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_NAME_VALUE_TO_STRING" 
+		}
+	},
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_READ_MODEL_DEF": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_READ_MODEL_DEF" 
+		}
+	},
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_READ_MODEL_DEF_N": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_READ_MODEL_DEF_N" 
+		}
+	},
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_SP_GET_CURRENT_VERSION_FOR_ORIGIN_KEY": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_SP_GET_CURRENT_VERSION_FOR_ORIGIN_KEY" 
+		}
+	},
+   "sap.hana-app.cuan.cpred.reuse.internal::PR_TO_NAME_VALUE": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::PR_TO_NAME_VALUE" 
+		}
+	} 
+}

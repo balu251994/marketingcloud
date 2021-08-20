@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_LEAD_STAGE_CURRENT" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Aggregation" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="CA_LM_LEAD_STAGE_CURRENT"/>
+  <metadata changedAt="2016-09-19 17:04:11.001"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="37"/>
+  <dataSources>
+    <DataSource id="CUAND_LM_STG">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_LM_STG</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_ATTH">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ATTH</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_LM_STG_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_LM_STG_T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="StagesDef">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ACTIVE"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="NUMBER"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_LM_STG"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;ACTIVE&quot; ='X')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PR_CUAND_CE_IC_ATTH">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ATTRIBUTE_NAME"/>
+        <viewAttribute id="VALUE"/>
+        <viewAttribute id="VALUE_DATE_FROM"/>
+        <viewAttribute id="VALUE_DATE_TO"/>
+        <viewAttribute id="VALUE_PREV"/>
+        <viewAttribute id="MANDT_1"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_ATTH">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_1" source="MANDT"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="PR_CUAND_CE_IC_ROOT">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_ROOT"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="ContactHistory" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ATTRIBUTE_NAME"/>
+        <viewAttribute id="VALUE"/>
+        <viewAttribute id="VALUE_DATE_FROM"/>
+        <viewAttribute id="VALUE_DATE_TO"/>
+        <viewAttribute id="VALUE_PREV"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="PR_CUAND_CE_IC_ATTH">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_NAME" source="ATTRIBUTE_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="VALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_DATE_FROM" source="VALUE_DATE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_DATE_TO" source="VALUE_DATE_TO"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_PREV" source="VALUE_PREV"/>
+      </input>
+      <input node="PR_CUAND_CE_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="PARENT_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="History">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ATTRIBUTE_NAME"/>
+        <viewAttribute id="VALUE"/>
+        <viewAttribute id="VALUE_DATE_FROM"/>
+        <viewAttribute id="VALUE_DATE_TO"/>
+        <viewAttribute id="VALUE_PREV"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="ContactHistory"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;ATTRIBUTE_NAME&quot; ='LEAD_STAGE') AND (&quot;VALUE_DATE_TO&quot; ='99991231')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Stages" joinType="rightOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="NUMBER"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="VALUE"/>
+        <viewAttribute id="VALUE_DATE_FROM"/>
+        <viewAttribute id="VALUE_DATE_TO"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="History">
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="VALUE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_DATE_FROM" source="VALUE_DATE_FROM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_DATE_TO" source="VALUE_DATE_TO"/>
+      </input>
+      <input node="StagesDef">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NUMBER" source="NUMBER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="VALUE" source="ID"/>
+      </input>
+      <joinAttribute name="VALUE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="StagesDefText">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="LANGUAGE_CODE"/>
+        <viewAttribute id="TEXT"/>
+        <viewAttribute id="PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_LM_STG_T"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="StagesWithText" cardinality="C1_1" joinType="textTable" languageColumn="LANGUAGE_CODE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="STAGE_TEXT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$DB_KEY$PARENT_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Stages">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="DB_KEY"/>
+      </input>
+      <input node="StagesDefText">
+        <mapping xsi:type="Calculation:AttributeMapping" target="STAGE_TEXT" source="TEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DB_KEY$PARENT_KEY" source="PARENT_KEY"/>
+      </input>
+      <joinAttribute name="JOIN$DB_KEY$PARENT_KEY"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="StagesWithText">
+    <descriptions/>
+    <attributes>
+      <attribute id="STAGE_TEXT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Lead Stage"/>
+        <keyMapping columnObjectName="StagesWithText" columnName="STAGE_TEXT"/>
+      </attribute>
+      <attribute id="CA_LEAD_CONTACT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="StagesWithText" columnName="CONTACT_KEY"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="313.1571701549222" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="StagesDef" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="536.9999976158142"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PR_CUAND_CE_IC_ATTH" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="174.89471301357878" y="821.9999964237213"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="PR_CUAND_CE_IC_ROOT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="384.8947130135788" y="821.9999964237213"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="ContactHistory" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="301.99999999999994" y="661.9999976158142"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape modelObjectName="PR_CUAND_CE_IC_ATTH" modelObjectNameSpace="ContactHistory" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="PR_CUAND_CE_IC_ROOT" modelObjectNameSpace="ContactHistory" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="History" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="301.99999999999994" y="536.9999976158142"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Stages" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="118.66666666666666" y="376.9999988079071"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="History" modelObjectNameSpace="Stages" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="StagesDef" modelObjectNameSpace="Stages" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="StagesDefText" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="382.1650813644655" y="376.9999988079071"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="StagesWithText" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="313.1571701549222" y="217"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Stages" modelObjectNameSpace="StagesWithText" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="StagesDefText" modelObjectNameSpace="StagesWithText" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

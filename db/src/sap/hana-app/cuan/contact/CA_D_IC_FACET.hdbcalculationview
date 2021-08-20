@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="sap.hana-app.cuan.contact::CA_D_IC_FACET" applyPrivilegeType="NONE" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="true" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+<origin/>
+  <descriptions defaultDescription="Facet of Interaction Contact"/>
+  <metadata changedAt="2019-04-12 11:19:43.325"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="34"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_FCET">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_FCET</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_ORIGN_T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_ORIGN_T</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_MKT_EVT_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_MKT_EVT_RT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_EVT_PRTCPN">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_EVT_PRTCPN</resourceUri>
+    </DataSource>
+    <DataSource id="HPAC_STATUST">
+      <resourceUri>sap.hana-app.cuan.db.cuan::HPAC_STATUST</resourceUri>
+    </DataSource>
+    <DataSource id="DD07V">
+      <resourceUri>sap.hana-app.cuan.db.cuan::DD07V</resourceUri>
+    </DataSource>
+    <DataSource id="sap.hana-app.cuan.db.cuan::T002T">
+      <resourceUri>sap.hana-app.cuan.db.cuan::T002T</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_FCET">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="INVALID"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_CE_IC_FCET"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (not in (&quot;ID_ORIGIN&quot;,'SAP_FILE_IMPORT','SAP_HYBRIS_MKT_IC','SAP_MANUAL','SAP_ODATA_IMPORT')) AND (&quot;INVALID&quot; ='') AND (&quot;_DATAAGING&quot; !='00010101') AND (&quot;OBSOLETE&quot; ='') AND (&quot;END_OF_PURPOSE&quot; ='')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ORIGIN">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="ID_ORIGIN_DESC"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="SPRAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUANC_CE_ORIGN_T"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_ORIGN_T" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="MEMBER_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="ID_ORIGIN_DESC"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_FCET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEMBER_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      </input>
+      <input node="Projection_ORIGIN">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN_DESC" source="ID_ORIGIN_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      </input>
+      <joinAttribute name="ID_ORIGIN"/>
+      <joinAttribute name="MANDT"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_MARKETING_EVENT" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKTGEVENTUUID"/>
+        <viewAttribute id="MKTGEVENT"/>
+        <viewAttribute id="MKTGEVENTNAME"/>
+        <viewAttribute id="MKTGEVENTSTATUS"/>
+        <viewAttribute id="MKTGEVENTPROVIDER"/>
+        <viewAttribute id="MKTGEVENTSTARTDATETIME"/>
+      
+        <viewAttribute id="MKTGEVENTLANGUAGE"/>
+        <viewAttribute id="MKTGEVENTENDDATETIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_MKT_EVT_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTLANGUAGE" source="LANGUAGE"/>
+      </input>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_PARTICIPANT" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKTGEVENTUUID"/>
+        <viewAttribute id="CONTACTORIGIN"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTEXTERNALID"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTSTATUS"/>
+        <viewAttribute id="MKTGENGAGEMENTSCORE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESLIVE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESREPLAY"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESATTENDED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="CUAND_EVT_PRTCPN"/>
+      <filter>(&quot;SAPCLIENT&quot; ='$$client$$')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_EVENT_STATUS_TEXT" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="LANGUAGE"/>
+        <viewAttribute id="STATUS_ID"/>
+        <viewAttribute id="OBJECT_TYPE"/>
+        <viewAttribute id="STATUS_DESCRIPTION"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="HPAC_STATUST"/>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND(&quot;OBJECT_TYPE&quot;='I_MKT_MKTGEVENTTP')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_EVENT_STATUS_TEXT" cardinality="C1_1" joinType="textTable" languageColumn="LANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MKTGEVENTSTATUSTEXT"/>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKTGEVENTUUID"/>
+        <viewAttribute id="MKTGEVENT"/>
+        <viewAttribute id="MKTGEVENTNAME"/>
+        <viewAttribute id="MKTGEVENTSTATUS"/>
+        <viewAttribute id="MKTGEVENTPROVIDER"/>
+        <viewAttribute id="MKTGEVENTSTARTDATETIME"/>
+      
+        <viewAttribute id="MKTGEVENTLANGUAGE"/>
+        <viewAttribute id="MKTGEVENTENDDATETIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_MARKETING_EVENT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTUUID" source="MKTGEVENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENT" source="MKTGEVENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTNAME" source="MKTGEVENTNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTATUS" source="MKTGEVENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPROVIDER" source="MKTGEVENTPROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTARTDATETIME" source="MKTGEVENTSTARTDATETIME"/>
+      
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTLANGUAGE" source="MKTGEVENTLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTENDDATETIME" source="MKTGEVENTENDDATETIME"/>
+      </input>
+      <input node="Projection_EVENT_STATUS_TEXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTATUSTEXT" source="STATUS_DESCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTATUS" source="STATUS_ID"/>
+      </input>
+      <joinAttribute name="SAPCLIENT"/>
+      <joinAttribute name="MKTGEVENTSTATUS"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_PARTICIPANT_STATUS" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DOMNAME"/>
+        <viewAttribute id="VALPOS"/>
+        <viewAttribute id="DDLANGUAGE"/>
+        <viewAttribute id="DOMVALUE_L"/>
+        <viewAttribute id="DOMVALUE_H"/>
+        <viewAttribute id="DDTEXT"/>
+        <viewAttribute id="DOMVAL_LD"/>
+        <viewAttribute id="DOMVAL_HD"/>
+        <viewAttribute id="APPVAL"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="DD07V"/>
+      <filter>&quot;DOMNAME&quot; = 'CUAN_MKT_EVENT_PRTCPN_STATUS'</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_PARTICIPANT_STATUS" cardinality="C1_1" joinType="textTable" languageColumn="DDLANGUAGE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKTGEVENTUUID"/>
+        <viewAttribute id="CONTACTORIGIN"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTEXTERNALID"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTSTATUS"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTSTATUSTEXT"/>
+        <viewAttribute id="MKTGENGAGEMENTSCORE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESLIVE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESREPLAY"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESATTENDED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Projection_PARTICIPANT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTUUID" source="MKTGEVENTUUID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACTORIGIN" source="CONTACTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTEXTERNALID" source="MKTGEVENTPARTICIPANTEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTSTATUS" source="MKTGEVENTPARTICIPANTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGENGAGEMENTSCORE" source="MKTGENGAGEMENTSCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESLIVE" source="TOTALNUMBEROFMINUTESLIVE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESREPLAY" source="TOTALNUMBEROFMINUTESREPLAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESATTENDED" source="TOTALNUMBEROFMINUTESATTENDED"/>
+      </input>
+      <input node="Projection_PARTICIPANT_STATUS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTSTATUSTEXT" source="DDTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTSTATUS" source="DOMVALUE_L"/>
+      </input>
+      <joinAttribute name="MKTGEVENTPARTICIPANTSTATUS"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_EVENT_PARTICIPANT" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MKTGEVENTPARTICIPANTSTATUSTEXT"/>
+        <viewAttribute id="MKTGEVENTSTATUSTEXT"/>
+        <viewAttribute id="SAPCLIENT"/>
+        <viewAttribute id="MKTGEVENT"/>
+        <viewAttribute id="MKTGEVENTNAME"/>
+        <viewAttribute id="MKTGEVENTSTATUS"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTSTATUS"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTEXTERNALID"/>
+        <viewAttribute id="CONTACTORIGIN"/>
+        <viewAttribute id="MKTGEVENTPROVIDER"/>
+        <viewAttribute id="MKTGEVENTSTARTDATETIME"/>
+        <viewAttribute id="MKTGENGAGEMENTSCORE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESLIVE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESREPLAY"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESATTENDED"/>
+        <viewAttribute id="MKTGEVENTLANGUAGE"/>
+        <viewAttribute id="MKTGEVENTENDDATETIME"/>
+        <viewAttribute hidden="true" id="JOIN$MKTGEVENTUUID$MKTGEVENTUUID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_EVENT_STATUS_TEXT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTATUSTEXT" source="MKTGEVENTSTATUSTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENT" source="MKTGEVENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTNAME" source="MKTGEVENTNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTATUS" source="MKTGEVENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPROVIDER" source="MKTGEVENTPROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTARTDATETIME" source="MKTGEVENTSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTLANGUAGE" source="MKTGEVENTLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTENDDATETIME" source="MKTGEVENTENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKTGEVENTUUID$MKTGEVENTUUID" source="MKTGEVENTUUID"/>
+      </input>
+      <input node="Join_PARTICIPANT_STATUS">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTSTATUSTEXT" source="MKTGEVENTPARTICIPANTSTATUSTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTSTATUS" source="MKTGEVENTPARTICIPANTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTEXTERNALID" source="MKTGEVENTPARTICIPANTEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACTORIGIN" source="CONTACTORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGENGAGEMENTSCORE" source="MKTGENGAGEMENTSCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESLIVE" source="TOTALNUMBEROFMINUTESLIVE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESREPLAY" source="TOTALNUMBEROFMINUTESREPLAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESATTENDED" source="TOTALNUMBEROFMINUTESATTENDED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SAPCLIENT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MKTGEVENTUUID$MKTGEVENTUUID" source="MKTGEVENTUUID"/>
+      </input>
+      <joinAttribute name="SAPCLIENT"/>
+      <joinAttribute name="JOIN$MKTGEVENTUUID$MKTGEVENTUUID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_FACET_EVENT" cardinality="C1_N" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="MEMBER_KEY"/>
+        <viewAttribute id="ID_ORIGIN_DESC"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTSTATUSTEXT"/>
+        <viewAttribute id="MKTGEVENTSTATUSTEXT"/>
+        <viewAttribute id="MKTGEVENT"/>
+        <viewAttribute id="MKTGEVENTNAME"/>
+        <viewAttribute id="MKTGEVENTSTATUS"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTSTATUS"/>
+        <viewAttribute id="MKTGEVENTPROVIDER"/>
+        <viewAttribute id="MKTGEVENTSTARTDATETIME"/>
+        <viewAttribute id="MKTGENGAGEMENTSCORE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESLIVE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESREPLAY"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESATTENDED"/>
+      
+        <viewAttribute id="MKTGEVENTLANGUAGE"/>
+        <viewAttribute id="MKTGEVENTENDDATETIME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_ORIGN_T">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEMBER_KEY" source="MEMBER_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN_DESC" source="ID_ORIGIN_DESC"/>
+      </input>
+      <input node="Join_EVENT_PARTICIPANT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTSTATUSTEXT" source="MKTGEVENTPARTICIPANTSTATUSTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTATUSTEXT" source="MKTGEVENTSTATUSTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENT" source="MKTGEVENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTNAME" source="MKTGEVENTNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTATUS" source="MKTGEVENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTSTATUS" source="MKTGEVENTPARTICIPANTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPROVIDER" source="MKTGEVENTPROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTARTDATETIME" source="MKTGEVENTSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGENGAGEMENTSCORE" source="MKTGENGAGEMENTSCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESLIVE" source="TOTALNUMBEROFMINUTESLIVE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESREPLAY" source="TOTALNUMBEROFMINUTESREPLAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESATTENDED" source="TOTALNUMBEROFMINUTESATTENDED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTLANGUAGE" source="MKTGEVENTLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTENDDATETIME" source="MKTGEVENTENDDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="SAPCLIENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="MKTGEVENTPARTICIPANTEXTERNALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="CONTACTORIGIN"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="ID"/>
+      <joinAttribute name="ID_ORIGIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="textTable" languageColumn="SPRAS">
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="MEMBER_KEY"/>
+        <viewAttribute id="ID_ORIGIN_DESC"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTSTATUSTEXT"/>
+        <viewAttribute id="MKTGEVENTSTATUSTEXT"/>
+        <viewAttribute id="MKTGEVENT"/>
+        <viewAttribute id="MKTGEVENTNAME"/>
+        <viewAttribute id="MKTGEVENTSTATUS"/>
+        <viewAttribute id="MKTGEVENTPARTICIPANTSTATUS"/>
+        <viewAttribute id="MKTGEVENTPROVIDER"/>
+        <viewAttribute id="MKTGEVENTSTARTDATETIME"/>
+        <viewAttribute id="MKTGENGAGEMENTSCORE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESLIVE"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESREPLAY"/>
+        <viewAttribute id="TOTALNUMBEROFMINUTESATTENDED"/>
+        <viewAttribute id="MKTGEVENTLANGUAGE"/>
+        <viewAttribute id="MKTGEVENTENDDATETIME"/>
+        <viewAttribute id="MKTGEVENTLANGUAGENAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="Join_FACET_EVENT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MEMBER_KEY" source="MEMBER_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN_DESC" source="ID_ORIGIN_DESC"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTSTATUSTEXT" source="MKTGEVENTPARTICIPANTSTATUSTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTATUSTEXT" source="MKTGEVENTSTATUSTEXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENT" source="MKTGEVENT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTNAME" source="MKTGEVENTNAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTATUS" source="MKTGEVENTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPARTICIPANTSTATUS" source="MKTGEVENTPARTICIPANTSTATUS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTPROVIDER" source="MKTGEVENTPROVIDER"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTSTARTDATETIME" source="MKTGEVENTSTARTDATETIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGENGAGEMENTSCORE" source="MKTGENGAGEMENTSCORE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESLIVE" source="TOTALNUMBEROFMINUTESLIVE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESREPLAY" source="TOTALNUMBEROFMINUTESREPLAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TOTALNUMBEROFMINUTESATTENDED" source="TOTALNUMBEROFMINUTESATTENDED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTLANGUAGE" source="MKTGEVENTLANGUAGE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTENDDATETIME" source="MKTGEVENTENDDATETIME"/>
+      </input>
+      <input node="Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTLANGUAGENAME" source="SPTXT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MKTGEVENTLANGUAGE" source="SPRSL"/>
+      </input>
+      <joinAttribute name="MKTGEVENTLANGUAGE"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <viewAttributes>
+        <viewAttribute id="SPTXT"/>
+        <viewAttribute id="SPRSL"/>
+        <viewAttribute id="SPRAS"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="sap.hana-app.cuan.db.cuan::T002T"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client1"/>
+        <keyMapping columnObjectName="Join_1" columnName="MANDT"/>
+      </attribute>
+      <attribute id="PARENT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Parent Key"/>
+        <keyMapping columnObjectName="Join_1" columnName="PARENT_KEY"/>
+      </attribute>
+      <attribute id="ID_ORIGIN" order="3" attributeHierarchyActive="false" descriptionColumnName="ID_ORIGIN_DESC" displayAttribute="false">
+        <descriptions defaultDescription="ID Origin"/>
+        <keyMapping columnObjectName="Join_1" columnName="ID_ORIGIN"/>
+      </attribute>
+      <attribute id="ID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID"/>
+        <keyMapping columnObjectName="Join_1" columnName="ID"/>
+      </attribute>
+      <attribute id="MEMBER_KEY" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Member Key"/>
+        <keyMapping columnObjectName="Join_1" columnName="MEMBER_KEY"/>
+      </attribute>
+      <attribute id="ID_ORIGIN_DESC" hidden="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions/>
+        <keyMapping columnObjectName="Join_1" columnName="ID_ORIGIN_DESC"/>
+      </attribute>
+      <attribute id="MKTGEVENTPARTICIPANTSTATUSTEXT" hidden="true" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Participant Status Description"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTPARTICIPANTSTATUSTEXT"/>
+      </attribute>
+      <attribute id="MKTGEVENTSTATUSTEXT" hidden="true" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Event Status Description"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTSTATUSTEXT"/>
+      </attribute>
+      <attribute id="MKTGEVENT" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Event ID"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENT"/>
+      </attribute>
+      <attribute id="MKTGEVENTNAME" order="10" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Event Name"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTNAME"/>
+      </attribute>
+      <attribute id="MKTGEVENTSTATUS" order="11" attributeHierarchyActive="false" descriptionColumnName="MKTGEVENTSTATUSTEXT" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Event Status"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTSTATUS"/>
+      </attribute>
+      <attribute id="MKTGEVENTPARTICIPANTSTATUS" order="12" attributeHierarchyActive="false" descriptionColumnName="MKTGEVENTPARTICIPANTSTATUSTEXT" displayAttribute="false">
+        <descriptions defaultDescription="Participant Status"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTPARTICIPANTSTATUS"/>
+      </attribute>
+      <attribute id="MKTGEVENTPROVIDER" order="13" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Marketing Event Provider"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTPROVIDER"/>
+      </attribute>
+      <attribute id="MKTGEVENTSTARTDATETIME" order="14" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Start Timestamp of Event"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTSTARTDATETIME"/>
+      </attribute>
+      <attribute id="MKTGENGAGEMENTSCORE" order="15" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Participation Score"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGENGAGEMENTSCORE"/>
+      </attribute>
+      <attribute id="TOTALNUMBEROFMINUTESLIVE" order="16" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Live Participation Time"/>
+        <keyMapping columnObjectName="Join_1" columnName="TOTALNUMBEROFMINUTESLIVE"/>
+      </attribute>
+      <attribute id="TOTALNUMBEROFMINUTESREPLAY" order="17" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="On-demand Participation Time"/>
+        <keyMapping columnObjectName="Join_1" columnName="TOTALNUMBEROFMINUTESREPLAY"/>
+      </attribute>
+      <attribute id="TOTALNUMBEROFMINUTESATTENDED" order="18" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Total Participation Time"/>
+        <keyMapping columnObjectName="Join_1" columnName="TOTALNUMBEROFMINUTESATTENDED"/>
+      </attribute>
+    
+      <attribute id="MKTGEVENTLANGUAGE" order="19" descriptionColumnName="MKTGEVENTLANGUAGENAME" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="Marketing Event Language"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTLANGUAGE"/>
+      </attribute>
+      <attribute id="MKTGEVENTENDDATETIME" order="20" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription="End Timestamp of Event"/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTENDDATETIME"/>
+      </attribute>
+      <attribute id="MKTGEVENTLANGUAGENAME" hidden="true" order="21" displayAttribute="false" attributeHierarchyActive="false">
+        <descriptions defaultDescription=""/>
+        <keyMapping columnObjectName="Join_1" columnName="MKTGEVENTLANGUAGENAME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="576.3730521131289" y="112"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_FCET" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="302.0000000000002" y="661.9999964237213"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_ORIGIN" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="92" y="661.9999964237213"/>
+        <rectangleSize height="61" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_ORIGN_T" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="275.3333333333335" y="501.9999976158142"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_FCET" modelObjectNameSpace="Join_ORIGN_T" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_ORIGIN" modelObjectNameSpace="Join_ORIGN_T" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_MARKETING_EVENT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="704.0211153608561" y="821.9999952316284"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_PARTICIPANT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="284.02111536085613" y="821.9999952316284"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_EVENT_STATUS_TEXT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="914.0211153608561" y="821.9999952316284"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_EVENT_STATUS_TEXT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="722.4082025346127" y="661.9999964237213"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_MARKETING_EVENT" modelObjectNameSpace="Join_EVENT_STATUS_TEXT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_EVENT_STATUS_TEXT" modelObjectNameSpace="Join_EVENT_STATUS_TEXT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_PARTICIPANT_STATUS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="494.02111536085613" y="821.9999952316284"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_PARTICIPANT_STATUS" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="512.0000000000001" y="661.9999964237213"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Projection_PARTICIPANT" modelObjectNameSpace="Join_PARTICIPANT_STATUS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_PARTICIPANT_STATUS" modelObjectNameSpace="Join_PARTICIPANT_STATUS" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_EVENT_PARTICIPANT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="538.6666666666667" y="501.9999976158142"/>
+        <rectangleSize height="-1" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_EVENT_STATUS_TEXT" modelObjectNameSpace="Join_EVENT_PARTICIPANT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_PARTICIPANT_STATUS" modelObjectNameSpace="Join_EVENT_PARTICIPANT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_FACET_EVENT" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="512.0000000000001" y="341.9999988079071"/>
+        <rectangleSize height="0" width="160"/>
+      </shape>
+    
+      <shape modelObjectName="Join_ORIGN_T" modelObjectNameSpace="Join_FACET_EVENT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Join_EVENT_PARTICIPANT" modelObjectNameSpace="Join_FACET_EVENT" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+    
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="512.0000000000001" y="236.9999988079071"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+      <shape modelObjectName="Join_FACET_EVENT" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="20" y="30"/>
+        <rectangleSize width="250"/>
+      </shape>
+      <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+        <upperLeftCorner x="320" y="30"/>
+        <rectangleSize width="136.0234375"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="770" y="267"/>
+        <rectangleSize height="30" width="160"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

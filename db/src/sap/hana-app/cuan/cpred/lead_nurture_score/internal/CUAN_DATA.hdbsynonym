@@ -1,0 +1,7 @@
+{
+   "sap.hana-app.cuan.cpred.lead_nurture_score.internal::TABLE_FUNCTION_CA_CE_LEAD_NURTURE_SCR": {
+        "target":   {
+ "object": "sap.hana-app.cuan.custom_seg::TABLE_FUNCTION_CA_CE_LEAD_NURTURE_SCR" 
+		}
+	} 
+}

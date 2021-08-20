@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact::CA_D_IC_NEWSLETTER_SUBSCRIPTION" applyPrivilegeType="NONE" cacheInvalidationPeriod="HOURLY" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="Newsletter Subscriptions"/>
+  <metadata changedAt="2018-02-22 11:18:09.864"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="38"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_FCET">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_FCET</resourceUri>
+    </DataSource>
+    <DataSource id="CUANC_CE_MP_MAP">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_MP_MAP</resourceUri>
+    </DataSource>
+    <DataSource id="CUAND_CE_MP_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_MP_ROOT</resourceUri>
+    </DataSource>
+    <DataSource id="CUAN_D_COMCAT_RT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAN_D_COMCAT_RT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="PARENT_KEY"/>
+        <viewAttribute id="ID_ORIGIN"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="INVALID"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="END_OF_PURPOSE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_IC_FCET">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="INVALID" source="INVALID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="END_OF_PURPOSE" source="END_OF_PURPOSE"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (not in (&quot;OBSOLETE&quot;,'X')) AND (not in (&quot;INVALID&quot;,'X')) AND (not in (&quot;_DATAAGING&quot;,'00010101')) AND (not in (&quot;END_OF_PURPOSE&quot;,'X'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="DISABLED"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUANC_CE_MP_MAP">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DISABLED" source="DISABLED"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (not in (&quot;DISABLED&quot;,'X'))</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="PARENT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="ID"/>
+      </input>
+      <input node="#Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="COMM_MEDIUM"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="CONTACT_FACET_ID_ORIGIN"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="COMM_MEDIUM"/>
+        <viewAttribute id="COMM_DIRECTION"/>
+        <viewAttribute id="COMM_CAT_KEY"/>
+        <viewAttribute id="DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="VARCHAR" id="NON_SUSBSCRIPTION" length="1" expressionLanguage="COLUMN_ENGINE">
+          <formula>if(isnull(&quot;COMM_CAT_KEY&quot;) = 1,'1',if(&quot;COMM_CAT_KEY&quot; = '','1',if(rawtohex(&quot;COMM_CAT_KEY&quot;) = '00000000000000000000000000000000','1','0')))</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#CUAND_CE_MP_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="CONTACT_FACET_ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="CONTACT_FACET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_MEDIUM" source="COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_DIRECTION" source="COMM_DIRECTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_CAT_KEY" source="COMM_CAT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;COMM_DIRECTION&quot; ='O')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="COMM_CAT_KEY"/>
+        <viewAttribute id="NON_SUSBSCRIPTION"/>
+        <viewAttribute id="DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Projection_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="CONTACT_FACET_ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="CONTACT_FACET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_CAT_KEY" source="COMM_CAT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NON_SUSBSCRIPTION" source="NON_SUSBSCRIPTION"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      </input>
+      <filter>(&quot;NON_SUSBSCRIPTION&quot; ='0')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="COMM_CAT_KEY"/>
+        <viewAttribute id="DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="CONTACT_FACET_ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="CONTACT_FACET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+      </input>
+      <input node="#Projection_4">
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COMM_CAT_KEY" source="COMM_CAT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="CONTACT_FACET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="CONTACT_KEY"/>
+      <joinAttribute name="CONTACT_FACET_ID"/>
+      <joinAttribute name="OUTBOUND_COMM_MEDIUM"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="IS_NEWSLETTER"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAN_D_COMCAT_RT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IS_NEWSLETTER" source="IS_NEWSLETTER"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;IS_NEWSLETTER&quot; ='X')</filter>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="CONTACT_FACET_ID_ORIGIN"/>
+        <viewAttribute id="CONTACT_FACET_ID"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute hidden="true" id="JOIN$COMM_CAT_KEY$DB_KEY"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID_ORIGIN" source="CONTACT_FACET_ID_ORIGIN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_FACET_ID" source="CONTACT_FACET_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$COMM_CAT_KEY$DB_KEY" source="COMM_CAT_KEY"/>
+      </input>
+      <input node="#Projection_5">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$COMM_CAT_KEY$DB_KEY" source="DB_KEY"/>
+      </input>
+      <joinAttribute name="MANDT"/>
+      <joinAttribute name="JOIN$COMM_CAT_KEY$DB_KEY"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="CONTACT_KEY"/>
+        <viewAttribute id="OUTBOUND_COMM_MEDIUM"/>
+        <viewAttribute id="OPT_IN"/>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="NAME"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_KEY" source="CONTACT_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OUTBOUND_COMM_MEDIUM" source="OUTBOUND_COMM_MEDIUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OPT_IN" source="OPT_IN"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+      </input>
+      <filter>(&quot;OPT_IN&quot; ='Y')</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection_6">
+    <descriptions/>
+    <attributes>
+      <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Client"/>
+        <keyMapping columnObjectName="Projection_6" columnName="MANDT"/>
+      </attribute>
+      <attribute id="CONTACT_KEY" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Contact Key"/>
+        <keyMapping columnObjectName="Projection_6" columnName="CONTACT_KEY"/>
+      </attribute>
+      <attribute id="MKT_PERM_NEWSLETTER_COMM_MEDIUM" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Communication Medium for Subscription"/>
+        <keyMapping columnObjectName="Projection_6" columnName="OUTBOUND_COMM_MEDIUM"/>
+      </attribute>
+      <attribute id="MKT_PERM_NEWSLETTER" order="4" attributeHierarchyActive="false" descriptionColumnName="NEWSLETTER_DESC" displayAttribute="false">
+        <descriptions defaultDescription="Subscription"/>
+        <keyMapping columnObjectName="Projection_6" columnName="ID"/>
+      </attribute>
+      <attribute id="NEWSLETTER_DESC" hidden="true" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Subscription Name"/>
+        <keyMapping columnObjectName="Projection_6" columnName="NAME"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="175" y="87"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="22" y="531"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="531"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="176" y="435"/>
+        <rectangleSize height="71" width="140"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="531"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="330" y="435"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="252" y="339"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="98" y="339"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="175" y="243"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="175" y="165"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

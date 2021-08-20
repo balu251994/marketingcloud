@@ -1,0 +1,1 @@
+TYPE "sap.hana-app.cuan.custom_seg::PR_NAME_TO_STRING/tabletype/ot_string" AS TABLE  ( "STRING" NCLOB  MEMORY THRESHOLD 1000   ) 

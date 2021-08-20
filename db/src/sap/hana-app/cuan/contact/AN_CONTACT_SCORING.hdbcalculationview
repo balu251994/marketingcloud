@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:AccessControl="http://www.sap.com/ndb/SQLCoreModelAccessControl.ecore" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="sap.hana-app.cuan.contact::AN_CONTACT_SCORING" applyPrivilegeType="NONE" defaultClient="" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" analyticViewCompatibilityMode="true" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" rowCounterName="row.count" xscCompatibilityMode="true">
+  <origin/>
+  <descriptions defaultDescription="AN_CONTACT_SCORING"/>
+  <localVariables>
+    <variable id="LEVEL1_BOUNDARY" parameter="true">
+      <descriptions defaultDescription="Date Boundary for Active Contacts"/>
+      <variableProperties datatype="SMALLINT" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+        <derivationRule>
+          <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_RECENCY</resourceUri>
+          <resultElementName>LEVEL_BOUNDARY</resultElementName>
+          <columnFilter columnName="RECENCY_LEVEL">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="10"/>
+          </columnFilter>
+          <columnFilter columnName="MANDT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$client$$"/>
+          </columnFilter>
+        </derivationRule>
+      </variableProperties>
+    </variable>
+    <variable id="LEVEL2_BOUNDARY" parameter="true">
+      <descriptions defaultDescription="Date Boundary for Fairly Active Contacts"/>
+      <variableProperties datatype="SMALLINT" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+        <derivationRule>
+          <resourceUri>sap.hana-app.cuan.db.cuan::CUANC_CE_RECENCY</resourceUri>
+          <resultElementName>LEVEL_BOUNDARY</resultElementName>
+          <columnFilter columnName="RECENCY_LEVEL">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="30"/>
+          </columnFilter>
+          <columnFilter columnName="MANDT">
+            <valueFilter xsi:type="AccessControl:SingleValueFilter" including="true" value="$$client$$"/>
+          </columnFilter>
+        </derivationRule>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="CUAND_CE_IC_ROOT">
+      <resourceUri>sap.hana-app.cuan.db.cuan::CUAND_CE_IC_ROOT</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection" filterExpressionLanguage="COLUMN_ENGINE">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="DB_KEY"/>
+        <viewAttribute id="KUNNR"/>
+        <viewAttribute id="LCHG_DATE_TIME"/>
+        <viewAttribute id="LAST_INBOUND_IA_TIMESTAMP"/>
+        <viewAttribute id="MANDT"/>
+        <viewAttribute id="OBSOLETE"/>
+        <viewAttribute id="_DATAAGING"/>
+        <viewAttribute id="ANONYMIZED"/>
+        <viewAttribute id="IC_TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CUAND_CE_IC_ROOT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="KUNNR" source="KUNNR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LCHG_DATE_TIME" source="LCHG_DATE_TIME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LAST_INBOUND_IA_TIMESTAMP" source="LAST_INBOUND_IA_TIMESTAMP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="OBSOLETE" source="OBSOLETE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="_DATAAGING" source="_DATAAGING"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ANONYMIZED" source="ANONYMIZED"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="IC_TYPE" source="IC_TYPE"/>
+      </input>
+      <filter>(&quot;MANDT&quot; ='$$client$$') AND (&quot;OBSOLETE&quot; ='') AND (in (&quot;_DATAAGING&quot;,'','00000000')) AND (&quot;ANONYMIZED&quot; ='') AND (in (&quot;IC_TYPE&quot;,'00','01'))</filter>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection">
+    <descriptions/>
+    <attributes>
+      <attribute id="DB_KEY" hidden="false" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Key"/>
+        <keyMapping columnObjectName="Projection" columnName="DB_KEY"/>
+      </attribute>
+      <attribute id="KUNNR" hidden="false" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Account"/>
+        <keyMapping columnObjectName="Projection" columnName="KUNNR"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes>
+      <calculatedAttribute id="RECENCY_LEVEL" hidden="false" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Latest Activity"/>
+        <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="2" scale="0">
+          <formula>if(&quot;CONVERTED_DAY&quot; >= &quot;CALCULATED_LEVEL1_DATE&quot; , '10', if(&quot;CONVERTED_DAY&quot; >= &quot;CALCULATED_LEVEL2_DATE&quot;, '30', '50'))</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="CALCULATED_LEVEL1_DATE" hidden="false" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date Boundary for Active Contacts"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE" length="0" scale="0">
+          <formula>adddays(now(), -$$LEVEL1_BOUNDARY$$)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="CALCULATED_LEVEL2_DATE" hidden="false" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date Boundary for Fairly Active Contacts"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE" length="0" scale="0">
+          <formula>adddays(now(), -$$LEVEL2_BOUNDARY$$)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="CONVERTED_DAY" hidden="false" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Date in Database Format"/>
+        <keyCalculation datatype="DATE" expressionLanguage="COLUMN_ENGINE">
+          <formula>date(&quot;LAST_INBOUND_IA_TIMESTAMP&quot;)</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+      <calculatedAttribute id="DAYS_UNTIL_LAST_IA" hidden="false" order="8" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Days Since Last Interaction"/>
+        <keyCalculation datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+          <formula>daysbetween(if(&quot;LAST_INBOUND_IA_TIMESTAMP&quot;=0,adddays(now(),-10000),&quot;CONVERTED_DAY&quot;),now())</formula>
+        </keyCalculation>
+      </calculatedAttribute>
+    </calculatedAttributes>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="LCHG_DATE_TIME" hidden="false" order="7" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Date and Time of Last Change"/>
+        <measureMapping columnObjectName="Projection" columnName="LCHG_DATE_TIME"/>
+      </measure>
+      <measure id="LAST_INBOUND_IA_TIMESTAMP" hidden="false" order="9" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="LAST_INBOUND_IA_TIMESTAMP"/>
+        <measureMapping columnObjectName="Projection" columnName="LAST_INBOUND_IA_TIMESTAMP"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner/>
+        <rectangleSize/>
+      </shape>
+      <shape modelObjectName="Projection" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner/>
+        <rectangleSize/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>
